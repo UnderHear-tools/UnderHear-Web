@@ -18,20 +18,31 @@
           </li>
         </ul>
       </nav>
-      <div 
-        class="absolute right-8 max-md:relative max-md:right-0 max-md:ml-3 px-2.5 py-2 rounded-md text-[16px] font-medium leading-none flex items-center max-md:rounded-[16px] max-md:px-3 cursor-pointer text-[#727272] hover:bg-[#E6E6E6] hover:text-[#000000] transition-colors"
-        @click="handleSignIn">
-        Sign In
+
+      <div v-if="currentUser" class="absolute right-8 max-md:relative max-md:right-0 max-md:ml-4">
+        <zUserMenu :user="currentUser" :menu-items="userMenuItems" @item-click="handleMenuItemClick" />
       </div>
+
+      <button
+        v-else
+        type="button"
+        class="absolute right-8 max-md:relative max-md:right-0 max-md:ml-4 text-sm font-medium text-[#111111] transition-opacity hover:opacity-70"
+        @click="handleSignIn"
+      >
+        登录
+      </button>
     </div>
   </header>
 </template>
 
 <script setup lang="ts">
-import { ref, watch } from 'vue'
+import { onMounted, onUnmounted, ref, watch, computed } from 'vue'
 import { useRouter, useRoute } from 'vue-router'
+import { getStoredUser, logout, type UserProfile } from '@/api/auth'
+import { zUserMenu } from '@/components/z-ui/user-menu/zUserMenu'
+import type { MenuItem } from '@/components/z-ui/user-menu/zUserMenu'
+import { icons } from '@/components/z-ui/user-menu/icons'
 
-// Types
 interface NavigationItem {
   name: string
   href: string
@@ -40,8 +51,8 @@ interface NavigationItem {
 
 const router = useRouter()
 const route = useRoute()
+const currentUser = ref<UserProfile | null>(getStoredUser())
 
-// Default navigation data
 const navigationItems = ref<NavigationItem[]>([
   { name: '首页', href: '/', active: true },
   { name: '工具', href: '/tool', active: false },
@@ -49,26 +60,87 @@ const navigationItems = ref<NavigationItem[]>([
   { name: '名片', href: '/namecard', active: false }
 ])
 
-// Update active state based on current route
+const userMenuItems = computed<MenuItem[]>(() => [
+  {
+    label: 'GitHub 主页',
+    icon: icons.person,
+    href: currentUser.value?.htmlUrl || '',
+    external: true
+  },
+  { type: 'divider' } as MenuItem,
+  {
+    label: '设置',
+    icon: icons.gear,
+    onClick: () => {
+      // 可以后续添加设置页面
+      console.log('设置')
+    }
+  },
+  {
+    label: '外观',
+    icon: icons.paintbrush,
+    onClick: () => {
+      // 可以后续添加主题切换功能
+      console.log('外观设置')
+    }
+  },
+  { type: 'divider' } as MenuItem,
+  {
+    label: '退出登录',
+    icon: icons.signOut,
+    onClick: () => {
+      handleLogout()
+    }
+  }
+])
+
 const updateActiveState = () => {
   navigationItems.value.forEach(navItem => {
     navItem.active = navItem.href === route.path
   })
 }
 
-// Methods
+const refreshUser = () => {
+  currentUser.value = getStoredUser()
+}
+
 const navigateToPage = (item: NavigationItem) => {
   router.push(item.href)
 }
 
 const handleSignIn = () => {
-  // TODO: Implement sign in functionality
-  console.log('Sign In clicked')
+  router.push('/auth/login')
 }
 
-// Watch for route changes
+const handleLogout = () => {
+  logout()
+  refreshUser()
+  router.push('/')
+}
+
+const handleMenuItemClick = (item: MenuItem) => {
+  // 菜单项点击事件已在 menuItems 的 onClick 中处理
+  console.log('Menu item clicked:', item.label)
+}
+
+const handleStorageChange = (event: StorageEvent) => {
+  if (event.key === 'underhear_user') {
+    refreshUser()
+  }
+}
+
+onMounted(() => {
+  refreshUser()
+  window.addEventListener('storage', handleStorageChange)
+})
+
+onUnmounted(() => {
+  window.removeEventListener('storage', handleStorageChange)
+})
+
 watch(() => route.path, () => {
   updateActiveState()
+  refreshUser()
 })
 </script>
 
