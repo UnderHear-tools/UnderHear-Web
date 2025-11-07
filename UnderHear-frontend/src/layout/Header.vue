@@ -3,7 +3,7 @@
     class="sticky top-0 z-50 w-full bg-[#F5F5F5]/70 backdrop-blur-2xl 
     shadow-[0_1px_1px_rgba(220,220,220,1)] md:top-0 max-md:top-4 max-md:w-fit 
     max-md:mx-auto max-md:rounded-[24px] max-md:shadow-none">
-    <div class="flex h-20 items-center justify-center max-md:h-fit py-[6px] px-[8px]">
+    <div class="relative flex h-20 items-center justify-center max-md:h-fit py-[6px] px-[8px] md:px-8">
       <nav>
         <ul class="flex space-x-6 max-md:space-x-3">
           <li v-for="item in navigationItems" :key="item.name">
@@ -18,6 +18,11 @@
           </li>
         </ul>
       </nav>
+      <div 
+        class="absolute right-8 max-md:relative max-md:right-0 max-md:ml-3 px-2.5 py-2 rounded-md text-[16px] font-medium leading-none flex items-center max-md:rounded-[16px] max-md:px-3 cursor-pointer text-[#727272] hover:bg-[#E6E6E6] hover:text-[#000000] transition-colors"
+        @click="handleSignIn">
+        Sign In
+      </div>
     </div>
   </header>
 </template>
@@ -54,6 +59,11 @@ const updateActiveState = () => {
 // Methods
 const navigateToPage = (item: NavigationItem) => {
   router.push(item.href)
+}
+
+const handleSignIn = () => {
+  // TODO: Implement sign in functionality
+  console.log('Sign In clicked')
 }
 
 // Watch for route changes
