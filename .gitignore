@@ -1,0 +1,96 @@
+ # ============================================
+# Backend (Spring Boot + Maven)
+# ============================================
+
+# Maven
+UnderHear-backend/target/
+UnderHear-backend/.mvn/
+UnderHear-backend/mvnw
+UnderHear-backend/mvnw.cmd
+
+# IntelliJ IDEA
+UnderHear-backend/.idea/
+UnderHear-backend/*.iml
+UnderHear-backend/*.iws
+UnderHear-backend/*.ipr
+UnderHear-backend/out/
+
+# Eclipse
+UnderHear-backend/.classpath
+UnderHear-backend/.project
+UnderHear-backend/.settings/
+
+# VS Code
+UnderHear-backend/.vscode/
+
+# Spring Boot
+UnderHear-backend/*.log
+UnderHear-backend/*.gz
+UnderHear-backend/spring.log
+
+# ============================================
+# Frontend (Vue + Vite + Node.js)
+# ============================================
+
+# Dependencies
+UnderHear-frontend/node_modules/
+UnderHear-frontend/package-lock.json
+
+# Build output
+UnderHear-frontend/dist/
+UnderHear-frontend/dist-ssr/
+UnderHear-frontend/.vite/
+
+# Cache
+UnderHear-frontend/.cache/
+UnderHear-frontend/.temp/
+UnderHear-frontend/.tmp/
+
+# Logs
+UnderHear-frontend/logs/
+UnderHear-frontend/*.log
+UnderHear-frontend/npm-debug.log*
+UnderHear-frontend/yarn-debug.log*
+UnderHear-frontend/yarn-error.log*
+UnderHear-frontend/pnpm-debug.log*
+UnderHear-frontend/lerna-debug.log*
+
+# Editor directories and files
+UnderHear-frontend/.vscode/*
+!UnderHear-frontend/.vscode/extensions.json
+UnderHear-frontend/.idea/
+UnderHear-frontend/.DS_Store
+UnderHear-frontend/*.suo
+UnderHear-frontend/*.ntvs*
+UnderHear-frontend/*.njsproj
+UnderHear-frontend/*.sln
+UnderHear-frontend/*.sw?
+
+# Environment variables
+UnderHear-frontend/.env
+UnderHear-frontend/.env.local
+UnderHear-frontend/.env.*.local
+
+# ============================================
+# General
+# ============================================
+
+# OS
+.DS_Store
+Thumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+
+# IDE
+.vscode/
+*.swp
+*.swo
+*~
+
+# Logs
+*.log
+
+# Environment variables
+.env
+.env.local
+.env.*.local

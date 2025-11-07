@@ -1,0 +1,1 @@
+export { default as zTechTag } from './zTechTag.vue'
