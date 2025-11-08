@@ -53,7 +53,7 @@ public class JwtTokenProvider {
                 .build()
                 .parseSignedClaims(token)
                 .getPayload();
-        return Long.parseLong(claims.getSubject());
+        return Long.valueOf(claims.getSubject());
     }
 
     public boolean validateToken(String token) {
