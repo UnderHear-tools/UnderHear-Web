@@ -26,7 +26,7 @@
       <button
         v-else
         type="button"
-        class="absolute right-8 max-md:relative max-md:right-0 max-md:ml-4 text-sm font-medium text-[#111111] transition-opacity hover:opacity-70"
+        class="absolute right-8 max-md:relative max-md:right-0 max-md:ml-4 text-sm font-medium text-gray-500 hover:text-[#111111] cursor-pointer transition-colors"
         @click="handleSignIn"
       >
         登录
