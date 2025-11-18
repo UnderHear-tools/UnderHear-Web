@@ -1,49 +1,37 @@
 <template>
-  <div class="min-h-[calc(100vh-80px)] bg-[#F5F5F5] flex items-center justify-center px-4 py-12">
-    <div class="w-full max-w-lg rounded-[28px] border border-[#E6E6E6] bg-white/60 backdrop-blur-2xl shadow-[0_20px_45px_rgba(0,0,0,0.05)] p-10">
-      <div class="mb-8 text-center space-y-2">
-        <h1 class="text-3xl font-semibold text-[#111111]">欢迎回来</h1>
-        <p class="text-[#727272] text-sm">使用 GitHub 账号登录，解锁 UnderHear 的更多功能</p>
+  <div class="min-h-screen flex items-center justify-center px-4 py-12">
+    <div class="w-full max-w-md border border-[#D1D9E6] bg-white rounded-lg p-8">
+      <div class="mb-8 space-y-1">
+        <h1 class="text-2xl font-medium text-[#111111]">登录</h1>
+        <p class="text-gray-500 text-sm">使用 GitHub 账号登录</p>
       </div>
 
-      <div
-        v-if="statusMessage"
-        :class="[
-          'mb-6 rounded-[16px] px-4 py-3 text-sm border',
-          statusType === 'success'
-            ? 'border-[#85D996] bg-[#E9F8ED] text-[#217A38]'
-            : 'border-[#F5C2C7] bg-[#FCECEF] text-[#a61d24]'
-        ]"
-      >
+      <div v-if="statusMessage" :class="[
+        'mb-6 rounded-md px-3 py-2 text-sm',
+        statusType === 'success'
+          ? 'bg-green-50 text-green-700 border border-green-200'
+          : 'bg-red-50 text-red-700 border border-red-200'
+      ]">
         {{ statusMessage }}
       </div>
 
-      <div class="space-y-6">
+      <div class="space-y-4">
         <button
-          class="w-full flex items-center justify-center gap-3 rounded-[18px] border border-[#111111] bg-[#111111] text-white py-3 text-base font-medium transition-all hover:bg-transparent hover:text-[#111111] disabled:cursor-not-allowed disabled:opacity-60"
-          @click="startGithubLogin"
-          :disabled="loading"
-        >
-          <svg
-            class="h-5 w-5"
-            viewBox="0 0 24 24"
-            fill="currentColor"
-            aria-hidden="true"
-          >
+          class="w-full flex items-center justify-center gap-2 rounded-[6px] border border-gray-300 bg-[#F6F8FA] text-[#111111] py-2.5 text-sm font-medium transition-colors hover:bg-[#eff2f5] cursor-pointer"
+          @click="startGithubLogin" :disabled="loading">
+          <svg class="h-5 w-5" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
             <path
-              fill-rule="evenodd"
-              clip-rule="evenodd"
-              d="M12 .5C5.65.5.5 5.65.5 12c0 5.1 3.3 9.4 7.9 10.9.6.1.8-.2.8-.5v-2c-3.3.7-4-1.6-4-1.6-.5-1.2-1.1-1.5-1.1-1.5-.9-.6.1-.6.1-.6 1 .1 1.5 1 1.5 1 .9 1.5 2.4 1.1 3 .9.1-.6.4-1.1.7-1.3-2.7-.3-5.5-1.3-5.5-5.9 0-1.3.5-2.4 1.1-3.2-.1-.3-.5-1.5.1-3.1 0 0 .9-.3 3.2 1.1a11 11 0 0 1 5.8 0c2.3-1.4 3.2-1.1 3.2-1.1.6 1.6.2 2.8.1 3.1.7.8 1.1 1.9 1.1 3.2 0 4.6-2.9 5.6-5.6 5.9.4.3.7.9.7 1.8v2.6c0 .3.2.6.8.5A10.9 10.9 0 0 0 23.5 12C23.5 5.65 18.35.5 12 .5Z"
-            />
+              d="M12 1C5.923 1 1 5.923 1 12c0 4.867 3.149 8.979 7.521 10.436.55.096.756-.233.756-.522 0-.262-.013-1.128-.013-2.049-2.764.509-3.479-.674-3.699-1.292-.124-.317-.66-1.293-1.127-1.554-.385-.207-.936-.715-.014-.729.866-.014 1.485.797 1.691 1.128.99 1.663 2.571 1.196 3.204.907.096-.715.385-1.196.701-1.471-2.448-.275-5.005-1.224-5.005-5.432 0-1.196.426-2.186 1.128-2.956-.111-.275-.496-1.402.11-2.915 0 0 .921-.288 3.024 1.128a10.193 10.193 0 0 1 2.75-.371c.936 0 1.871.123 2.75.371 2.104-1.43 3.025-1.128 3.025-1.128.605 1.513.221 2.64.111 2.915.701.77 1.127 1.747 1.127 2.956 0 4.222-2.571 5.157-5.019 5.432.399.344.743 1.004.743 2.035 0 1.471-.014 2.654-.014 3.025 0 .289.206.632.756.522C19.851 20.979 23 16.854 23 12c0-6.077-4.922-11-11-11Z">
+            </path>
           </svg>
           通过 GitHub 登录
         </button>
 
-        <p class="text-center text-xs text-[#999999]">
-          登录即表示同意 UnderHear 的
-          <a href="#" class="text-[#111111] underline-offset-4 hover:underline">服务条款</a>
+        <p class="text-center text-xs text-gray-400">
+          登录即表示同意
+          <a href="#" class="text-gray-600 hover:text-[#111111] transition-colors">服务条款</a>
           和
-          <a href="#" class="text-[#111111] underline-offset-4 hover:underline">隐私政策</a>
+          <a href="#" class="text-gray-600 hover:text-[#111111] transition-colors">隐私政策</a>
         </p>
       </div>
     </div>
@@ -142,4 +130,3 @@ onMounted(async () => {
 </script>
 
 <style scoped></style>
-
