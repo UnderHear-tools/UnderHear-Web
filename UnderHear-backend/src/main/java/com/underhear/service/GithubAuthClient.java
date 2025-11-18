@@ -1,6 +1,11 @@
 package com.underhear.service;
 
+import org.springframework.stereotype.Component;
+import org.springframework.util.Assert;
+import org.springframework.util.StringUtils;
+
 import com.underhear.config.GithubOAuthProperties;
+
 import me.zhyd.oauth.config.AuthConfig;
 import me.zhyd.oauth.model.AuthCallback;
 import me.zhyd.oauth.model.AuthResponse;
@@ -8,9 +13,6 @@ import me.zhyd.oauth.model.AuthUser;
 import me.zhyd.oauth.request.AuthGithubRequest;
 import me.zhyd.oauth.request.AuthRequest;
 import me.zhyd.oauth.utils.AuthStateUtils;
-import org.springframework.stereotype.Component;
-import org.springframework.util.Assert;
-import org.springframework.util.StringUtils;
 
 @Component
 public class GithubAuthClient {
@@ -27,6 +29,7 @@ public class GithubAuthClient {
         return createAuthRequest().authorize(resolvedState);
     }
 
+    @SuppressWarnings("unchecked")
     public AuthResponse<AuthUser> login(String code, String state) {
         validateConfig();
         AuthRequest authRequest = createAuthRequest();
