@@ -54,7 +54,7 @@ const route = useRoute()
 const currentUser = ref<UserProfile | null>(getStoredUser())
 
 const navigationItems = ref<NavigationItem[]>([
-  { name: '首页', href: '/', active: true },
+  { name: '首页', href: '/', active: false },
   { name: '工具', href: '/tool', active: false },
   { name: '组件', href: '/component', active: false },
   { name: '名片', href: '/namecard', active: false }
@@ -66,23 +66,6 @@ const userMenuItems = computed<MenuItem[]>(() => [
     icon: icons.person,
     href: currentUser.value?.htmlUrl || '',
     external: true
-  },
-  { type: 'divider' } as MenuItem,
-  {
-    label: '设置',
-    icon: icons.gear,
-    onClick: () => {
-      // 可以后续添加设置页面
-      console.log('设置')
-    }
-  },
-  {
-    label: '外观',
-    icon: icons.paintbrush,
-    onClick: () => {
-      // 可以后续添加主题切换功能
-      console.log('外观设置')
-    }
   },
   { type: 'divider' } as MenuItem,
   {
@@ -130,6 +113,7 @@ const handleStorageChange = (event: StorageEvent) => {
 }
 
 onMounted(() => {
+  updateActiveState()
   refreshUser()
   window.addEventListener('storage', handleStorageChange)
 })
