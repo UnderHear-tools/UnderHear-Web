@@ -11,7 +11,7 @@ export default defineConfig({
     },
   },
   server: {
-    allowedHosts: ['www.zhangchengwei.cn'],
+    allowedHosts: ['www.underhear.cn', 'underhear.cn'],
     host: '0.0.0.0',
     port: 5173,
   },
