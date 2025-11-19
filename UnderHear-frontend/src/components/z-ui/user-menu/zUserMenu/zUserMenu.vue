@@ -195,7 +195,7 @@ onUnmounted(() => {
   max-height: calc(100vh - 80px);
   overflow: auto;
   border: 1px solid #d0d7de;
-  border-radius: 12px;
+  border-radius: 6px;
   background: #ffffff;
   box-shadow: 0 8px 24px rgba(140, 149, 159, 0.2);
 }
