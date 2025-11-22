@@ -1,4 +1,4 @@
-const API_BASE_URL = 'http://47.96.177.210:8080';
+const API_BASE_URL = 'https://api.underhear.cn';
 
 export interface GithubAuthorizeResponse {
   authorizeUrl: string
