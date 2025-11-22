@@ -333,5 +333,12 @@ onUnmounted(() => {
 .z-user-menu-dropdown::-webkit-scrollbar-thumb:hover {
   background: #b4bcc5;
 }
+
+@media (max-width: 767px) {
+  .z-user-menu-trigger{
+    width: 32px;
+    height: 32px;
+  }
+}
 </style>
 

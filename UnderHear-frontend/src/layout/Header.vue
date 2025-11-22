@@ -212,6 +212,7 @@ watch(() => route.path, () => {
     position: relative;
     right: 0;
     margin-left: 0.5rem;
+    height: 32px;
   }
 }
 </style>
