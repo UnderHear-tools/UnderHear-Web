@@ -93,7 +93,7 @@
         <dependency>
             <groupId>me.zhyd.oauth</groupId>
             <artifactId>JustAuth</artifactId>
-            <version>1.16.6</version>
+            <version>1.16.7</version>
         </dependency>
     </dependencies>
 
