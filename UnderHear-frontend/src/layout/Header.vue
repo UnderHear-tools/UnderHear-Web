@@ -1,34 +1,21 @@
-<template>
-  <header
-    class="sticky top-0 z-50 w-full bg-[#F5F5F5]/70 backdrop-blur-2xl 
-    shadow-[0_1px_1px_rgba(220,220,220,1)] md:top-0 max-md:top-4 max-md:w-fit 
-    max-md:mx-auto max-md:rounded-[24px] max-md:shadow-none">
-    <div class="relative flex h-20 items-center justify-center max-md:h-fit py-[6px] px-[8px] md:px-8">
+﻿<template>
+  <header class="header">
+    <div class="header-inner">
       <nav>
-        <ul class="flex space-x-6 max-md:space-x-3">
+        <ul class="nav-list">
           <li v-for="item in navigationItems" :key="item.name">
-            <div :class="[
-              'px-2.5 py-2 rounded-md text-[16px] font-medium leading-none flex items-center max-md:rounded-[16px] max-md:px-3 cursor-pointer',
-              item.active
-                ? 'bg-[#E6E6E6] text-[#000000]'
-                : 'text-[#727272] hover:bg-[#E6E6E6] hover:text-[#000000]'
-            ]" @click="navigateToPage(item)">
+            <div :class="['nav-link', { active: item.active }]" @click="navigateToPage(item)">
               {{ item.name }}
-          </div>
+            </div>
           </li>
         </ul>
       </nav>
 
-      <div v-if="currentUser" class="absolute right-8 max-md:relative max-md:right-0 max-md:ml-4">
+      <div v-if="currentUser" class="user-menu">
         <zUserMenu :user="currentUser" :menu-items="userMenuItems" @item-click="handleMenuItemClick" />
       </div>
 
-      <button
-        v-else
-        type="button"
-        class="absolute right-8 max-md:relative max-md:right-0 max-md:ml-4 text-sm font-medium text-gray-500 hover:text-[#111111] cursor-pointer transition-colors"
-        @click="handleSignIn"
-      >
+      <button v-else type="button" class="signin-button" @click="handleSignIn">
         登录
       </button>
     </div>
@@ -102,7 +89,7 @@ const handleLogout = () => {
 }
 
 const handleMenuItemClick = (item: MenuItem) => {
-  // 菜单项点击事件已在 menuItems 的 onClick 中处理
+  // 菜单点击事件在 menuItems 的 onClick 中处理
   console.log('Menu item clicked:', item.label)
 }
 
@@ -128,4 +115,103 @@ watch(() => route.path, () => {
 })
 </script>
 
-<style scoped></style>
+<style scoped>
+.header {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  width: 100%;
+  background: rgba(245, 245, 245, 0.7);
+  backdrop-filter: blur(40px);
+  -webkit-backdrop-filter: blur(40px);
+  box-shadow: 0 1px 1px rgba(220, 220, 220, 1);
+}
+
+.header-inner {
+  position: relative;
+  display: flex;
+  height: 5rem;
+  align-items: center;
+  justify-content: center;
+  padding: 6px 8px;
+}
+
+.nav-list {
+  display: flex;
+  gap: 1.5rem;
+}
+
+.nav-link {
+  display: flex;
+  align-items: center;
+  padding: 8px 10px;
+  border-radius: 6px;
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 1;
+  color: #727272;
+  cursor: pointer;
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.nav-link:hover,
+.nav-link.active {
+  background-color: #e6e6e6;
+  color: #000000;
+}
+
+.user-menu {
+  position: absolute;
+  right: 2rem;
+}
+
+.signin-button {
+  position: absolute;
+  right: 2rem;
+  display: flex;
+  align-items: center;
+  padding: 8px 10px;
+  border-radius: 6px;
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 1;
+  color: #727272;
+  cursor: pointer;
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.signin-button:hover {
+  color: #111111;
+}
+
+@media (max-width: 767px) {
+  .header {
+    top: 1rem;
+    width: fit-content;
+    margin: 0 auto;
+    border-radius: 24px;
+    box-shadow: none;
+  }
+
+  .header-inner {
+    height: auto;
+  }
+
+  .nav-list {
+    gap: 0.5rem;
+  }
+
+  .nav-link {
+    padding-left: 12px;
+    padding-right: 12px;
+    border-radius: 16px;
+  }
+
+  .user-menu,
+  .signin-button {
+    position: relative;
+    right: 0;
+    margin-left: 0.5rem;
+  }
+}
+</style>
