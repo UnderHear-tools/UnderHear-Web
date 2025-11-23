@@ -49,7 +49,7 @@ const navigationItems = ref<NavigationItem[]>([
 
 const userMenuItems = computed<MenuItem[]>(() => [
   {
-    label: 'GitHub 主页',
+    label: '前往 GitHub 主页',
     icon: icons.person,
     href: currentUser.value?.htmlUrl || '',
     external: true

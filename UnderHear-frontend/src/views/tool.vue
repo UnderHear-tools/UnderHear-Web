@@ -105,6 +105,7 @@ onMounted(() => {
 .tool-card {
   background: white;
   border: 1px solid #d1d9e1;
+  border-radius: 6px;
   padding: 2rem;
   display: flex;
   transition: all 0.2s ease;
