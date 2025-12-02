@@ -42,7 +42,7 @@ const currentUser = ref<UserProfile | null>(getStoredUser())
 
 const navigationItems = ref<NavigationItem[]>([
   { name: '首页', href: '/', active: false },
-  { name: '工具', href: '/tool', active: false },
+  { name: '应用', href: '/application', active: false },
   { name: '组件', href: '/component', active: false },
   { name: '名片', href: '/namecard', active: false }
 ])

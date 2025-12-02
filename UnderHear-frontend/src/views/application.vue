@@ -1,28 +1,28 @@
 <template>
-  <div class="tool-container">
-    <div class="tool-header">
-      <h1 class="tool-title">实用工具</h1>
-      <p class="tool-subtitle">希望这些工具能够帮到你🐱。</p>
+  <div class="application-container">
+    <div class="application-header">
+      <h1 class="application-title">实用的SPA应用</h1>
+      <p class="application-subtitle">希望这些应用能够帮到你🐱。</p>
     </div>
 
-    <div class="tools-grid">
-      <div v-for="tool in tools" :key="tool.id" class="tool-card">
-        <div class="tool-content">
-          <div class="tool-header-info">
-            <h3 class="tool-name">{{ tool.title }}</h3>
-            <span class="tool-category">{{ tool.category }}</span>
+    <div class="applications-grid">
+      <div v-for="tool in tools" :key="tool.id" class="application-card">
+        <div class="application-content">
+          <div class="application-header-info">
+            <h3 class="application-name">{{ tool.title }}</h3>
+            <span class="application-category">{{ tool.category }}</span>
           </div>
-          <div class="tool-description">
+          <div class="application-description">
             <p>{{ tool.description.zh }}</p>
             <p class="description-en">{{ tool.description.en }}</p>
           </div>
-          <div class="tool-actions">
+          <div class="application-actions">
             <div class="author-info" v-if="tool.isOriginal && tool.author">
               <img :src="tool.authorAvatar" :alt="tool.author" class="author-avatar" />
               <a :href="tool.authorLink" class="author-link">{{ tool.author }}</a>
             </div>
             <div class="collected-badge" v-if="!tool.isOriginal">
-              该工具为本站收录
+              该应用为本站收录
             </div>
             <a :href="tool.link" class="try-button" v-if="tool.isOriginal">
               Try it
@@ -41,7 +41,7 @@
 import { ref, onMounted } from 'vue'
 
 // 引入数据
-import toolData from '@/views/tool/Toolcard.json'
+import toolData from '@/views/application/Applicationcard.json'
 
 interface ToolDescription {
   zh: string
@@ -68,19 +68,19 @@ onMounted(() => {
 </script>
 
 <style scoped>
-.tool-container {
+.application-container {
   max-width: 1150px;
   margin: 0 auto;
   padding: 2rem;
   background-color: #fff;
 }
 
-.tool-header {
+.application-header {
   text-align: center;
   margin-bottom: 3rem;
 }
 
-.tool-title {
+.application-title {
   font-size: 2.5rem;
   font-weight: 700;
   color: #24292f;
@@ -88,7 +88,7 @@ onMounted(() => {
   line-height: 1.2;
 }
 
-.tool-subtitle {
+.application-subtitle {
   font-size: 1.1rem;
   color: #656d76;
   line-height: 1.6;
@@ -96,13 +96,13 @@ onMounted(() => {
   margin: 0 auto;
 }
 
-.tools-grid {
+.applications-grid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   gap: 2rem;
 }
 
-.tool-card {
+.application-card {
   background: white;
   border: 1px solid #d1d9e1;
   border-radius: 6px;
@@ -112,17 +112,17 @@ onMounted(() => {
   min-height: 180px;
 }
 
-.tool-card:hover {
+.application-card:hover {
   border-color: #0969da;
 }
 
-.tool-content {
+.application-content {
   flex: 1;
   display: flex;
   flex-direction: column;
 }
 
-.tool-header-info {
+.application-header-info {
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
@@ -130,7 +130,7 @@ onMounted(() => {
   gap: 1rem;
 }
 
-.tool-name {
+.application-name {
   margin: 0;
   font-size: 1.25rem;
   font-weight: 600;
@@ -139,7 +139,7 @@ onMounted(() => {
   flex: 1;
 }
 
-.tool-category {
+.application-category {
   font-size: 0.75rem;
   color: #656d76;
   background-color: #f6f8fa;
@@ -149,11 +149,11 @@ onMounted(() => {
   white-space: nowrap;
 }
 
-.tool-description {
+.application-description {
   flex: 1;
 }
 
-.tool-description p {
+.application-description p {
   margin: 0 0 0.75rem 0;
   font-size: 0.95rem;
   line-height: 1.6;
@@ -166,7 +166,7 @@ onMounted(() => {
   font-size: 0.9rem !important;
 }
 
-.tool-actions {
+.application-actions {
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -230,24 +230,24 @@ onMounted(() => {
 }
 
 @media (max-width: 768px) {
-  .tool-container {
+  .application-container {
     padding: 1rem;
   }
 
-  .tool-title {
+  .application-title {
     font-size: 2rem;
   }
 
-  .tool-subtitle {
+  .application-subtitle {
     font-size: 1rem;
   }
 
-  .tools-grid {
+  .applications-grid {
     grid-template-columns: 1fr;
     gap: 1.5rem;
   }
 
-  .tool-card {
+  .application-card {
     padding: 1.5rem;
     flex-direction: column;
     gap: 1rem;
@@ -256,13 +256,13 @@ onMounted(() => {
 
 
 
-  .tool-header-info {
+  .application-header-info {
     flex-direction: column;
     align-items: flex-start;
     gap: 0.5rem;
   }
 
-  .tool-actions {
+  .application-actions {
     flex-direction: column;
     align-items: flex-start;
     gap: 0.75rem;

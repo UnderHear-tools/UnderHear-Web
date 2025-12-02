@@ -160,8 +160,8 @@
         <router-link to="/" class="bottom-nav-item">
           <span class="nav-text">首页</span>
         </router-link>
-        <router-link to="/tool" class="bottom-nav-item">
-          <span class="nav-text">工具</span>
+        <router-link to="/application" class="bottom-nav-item">
+          <span class="nav-text">应用</span>
         </router-link>
         <router-link to="/component" class="bottom-nav-item">
           <span class="nav-text">组件</span>
