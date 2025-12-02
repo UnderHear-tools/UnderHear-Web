@@ -1,7 +1,7 @@
 <template>
   <div class="application-container">
     <div class="application-header">
-      <h1 class="application-title">实用的SPA应用</h1>
+      <h1 class="application-title">一些SPA应用</h1>
       <p class="application-subtitle">希望这些应用能够帮到你🐱。</p>
     </div>
 
