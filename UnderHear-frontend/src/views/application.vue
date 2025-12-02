@@ -6,28 +6,28 @@
     </div>
 
     <div class="applications-grid">
-      <div v-for="tool in tools" :key="tool.id" class="application-card">
+      <div v-for="application in applications" :key="application.id" class="application-card">
         <div class="application-content">
           <div class="application-header-info">
-            <h3 class="application-name">{{ tool.title }}</h3>
-            <span class="application-category">{{ tool.category }}</span>
+            <h3 class="application-name">{{ application.title }}</h3>
+            <span class="application-category">{{ application.category }}</span>
           </div>
           <div class="application-description">
-            <p>{{ tool.description.zh }}</p>
-            <p class="description-en">{{ tool.description.en }}</p>
+            <p>{{ application.description.zh }}</p>
+            <p class="description-en">{{ application.description.en }}</p>
           </div>
           <div class="application-actions">
-            <div class="author-info" v-if="tool.isOriginal && tool.author">
-              <img :src="tool.authorAvatar" :alt="tool.author" class="author-avatar" />
-              <a :href="tool.authorLink" class="author-link">{{ tool.author }}</a>
+            <div class="author-info" v-if="application.isOriginal && application.author">
+              <img :src="application.authorAvatar" :alt="application.author" class="author-avatar" />
+              <a :href="application.authorLink" class="author-link">{{ application.author }}</a>
             </div>
-            <div class="collected-badge" v-if="!tool.isOriginal">
+            <div class="collected-badge" v-if="!application.isOriginal">
               该应用为本站收录
             </div>
-            <a :href="tool.link" class="try-button" v-if="tool.isOriginal">
+            <a :href="application.link" class="try-button" v-if="application.isOriginal">
               Try it
             </a>
-            <a :href="tool.link" v-else target="_blank" class="try-button">
+            <a :href="application.link" v-else target="_blank" class="try-button">
               Try it
             </a>
           </div>
@@ -41,17 +41,17 @@
 import { ref, onMounted } from 'vue'
 
 // 引入数据
-import toolData from '@/views/application/Applicationcard.json'
+import applicationData from '@/views/application/Applicationcard.json'
 
-interface ToolDescription {
+interface ApplicationDescription {
   zh: string
   en: string
 }
 
-interface Tool {
+interface Application {
   id: number
   title: string
-  description: ToolDescription
+  description: ApplicationDescription
   category: string
   link: string
   isOriginal: boolean
@@ -60,10 +60,10 @@ interface Tool {
   authorAvatar: string
 }
 
-const tools = ref<Tool[]>([])
+const applications = ref<Application[]>([])
 
 onMounted(() => {
-  tools.value = toolData as any
+  applications.value = applicationData as any
 })
 </script>
 
