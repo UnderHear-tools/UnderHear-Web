@@ -29,7 +29,6 @@ public class GithubAuthClient {
         return createAuthRequest().authorize(resolvedState);
     }
 
-    @SuppressWarnings("unchecked")
     public AuthResponse<AuthUser> login(String code, String state) {
         validateConfig();
         AuthRequest authRequest = createAuthRequest();
