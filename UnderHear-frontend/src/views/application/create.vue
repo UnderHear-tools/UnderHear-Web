@@ -3,10 +3,9 @@
     <header class="page-header">
       <p class="eyebrow">Application Studio</p>
       <h1 class="page-title">创建你的单页面应用</h1>
-      <p class="page-subtitle">支持原生 HTML 与 Vue 3 代码，左侧编辑右侧实时预览，保持本站风格的同时快速验证你的灵感。</p>
+      <p class="page-subtitle">支持原生 HTML 代码，左侧编辑右侧实时预览，保持本站风格的同时快速验证你的灵感。</p>
       <div class="page-pills">
         <span class="pill">安全隔离的 iframe 预览</span>
-        <span class="pill">Vue 模式自动注入 CDN 运行时</span>
         <span class="pill">适合上传前的快速验收</span>
       </div>
     </header>
@@ -34,59 +33,42 @@
     <div class="layout">
       <section class="card editor-card">
         <div class="section-head">
-          <div class="tabs">
-            <button
-              class="tab"
-              :class="{ active: mode === 'html' }"
-              type="button"
-              @click="switchMode('html')"
-            >
-              原生 HTML
-            </button>
-            <button
-              class="tab"
-              :class="{ active: mode === 'vue' }"
-              type="button"
-              @click="switchMode('vue')"
-            >
-              Vue 单文件
-            </button>
-          </div>
           <div class="tools">
             <label class="toggle">
               <input v-model="autoPreview" type="checkbox" />
               <span>自动预览</span>
             </label>
-            <button class="ghost-button" type="button" @click="fillTemplate">填充示例</button>
           </div>
         </div>
 
         <div class="field">
           <div class="field-head">
             <span>代码内容</span>
-            <span class="muted" v-if="mode === 'html'">支持直接粘贴完整 HTML 文档</span>
-            <span class="muted" v-else>自动注入 Vue CDN，挂载点为 #app</span>
+            <span class="muted">支持直接粘贴完整 HTML 文档</span>
+          </div>
+          <div class="meta-bar">
+            <div class="meta-left">
+              <span class="pill soft">
+                <span class="status-dot tiny" :class="{ online: autoPreview }"></span>
+                {{ syncModeText }}
+              </span>
+              <span class="pill neutral">字符数：{{ charCount }}</span>
+            </div>
+            <button class="ghost-button subtle" type="button" :disabled="autoPreview" @click="renderPreview">
+              立即同步
+            </button>
           </div>
           <textarea
-            v-if="mode === 'html'"
             v-model="htmlCode"
             class="code-editor"
             spellcheck="false"
             placeholder="在此粘贴或编写你的 HTML..."
           ></textarea>
-          <textarea
-            v-else
-            v-model="vueCode"
-            class="code-editor"
-            spellcheck="false"
-            placeholder="在此粘贴或编写你的 Vue 代码（JS 逻辑 + template）..."
-          ></textarea>
         </div>
 
         <div class="helper-row">
           <div class="helper">
-            <p v-if="mode === 'html'">你可以写入 script / style 标签，左侧输入即时同步到右侧 iframe。</p>
-            <p v-else>Vue 模式使用全局构建版本（Vue 3.5），请确保代码内调用 createApp 并挂载到 #app。</p>
+            <p>你可以写入 script / style 标签，左侧输入即时同步到右侧 iframe。</p>
           </div>
           <div class="actions">
             <button class="outline-button" type="button" @click="resetEditor">清空</button>
@@ -99,7 +81,7 @@
         <div class="section-head">
           <div>
             <p class="section-label">实时预览</p>
-            <h3 class="section-title">{{ mode === 'html' ? 'HTML 片段' : 'Vue 组件' }} 渲染效果</h3>
+            <h3 class="section-title">HTML 片段渲染效果</h3>
             <p class="muted">预览在独立 iframe 中运行，避免影响站点本身。</p>
           </div>
           <div class="preview-status">
@@ -109,6 +91,12 @@
         </div>
 
         <div class="preview-shell">
+          <div class="preview-bar">
+            <span class="dot red"></span>
+            <span class="dot amber"></span>
+            <span class="dot green"></span>
+            <span class="preview-url">iframe 预览 · 隔离环境</span>
+          </div>
           <iframe
             :key="previewKey"
             class="preview-frame"
@@ -120,7 +108,7 @@
 
         <ul class="preview-tips">
           <li>支持外链 CSS / JS，如 CDN 图表库或字体。</li>
-          <li>错误信息会直接显示在预览下方，方便排查。</li>
+          <li>预览隔离于 iframe，不会影响本站运行。</li>
           <li>移动端自适应，与本站其他页面保持一致的留白。</li>
         </ul>
       </section>
@@ -129,165 +117,30 @@
 </template>
 
 <script setup lang="ts">
-import { ref, watch } from 'vue'
-
-type EditorMode = 'html' | 'vue'
+import { computed, ref, watch } from 'vue'
 
 const title = ref('')
 const summary = ref('')
-const mode = ref<EditorMode>('html')
 const autoPreview = ref(true)
 const previewContent = ref('')
 const previewKey = ref(0)
 
-const defaultHtmlTemplate = `<main class="preview-card">
-  <p class="tag">HTML 预览</p>
-  <h1>👋 欢迎来到 UnderHear</h1>
-  <p class="muted">写下你的页面、加载脚本，右侧即可看到完整效果。</p>
-  <div class="button-row">
-    <button class="button" onclick="alert('可以写交互哦！')">点我触发脚本</button>
-    <a class="button ghost" href="https://underhear.com" target="_blank">外链示例</a>
-  </div>
-</main>`
-
-const defaultVueTemplate = `const { createApp, ref, computed } = Vue
-
-const App = {
-  setup() {
-    const todo = ref('')
-    const items = ref(['路径规划器', '组件库 zLight', '在线工具集合'])
-    const add = () => {
-      if (!todo.value.trim()) return
-      items.value.push(todo.value.trim())
-      todo.value = ''
-    }
-    const total = computed(() => items.value.length)
-    return { todo, items, add, total }
-  },
-  template: \`
-    <main class="preview-card">
-      <p class="tag">Vue 预览</p>
-      <h1>⚡ 单文件组件逻辑</h1>
-      <p class="muted">把你的 <script setup> 逻辑粘贴进来即可运行。</p>
-      <div class="stack">
-        <label class="field">
-          <span>添加一个条目</span>
-          <input v-model="todo" placeholder="输入后点击添加" />
-        </label>
-        <button class="button" @click="add">添加（{{ total }}）</button>
-        <ul class="list">
-          <li v-for="item in items" :key="item">{{ item }}</li>
-        </ul>
-      </div>
-    </main>
-  \`
-}
-
-createApp(App).mount('#app')
-`
-
-const htmlCode = ref(defaultHtmlTemplate)
-const vueCode = ref(defaultVueTemplate)
-
-const previewBaseStyles = `:root { color-scheme: light; }
-* { box-sizing: border-box; }
-body { margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #f6f8fa; color: #0f172a; }
-main, section { max-width: 860px; margin: 26px auto; padding: 0 16px; }
-.preview-card { background: #fff; border: 1px solid #e5e7eb; border-radius: 12px; padding: 22px; box-shadow: 0 16px 60px -34px rgba(15, 23, 42, 0.35); }
-.button-row { display: flex; gap: 12px; flex-wrap: wrap; }
-.button { padding: 10px 16px; border-radius: 10px; border: 1px solid #0b69da; background: #0969da; color: #fff; font-weight: 600; cursor: pointer; text-decoration: none; transition: transform 120ms ease, box-shadow 120ms ease; }
-.button:hover { transform: translateY(-1px); box-shadow: 0 10px 25px -15px rgba(9, 105, 218, 0.45); }
-.button.ghost { background: #fff; color: #0969da; border-color: #d1d9e1; }
-.muted { color: #6b7280; }
-.tag { display: inline-flex; align-items: center; gap: 6px; background: #ecf5ff; color: #0b69da; padding: 6px 10px; border-radius: 999px; border: 1px solid #d6e6ff; font-size: 12px; letter-spacing: 0.01em; }
-.stack { display: flex; flex-direction: column; gap: 10px; }
-.field { display: flex; flex-direction: column; gap: 6px; font-size: 14px; color: #111827; }
-.field input { padding: 10px 12px; border-radius: 10px; border: 1px solid #d1d9e1; background: #f8fafc; }
-.list { list-style: none; padding: 0; margin: 0; display: grid; gap: 8px; }
-.list li { padding: 10px 12px; border-radius: 10px; border: 1px solid #e5e7eb; background: #fff; }
-.preview-error { display: none; margin: 12px auto; max-width: 860px; color: #b42318; background: #fef2f2; border: 1px solid #fecdd3; padding: 10px 14px; border-radius: 10px; font-size: 14px; }`
-
-const escapeScript = (input: string) => input.replace(/<\/(script)/gi, '<\\/$1')
-const scriptEndToken = '</scr' + 'ipt>'
-const vueCdnScript = `<script src="https://unpkg.com/vue@3/dist/vue.global.prod.js">${scriptEndToken}`
-
-const buildHtmlPreview = (code: string) => {
-  const hasHtmlShell = /<html[\\s>]/i.test(code)
-  if (hasHtmlShell) return code || ''
-  const safeBody = code?.trim() ? code : '<main class=\"preview-card\"><h2>暂时还没有内容</h2></main>'
-  return `<!doctype html>
-  <html lang=\"zh-CN\">
-    <head>
-      <meta charset=\"UTF-8\" />
-      <meta name=\"viewport\" content=\"width=device-width,initial-scale=1.0\" />
-      <style>${previewBaseStyles}</style>
-    </head>
-    <body>${safeBody}</body>
-  </html>`
-}
-
-const buildVuePreview = (code: string) => `<!doctype html>
-<html lang=\"zh-CN\">
-  <head>
-    <meta charset=\"UTF-8\" />
-    <meta name=\"viewport\" content=\"width=device-width,initial-scale=1.0\" />
-    <style>${previewBaseStyles}</style>
-  </head>
-  <body>
-    <div id=\"app\"></div>
-    <div id=\"preview-error\" class=\"preview-error\" aria-live=\"polite\"></div>
-    ${vueCdnScript}
-    <script>
-      const errorBox = document.getElementById('preview-error')
-      window.addEventListener('error', (event) => {
-        if (errorBox) {
-          errorBox.textContent = '脚本错误：' + event.message
-          errorBox.style.display = 'block'
-        }
-      })
-      try {
-        ${escapeScript(code)}
-      } catch (err) {
-        if (errorBox) {
-          errorBox.textContent = '运行时错误：' + (err && err.message ? err.message : err)
-          errorBox.style.display = 'block'
-        }
-        console.error(err)
-      }
-    ${scriptEndToken}
-  </body>
-</html>`
+const htmlCode = ref('')
+const charCount = computed(() => htmlCode.value.length)
+const syncModeText = computed(() => (autoPreview.value ? '自动同步开启' : '手动刷新模式'))
 
 const renderPreview = () => {
-  previewContent.value =
-    mode.value === 'html' ? buildHtmlPreview(htmlCode.value) : buildVuePreview(vueCode.value)
+  previewContent.value = htmlCode.value || ''
   previewKey.value += 1
 }
 
-const switchMode = (next: EditorMode) => {
-  mode.value = next
-}
-
-const fillTemplate = () => {
-  if (mode.value === 'html') {
-    htmlCode.value = defaultHtmlTemplate
-  } else {
-    vueCode.value = defaultVueTemplate
-  }
-  renderPreview()
-}
-
 const resetEditor = () => {
-  if (mode.value === 'html') {
-    htmlCode.value = ''
-  } else {
-    vueCode.value = ''
-  }
+  htmlCode.value = ''
   renderPreview()
 }
 
 watch(
-  () => [mode.value, htmlCode.value, vueCode.value],
+  () => htmlCode.value,
   () => {
     if (autoPreview.value) {
       renderPreview()
@@ -305,15 +158,15 @@ watch(autoPreview, (enabled) => {
 
 <style scoped>
 .create-container {
-  max-width: 1150px;
+  max-width: 1200px;
   margin: 0 auto;
-  padding: 2rem;
-  background: #fff;
+  padding: 2.25rem 1.5rem 2.5rem;
+  background: linear-gradient(180deg, #f8fafc 0%, #ffffff 16%);
 }
 
 .page-header {
   text-align: center;
-  margin-bottom: 2rem;
+  margin-bottom: 2.25rem;
 }
 
 .eyebrow {
@@ -346,7 +199,7 @@ watch(autoPreview, (enabled) => {
   gap: 0.5rem;
   justify-content: center;
   flex-wrap: wrap;
-  margin-top: 1rem;
+  margin-top: 0.85rem;
 }
 
 .pill {
@@ -361,14 +214,18 @@ watch(autoPreview, (enabled) => {
 .card {
   border: 1px solid #d1d9e1;
   border-radius: 12px;
-  padding: 1.5rem;
+  padding: 1.75rem;
   background: #fff;
-  box-shadow: 0 20px 60px -38px rgba(15, 23, 42, 0.4);
+  box-shadow: 0 16px 60px -42px rgba(15, 23, 42, 0.5);
+}
+
+.info-card {
+  margin-bottom: 1.5rem;
 }
 
 .section-head {
   display: flex;
-  align-items: flex-start;
+  align-items: center;
   justify-content: space-between;
   gap: 1rem;
   margin-bottom: 1rem;
@@ -421,6 +278,22 @@ watch(autoPreview, (enabled) => {
   font-weight: 600;
 }
 
+.meta-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  margin: 0.35rem 0 0.5rem;
+  flex-wrap: wrap;
+}
+
+.meta-left {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
 .field input {
   width: 100%;
   padding: 0.75rem 0.9rem;
@@ -440,8 +313,8 @@ watch(autoPreview, (enabled) => {
 
 .layout {
   display: grid;
-  grid-template-columns: 1.05fr 0.95fr;
-  gap: 1.5rem;
+  grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.95fr);
+  gap: 1.25rem;
   align-items: start;
 }
 
@@ -449,32 +322,6 @@ watch(autoPreview, (enabled) => {
   display: flex;
   flex-direction: column;
   gap: 1rem;
-}
-
-.tabs {
-  display: inline-flex;
-  padding: 4px;
-  background: #f6f8fa;
-  border-radius: 999px;
-  border: 1px solid #d1d9e1;
-  gap: 4px;
-}
-
-.tab {
-  border: none;
-  background: transparent;
-  padding: 0.5rem 0.9rem;
-  border-radius: 999px;
-  color: #394150;
-  font-weight: 600;
-  cursor: pointer;
-  transition: all 0.15s ease;
-}
-
-.tab.active {
-  background: #fff;
-  color: #0b69da;
-  box-shadow: 0 8px 24px -16px rgba(9, 105, 218, 0.5);
 }
 
 .tools {
@@ -504,9 +351,10 @@ watch(autoPreview, (enabled) => {
   min-height: 360px;
   padding: 1rem;
   border-radius: 12px;
-  background: #0d1117;
-  color: #e6edf3;
-  border: 1px solid #161b22;
+  background: linear-gradient(180deg, #0d1117 0%, #0b1221 100%);
+  color: #e8edf3;
+  border: 1px solid #1e2a3a;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.04), 0 18px 60px -45px rgba(0, 0, 0, 0.7);
   font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace;
   font-size: 0.95rem;
   line-height: 1.6;
@@ -572,6 +420,11 @@ watch(autoPreview, (enabled) => {
   border: 1px solid #d1d9e1;
 }
 
+.ghost-button.subtle {
+  border-style: dashed;
+  color: #3a4a60;
+}
+
 .muted {
   color: #6b7280;
 }
@@ -580,6 +433,8 @@ watch(autoPreview, (enabled) => {
   display: flex;
   flex-direction: column;
   gap: 1rem;
+  position: sticky;
+  top: 18px;
 }
 
 .preview-status {
@@ -595,6 +450,12 @@ watch(autoPreview, (enabled) => {
   background: #d1d5db;
 }
 
+.status-dot.tiny {
+  width: 8px;
+  height: 8px;
+  box-shadow: none;
+}
+
 .status-dot.online {
   background: #22c55e;
   box-shadow: 0 0 0 6px rgba(34, 197, 94, 0.15);
@@ -605,6 +466,33 @@ watch(autoPreview, (enabled) => {
   border-radius: 12px;
   overflow: hidden;
   background: linear-gradient(180deg, #f6f8fa 0%, #fff 100%);
+}
+
+.preview-bar {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.6rem 0.9rem;
+  background: #f9fafb;
+  border-bottom: 1px solid #e5e7eb;
+  font-size: 0.9rem;
+  color: #64748b;
+}
+
+.dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  display: inline-block;
+}
+
+.dot.red { background: #ef4444; }
+.dot.amber { background: #f59e0b; }
+.dot.green { background: #22c55e; }
+
+.preview-url {
+  margin-left: 0.5rem;
+  color: #475569;
 }
 
 .preview-frame {
@@ -627,6 +515,10 @@ watch(autoPreview, (enabled) => {
 @media (max-width: 1024px) {
   .layout {
     grid-template-columns: 1fr;
+  }
+
+  .preview-card {
+    position: static;
   }
 }
 
