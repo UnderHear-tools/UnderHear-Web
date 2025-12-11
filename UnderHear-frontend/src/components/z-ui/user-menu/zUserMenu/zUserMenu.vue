@@ -2,6 +2,7 @@
   <div class="z-user-menu" ref="menuRef">
     <!-- Avatar Button -->
     <button
+      v-if="currentUser"
       type="button"
       class="z-user-menu-trigger"
       :class="{ active: isOpen }"
@@ -10,32 +11,41 @@
       :aria-expanded="isOpen"
     >
       <img
-        v-if="user?.avatarUrl"
-        :src="user.avatarUrl"
-        :alt="user.login"
+        v-if="currentUser?.avatarUrl"
+        :src="currentUser.avatarUrl"
+        :alt="currentUser.login"
         class="z-user-menu-avatar"
         referrerpolicy="no-referrer"
       />
       <span v-else class="z-user-menu-placeholder">
-        {{ user?.login?.charAt(0).toUpperCase() || '?' }}
+        {{ currentUser?.login?.charAt(0).toUpperCase() || '?' }}
       </span>
+    </button>
+
+    <button v-else type="button" class="z-user-menu-signin" @click="handleSignIn">
+      登录
     </button>
 
     <!-- Dropdown Menu -->
     <Transition name="z-user-menu-fade">
-      <div v-if="isOpen" class="z-user-menu-dropdown" role="dialog" aria-label="User navigation">
+      <div
+        v-if="isOpen && currentUser"
+        class="z-user-menu-dropdown"
+        role="dialog"
+        aria-label="User navigation"
+      >
         <!-- User Info -->
         <div class="z-user-menu-header">
           <img
-            v-if="user?.avatarUrl"
-            :src="user.avatarUrl"
-            :alt="user?.login"
+            v-if="currentUser?.avatarUrl"
+            :src="currentUser.avatarUrl"
+            :alt="currentUser?.login"
             class="z-user-menu-avatar-large"
             referrerpolicy="no-referrer"
           />
           <div class="z-user-menu-info">
-            <div class="z-user-menu-name">{{ user?.name || user?.login }}</div>
-            <div class="z-user-menu-email">{{ user?.email }}</div>
+            <div class="z-user-menu-name">{{ currentUser?.name || currentUser?.login }}</div>
+            <div class="z-user-menu-email">{{ currentUser?.email }}</div>
           </div>
         </div>
 
@@ -65,18 +75,12 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted, onUnmounted } from 'vue'
+import { computed, onMounted, onUnmounted, ref } from 'vue'
+import { useRouter } from 'vue-router'
+import { getStoredUser, logout, type UserProfile as AuthUserProfile } from '@/api/auth'
+import { icons } from '@/components/z-ui/user-menu/icons'
 
-export interface UserProfile {
-  id?: number
-  githubId?: number
-  login: string
-  name?: string
-  avatarUrl?: string
-  email?: string
-  bio?: string
-  htmlUrl?: string
-}
+export type UserProfile = AuthUserProfile
 
 export interface MenuItem {
   label: string
@@ -88,24 +92,47 @@ export interface MenuItem {
   onClick?: () => void
 }
 
-interface Props {
-  user?: UserProfile | null
-  menuItems?: MenuItem[]
-}
-
-withDefaults(defineProps<Props>(), {
-  user: null,
-  menuItems: () => []
-})
-
-const emit = defineEmits<{
-  itemClick: [item: MenuItem]
-}>()
-
+const router = useRouter()
+const currentUser = ref<UserProfile | null>(getStoredUser())
 const isOpen = ref(false)
 const menuRef = ref<HTMLElement | null>(null)
 
+const refreshUser = () => {
+  currentUser.value = getStoredUser()
+  if (!currentUser.value) {
+    isOpen.value = false
+  }
+}
+
+const handleSignIn = () => {
+  router.push('/auth/login')
+}
+
+const handleLogout = () => {
+  logout()
+  refreshUser()
+  router.push('/')
+}
+
+const menuItems = computed<MenuItem[]>(() => [
+  {
+    label: '前往 GitHub 页面',
+    icon: icons.person,
+    href: currentUser.value?.htmlUrl || '',
+    external: true
+  },
+  { type: 'divider' } as MenuItem,
+  {
+    label: '退出登录',
+    icon: icons.signOut,
+    onClick: () => {
+      handleLogout()
+    }
+  }
+])
+
 const toggleMenu = () => {
+  if (!currentUser.value) return
   isOpen.value = !isOpen.value
 }
 
@@ -113,7 +140,6 @@ const handleItemClick = (item: MenuItem) => {
   if (item.onClick) {
     item.onClick()
   }
-  emit('itemClick', item)
   if (!item.href || item.href.startsWith('#')) {
     isOpen.value = false
   }
@@ -131,14 +157,23 @@ const handleEscape = (event: KeyboardEvent) => {
   }
 }
 
+const handleStorageChange = (event: StorageEvent) => {
+  if (event.key === 'underhear_user') {
+    refreshUser()
+  }
+}
+
 onMounted(() => {
+  refreshUser()
   document.addEventListener('click', handleClickOutside)
   document.addEventListener('keydown', handleEscape)
+  window.addEventListener('storage', handleStorageChange)
 })
 
 onUnmounted(() => {
   document.removeEventListener('click', handleClickOutside)
   document.removeEventListener('keydown', handleEscape)
+  window.removeEventListener('storage', handleStorageChange)
 })
 </script>
 
@@ -185,6 +220,26 @@ onUnmounted(() => {
   font-size: 14px;
   font-weight: 600;
   color: #111111;
+}
+
+.z-user-menu-signin {
+  display: flex;
+  align-items: center;
+  padding: 8px 10px;
+  border: none;
+  border-radius: 6px;
+  background: transparent;
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 1;
+  color: #727272;
+  cursor: pointer;
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.z-user-menu-signin:hover {
+  color: #111111;
+  background: #f0f0f0;
 }
 
 .z-user-menu-dropdown {

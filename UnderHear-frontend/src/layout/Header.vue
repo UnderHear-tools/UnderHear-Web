@@ -1,4 +1,4 @@
-﻿<template>
+<template>
   <header class="header">
     <div class="header-inner">
       <nav>
@@ -11,24 +11,17 @@
         </ul>
       </nav>
 
-      <div v-if="currentUser" class="user-menu">
-        <zUserMenu :user="currentUser" :menu-items="userMenuItems" @item-click="handleMenuItemClick" />
+      <div class="user-menu">
+        <zUserMenu />
       </div>
-
-      <button v-else type="button" class="signin-button" @click="handleSignIn">
-        登录
-      </button>
     </div>
   </header>
 </template>
 
 <script setup lang="ts">
-import { onMounted, onUnmounted, ref, watch, computed } from 'vue'
+import { onMounted, ref, watch } from 'vue'
 import { useRouter, useRoute } from 'vue-router'
-import { getStoredUser, logout, type UserProfile } from '@/api/auth'
 import { zUserMenu } from '@/components/z-ui/user-menu/zUserMenu'
-import type { MenuItem } from '@/components/z-ui/user-menu/zUserMenu'
-import { icons } from '@/components/z-ui/user-menu/icons'
 
 interface NavigationItem {
   name: string
@@ -38,7 +31,6 @@ interface NavigationItem {
 
 const router = useRouter()
 const route = useRoute()
-const currentUser = ref<UserProfile | null>(getStoredUser())
 
 const navigationItems = ref<NavigationItem[]>([
   { name: '首页', href: '/', active: false },
@@ -47,71 +39,22 @@ const navigationItems = ref<NavigationItem[]>([
   { name: '名片', href: '/namecard', active: false }
 ])
 
-const userMenuItems = computed<MenuItem[]>(() => [
-  {
-    label: '前往 GitHub 主页',
-    icon: icons.person,
-    href: currentUser.value?.htmlUrl || '',
-    external: true
-  },
-  { type: 'divider' } as MenuItem,
-  {
-    label: '退出登录',
-    icon: icons.signOut,
-    onClick: () => {
-      handleLogout()
-    }
-  }
-])
-
 const updateActiveState = () => {
   navigationItems.value.forEach(navItem => {
     navItem.active = navItem.href === route.path
   })
 }
 
-const refreshUser = () => {
-  currentUser.value = getStoredUser()
-}
-
 const navigateToPage = (item: NavigationItem) => {
   router.push(item.href)
 }
 
-const handleSignIn = () => {
-  router.push('/auth/login')
-}
-
-const handleLogout = () => {
-  logout()
-  refreshUser()
-  router.push('/')
-}
-
-const handleMenuItemClick = (item: MenuItem) => {
-  // 菜单点击事件在 menuItems 的 onClick 中处理
-  console.log('Menu item clicked:', item.label)
-}
-
-const handleStorageChange = (event: StorageEvent) => {
-  if (event.key === 'underhear_user') {
-    refreshUser()
-  }
-}
-
 onMounted(() => {
   updateActiveState()
-  refreshUser()
-  window.addEventListener('storage', handleStorageChange)
-})
-
-onUnmounted(() => {
-  window.removeEventListener('storage', handleStorageChange)
 })
 
 watch(() => route.path, () => {
   updateActiveState()
-  refreshUser()
 })
 </script>
 
@@ -165,25 +108,6 @@ watch(() => route.path, () => {
   right: 2rem;
 }
 
-.signin-button {
-  position: absolute;
-  right: 2rem;
-  display: flex;
-  align-items: center;
-  padding: 8px 10px;
-  border-radius: 6px;
-  font-size: 16px;
-  font-weight: 500;
-  line-height: 1;
-  color: #727272;
-  cursor: pointer;
-  transition: background-color 0.2s ease, color 0.2s ease;
-}
-
-.signin-button:hover {
-  color: #111111;
-}
-
 @media (max-width: 767px) {
   .header {
     top: 1rem;
@@ -207,8 +131,7 @@ watch(() => route.path, () => {
     border-radius: 16px;
   }
 
-  .user-menu,
-  .signin-button {
+  .user-menu {
     position: relative;
     right: 0;
     margin-left: 0.5rem;
