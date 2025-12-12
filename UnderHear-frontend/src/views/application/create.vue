@@ -13,8 +13,8 @@ export default {
   methods: {
     createEditor() {
       this.editor = monaco.editor.create(this.$refs.editorContainer, {
-        value: "// 欢迎使用 Monaco 编辑器\nconsole.log('Hello, Monaco!');",
-        language: 'javascript',
+        value: "<!-- 欢迎使用 Monaco 编辑器 -->\nconsole.log('Hello, Monaco!');",
+        language: 'html',
         theme: 'vs-light', // 你可以更改主题，例如 'vs-light' 或 'hc-black'
         automaticLayout: true, // 自动调整布局
       });
