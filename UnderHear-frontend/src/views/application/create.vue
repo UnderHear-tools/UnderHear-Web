@@ -9,7 +9,16 @@
     </div>
 
     <div class="create-grid">
-      <div class="panel">
+      <div class="panel panel--editor">
+        <div class="panel-header">
+          <h2 class="panel-title">页面代码（可选）</h2>
+          <span class="panel-tip">Monaco Editor</span>
+        </div>
+        <div ref="editorContainer" class="editor"></div>
+        <p class="hint">后续可将这里的内容用于预览、存档或发布流程。</p>
+      </div>
+      
+      <div class="panel panel--form">
         <h2 class="panel-title">基本信息</h2>
         <form class="form" @submit.prevent="handleSubmit">
           <div class="field">
@@ -68,15 +77,6 @@
 
           <button type="submit" class="submit">提交（占位）</button>
         </form>
-      </div>
-
-      <div class="panel">
-        <div class="panel-header">
-          <h2 class="panel-title">页面代码（可选）</h2>
-          <span class="panel-tip">Monaco Editor</span>
-        </div>
-        <div ref="editorContainer" class="editor"></div>
-        <p class="hint">后续可将这里的内容用于预览、存档或发布流程。</p>
       </div>
     </div>
   </div>
@@ -161,7 +161,7 @@ onBeforeUnmount(() => {
 
 .create-grid {
   display: grid;
-  grid-template-columns: 1fr 1.2fr;
+  grid-template-columns: 1fr;
   gap: 1.6rem;
   align-items: start;
 }
@@ -288,10 +288,6 @@ onBeforeUnmount(() => {
 }
 
 @media (max-width: 920px) {
-  .create-grid {
-    grid-template-columns: 1fr;
-  }
-
   .editor {
     height: 480px;
   }
