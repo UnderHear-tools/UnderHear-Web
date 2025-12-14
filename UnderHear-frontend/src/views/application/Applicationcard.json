@@ -7,7 +7,7 @@
       "en": "Supports multiple path planning algorithms, including full coverage path algorithms and shortest path planning algorithms. Upload a map and find the optimal path. Multiple map formats are supported for upload."
     },
     "category": "开发工具",
-    "link": "/tool/pathplanner",
+    "link": "/application/pathplanner",
     "isOriginal": true,
     "author": "UnderHear",
     "authorLink": "/namecard/underhear",
