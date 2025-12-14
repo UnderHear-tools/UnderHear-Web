@@ -1,5 +1,5 @@
 <template>
-  <div class="components-wrapper">
+  <div class="components-container">
     <div class="components-header">
       <h1 class="title">UI 组件库 zLight</h1>
       <p class="subtitle">这里展示本站自研的 UI 组件库，提供现代化、美观且易用的组件。</p>
@@ -16,7 +16,7 @@ import { zLink } from '@/components/z-ui/link/zlink'
 </script>
 
 <style scoped>
-.components-wrapper {
+.components-container {
   max-width: 1150px;
   margin: 0 auto;
   padding: 2rem;
