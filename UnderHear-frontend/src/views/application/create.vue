@@ -12,7 +12,7 @@
       <div class="panel panel--editor">
         <div class="panel-header">
           <h2 class="panel-title">页面代码（可选）</h2>
-          <span class="panel-tip">Monaco Editor</span>
+          <button type="button" class="panel-tip preview-button" @click="openPreview">预览</button>
         </div>
         <div ref="editorContainer" class="editor"></div>
         <p class="hint">后续可将这里的内容用于预览、存档或发布流程。</p>
@@ -79,6 +79,12 @@
         </form>
       </div>
     </div>
+
+    <teleport to="body">
+      <div v-if="isPreviewOpen" class="preview-overlay" @click.self="closePreview">
+        <iframe class="preview-frame" :srcdoc="previewHtml" sandbox="allow-scripts"></iframe>
+      </div>
+    </teleport>
   </div>
 </template>
 
@@ -90,6 +96,10 @@ import { zLink } from '@/components/z-ui/link/zlink'
 
 const editorContainer = ref<HTMLElement | null>(null)
 let editor: monaco.editor.IStandaloneCodeEditor | undefined
+
+const isPreviewOpen = ref(false)
+const previewHtml = ref('')
+let previousBodyOverflow: string | null = null
 
 const form = ref({
   title: '',
@@ -113,6 +123,39 @@ function handleSubmit() {
   console.log('[application/create] submit (placeholder)', form.value)
 }
 
+function lockBodyScroll() {
+  if (previousBodyOverflow !== null) return
+  previousBodyOverflow = document.body.style.overflow
+  document.body.style.overflow = 'hidden'
+}
+
+function unlockBodyScroll() {
+  if (previousBodyOverflow === null) return
+  document.body.style.overflow = previousBodyOverflow
+  previousBodyOverflow = null
+}
+
+function refreshPreview() {
+  previewHtml.value = editor?.getValue() ?? defaultTemplate
+}
+
+function openPreview() {
+  refreshPreview()
+  isPreviewOpen.value = true
+  lockBodyScroll()
+}
+
+function closePreview() {
+  isPreviewOpen.value = false
+  unlockBodyScroll()
+}
+
+function onWindowKeydown(event: KeyboardEvent) {
+  if (event.key === 'Escape' && isPreviewOpen.value) {
+    closePreview()
+  }
+}
+
 onMounted(() => {
   if (!editorContainer.value) return
 
@@ -123,9 +166,13 @@ onMounted(() => {
     automaticLayout: true,
     minimap: { enabled: false }
   })
+
+  window.addEventListener('keydown', onWindowKeydown)
 })
 
 onBeforeUnmount(() => {
+  window.removeEventListener('keydown', onWindowKeydown)
+  unlockBodyScroll()
   editor?.dispose()
 })
 </script>
@@ -199,6 +246,67 @@ onBeforeUnmount(() => {
   border-radius: 12px;
   padding: 0.2rem 0.55rem;
   font-weight: 600;
+}
+
+.preview-button {
+  border: none;
+  cursor: pointer;
+}
+
+.preview-button:hover {
+  background: #eaeef2;
+}
+
+.preview-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.55);
+  z-index: 9999;
+  display: flex;
+  flex-direction: column;
+}
+
+.preview-toolbar {
+  height: 56px;
+  background: #fff;
+  border-bottom: 1px solid #d1d9e1;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 16px;
+}
+
+.preview-title {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: #24292f;
+}
+
+.preview-actions {
+  display: flex;
+  gap: 10px;
+}
+
+.preview-refresh,
+.preview-close {
+  cursor: pointer;
+  border: 1px solid #d1d9e1;
+  background: #fff;
+  border-radius: 8px;
+  padding: 8px 12px;
+  font-weight: 600;
+}
+
+.preview-refresh:hover,
+.preview-close:hover {
+  background: #f6f8fa;
+}
+
+.preview-frame {
+  flex: 1 1 auto;
+  width: 100%;
+  border: 0;
+  background: #fff;
 }
 
 .form {
@@ -276,7 +384,6 @@ onBeforeUnmount(() => {
   width: 100%;
   height: 520px;
   border: 1px solid #d1d9e1;
-  border-radius: 6px;
   overflow: hidden;
 }
 
