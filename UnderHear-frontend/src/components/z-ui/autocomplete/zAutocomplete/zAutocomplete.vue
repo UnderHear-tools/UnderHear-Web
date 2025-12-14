@@ -156,7 +156,6 @@ const emit = defineEmits<Emits>()
 
 // 响应式数据
 const inputRef = ref<HTMLInputElement>()
-const dropdownRef = ref<HTMLElement>()
 const inputValue = ref(props.modelValue)
 const showDropdown = ref(false)
 const highlightedIndex = ref(-1)
