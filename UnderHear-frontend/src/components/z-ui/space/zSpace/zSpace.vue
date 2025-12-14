@@ -20,7 +20,12 @@
 <script setup lang="ts">
 import { computed, useSlots } from 'vue'
 import type { VNode } from 'vue'
-import { addUnit } from '@/lib/utils'
+
+function addUnit(value?: string | number): string | undefined {
+  if (value === undefined || value === null) return undefined
+  if (typeof value === 'string') return value
+  return `${value}px`
+}
 
 interface Props {
   direction?: 'horizontal' | 'vertical'
