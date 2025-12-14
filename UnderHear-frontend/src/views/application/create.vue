@@ -7,7 +7,7 @@
         返回列表：<zLink href="/application" link-text="应用广场" />
       </p>
     </div>
-
+        
     <div class="create-grid">
       <div class="panel panel--editor">
         <div class="panel-header">
@@ -17,7 +17,7 @@
         <div ref="editorContainer" class="editor"></div>
         <p class="hint">后续可将这里的内容用于预览、存档或发布流程。</p>
       </div>
-      
+
       <div class="panel panel--form">
         <h2 class="panel-title">基本信息</h2>
         <form class="form" @submit.prevent="handleSubmit">
