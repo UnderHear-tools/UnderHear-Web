@@ -3,7 +3,22 @@ import type { RouteRecordRaw } from 'vue-router'
 export const applicationRoutes: Array<RouteRecordRaw> = [
     {
         path: '/application/create',
-        name: 'ApplicationCreate',
+        name: 'ApplicationCreateMethod',
+        component: () => import('@/views/application/create-method.vue')
+    },
+    {
+        path: '/application/create/new',
+        name: 'ApplicationCreateNew',
+        component: () => import('@/views/application/create.vue')
+    },
+    {
+        path: '/application/create/website',
+        name: 'ApplicationCreateWebsite',
+        component: () => import('@/views/application/create.vue')
+    },
+    {
+        path: '/application/create/collect',
+        name: 'ApplicationCreateCollect',
         component: () => import('@/views/application/create.vue')
     },
     {
