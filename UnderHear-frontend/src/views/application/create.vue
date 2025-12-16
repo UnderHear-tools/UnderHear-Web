@@ -2,7 +2,7 @@
   <div class="application-create-container">
     <div class="application-create-header">
       <h1 class="title">上传单页应用</h1>
-      <p class="subtitle">在这里提交你的单页应用信息（当前为页面框架占位）。</p>
+      <p class="subtitle">在这里提交你的单页应用信息。</p>
       <p class="subtitle">
         返回列表：<zLink href="/application" link-text="应用广场" />
       </p>
