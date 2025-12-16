@@ -136,7 +136,8 @@ function unlockBodyScroll() {
 }
 
 function refreshPreview() {
-  previewHtml.value = editor?.getValue() ?? defaultTemplate
+  const code = editor?.getValue() ?? defaultTemplate
+  previewHtml.value = `<!doctype html><html><body style="margin:0">${code}</body></html>`
 }
 
 function openPreview() {
