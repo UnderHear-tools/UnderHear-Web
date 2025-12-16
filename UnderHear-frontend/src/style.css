@@ -112,11 +112,3 @@
     margin: 1.67em 0;
   }
 }
-
-@layer base {
-    html,
-    :host {
-        -webkit-text-size-adjust: 100%;
-        text-size-adjust: 100%;
-    }
-}
