@@ -12,16 +12,19 @@
       <button type="button" class="option-card" @click="goNew">
         <h2 class="option-title">新建</h2>
         <p class="option-desc">在本站编辑/粘贴页面代码并发布</p>
+        <img class="create-image" src="@/assets/application/create/create-new.svg" alt="Create New" />
       </button>
 
       <button type="button" class="option-card" @click="goWebsite">
         <h2 class="option-title">已有自己的网站！</h2>
         <p class="option-desc">提交站点链接与基本信息，直接发布</p>
+        <img class="create-image" src="@/assets/application/create/create-website.svg" alt="Create Website" />
       </button>
 
       <button type="button" class="option-card" @click="goCollect">
         <h2 class="option-title">收录</h2>
         <p class="option-desc">收录优质站点到应用广场</p>
+        <img class="create-image" src="@/assets/application/create/create-collect.svg" alt="Create Collect" />
       </button>
     </div>
   </div>
@@ -88,17 +91,15 @@ function goCollect() {
   width: 100%;
   text-align: left;
   border: 1px solid #d1d9e1;
-  border-radius: 10px;
-  background: #fff;
+  border-radius: 6px;
+  background: #fafafa;
   padding: 1.5rem;
   cursor: pointer;
-  transition: border-color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
 }
 
 .option-card:hover {
   border-color: #0969da;
-  transform: translateY(-2px);
-  box-shadow: 0 8px 22px rgba(9, 105, 218, 0.14);
+  box-shadow: 0 4px 14px -4px rgba(0, 0, 0, 0.08);
 }
 
 .option-title {
@@ -113,6 +114,13 @@ function goCollect() {
   font-size: 0.95rem;
   line-height: 1.6;
   color: #656d76;
+}
+
+.create-image {
+  margin-top: 2rem;
+  width: 70%;
+  height: auto;
+  margin: 0 auto;
 }
 
 @media (max-width: 900px) {
