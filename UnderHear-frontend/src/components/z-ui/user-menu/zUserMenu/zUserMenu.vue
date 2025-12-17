@@ -240,7 +240,6 @@ onUnmounted(() => {
 .z-user-menu-signin:hover {
   background-color: #e6e6e6;
   color: #000000;
-  border-radius: 16px;
 }
 
 .z-user-menu-dropdown {
@@ -394,6 +393,9 @@ onUnmounted(() => {
   .z-user-menu-trigger{
     width: 32px;
     height: 32px;
+  }
+  .z-user-menu-signin:hover {
+    border-radius: 16px;
   }
 }
 </style>

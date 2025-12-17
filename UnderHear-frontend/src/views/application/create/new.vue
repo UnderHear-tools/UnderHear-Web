@@ -344,8 +344,8 @@ onBeforeUnmount(() => {
 
 .input:focus,
 .textarea:focus {
-  border-color: #0969da;
-  box-shadow: 0 0 0 3px rgba(9, 105, 218, 0.15);
+  outline: 2px solid #0969da;
+  outline-offset: -1px;
 }
 
 .divider {
