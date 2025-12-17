@@ -23,37 +23,27 @@
         <form class="form" @submit.prevent="handleSubmit">
           <div class="field">
             <label class="label">标题</label>
-            <input v-model="form.title" class="input" placeholder="例如：番茄钟 / 小工具合集" />
+            <zInput v-model="form.title" placeholder="例如：番茄钟 / 小工具合集" />
           </div>
 
           <div class="field">
             <label class="label">分类</label>
-            <input v-model="form.category" class="input" placeholder="例如：工具 / 游戏 / 学习" />
+            <zInput v-model="form.category" placeholder="例如：工具 / 游戏 / 学习" />
           </div>
 
           <div class="field">
             <label class="label">描述（中文）</label>
-            <textarea
-              v-model="form.descriptionZh"
-              class="textarea"
-              rows="3"
-              placeholder="一句话介绍你的应用"
-            ></textarea>
+            <zTextarea v-model="form.descriptionZh" rows="3" placeholder="一句话介绍你的应用" />
           </div>
 
           <div class="field">
             <label class="label">Description (EN)</label>
-            <textarea
-              v-model="form.descriptionEn"
-              class="textarea"
-              rows="3"
-              placeholder="A short description in English"
-            ></textarea>
+            <zTextarea v-model="form.descriptionEn" rows="3" placeholder="A short description in English" />
           </div>
 
           <div class="field">
             <label class="label">访问链接</label>
-            <input v-model="form.link" class="input" placeholder="https://..." />
+            <zInput v-model="form.link" placeholder="https://..." />
           </div>
 
           <div class="divider"></div>
@@ -62,17 +52,17 @@
 
           <div class="field">
             <label class="label">作者昵称</label>
-            <input v-model="form.author" class="input" placeholder="例如：UnderHear" />
+            <zInput v-model="form.author" placeholder="例如：UnderHear" />
           </div>
 
           <div class="field">
             <label class="label">作者主页</label>
-            <input v-model="form.authorLink" class="input" placeholder="https://github.com/..." />
+            <zInput v-model="form.authorLink" placeholder="https://github.com/..." />
           </div>
 
           <div class="field">
             <label class="label">头像链接</label>
-            <input v-model="form.authorAvatar" class="input" placeholder="https://.../avatar.png" />
+            <zInput v-model="form.authorAvatar" placeholder="https://.../avatar.png" />
           </div>
 
           <button type="submit" class="submit">提交（占位）</button>
@@ -92,6 +82,8 @@
 import { onBeforeUnmount, onMounted, ref } from 'vue'
 import * as monaco from 'monaco-editor'
 
+import { zInput } from '@/components/z-ui/input/zInput'
+import { zTextarea } from '@/components/z-ui/input/zTextarea'
 import { zLink } from '@/components/z-ui/link/zlink'
 
 const editorContainer = ref<HTMLElement | null>(null)
@@ -324,28 +316,6 @@ onBeforeUnmount(() => {
   font-size: 0.9rem;
   font-weight: 600;
   color: #24292f;
-}
-
-.input,
-.textarea {
-  width: 100%;
-  border: 1px solid #d1d9e1;
-  border-radius: 6px;
-  padding: 0.6rem 0.7rem;
-  font-size: 0.95rem;
-  outline: none;
-  transition: border-color 0.2s ease, box-shadow 0.2s ease;
-}
-
-.textarea {
-  resize: vertical;
-  line-height: 1.5;
-}
-
-.input:focus,
-.textarea:focus {
-  outline: 2px solid #0969da;
-  outline-offset: -1px;
 }
 
 .divider {
