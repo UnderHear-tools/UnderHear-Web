@@ -14,12 +14,12 @@ export const applicationRoutes: Array<RouteRecordRaw> = [
     {
         path: '/application/create/website',
         name: 'ApplicationCreateWebsite',
-        component: () => import('@/views/application/create/new.vue')
+        component: () => import('@/views/application/create/website.vue')
     },
     {
         path: '/application/create/collect',
         name: 'ApplicationCreateCollect',
-        component: () => import('@/views/application/create/new.vue')
+        component: () => import('@/views/application/create/collect.vue')
     },
     {
         path: '/application',
