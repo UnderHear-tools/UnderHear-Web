@@ -225,7 +225,7 @@ onUnmounted(() => {
 .z-user-menu-signin {
   display: flex;
   align-items: center;
-  padding: 8px 10px;
+  padding: 8px 12px;
   border: none;
   border-radius: 6px;
   background: transparent;
@@ -238,8 +238,9 @@ onUnmounted(() => {
 }
 
 .z-user-menu-signin:hover {
-  color: #111111;
-  background: #f0f0f0;
+  background-color: #e6e6e6;
+  color: #000000;
+  border-radius: 16px;
 }
 
 .z-user-menu-dropdown {

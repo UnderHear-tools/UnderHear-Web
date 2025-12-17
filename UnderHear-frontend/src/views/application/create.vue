@@ -10,20 +10,26 @@
 
     <div class="options-grid">
       <button type="button" class="option-card" @click="goNew">
-        <h2 class="option-title">新建</h2>
-        <p class="option-desc">在本站编辑/粘贴页面代码并发布</p>
+        <div class="option-header">
+          <h2 class="option-title">新建</h2>
+          <p class="option-desc">在本站编辑/粘贴页面代码并发布</p>
+        </div>
         <img class="create-image" src="@/assets/application/create/create-new.svg" alt="Create New" />
       </button>
 
       <button type="button" class="option-card" @click="goWebsite">
-        <h2 class="option-title">已有自己的网站！</h2>
-        <p class="option-desc">提交站点链接与基本信息，直接发布</p>
+        <div class="option-header">
+          <h2 class="option-title">已有自己的网站！</h2>
+          <p class="option-desc">提交站点链接与基本信息，直接发布</p>
+        </div>
         <img class="create-image" src="@/assets/application/create/create-website.svg" alt="Create Website" />
       </button>
 
       <button type="button" class="option-card" @click="goCollect">
-        <h2 class="option-title">收录</h2>
-        <p class="option-desc">收录优质站点到应用广场</p>
+        <div class="option-header">
+          <h2 class="option-title">收录</h2>
+          <p class="option-desc">收录优质站点到应用广场</p>
+        </div>
         <img class="create-image" src="@/assets/application/create/create-collect.svg" alt="Create Collect" />
       </button>
     </div>
@@ -123,9 +129,21 @@ function goCollect() {
   margin: 0 auto;
 }
 
-@media (max-width: 900px) {
+@media (max-width: 768px) {
   .options-grid {
     grid-template-columns: 1fr;
+  }
+
+  .option-card {
+    display: flex;
+  }
+
+  .option-header {
+    width: 60%;
+  }
+  
+  .create-image {
+    width: 40%;
   }
 }
 </style>
