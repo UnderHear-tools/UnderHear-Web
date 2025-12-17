@@ -118,6 +118,7 @@ onMounted(() => {
 
 .application-card:hover {
   border-color: #0969da;
+  box-shadow: 0 4px 14px -4px rgba(0, 0, 0, 0.08);
 }
 
 .application-content {
