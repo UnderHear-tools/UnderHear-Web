@@ -50,7 +50,7 @@ import { zLink } from '@/components/z-ui/link/zlink'
 }
 
 @media (max-width: 768px) {
-  .components-wrapper {
+  .components-container {
     padding: 1rem;
   }
 
