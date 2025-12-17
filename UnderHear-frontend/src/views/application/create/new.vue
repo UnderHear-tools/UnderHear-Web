@@ -46,7 +46,7 @@
             <zInput v-model="form.link" placeholder="https://..." />
           </div>
 
-          <div class="divider"></div>
+          <zDivider />
 
           <h3 class="sub-title">作者信息（可选）</h3>
 
@@ -84,6 +84,7 @@ import * as monaco from 'monaco-editor'
 
 import { zInput } from '@/components/z-ui/input/zInput'
 import { zTextarea } from '@/components/z-ui/input/zTextarea'
+import { zDivider } from '@/components/z-ui/divider/zDivider'
 import { zLink } from '@/components/z-ui/link/zlink'
 
 const editorContainer = ref<HTMLElement | null>(null)
@@ -316,13 +317,6 @@ onBeforeUnmount(() => {
   font-size: 0.9rem;
   font-weight: 600;
   color: #24292f;
-}
-
-.divider {
-  height: 1px;
-  background: #d1d9e1;
-  opacity: 0.6;
-  margin: 0.4rem 0;
 }
 
 .sub-title {

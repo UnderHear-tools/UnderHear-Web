@@ -1,0 +1,1 @@
+export { default as zDivider } from './zDivider.vue';
