@@ -1,9 +1,9 @@
 <template>
-	<div class="project-container">
-		<div class="project-header">
+	<zContainer>
+			<div class="project-header">
 			<h1 class="project-title">我的项目</h1>
 			<p class="project-subtitle">以下是我独立开发的一些项目，涵盖了全栈开发、机器人技术、小程序开发、AI等多个领域。其中一些还在持续维护。</p>
-		</div>
+			</div>
 
 		<div class="project-grid">
 			<div v-for="project in projects" :key="project.id" class="project-card">
@@ -28,12 +28,13 @@
 				</div>
 			</div>
 		</div>
-	</div>
+	</zContainer>
 </template>
 
 <script setup lang="ts">
 import { ref, onMounted } from 'vue'
 
+import { zContainer } from '@/components/z-ui/container/zContainer'
 // 引入图标
 import {zTechTag} from '@/components/z-ui/tag/zTechTag/'
 
@@ -81,13 +82,6 @@ const getStatusClass = (status: string) => {
 </script>
 
 <style scoped>
-.project-container {
-	max-width: 1150px;
-	margin: 0 auto;
-	padding: 2rem;
-	background-color: #fff;
-}
-
 .project-header {
 	text-align: center;
 	margin-bottom: 3rem;
@@ -234,10 +228,6 @@ const getStatusClass = (status: string) => {
 
 
 @media (max-width: 768px) {
-	.project-container {
-		padding: 1rem;
-	}
-
 	.project-title {
 		font-size: 2rem;
 	}

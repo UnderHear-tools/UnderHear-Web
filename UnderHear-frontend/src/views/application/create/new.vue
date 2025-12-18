@@ -1,14 +1,14 @@
 <template>
-  <div class="application-create-container">
-    <div class="application-create-header">
+  <zContainer>
+      <div class="application-create-header">
       <h1 class="title">上传单页应用</h1>
       <p class="subtitle">在这里提交你的单页应用信息。</p>
       <p class="subtitle">
         返回列表：<zLink href="/application" link-text="应用广场" />
       </p>
-    </div>
+      </div>
         
-    <div class="create-grid">
+      <div class="create-grid">
       <div class="panel panel--editor">
         <div class="panel-header">
           <h2 class="panel-title">页面代码（可选）</h2>
@@ -70,18 +70,19 @@
       </div>
     </div>
 
-    <teleport to="body">
+      <teleport to="body">
       <div v-if="isPreviewOpen" class="preview-overlay" @click.self="closePreview">
         <iframe class="preview-frame" :srcdoc="previewHtml" sandbox="allow-scripts"></iframe>
       </div>
-    </teleport>
-  </div>
+      </teleport>
+  </zContainer>
 </template>
 
 <script setup lang="ts">
 import { onBeforeUnmount, onMounted, ref } from 'vue'
 import * as monaco from 'monaco-editor'
 
+import { zContainer } from '@/components/z-ui/container/zContainer'
 import { zInput } from '@/components/z-ui/input/zInput'
 import { zTextarea } from '@/components/z-ui/input/zTextarea'
 import { zDivider } from '@/components/z-ui/divider/zDivider'
@@ -172,13 +173,6 @@ onBeforeUnmount(() => {
 </script>
 
 <style scoped>
-.application-create-container {
-  max-width: 1150px;
-  margin: 0 auto;
-  padding: 2rem;
-  background: #fff;
-}
-
 .application-create-header {
   text-align: center;
   margin-bottom: 3rem;
@@ -366,10 +360,6 @@ onBeforeUnmount(() => {
 }
 
 @media (max-width: 768px) {
-  .application-create-container {
-    padding: 1rem;
-  }
-
   .title {
     font-size: 2rem;
   }

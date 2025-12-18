@@ -1,14 +1,14 @@
 <template>
-  <div class="publish-method-container">
+  <zContainer>
     <div class="publish-method-header">
       <h1 class="title">选择发布方式</h1>
       <p class="subtitle">进入发布页面前，请先选择发布来源</p>
       <p class="subtitle">
         返回列表：<zLink href="/application" link-text="应用广场" />
       </p>
-    </div>
+      </div>
 
-    <div class="options-grid">
+      <div class="options-grid">
       <button type="button" class="option-card" @click="goNew">
         <div class="option-header">
           <h2 class="option-title">新建</h2>
@@ -33,12 +33,13 @@
         <img class="create-image" src="@/assets/application/create/create-collect.svg" alt="Create Collect" />
       </button>
     </div>
-  </div>
+  </zContainer>
 </template>
 
 <script setup lang="ts">
 import { useRouter } from 'vue-router'
 
+import { zContainer } from '@/components/z-ui/container/zContainer'
 import { zLink } from '@/components/z-ui/link/zlink'
 
 const router = useRouter()
@@ -57,13 +58,6 @@ function goCollect() {
 </script>
 
 <style scoped>
-.publish-method-container {
-  max-width: 1150px;
-  margin: 0 auto;
-  padding: 2rem;
-  background: #fff;
-}
-
 .publish-method-header {
   text-align: center;
   margin-bottom: 3rem;

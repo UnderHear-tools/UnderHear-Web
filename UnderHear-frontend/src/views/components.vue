@@ -1,5 +1,5 @@
 <template>
-  <zContainer variant="page">
+  <zContainer>
     <div class="components-header">
       <h1 class="title">UI 组件库 zLight</h1>
       <p class="subtitle">这里展示本站自研的 UI 组件库，提供现代化、美观且易用的组件。</p>

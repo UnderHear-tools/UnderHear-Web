@@ -1,5 +1,5 @@
 <template>
-  <zContainer variant="page">
+  <zContainer>
     <div class="application-header">
       <h1 class="application-title">单页应用</h1>
       <p class="application-subtitle">从一个小创意开始🐱。</p>
