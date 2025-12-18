@@ -1,5 +1,5 @@
 <template>
-	<div class="namecard-container">
+	<zContainer variant="page">
 		<div class="namecard-header">
 			<h1 class="title">创作者名片</h1>
 			<p class="subtitle">这里展示本站创作者 / 贡献者的个人名片。点击进入详情页面了解更多。</p>
@@ -29,21 +29,15 @@
 				</div>
 			</RouterLink>
 		</div>
-	</div>
+	</zContainer>
 </template>
 
 <script setup lang="ts">
+import { zContainer } from '@/components/z-ui/container/zContainer'
 import { zLink } from '@/components/z-ui/link/zlink'
 </script>
 
 <style scoped>
-.namecard-container {
-	max-width: 1150px;
-	margin: 0 auto;
-	padding: 2rem;
-	background: #fff;
-}
-
 .namecard-header {
 	text-align: center;
 	margin-bottom: 3rem;
@@ -162,10 +156,6 @@ import { zLink } from '@/components/z-ui/link/zlink'
 }
 
 @media (max-width: 768px) {
-	.namecard-wrapper {
-		padding: 1rem;
-	}
-
 	.name-row {
 		flex-direction: column;
 		align-items: flex-start;

@@ -1,5 +1,5 @@
 <template>
-  <div class="components-container">
+  <zContainer variant="page">
     <div class="components-header">
       <h1 class="title">UI 组件库 zLight</h1>
       <p class="subtitle">这里展示本站自研的 UI 组件库，提供现代化、美观且易用的组件。</p>
@@ -8,21 +8,15 @@
       </p>
       <img src="@/assets/components.svg" alt="Components Preview" class="components-preview" />
     </div>
-  </div>
+  </zContainer>
 </template>
 
 <script setup lang="ts">
+import { zContainer } from '@/components/z-ui/container/zContainer'
 import { zLink } from '@/components/z-ui/link/zlink'
 </script>
 
 <style scoped>
-.components-container {
-  max-width: 1150px;
-  margin: 0 auto;
-  padding: 2rem;
-  background: #fff;
-}
-
 .components-header {
   text-align: center;
   margin-bottom: 3rem;
@@ -50,10 +44,6 @@ import { zLink } from '@/components/z-ui/link/zlink'
 }
 
 @media (max-width: 768px) {
-  .components-container {
-    padding: 1rem;
-  }
-
   .title {
     font-size: 2rem;
   }

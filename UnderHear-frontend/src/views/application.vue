@@ -1,5 +1,5 @@
 <template>
-  <div class="application-container">
+  <zContainer variant="page">
     <div class="application-header">
       <h1 class="application-title">单页应用</h1>
       <p class="application-subtitle">从一个小创意开始🐱。</p>
@@ -36,12 +36,13 @@
         </div>
       </div>
     </div>
-  </div>
+  </zContainer>
 </template>
 
 <script setup lang="ts">
 import { ref, onMounted } from 'vue'
 
+import { zContainer } from '@/components/z-ui/container/zContainer'
 import { zLink } from '@/components/z-ui/link/zlink'
 
 // 引入数据
@@ -72,13 +73,6 @@ onMounted(() => {
 </script>
 
 <style scoped>
-.application-container {
-  max-width: 1150px;
-  margin: 0 auto;
-  padding: 2rem;
-  background-color: #fff;
-}
-
 .application-header {
   text-align: center;
   margin-bottom: 3rem;
@@ -235,10 +229,6 @@ onMounted(() => {
 }
 
 @media (max-width: 768px) {
-  .application-container {
-    padding: 1rem;
-  }
-
   .application-title {
     font-size: 2rem;
   }
