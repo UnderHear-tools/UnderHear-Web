@@ -1,5 +1,5 @@
 <template>
-	<div class="namecard-wrapper">
+	<div class="namecard-container">
 		<div class="namecard-header">
 			<h1 class="title">创作者名片</h1>
 			<p class="subtitle">这里展示本站创作者 / 贡献者的个人名片。点击进入详情页面了解更多。</p>
@@ -37,7 +37,7 @@ import { zLink } from '@/components/z-ui/link/zlink'
 </script>
 
 <style scoped>
-.namecard-wrapper {
+.namecard-container {
 	max-width: 1150px;
 	margin: 0 auto;
 	padding: 2rem;
