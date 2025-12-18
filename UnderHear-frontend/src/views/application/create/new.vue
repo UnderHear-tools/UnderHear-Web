@@ -11,8 +11,8 @@
       <div class="create-grid">
       <div class="panel panel--editor">
         <div class="panel-header">
-          <h2 class="panel-title">页面代码（可选）</h2>
-          <button type="button" class="panel-tip preview-button" @click="openPreview">预览</button>
+          <h4 class="panel-title">页面代码（可选）</h4>
+          <button class="preview-button" @click="openPreview">点击预览</button>
         </div>
         <div ref="editorContainer" class="editor"></div>
         <p class="hint">后续可将这里的内容用于预览、存档或发布流程。</p>
@@ -218,31 +218,19 @@ onBeforeUnmount(() => {
 
 .panel-title {
   margin: 0 0 1rem 0;
-  font-size: 1.1rem;
   font-weight: 700;
   color: #24292f;
 }
 
-.panel-header .panel-title {
-  margin-bottom: 0;
-}
-
-.panel-tip {
-  font-size: 0.75rem;
-  color: #656d76;
-  background: #f6f8fa;
-  border-radius: 12px;
-  padding: 0.2rem 0.55rem;
-  font-weight: 600;
-}
-
 .preview-button {
-  border: none;
+  font-size: 0.9rem;
+  color: #0969da;
+  font-weight: 600;
   cursor: pointer;
 }
 
-.preview-button:hover {
-  background: #eaeef2;
+.panel-header .panel-title {
+  margin-bottom: 0;
 }
 
 .preview-overlay {
