@@ -631,14 +631,14 @@ watch(isCoverage, (v) => {
 .pathplanner-title {
   font-size: 2.2rem;
   font-weight: 700;
-  color: #24292f;
+  color: var(--font-black);
   margin-bottom: 0.5rem;
   line-height: 1.2;
 }
 
 .pathplanner-subtitle {
   font-size: 1rem;
-  color: #656d76;
+  color: var(--font-gray);
   line-height: 1.6;
   max-width: 760px;
   margin: 0 auto;
@@ -656,7 +656,7 @@ watch(isCoverage, (v) => {
 }
 
 .pathplanner-card:hover {
-  border-color: #0969da;
+  border-color: var(--font-blue);
   box-shadow: 0 4px 12px rgba(9, 105, 218, 0.06);
 }
 
@@ -728,7 +728,7 @@ watch(isCoverage, (v) => {
 
 .group-l>label,.group-r>label {
   font-weight: 600;
-  color: #24292f;
+  color: var(--font-black);
 }
 
 .inline {
@@ -753,7 +753,7 @@ select {
 }
 
 input[type='range'] {
-  accent-color: #0969da;
+  accent-color: var(--font-blue);
 }
 
 .radio {
@@ -763,7 +763,7 @@ input[type='range'] {
 }
 
 .muted {
-  color: #656d76;
+  color: var(--font-gray);
   font-size: 0.92rem;
 }
 
@@ -772,7 +772,7 @@ input[type='range'] {
   padding: 0.45rem 0.75rem;
   border: 1px solid #c9d1d9;
   background: #f6f8fa;
-  color: #24292f;
+  color: var(--font-black);
   border-radius: 6px;
   cursor: pointer;
   transition: background-color 0.15s ease, filter 0.15s ease, opacity 0.15s ease;
@@ -783,8 +783,8 @@ input[type='range'] {
 }
 
 .btn.primary {
-  border-color: #0969da;
-  background: #0969da;
+  border-color: var(--font-blue);
+  background: var(--font-blue);
   color: #fff;
 }
 
@@ -882,7 +882,7 @@ input[type='range'] {
   margin: 0 0 0.5rem 0;
   font-size: 1.1rem;
   font-weight: 600;
-  color: #24292f;
+  color: var(--font-black);
 }
 
 .pathplanner-card ul {
@@ -892,7 +892,7 @@ input[type='range'] {
 
 .pathplanner-card li {
   margin-bottom: 0.35rem;
-  color: #24292f;
+  color: var(--font-black);
   line-height: 1.6;
 }
 

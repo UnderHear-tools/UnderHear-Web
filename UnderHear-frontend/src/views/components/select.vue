@@ -188,7 +188,7 @@ const selectedLanguage = ref('javascript')</code></pre>
           </div>
           <div style="margin-top: 16px; padding: 12px; background: #f6f8fa; border-radius: 6px;">
             <div><strong>事件日志：</strong></div>
-            <div v-for="(log, index) in eventLogs" :key="index" style="font-size: 13px; color: #656d76; margin-top: 4px;">
+            <div v-for="(log, index) in eventLogs" :key="index" style="font-size: 13px; color: var(--font-gray); margin-top: 4px;">
               {{ log }}
             </div>
           </div>
@@ -490,7 +490,7 @@ const onClose = () => {
 
 .demo-result {
   font-size: 14px;
-  color: #0969da;
+  color: var(--font-blue);
   font-weight: 500;
 }
 

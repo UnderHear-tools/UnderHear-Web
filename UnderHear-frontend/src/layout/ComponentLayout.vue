@@ -212,7 +212,7 @@
 .section-title {
   font-size: 1rem;
   font-weight: 600;
-  color: #24292f;
+  color: var(--font-black);
   margin: 0 0 0.75rem 1.5rem;
   padding: 0;
 }
@@ -220,7 +220,7 @@
 .nav-item {
   display: block;
   padding: 0.5rem 1.5rem;
-  color: #656d76;
+  color: var(--font-gray);
   text-decoration: none;
   font-size: 0.875rem;
   transition: all 0.2s ease;
@@ -230,7 +230,7 @@
 
 .nav-item:hover {
   background-color: #f6f8fa;
-  color: #24292f;
+  color: var(--font-black);
 }
 
 .nav-item.active {
@@ -255,7 +255,7 @@
 }
 
 .version-tag {
-  background-color: #0969da;
+  background-color: var(--font-blue);
   color: white;
   font-size: 0.75rem;
   padding: 0.125rem 0.375rem;
@@ -288,7 +288,7 @@
   align-items: center;
   padding: 0.3rem 0.5rem;
   text-decoration: none;
-  color: #656d76;
+  color: var(--font-gray);
   transition: all 0.2s ease;
   border-left: 3px solid transparent;
   border-radius: 4px;
@@ -296,7 +296,7 @@
 
 .bottom-nav-item:hover {
   background-color: #E6E6E6;
-  color: #24292f;
+  color: var(--font-black);
 }
 
 .bottom-nav-item.router-link-active {

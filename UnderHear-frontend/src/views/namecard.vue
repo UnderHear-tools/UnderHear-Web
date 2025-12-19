@@ -46,14 +46,14 @@ import { zLink } from '@/components/z-ui/link/zlink'
 .title {
 	font-size: 2.5rem;
 	font-weight: 700;
-	color: #24292f;
+	color: var(--font-black);
 	margin-bottom: 1rem;
 	line-height: 1.2;
 }
 
 .subtitle {
 	font-size: 1.05rem;
-	color: #656d76;
+	color: var(--font-gray);
 	line-height: 1.6;
 	max-width: 620px;
 	margin: 0 auto;
@@ -78,7 +78,7 @@ import { zLink } from '@/components/z-ui/link/zlink'
 }
 
 .creator-card:hover {
-	border-color: #0969da;
+	border-color: var(--font-blue);
 	box-shadow: 0 4px 14px -4px rgba(0, 0, 0, 0.08);
 }
 
@@ -112,7 +112,7 @@ import { zLink } from '@/components/z-ui/link/zlink'
 	margin: 0;
 	font-size: 1.25rem;
 	font-weight: 600;
-	color: #0969da;
+	color: var(--font-blue);
 }
 
 .role {
@@ -122,7 +122,7 @@ import { zLink } from '@/components/z-ui/link/zlink'
 	background: #f6f8fa;
 	padding: .25rem .55rem;
 	border-radius: 12px;
-	color: #656d76;
+	color: var(--font-gray);
 	font-weight: 600;
 	line-height: 1;
 }
@@ -132,11 +132,11 @@ import { zLink } from '@/components/z-ui/link/zlink'
 	margin: 0 0 .5rem;
 	font-size: .85rem;
 	line-height: 1.5;
-	color: #24292f;
+	color: var(--font-black);
 }
 
 .bio-zh {
-	color: #656d76;
+	color: var(--font-gray);
 	font-style: italic;
 }
 
@@ -149,7 +149,7 @@ import { zLink } from '@/components/z-ui/link/zlink'
 .enter {
 	font-size: 1rem;
 	font-weight: 600;
-	color: #0969da;
+	color: var(--font-blue);
 	padding: .35rem .7rem;
 	border-radius: 6px;
 	transition: background .18s ease;

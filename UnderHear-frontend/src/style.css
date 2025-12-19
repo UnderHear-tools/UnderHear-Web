@@ -1,6 +1,12 @@
 @import "tailwindcss";
 @import "tw-animate-css";
 
+:root {
+  --font-blue: #0969da;
+  --font-gray: #656d76;
+  --font-black: #24292f;
+}
+
 @layer base {
   html, body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;

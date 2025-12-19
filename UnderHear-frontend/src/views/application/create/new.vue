@@ -201,14 +201,14 @@ onBeforeUnmount(() => {
 .title {
   font-size: 2.5rem;
   font-weight: 700;
-  color: #24292f;
+  color: var(--font-black);
   margin-bottom: 1rem;
   line-height: 1.2;
 }
 
 .subtitle {
   font-size: 1.05rem;
-  color: #656d76;
+  color: var(--font-gray);
   line-height: 1.6;
   max-width: 620px;
   margin: 0 auto;
@@ -239,12 +239,12 @@ onBeforeUnmount(() => {
 .panel-title {
   margin: 0 0 1rem 0;
   font-weight: 700;
-  color: #24292f;
+  color: var(--font-black);
 }
 
 .preview-button {
   font-size: 0.9rem;
-  color: #0969da;
+  color: var(--font-blue);
   font-weight: 600;
   cursor: pointer;
 }
@@ -288,7 +288,7 @@ onBeforeUnmount(() => {
 .preview-title {
   font-size: 0.95rem;
   font-weight: 700;
-  color: #24292f;
+  color: var(--font-black);
 }
 
 .preview-actions {
@@ -352,14 +352,14 @@ onBeforeUnmount(() => {
 .label {
   font-size: 0.9rem;
   font-weight: 600;
-  color: #24292f;
+  color: var(--font-black);
 }
 
 .sub-title {
   margin: 0.2rem 0 0.1rem;
   font-size: 0.95rem;
   font-weight: 700;
-  color: #24292f;
+  color: var(--font-black);
 }
 
 .submit {
@@ -367,7 +367,7 @@ onBeforeUnmount(() => {
   justify-content: center;
   align-items: center;
   padding: 0.55rem 1rem;
-  background-color: #0969da;
+  background-color: var(--font-blue);
   color: #fff;
   border: none;
   border-radius: 6px;
@@ -390,7 +390,7 @@ onBeforeUnmount(() => {
 
 .hint {
   margin: 0.75rem 0 0;
-  color: #656d76;
+  color: var(--font-gray);
   font-size: 0.9rem;
   line-height: 1.6;
 }

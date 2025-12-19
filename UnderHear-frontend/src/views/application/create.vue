@@ -66,14 +66,14 @@ function goCollect() {
 .title {
   font-size: 2.5rem;
   font-weight: 700;
-  color: #24292f;
+  color: var(--font-black);
   margin-bottom: 1rem;
   line-height: 1.2;
 }
 
 .subtitle {
   font-size: 1.05rem;
-  color: #656d76;
+  color: var(--font-gray);
   line-height: 1.6;
   max-width: 620px;
   margin: 0.35rem auto 0;
@@ -98,7 +98,7 @@ function goCollect() {
 }
 
 .option-card:hover {
-  border-color: #0969da;
+  border-color: var(--font-blue);
   box-shadow: 0 4px 14px -4px rgba(0, 0, 0, 0.08);
 }
 
@@ -106,14 +106,14 @@ function goCollect() {
   margin: 0 0 0.6rem 0;
   font-size: 1.15rem;
   font-weight: 700;
-  color: #24292f;
+  color: var(--font-black);
 }
 
 .option-desc {
   margin: 0;
   font-size: 0.95rem;
   line-height: 1.6;
-  color: #656d76;
+  color: var(--font-gray);
 }
 
 .create-image {

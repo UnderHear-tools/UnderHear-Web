@@ -394,14 +394,14 @@ onMounted(() => {
     margin: 0;
     font-size: 16px;
     font-weight: 600;
-    color: #0969da;
+    color: var(--font-blue);
     line-height: 1.25;
     text-decoration: underline;
 }
 
 .project-date {
     font-size: 12px;
-    color: #656d76;
+    color: var(--font-gray);
     background-color: #f3f5f7;
     padding: 4px 8px;
     border-radius: 12px;
@@ -417,11 +417,11 @@ onMounted(() => {
     margin: 0 0 8px 0;
     font-size: 14px;
     line-height: 1.5;
-    color: #656d76;
+    color: var(--font-gray);
 }
 
 .project-description p:first-child {
-    color: #24292f;
+    color: var(--font-black);
     font-weight: 500;
 }
 
@@ -436,7 +436,7 @@ onMounted(() => {
 .view-more-simple {
     text-align: center;
     padding: 10px;
-    color: #0969da;
+    color: var(--font-blue);
     font-size: 14px;
 }
 

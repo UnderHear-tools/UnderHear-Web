@@ -90,14 +90,14 @@ const getStatusClass = (status: string) => {
 .project-title {
 	font-size: 2.5rem;
 	font-weight: 700;
-	color: #24292f;
+	color: var(--font-black);
 	margin-bottom: 1rem;
 	line-height: 1.2;
 }
 
 .project-subtitle {
 	font-size: 1.1rem;
-	color: #656d76;
+	color: var(--font-gray);
 	line-height: 1.6;
 	max-width: 600px;
 	margin: 0 auto;
@@ -127,14 +127,14 @@ const getStatusClass = (status: string) => {
 	margin: 0;
 	font-size: 1.25rem;
 	font-weight: 600;
-	color: #0969da;
+	color: var(--font-blue);
 	line-height: 1.3;
 	flex: 1;
 }
 
 .project-date {
 	font-size: 0.875rem;
-	color: #656d76;
+	color: var(--font-gray);
 	background-color: #f6f8fa;
 	padding: 0.3rem 0.8rem;
 	border-radius: 100px;
@@ -150,11 +150,11 @@ const getStatusClass = (status: string) => {
 	margin: 0 0 1rem 0;
 	font-size: 0.95rem;
 	line-height: 1.6;
-	color: #656d76;
+	color: var(--font-gray);
 }
 
 .project-description p:first-child {
-	color: #24292f;
+	color: var(--font-black);
 	font-weight: 500;
 	font-size: 1rem;
 }
@@ -196,7 +196,7 @@ const getStatusClass = (status: string) => {
 }
 
 .status-active {
-	color: #0969da;
+	color: var(--font-blue);
 }
 
 .status-updating {
@@ -210,7 +210,7 @@ const getStatusClass = (status: string) => {
 .project-link,.project-detail {
 	display: inline-flex;
 	align-items: center;
-	color: #0969da;
+	color: var(--font-blue);
 	text-decoration: none;
 	font-weight: 600;
 	font-size: 1rem;
