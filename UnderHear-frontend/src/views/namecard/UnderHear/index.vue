@@ -1,5 +1,5 @@
 <template>
-    <zContainer>
+    <zContainer class="zContainer">
         <div class="left-column">
             <div class="profile">
                 <div class="profile-header">
@@ -60,10 +60,8 @@
                     </div>
                 </div>
             </div>
-
             <div class="languages">
                 <h4>我使用的语言、框架和工具 Languages & Frameworks & Tools I use</h4>
-
                 <div class="language-icons">
                     <img src="./assets/index/skillsIcon/typescript-original.svg" class="language-icon" />
                     <img src="./assets/index/skillsIcon/uniapp.svg" class="language-icon" />
@@ -82,7 +80,6 @@
                     <img src="./assets/index/skillsIcon/git-original.svg" class="language-icon" />
                     <img src="./assets/index/skillsIcon/docker-plain.svg" class="language-icon" />
                 </div>
-
             </div>
             <div class="sessions">
                 <h4>项目经历和成果 Project Experience & Achievements</h4>
@@ -157,10 +154,12 @@ onMounted(() => {
     box-sizing: border-box;
 }
 
-.z-container {
+.zContainer {
     display: flex;
+    max-width: 1300px;
+    margin: 0 auto;
+    padding: 40px;
     gap: 30px;
-    width: 100%;
 }
 
 .left-column {
@@ -444,9 +443,8 @@ onMounted(() => {
 
 
 @media (max-width: 768px) {
-    .index .z-container {
+    .zContainer {
         flex-direction: column;
-        padding: 16px;
         gap: 10px;
     }
 
@@ -454,8 +452,6 @@ onMounted(() => {
     .right-column {
         width: 100%;
     }
-
-
 
     .session-list {
         grid-template-columns: 1fr;
