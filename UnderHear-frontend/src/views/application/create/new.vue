@@ -110,7 +110,7 @@ function handleSubmit() {
 
 function refreshPreview() {
   const code = editor?.getValue() ?? defaultTemplate
-  return `<!doctype html><html><body style="margin:0">${code}</body></html>`
+  return `<!doctype html><head><meta charset="utf-8"></head><html><body style="margin:0">${code}</body></html>`
 }
 
 function openPreview() {
