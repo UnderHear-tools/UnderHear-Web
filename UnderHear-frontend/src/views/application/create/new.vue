@@ -165,12 +165,6 @@ function closePreview() {
   unlockBodyScroll()
 }
 
-function onWindowKeydown(event: KeyboardEvent) {
-  if (event.key === 'Escape' && isPreviewOpen.value) {
-    closePreview()
-  }
-}
-
 onMounted(() => {
   if (!editorContainer.value) return
 
@@ -182,11 +176,9 @@ onMounted(() => {
     minimap: { enabled: false }
   })
 
-  window.addEventListener('keydown', onWindowKeydown)
 })
 
 onBeforeUnmount(() => {
-  window.removeEventListener('keydown', onWindowKeydown)
   unlockBodyScroll()
   editor?.dispose()
 })
