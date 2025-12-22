@@ -12,7 +12,10 @@
       <div class="panel panel--editor">
         <div class="panel-header">
           <h4 class="panel-title">页面代码（可选）</h4>
-          <button class="preview-button" @click="openPreview">点击预览</button>
+          <div class="panel-actions">
+            <button class="preview-button" @click="clearPreview">清除</button>
+            <button class="preview-button" @click="openPreview">点击预览</button>
+          </div>
         </div>
         <div ref="editorContainer" class="editor"></div>
         <p class="hint">后续可将这里的内容用于预览、存档或发布流程。</p>
@@ -103,6 +106,9 @@ const defaultTemplate = `<!-- 在这里粘贴/编写你的单页应用代码（�
   <p>Write something awesome.</p>
 </main>
 `
+function clearPreview() {
+  editor?.setValue('')
+}
 
 function handleSubmit() {
   console.log('[application/create] submit (placeholder)', form.value)
@@ -197,6 +203,11 @@ onBeforeUnmount(() => {
   margin: 0 0 1rem 0;
   font-weight: 700;
   color: var(--font-black);
+}
+
+.panel-actions {
+  display: flex;
+  gap: 1rem;
 }
 
 .preview-button {
