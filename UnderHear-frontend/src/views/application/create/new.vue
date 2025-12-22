@@ -12,7 +12,7 @@
       <div class="panel panel--editor">
         <div class="panel-header">
           <h4 class="panel-title">页面代码（可选）</h4>
-          <button class="preview-button" @click="openPreview($event)">点击预览</button>
+          <button class="preview-button" @click="openPreview">点击预览</button>
         </div>
         <div ref="editorContainer" class="editor"></div>
         <p class="hint">后续可将这里的内容用于预览、存档或发布流程。</p>
@@ -70,13 +70,6 @@
       </div>
     </div>
 
-      <teleport to="body">
-      <div v-if="isPreviewOpen" class="preview-overlay" @click.self="closePreview">
-        <div class="preview-reveal" :style="previewOverlayStyle">
-          <iframe class="preview-frame" :srcdoc="previewHtml" sandbox="allow-scripts"></iframe>
-        </div>
-      </div>
-      </teleport>
   </zContainer>
 </template>
 
@@ -92,14 +85,6 @@ import { zLink } from '@/components/z-ui/link/zlink'
 
 const editorContainer = ref<HTMLElement | null>(null)
 let editor: monaco.editor.IStandaloneCodeEditor | undefined
-
-const isPreviewOpen = ref(false)
-const previewHtml = ref('')
-const previewOverlayStyle = ref<Record<string, string>>({
-  '--preview-origin-x': '50vw',
-  '--preview-origin-y': '50vh'
-})
-let previousBodyOverflow: string | null = null
 
 const form = ref({
   title: '',
@@ -123,46 +108,27 @@ function handleSubmit() {
   console.log('[application/create] submit (placeholder)', form.value)
 }
 
-function lockBodyScroll() {
-  if (previousBodyOverflow !== null) return
-  previousBodyOverflow = document.body.style.overflow
-  document.body.style.overflow = 'hidden'
-}
-
-function unlockBodyScroll() {
-  if (previousBodyOverflow === null) return
-  document.body.style.overflow = previousBodyOverflow
-  previousBodyOverflow = null
-}
-
 function refreshPreview() {
   const code = editor?.getValue() ?? defaultTemplate
-  previewHtml.value = `<!doctype html><html><body style="margin:0">${code}</body></html>`
+  return `<!doctype html><html><body style="margin:0">${code}</body></html>`
 }
 
-function openPreview(event?: MouseEvent) {
-  const fallbackX = window.innerWidth / 2
-  const fallbackY = window.innerHeight / 2
+function openPreview() {
+  const previewWindow = window.open('about:blank', '_blank')
+  if (!previewWindow) return
 
-  const clientX = event?.clientX ?? fallbackX
-  const clientY = event?.clientY ?? fallbackY
+  const html = refreshPreview()
+  const blob = new Blob([html], { type: 'text/html' })
+  const url = URL.createObjectURL(blob)
 
-  const originX = clientX === 0 ? fallbackX : clientX
-  const originY = clientY === 0 ? fallbackY : clientY
-
-  previewOverlayStyle.value = {
-    '--preview-origin-x': `${Math.round(originX)}px`,
-    '--preview-origin-y': `${Math.round(originY)}px`
-  }
-
-  refreshPreview()
-  isPreviewOpen.value = true
-  lockBodyScroll()
-}
-
-function closePreview() {
-  isPreviewOpen.value = false
-  unlockBodyScroll()
+  previewWindow.location.replace(url)
+  previewWindow.addEventListener(
+    'load',
+    () => {
+      URL.revokeObjectURL(url)
+    },
+    { once: true }
+  )
 }
 
 onMounted(() => {
@@ -179,7 +145,6 @@ onMounted(() => {
 })
 
 onBeforeUnmount(() => {
-  unlockBodyScroll()
   editor?.dispose()
 })
 </script>
@@ -243,92 +208,6 @@ onBeforeUnmount(() => {
 
 .panel-header .panel-title {
   margin-bottom: 0;
-}
-
-.preview-overlay {
-  position: fixed;
-  inset: 0;
-  background: transparent;
-  z-index: 9999;
-  overflow: hidden;
-}
-
-.preview-reveal {
-  --preview-origin-x: 50vw;
-  --preview-origin-y: 50vh;
-  position: absolute;
-  inset: 0;
-  display: flex;
-  flex-direction: column;
-  pointer-events: none;
-  -webkit-clip-path: circle(150vmax at var(--preview-origin-x) var(--preview-origin-y));
-  clip-path: circle(150vmax at var(--preview-origin-x) var(--preview-origin-y));
-  animation: preview-overlay-reveal 3000ms cubic-bezier(0.2, 0.9, 0.2, 1) both;
-  will-change: clip-path;
-}
-
-.preview-toolbar {
-  height: 56px;
-  background: #fff;
-  border-bottom: 1px solid #d1d9e1;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 0 16px;
-}
-
-.preview-title {
-  font-size: 0.95rem;
-  font-weight: 700;
-  color: var(--font-black);
-}
-
-.preview-actions {
-  display: flex;
-  gap: 10px;
-}
-
-.preview-refresh,
-.preview-close {
-  cursor: pointer;
-  border: 1px solid #d1d9e1;
-  background: #fff;
-  border-radius: 8px;
-  padding: 8px 12px;
-  font-weight: 600;
-}
-
-.preview-refresh:hover,
-.preview-close:hover {
-  background: #f6f8fa;
-}
-
-.preview-frame {
-  flex: 1 1 auto;
-  width: 100%;
-  border: 0;
-  background: #fff;
-  pointer-events: auto;
-}
-
-@keyframes preview-overlay-reveal {
-  from {
-    -webkit-clip-path: circle(0px at var(--preview-origin-x) var(--preview-origin-y));
-    clip-path: circle(0px at var(--preview-origin-x) var(--preview-origin-y));
-  }
-
-  to {
-    -webkit-clip-path: circle(150vmax at var(--preview-origin-x) var(--preview-origin-y));
-    clip-path: circle(150vmax at var(--preview-origin-x) var(--preview-origin-y));
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .preview-reveal {
-    animation: none;
-    -webkit-clip-path: none;
-    clip-path: none;
-  }
 }
 
 .form {
