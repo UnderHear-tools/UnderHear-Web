@@ -76,7 +76,7 @@ function goCollect() {
   color: var(--font-gray);
   line-height: 1.6;
   max-width: 620px;
-  margin: 0.35rem auto 0;
+  margin: 0 auto;
 }
 
 .options-grid {
