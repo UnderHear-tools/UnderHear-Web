@@ -66,6 +66,12 @@
             <artifactId>JustAuth</artifactId>
             <version>1.16.7</version>
         </dependency>
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <version>1.18.34</version>
+            <optional>true</optional>
+        </dependency>
     </dependencies>
 
     <build>
