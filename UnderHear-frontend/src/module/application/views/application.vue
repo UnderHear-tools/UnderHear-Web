@@ -46,7 +46,7 @@ import { zContainer } from '@/components/z-ui/container/zContainer'
 import { zLink } from '@/components/z-ui/link/zlink'
 
 // 引入数据
-import applicationData from '@/views/application/Applicationcard.json'
+import applicationData from '../views/application/Applicationcard.json'
 
 interface ApplicationDescription {
   zh: string

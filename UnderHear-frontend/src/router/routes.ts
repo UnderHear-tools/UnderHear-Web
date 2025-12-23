@@ -1,12 +1,12 @@
 import type { RouteRecordRaw } from 'vue-router'
-import { homeRoutes } from './routes/home'
-import { applicationRoutes } from './routes/application'
-import { componentRoutes } from './routes/component'
-import { namecardRoutes } from './routes/namecard'
-import { authRoutes } from './routes/auth'
+import { indexRoutes } from '../module/index/router'
+import { applicationRoutes } from '../module/application/router/application'
+import { componentRoutes } from '../module/components/router/component'
+import { namecardRoutes } from '../module/namecard/router/namecard'
+import { authRoutes } from '../module/auth/router/auth'
 
 export const routes: Array<RouteRecordRaw> = [
-    ...homeRoutes,
+    ...indexRoutes,
     ...applicationRoutes,
     ...componentRoutes,
     ...namecardRoutes,

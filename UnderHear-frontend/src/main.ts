@@ -3,7 +3,7 @@ import './style.css'
 import App from './App.vue'
 import router from './router'
 
-import '@/lib/monaco/setupMonaco'
+import '@/module/application/lib/monaco/setupMonaco'
 
 const app = createApp(App)
 app.use(router)

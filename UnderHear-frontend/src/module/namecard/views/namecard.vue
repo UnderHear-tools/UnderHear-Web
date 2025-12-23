@@ -11,7 +11,7 @@
 		<div class="creator-grid">
 			<RouterLink to="/namecard/UnderHear" class="creator-card">
 				<div class="creator-main">
-					<img src="@/views/namecard/UnderHear/assets/index/avatar.png" alt="UnderHear" class="avatar" />
+					<img src="../views/namecard/UnderHear/assets/index/avatar.png" alt="UnderHear" class="avatar" />
 					<div class="info">
 						<div class="name-row">
 							<h3 class="name">UnderHear</h3>

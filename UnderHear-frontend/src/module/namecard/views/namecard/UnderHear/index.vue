@@ -121,7 +121,7 @@ import { IconPark } from '@icon-park/vue-next/es/all';
 
 
 // 引入数据
-import projectData from '@/views/namecard/UnderHear/data/Projectcard.json'
+import projectData from '../UnderHear/data/Projectcard.json'
 
 
 //

@@ -4,7 +4,7 @@ export const authRoutes: Array<RouteRecordRaw> = [
   {
     path: '/auth/login',
     name: 'Login',
-    component: () => import('@/views/auth/login.vue')
+    component: () => import('../views/auth/login.vue')
   }
 ]
 

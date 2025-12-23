@@ -39,7 +39,7 @@ import { zContainer } from '@/components/z-ui/container/zContainer'
 import {zTechTag} from '@/components/z-ui/tag/zTechTag/'
 
 // 引入数据
-import projectData from '@/views/namecard/UnderHear/data/Projectcard.json'
+import projectData from '../UnderHear/data/Projectcard.json'
 
 //
 interface ProjectDescription {
