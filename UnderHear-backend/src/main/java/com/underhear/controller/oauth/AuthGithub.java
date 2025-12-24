@@ -1,6 +1,8 @@
 package com.underhear.controller.oauth;
 
 import me.zhyd.oauth.config.AuthConfig;
+import me.zhyd.oauth.model.AuthResponse;
+import me.zhyd.oauth.model.AuthUser;
 import me.zhyd.oauth.request.AuthGithubRequest;
 import me.zhyd.oauth.model.AuthCallback;
 import me.zhyd.oauth.request.AuthRequest;
@@ -14,7 +16,7 @@ import java.io.IOException;
 
 
 @RestController
-@RequestMapping("/oauth")
+@RequestMapping("/oauth/github")
 public class AuthGithub {
 
     @Value("${github.oauth.client-id}")
@@ -35,7 +37,8 @@ public class AuthGithub {
     @RequestMapping("/callback")
     public Object login(AuthCallback callback) {
         AuthRequest authRequest = getAuthRequest();
-        return authRequest.login(callback);
+        AuthResponse<AuthUser> authResponse = authRequest.login(callback);
+        return authResponse;
     }
 
     private AuthRequest getAuthRequest() {
