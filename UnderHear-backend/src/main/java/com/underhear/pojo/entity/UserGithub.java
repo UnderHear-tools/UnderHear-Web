@@ -1,4 +1,4 @@
-package com.underhear.entity;
+package com.underhear.pojo.entity;
 
 import java.time.LocalDateTime;
 

@@ -1,4 +1,4 @@
-package com.underhear.mapper.api;
+package com.underhear.mapper.oauth;
 
 public class AuthGithubMapper {
 }

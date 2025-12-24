@@ -17,7 +17,7 @@ import java.io.IOException;
 
 @RestController
 @RequestMapping("/oauth/github")
-public class AuthGithub {
+public class AuthGithubController {
 
     @Value("${github.oauth.client-id}")
     private String clientId;
@@ -38,6 +38,7 @@ public class AuthGithub {
     public Object login(AuthCallback callback) {
         AuthRequest authRequest = getAuthRequest();
         AuthResponse<AuthUser> authResponse = authRequest.login(callback);
+
         return authResponse;
     }
 
