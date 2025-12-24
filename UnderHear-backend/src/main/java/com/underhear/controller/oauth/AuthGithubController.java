@@ -7,9 +7,13 @@ import me.zhyd.oauth.request.AuthGithubRequest;
 import me.zhyd.oauth.model.AuthCallback;
 import me.zhyd.oauth.request.AuthRequest;
 import me.zhyd.oauth.utils.AuthStateUtils;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import com.underhear.service.oauth.AuthGithubService;
 
 import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
@@ -18,6 +22,9 @@ import java.io.IOException;
 @RestController
 @RequestMapping("/oauth/github")
 public class AuthGithubController {
+
+    @Autowired
+    private AuthGithubService authGithubService;
 
     @Value("${github.oauth.client-id}")
     private String clientId;
@@ -35,11 +42,11 @@ public class AuthGithubController {
     }
 
     @RequestMapping("/callback")
-    public Object login(AuthCallback callback) {
+    public String login(AuthCallback callback) {
         AuthRequest authRequest = getAuthRequest();
         AuthResponse<AuthUser> authResponse = authRequest.login(callback);
-
-        return authResponse;
+        String token = authGithubService.login(authResponse);
+        return "OK";
     }
 
     private AuthRequest getAuthRequest() {

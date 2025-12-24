@@ -1,4 +1,9 @@
 package com.underhear.service.oauth;
 
-public class AuthGithubService {
+import me.zhyd.oauth.model.AuthResponse;
+import me.zhyd.oauth.model.AuthUser;
+
+public interface AuthGithubService {
+
+    String login(AuthResponse<AuthUser> authResponse);
 }
