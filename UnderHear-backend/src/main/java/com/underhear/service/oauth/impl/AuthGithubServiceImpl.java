@@ -88,8 +88,8 @@ public class AuthGithubServiceImpl implements AuthGithubService {
         user.setUuid(userGithub.getUuid());
         user.setNickName(userGithub.getName());
         user.setAvatarUrl(userGithub.getAvatarUrl());
-        user.setCreate_at(LocalDateTime.now());
-        user.setUpdate_at(LocalDateTime.now());
+        user.setCreatedAt(LocalDateTime.now());
+        user.setUpdatedAt(LocalDateTime.now());
         return user;
     }
 

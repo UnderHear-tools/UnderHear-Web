@@ -10,7 +10,7 @@ public class User {
     private String uuid;
     private String nickName;
     private String avatarUrl;
-    private LocalDateTime create_at;
-    private LocalDateTime update_at;
+    private LocalDateTime createdAt;
+    private LocalDateTime updatedAt;
 }
 
