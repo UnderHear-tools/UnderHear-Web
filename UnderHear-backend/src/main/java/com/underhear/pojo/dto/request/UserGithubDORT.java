@@ -3,7 +3,7 @@ package com.underhear.pojo.dto.request;
 import lombok.Data;
 
 @Data
-public class UserGithubDORT {
+public class UserGithubDort {
     private Long githubId;
     private String name;
     private String avatarUrl;

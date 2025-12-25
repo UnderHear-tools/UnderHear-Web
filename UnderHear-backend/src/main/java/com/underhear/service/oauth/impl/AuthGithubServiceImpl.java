@@ -8,7 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.alibaba.fastjson.JSONObject;
 import com.underhear.mapper.oauth.AuthGithubMapper;
-import com.underhear.pojo.dto.request.UserGithubDORT;
+import com.underhear.pojo.dto.request.UserGithubDort;
 import com.underhear.pojo.entity.UserGithub;
 import com.underhear.pojo.entity.User;
 import com.underhear.service.api.UserService;
@@ -48,43 +48,44 @@ public class AuthGithubServiceImpl implements AuthGithubService {
             throw new IllegalStateException("github access token is empty");
         }
         
-        UserGithubDORT userGithubDORT = toUserGithubDORT(authUser.getRawUserInfo(), token);
-        UserGithub userGithub = toUserGithub(userGithubDORT);
-        User user = toUser(userGithub);
+        UserGithubDort userGithubDort = toUserGithubDort(authUser.getRawUserInfo(), token);
         
-        if (!exists(userGithubDORT)) {
+        if (!exists(userGithubDort)) {
+            UserGithub userGithub = toUserGithub(userGithubDort);
+            User user = toUser(userGithub);
             authGithubMapper.saveUserGithubAndUser(userGithub, user);
         }
 
+        User user = userService.findUserByGithubId(userGithubDort.getGithubId());
 
-
+        
 
         return token.getAccessToken();
     }
 
-    private UserGithubDORT toUserGithubDORT(Object rawUserInfo, AuthToken token) {
+    private UserGithubDort toUserGithubDort(Object rawUserInfo, AuthToken token) {
         JSONObject rawUserInfoJSON = (JSONObject) rawUserInfo;
-        UserGithubDORT userGithubDORT = new UserGithubDORT();
-        userGithubDORT.setGithubId(rawUserInfoJSON.getLong("id"));
-        userGithubDORT.setName(rawUserInfoJSON.getString("name"));
-        userGithubDORT.setAvatarUrl(rawUserInfoJSON.getString("avatar_url"));
-        userGithubDORT.setEmail(rawUserInfoJSON.getString("email"));
-        userGithubDORT.setBio(rawUserInfoJSON.getString("bio"));
-        userGithubDORT.setHtmlUrl(rawUserInfoJSON.getString("html_url"));
-        userGithubDORT.setGithubToken(token.getAccessToken());
-        return userGithubDORT;
+        UserGithubDort userGithubDort = new UserGithubDort();
+        userGithubDort.setGithubId(rawUserInfoJSON.getLong("id"));
+        userGithubDort.setName(rawUserInfoJSON.getString("name"));
+        userGithubDort.setAvatarUrl(rawUserInfoJSON.getString("avatar_url"));
+        userGithubDort.setEmail(rawUserInfoJSON.getString("email"));
+        userGithubDort.setBio(rawUserInfoJSON.getString("bio"));
+        userGithubDort.setHtmlUrl(rawUserInfoJSON.getString("html_url"));
+        userGithubDort.setGithubToken(token.getAccessToken());
+        return userGithubDort;
     }
 
-    private UserGithub toUserGithub(UserGithubDORT userGithubDORT) {
+    private UserGithub toUserGithub(UserGithubDort userGithubDort) {
         UserGithub userGithub = new UserGithub();
         userGithub.setUuid(ShortUuidGenerator.next());
-        userGithub.setGithubId(userGithubDORT.getGithubId());
-        userGithub.setName(userGithubDORT.getName());
-        userGithub.setAvatarUrl(userGithubDORT.getAvatarUrl());
-        userGithub.setEmail(userGithubDORT.getEmail());
-        userGithub.setBio(userGithubDORT.getBio());
-        userGithub.setHtmlUrl(userGithubDORT.getHtmlUrl());
-        userGithub.setGithubToken(userGithubDORT.getGithubToken());
+        userGithub.setGithubId(userGithubDort.getGithubId());
+        userGithub.setName(userGithubDort.getName());
+        userGithub.setAvatarUrl(userGithubDort.getAvatarUrl());
+        userGithub.setEmail(userGithubDort.getEmail());
+        userGithub.setBio(userGithubDort.getBio());
+        userGithub.setHtmlUrl(userGithubDort.getHtmlUrl());
+        userGithub.setGithubToken(userGithubDort.getGithubToken());
         return userGithub;
     }
 
@@ -100,12 +101,12 @@ public class AuthGithubServiceImpl implements AuthGithubService {
 
     @Override
     //在oauth_github表中检测该用户是否存在
-    public boolean exists(UserGithubDORT userGithubDORT) {
-        if (userGithubDORT == null) {
+    public boolean exists(UserGithubDort userGithubDort) {
+        if (userGithubDort == null) {
             return false;
         }
-        if (userGithubDORT.getGithubId() != null) {
-            return authGithubMapper.countByGithubId(userGithubDORT.getGithubId()) > 0;
+        if (userGithubDort.getGithubId() != null) {
+            return authGithubMapper.countByGithubId(userGithubDort.getGithubId()) > 0;
         }
         return false;
     }

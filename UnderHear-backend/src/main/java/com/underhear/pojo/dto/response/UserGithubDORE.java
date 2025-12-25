@@ -1,4 +1,4 @@
 package com.underhear.pojo.dto.response;
 
-public class UserGithubDORE {
+public class UserGithubDore {
 }
