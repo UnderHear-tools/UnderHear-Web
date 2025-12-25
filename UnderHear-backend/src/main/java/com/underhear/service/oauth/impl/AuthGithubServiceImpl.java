@@ -11,6 +11,7 @@ import com.underhear.mapper.oauth.AuthGithubMapper;
 import com.underhear.pojo.dto.request.UserGithubDORT;
 import com.underhear.pojo.entity.UserGithub;
 import com.underhear.pojo.entity.User;
+import com.underhear.service.api.UserService;
 import com.underhear.service.oauth.AuthGithubService;
 import com.underhear.util.ShortUuidGenerator;
 
@@ -23,6 +24,9 @@ public class AuthGithubServiceImpl implements AuthGithubService {
 
     @Autowired
     private AuthGithubMapper authGithubMapper;
+    
+    @Autowired
+    private UserService userService;
 
     @Override
     @Transactional
@@ -48,11 +52,12 @@ public class AuthGithubServiceImpl implements AuthGithubService {
         UserGithub userGithub = toUserGithub(userGithubDORT);
         User user = toUser(userGithub);
         
-        if (exists(userGithubDORT)) {
-            
-        } else {
+        if (!exists(userGithubDORT)) {
             authGithubMapper.saveUserGithubAndUser(userGithub, user);
         }
+
+
+
 
         return token.getAccessToken();
     }
