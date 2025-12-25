@@ -2,12 +2,17 @@ package com.underhear.service.oauth.impl;
 
 import java.time.LocalDateTime;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.alibaba.fastjson.JSONObject;
+import com.underhear.mapper.oauth.AuthGithubMapper;
 import com.underhear.pojo.dto.request.UserGithubDORT;
 import com.underhear.pojo.entity.UserGithub;
+import com.underhear.pojo.entity.User;
 import com.underhear.service.oauth.AuthGithubService;
+import com.underhear.util.ShortUuidGenerator;
 
 import me.zhyd.oauth.model.AuthResponse;
 import me.zhyd.oauth.model.AuthToken;
@@ -16,7 +21,12 @@ import me.zhyd.oauth.model.AuthUser;
 @Service
 public class AuthGithubServiceImpl implements AuthGithubService {
 
+    @Autowired
+    private AuthGithubMapper authGithubMapper;
+
     @Override
+    @Transactional
+    //github oauth登录/注册
     public String login(AuthResponse<AuthUser> authResponse) {
         if (authResponse == null) {
             throw new IllegalArgumentException("authResponse is null");
@@ -33,9 +43,16 @@ public class AuthGithubServiceImpl implements AuthGithubService {
         if (token == null || token.getAccessToken() == null || token.getAccessToken().isBlank()) {
             throw new IllegalStateException("github access token is empty");
         }
+        
         UserGithubDORT userGithubDORT = toUserGithubDORT(authUser.getRawUserInfo(), token);
         UserGithub userGithub = toUserGithub(userGithubDORT);
-        // TODO: persist userGithub if needed.
+        User user = toUser(userGithub);
+        
+        if (exists(userGithubDORT)) {
+
+        } else {
+            authGithubMapper.saveUserGithubAndUser(userGithub, user);
+        }
 
         return token.getAccessToken();
     }
@@ -44,7 +61,6 @@ public class AuthGithubServiceImpl implements AuthGithubService {
         JSONObject rawUserInfoJSON = (JSONObject) rawUserInfo;
         UserGithubDORT userGithubDORT = new UserGithubDORT();
         userGithubDORT.setGithubId(rawUserInfoJSON.getLong("id"));
-        userGithubDORT.setLogin(rawUserInfoJSON.getString("login"));
         userGithubDORT.setName(rawUserInfoJSON.getString("name"));
         userGithubDORT.setAvatarUrl(rawUserInfoJSON.getString("avatar_url"));
         userGithubDORT.setEmail(rawUserInfoJSON.getString("email"));
@@ -56,17 +72,37 @@ public class AuthGithubServiceImpl implements AuthGithubService {
 
     private UserGithub toUserGithub(UserGithubDORT userGithubDORT) {
         UserGithub userGithub = new UserGithub();
+        userGithub.setUuid(ShortUuidGenerator.next());
         userGithub.setGithubId(userGithubDORT.getGithubId());
-        userGithub.setLogin(userGithubDORT.getLogin());
         userGithub.setName(userGithubDORT.getName());
         userGithub.setAvatarUrl(userGithubDORT.getAvatarUrl());
         userGithub.setEmail(userGithubDORT.getEmail());
         userGithub.setBio(userGithubDORT.getBio());
         userGithub.setHtmlUrl(userGithubDORT.getHtmlUrl());
         userGithub.setGithubToken(userGithubDORT.getGithubToken());
-        userGithub.setCreatedAt(LocalDateTime.now());
-        userGithub.setUpdatedAt(LocalDateTime.now());
         return userGithub;
+    }
+
+    private User toUser(UserGithub userGithub) {
+        User user = new User();
+        user.setUuid(userGithub.getUuid());
+        user.setNickName(userGithub.getName());
+        user.setAvatarUrl(userGithub.getAvatarUrl());
+        user.setCreate_at(LocalDateTime.now());
+        user.setUpdate_at(LocalDateTime.now());
+        return user;
+    }
+
+    @Override
+    //在oauth_github表中检测该用户是否存在
+    public boolean exists(UserGithubDORT userGithubDORT) {
+        if (userGithubDORT == null) {
+            return false;
+        }
+        if (userGithubDORT.getGithubId() != null) {
+            return authGithubMapper.countByGithubId(userGithubDORT.getGithubId()) > 0;
+        }
+        return false;
     }
 
 }

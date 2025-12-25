@@ -45,7 +45,7 @@ public class AuthGithubController {
     public String login(AuthCallback callback) {
         AuthRequest authRequest = getAuthRequest();
         AuthResponse<AuthUser> authResponse = authRequest.login(callback);
-        String token = authGithubService.login(authResponse);
+        String token = authGithubService.login(authResponse); 
         return "OK";
     }
 

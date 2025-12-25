@@ -5,7 +5,6 @@ import lombok.Data;
 @Data
 public class UserGithubDORT {
     private Long githubId;
-    private String login;
     private String name;
     private String avatarUrl;
     private String email;
