@@ -49,7 +49,7 @@ public class AuthGithubServiceImpl implements AuthGithubService {
         User user = toUser(userGithub);
         
         if (exists(userGithubDORT)) {
-
+            
         } else {
             authGithubMapper.saveUserGithubAndUser(userGithub, user);
         }
