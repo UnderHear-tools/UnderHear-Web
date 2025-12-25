@@ -5,7 +5,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.underhear.converter.DortToEntity;
-import com.underhear.converter.EntityToDore;
+import com.underhear.converter.OtherToDort;
 import com.underhear.mapper.oauth.AuthGithubMapper;
 import com.underhear.pojo.dto.request.UserGithubDort;
 import com.underhear.pojo.entity.UserGithub;
@@ -46,7 +46,7 @@ public class AuthGithubServiceImpl implements AuthGithubService {
             throw new IllegalStateException("github access token is empty");
         }
         
-        UserGithubDort userGithubDort = DortToEntity.toUserGithubDort(authUser.getRawUserInfo(), token);
+        UserGithubDort userGithubDort = OtherToDort.toUserGithubDort(authUser.getRawUserInfo(), token);
         
         if (!exists(userGithubDort)) {
             UserGithub userGithub = DortToEntity.toUserGithub(userGithubDort);
