@@ -5,6 +5,7 @@ import java.time.LocalDateTime;
 import org.springframework.stereotype.Service;
 
 import com.alibaba.fastjson.JSONObject;
+import com.underhear.pojo.dto.request.UserGithubDORT;
 import com.underhear.pojo.entity.UserGithub;
 import com.underhear.service.oauth.AuthGithubService;
 
@@ -32,44 +33,40 @@ public class AuthGithubServiceImpl implements AuthGithubService {
         if (token == null || token.getAccessToken() == null || token.getAccessToken().isBlank()) {
             throw new IllegalStateException("github access token is empty");
         }
-
-        UserGithub userGithub = toUserGithub(authUser, token);
+        UserGithubDORT userGithubDORT = toUserGithubDORT(authUser.getRawUserInfo(), token);
+        UserGithub userGithub = toUserGithub(userGithubDORT);
         // TODO: persist userGithub if needed.
 
         return token.getAccessToken();
     }
 
-    private UserGithub toUserGithub(AuthUser authUser, AuthToken token) {
-        UserGithub user = new UserGithub();
-        user.setGithubId(parseGithubId(authUser.getUuid()));
-        user.setLogin(authUser.getUsername());
-        user.setName(authUser.getNickname());
-        user.setAvatarUrl(authUser.getAvatar());
-        user.setEmail(authUser.getEmail());
-        user.setBio(authUser.getRemark());
-        user.setHtmlUrl(resolveHtmlUrl(authUser));
-        user.setGithubToken(token.getAccessToken());
-        user.setCreatedAt(LocalDateTime.now());
-        user.setUpdatedAt(LocalDateTime.now());
-        return user;
+    private UserGithubDORT toUserGithubDORT(Object rawUserInfo, AuthToken token) {
+        JSONObject rawUserInfoJSON = (JSONObject) rawUserInfo;
+        UserGithubDORT userGithubDORT = new UserGithubDORT();
+        userGithubDORT.setGithubId(rawUserInfoJSON.getLong("id"));
+        userGithubDORT.setLogin(rawUserInfoJSON.getString("login"));
+        userGithubDORT.setName(rawUserInfoJSON.getString("name"));
+        userGithubDORT.setAvatarUrl(rawUserInfoJSON.getString("avatar_url"));
+        userGithubDORT.setEmail(rawUserInfoJSON.getString("email"));
+        userGithubDORT.setBio(rawUserInfoJSON.getString("bio"));
+        userGithubDORT.setHtmlUrl(rawUserInfoJSON.getString("html_url"));
+        userGithubDORT.setGithubToken(token.getAccessToken());
+        return userGithubDORT;
     }
 
-    private Long parseGithubId(String uuid) {
-        if (uuid == null || uuid.isBlank()) {
-            return null;
-        }
-        try {
-            return Long.parseLong(uuid);
-        } catch (NumberFormatException ex) {
-            return null;
-        }
+    private UserGithub toUserGithub(UserGithubDORT userGithubDORT) {
+        UserGithub userGithub = new UserGithub();
+        userGithub.setGithubId(userGithubDORT.getGithubId());
+        userGithub.setLogin(userGithubDORT.getLogin());
+        userGithub.setName(userGithubDORT.getName());
+        userGithub.setAvatarUrl(userGithubDORT.getAvatarUrl());
+        userGithub.setEmail(userGithubDORT.getEmail());
+        userGithub.setBio(userGithubDORT.getBio());
+        userGithub.setHtmlUrl(userGithubDORT.getHtmlUrl());
+        userGithub.setGithubToken(userGithubDORT.getGithubToken());
+        userGithub.setCreatedAt(LocalDateTime.now());
+        userGithub.setUpdatedAt(LocalDateTime.now());
+        return userGithub;
     }
 
-    private String resolveHtmlUrl(AuthUser authUser) {
-        JSONObject rawUserInfo = authUser.getRawUserInfo();
-        if (rawUserInfo == null) {
-            return null;
-        }
-        return rawUserInfo.getString("html_url");
-    }
 }
