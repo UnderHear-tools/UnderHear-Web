@@ -4,5 +4,5 @@ import com.underhear.pojo.entity.User;
 
 public interface UserService {
 
-    User findUserByGithubId(Long githubId);
+    User getUserByGithubId(Long githubId);
 }

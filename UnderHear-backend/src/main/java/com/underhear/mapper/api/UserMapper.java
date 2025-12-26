@@ -15,5 +15,5 @@ public interface UserMapper {
             join user_github ug on u.uuid = ug.uuid
             where ug.github_id = #{githubId}
             """)
-    User findUserByGithubId(@Param("githubId") Long githubId);
+    User getUserByGithubId(@Param("githubId") Long githubId);
 }

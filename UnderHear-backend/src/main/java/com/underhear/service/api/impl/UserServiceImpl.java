@@ -16,10 +16,10 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User findUserByGithubId(Long githubId) {
+    public User getUserByGithubId(Long githubId) {
         if (githubId == null) {
             return null;
         }
-        return userMapper.findUserByGithubId(githubId);
+        return userMapper.getUserByGithubId(githubId);
     }
 }

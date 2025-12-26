@@ -10,6 +10,7 @@ import com.underhear.mapper.oauth.AuthGithubMapper;
 import com.underhear.pojo.dto.request.UserGithubDort;
 import com.underhear.pojo.entity.UserGithub;
 import com.underhear.pojo.entity.User;
+import com.underhear.security.JwtTokenService;
 import com.underhear.service.api.UserService;
 import com.underhear.service.oauth.AuthGithubService;
 
@@ -26,6 +27,9 @@ public class AuthGithubServiceImpl implements AuthGithubService {
     @Autowired
     private UserService userService;
 
+    @Autowired
+    private JwtTokenService jwtTokenService;
+
     @Override
     @Transactional
     //github oauth登录/注册
@@ -41,24 +45,25 @@ public class AuthGithubServiceImpl implements AuthGithubService {
         if (authUser == null) {
             throw new IllegalStateException("github user info is empty");
         }
-        AuthToken token = authUser.getToken();
-        if (token == null || token.getAccessToken() == null || token.getAccessToken().isBlank()) {
+        AuthToken githubToken = authUser.getToken();
+        if (githubToken == null || githubToken.getAccessToken() == null || githubToken.getAccessToken().isBlank()) {
             throw new IllegalStateException("github access token is empty");
         }
         
-        UserGithubDort userGithubDort = OtherToDort.toUserGithubDort(authUser.getRawUserInfo(), token);
+        UserGithubDort userGithubDort = OtherToDort.toUserGithubDort(authUser.getRawUserInfo(), githubToken);
         
+        User user = null;
         if (!exists(userGithubDort)) {
             UserGithub userGithub = DortToEntity.toUserGithub(userGithubDort);
-            User user = DortToEntity.toUser(userGithub);
+            user = DortToEntity.toUser(userGithub);
             authGithubMapper.saveUserGithubAndUser(userGithub, user);
+            String token = jwtTokenService.generateToken(user.getUuid());
         }
 
-        User user = userService.findUserByGithubId(userGithubDort.getGithubId());
+        user = userService.getUserByGithubId(userGithubDort.getGithubId());
+        String token = jwtTokenService.generateToken(user.getUuid());
 
-        
-
-        return token.getAccessToken();
+        return token;
     }
 
     @Override
