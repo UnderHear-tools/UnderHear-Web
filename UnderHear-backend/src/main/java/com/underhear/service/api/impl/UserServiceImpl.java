@@ -24,6 +24,14 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public User getUserByGiteeId(Long giteeId) {
+        if (giteeId == null) {
+            return null;
+        }
+        return userMapper.getUserByGiteeId(giteeId);
+    }
+
+    @Override
     public int updateUserLastLoginByUuid(String uuid, java.time.LocalDateTime lastLoginAt, String lastLoginSource) {
         if (uuid == null || uuid.isBlank()) {
             return 0;

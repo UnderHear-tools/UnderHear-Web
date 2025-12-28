@@ -2,8 +2,10 @@ package com.underhear.converter;
 
 import java.time.LocalDateTime;
 
+import com.underhear.pojo.dto.request.UserGiteeDort;
 import com.underhear.pojo.dto.request.UserGithubDort;
 import com.underhear.pojo.entity.User;
+import com.underhear.pojo.entity.UserGitee;
 import com.underhear.pojo.entity.UserGithub;
 import com.underhear.util.ShortUuidGenerator;
 
@@ -38,13 +40,49 @@ public final class ToEntity {
         return userGithub;
     }
 
-    //github第一次登录时会用
+    //github第一次登录时用到
     public static User toUser(UserGithub userGithub) {
         User user = new User();
         user.setUuid(userGithub.getUuid());
         user.setNickName(userGithub.getName());
         user.setAvatarUrl(userGithub.getAvatarUrl());
         user.setLastLoginSource("GITHUB_OAUTH");
+        return user;
+    }
+
+    //gitee第一次登录时用到
+    public static UserGitee toUserGitee(UserGiteeDort userGiteeDort) {
+        UserGitee userGitee = new UserGitee();
+        userGitee.setUuid(ShortUuidGenerator.next());
+        userGitee.setGiteeId(userGiteeDort.getGiteeId());
+        userGitee.setName(userGiteeDort.getName());
+        userGitee.setAvatarUrl(userGiteeDort.getAvatarUrl());
+        userGitee.setEmail(userGiteeDort.getEmail());
+        userGitee.setBio(userGiteeDort.getBio());
+        userGitee.setHtmlUrl(userGiteeDort.getHtmlUrl());
+        userGitee.setGiteeToken(userGiteeDort.getGiteeToken());
+        return userGitee;
+    }
+
+    //gitee非第一次登录时用到
+    public static UserGitee toUpdateUserGitee(UserGiteeDort userGiteeDort) {
+        UserGitee userGitee = new UserGitee();
+        userGitee.setName(userGiteeDort.getName());
+        userGitee.setAvatarUrl(userGiteeDort.getAvatarUrl());
+        userGitee.setEmail(userGiteeDort.getEmail());
+        userGitee.setBio(userGiteeDort.getBio());
+        userGitee.setHtmlUrl(userGiteeDort.getHtmlUrl());
+        userGitee.setGiteeToken(userGiteeDort.getGiteeToken());
+        return userGitee;
+    }
+
+    //gitee第一次登录时用到
+    public static User toUser(UserGitee userGitee) {
+        User user = new User();
+        user.setUuid(userGitee.getUuid());
+        user.setNickName(userGitee.getName());
+        user.setAvatarUrl(userGitee.getAvatarUrl());
+        user.setLastLoginSource("GITEE_OAUTH");
         return user;
     }
     

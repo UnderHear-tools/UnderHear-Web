@@ -21,6 +21,14 @@ public interface UserMapper {
             """)
     User getUserByGithubId(@Param("githubId") Long githubId);
 
+    @Select("""
+            select u.*
+            from user u
+            join user_gitee ug on u.uuid = ug.uuid
+            where ug.gitee_id = #{giteeId}
+            """)
+    User getUserByGiteeId(@Param("giteeId") Long giteeId);
+
     @Update("""
             update `user`
             set `last_login_at` = #{lastLoginAt},

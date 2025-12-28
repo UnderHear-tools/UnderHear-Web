@@ -12,11 +12,10 @@ import com.underhear.pojo.entity.UserGithub;
 @Mapper
 public interface AuthGithubMapper {
 
-    //在oauth_github表中检测该用户是否存在
+    //在user_github表中检测该用户是否存在
     @Select("select count(1) from user_github where github_id = #{githubId}")
     int countByGithubId(@Param("githubId") Long githubId);
 
-    
     //github登录时注册插入user_github和user表记录
     @Insert("""
             insert into `user_github`
