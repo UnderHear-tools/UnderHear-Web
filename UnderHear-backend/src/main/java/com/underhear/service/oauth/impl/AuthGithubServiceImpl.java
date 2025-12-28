@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.underhear.converter.DortToEntity;
+import com.underhear.converter.EntityToDore;
 import com.underhear.converter.OtherToDort;
 import com.underhear.mapper.oauth.AuthGithubMapper;
 import com.underhear.pojo.dto.request.UserGithubDort;
@@ -34,7 +35,7 @@ public class AuthGithubServiceImpl implements AuthGithubService {
     @Override
     @Transactional
     //github oauth登录/注册
-    public String login(AuthResponse<AuthUser> authResponse) {
+    public UserLoginDore login(AuthResponse<AuthUser> authResponse) {
         if (authResponse == null) {
             throw new IllegalArgumentException("authResponse is null");
         }
@@ -54,7 +55,6 @@ public class AuthGithubServiceImpl implements AuthGithubService {
         UserGithubDort userGithubDort = OtherToDort.toUserGithubDort(authUser.getRawUserInfo(), githubToken);
         
         User user = null;
-        UserLoginDore userLoginDore = null;
 
         //如果不存在：注册+登录
         if (!exists(userGithubDort)) {
@@ -62,13 +62,13 @@ public class AuthGithubServiceImpl implements AuthGithubService {
             user = DortToEntity.toUser(userGithub);
             authGithubMapper.saveUserGithubAndUser(userGithub, user);
             String token = jwtTokenService.generateToken(user.getUuid());
-            return token;
+            return EntityToDore.toUserLoginDore(user, token);
         }
 
         //登录
         user = userService.getUserByGithubId(userGithubDort.getGithubId());
         String token = jwtTokenService.generateToken(user.getUuid());
-        return token;
+        return EntityToDore.toUserLoginDore(user, token);
     }
 
     @Override

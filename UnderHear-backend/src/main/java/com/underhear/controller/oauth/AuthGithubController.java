@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.underhear.pojo.dto.response.UserLoginDore;
 import com.underhear.pojo.dto.response.common.ApiResponse;
 import com.underhear.service.oauth.AuthGithubService;
 
@@ -43,11 +44,11 @@ public class AuthGithubController {
     }
 
     @RequestMapping("/callback")
-    public ApiResponse<String> login(AuthCallback callback) {
+    public ApiResponse<UserLoginDore> login(AuthCallback callback) {
         AuthRequest authRequest = getAuthRequest();
         AuthResponse<AuthUser> authResponse = authRequest.login(callback);
-        String token = authGithubService.login(authResponse);
-        return ApiResponse.success(token);
+        UserLoginDore userLoginDore = authGithubService.login(authResponse);
+        return ApiResponse.success(userLoginDore);
     }
 
     private AuthRequest getAuthRequest() {
