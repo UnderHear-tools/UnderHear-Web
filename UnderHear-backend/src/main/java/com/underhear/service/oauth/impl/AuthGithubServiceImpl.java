@@ -64,6 +64,7 @@ public class AuthGithubServiceImpl implements AuthGithubService {
             user = ToEntity.toUser(userGithub);
             authGithubMapper.saveUserGithubAndUser(userGithub, user);
             String token = jwtTokenService.generateToken(user.getUuid());
+            userService.insertUserLoginRecord(user.getUuid(), "GITHUB_OAUTH");
             return ToDore.toUserLoginDore(user, token);
         }
 
@@ -75,6 +76,7 @@ public class AuthGithubServiceImpl implements AuthGithubService {
         userService.updateUserLastLoginByUuid(user.getUuid(),LocalDateTime.now(),"GITHUB_OAUTH");
         user = ToEntity.toUpdateUser(user,LocalDateTime.now(),"GITHUB_OAUTH");
         String token = jwtTokenService.generateToken(user.getUuid());
+        userService.insertUserLoginRecord(user.getUuid(), "GITHUB_OAUTH");
         return ToDore.toUserLoginDore(user, token);
     }
 

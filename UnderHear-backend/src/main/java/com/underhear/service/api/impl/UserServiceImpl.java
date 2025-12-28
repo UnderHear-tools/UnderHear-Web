@@ -30,4 +30,12 @@ public class UserServiceImpl implements UserService {
         }
         return userMapper.updateUserLastLoginByUuid(uuid, lastLoginAt, lastLoginSource);
     }
+
+    @Override
+    public int insertUserLoginRecord(String uuid, String loginSource) {
+        if (uuid == null || uuid.isBlank() || loginSource == null || loginSource.isBlank()) {
+            return 0;
+        }
+        return userMapper.insertUserLoginRecord(uuid, loginSource);
+    }
 }

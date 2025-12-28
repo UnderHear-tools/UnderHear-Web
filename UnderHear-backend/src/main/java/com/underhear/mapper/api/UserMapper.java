@@ -4,6 +4,7 @@ import java.time.LocalDateTime;
 
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
+import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
 
@@ -29,4 +30,11 @@ public interface UserMapper {
     int updateUserLastLoginByUuid(@Param("uuid") String uuid,
                                   @Param("lastLoginAt") LocalDateTime lastLoginAt,
                                   @Param("lastLoginSource") String lastLoginSource);
+
+    @Insert("""
+            insert into user_login_record (`uuid`, `login_source`)
+            values (#{uuid}, #{loginSource})
+            """)
+    int insertUserLoginRecord(@Param("uuid") String uuid,
+                              @Param("loginSource") String loginSource);
 }
