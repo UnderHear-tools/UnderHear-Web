@@ -1,5 +1,7 @@
 package com.underhear.service.oauth.impl;
 
+import java.time.LocalDateTime;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -56,7 +58,7 @@ public class AuthGithubServiceImpl implements AuthGithubService {
         
         User user = null;
 
-        //如果不存在：注册+登录
+        //如果第一次登录：注册+登录
         if (!exists(userGithubDort)) {
             UserGithub userGithub = ToEntity.toUserGithub(userGithubDort);
             user = ToEntity.toUser(userGithub);
@@ -65,8 +67,13 @@ public class AuthGithubServiceImpl implements AuthGithubService {
             return ToDore.toUserLoginDore(user, token);
         }
 
-        //登录
+        //登录+更新用户信息
+        UserGithub updateUserGithub = ToEntity.toUpdateUserGithub(userGithubDort);
+        updateUserGithub.setGithubId(userGithubDort.getGithubId());
+        authGithubMapper.updateUserGithubByGithubId(updateUserGithub);
         user = userService.getUserByGithubId(userGithubDort.getGithubId());
+        userService.updateUserLastLoginByUuid(user.getUuid(),LocalDateTime.now(),"GITHUB_OAUTH");
+        user = ToEntity.toUpdateUser(user,LocalDateTime.now(),"GITHUB_OAUTH");
         String token = jwtTokenService.generateToken(user.getUuid());
         return ToDore.toUserLoginDore(user, token);
     }

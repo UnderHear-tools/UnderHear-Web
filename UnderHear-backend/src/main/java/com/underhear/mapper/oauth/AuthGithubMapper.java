@@ -4,6 +4,7 @@ import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.Update;
 
 import com.underhear.pojo.entity.User;
 import com.underhear.pojo.entity.UserGithub;
@@ -37,4 +38,16 @@ public interface AuthGithubMapper {
         insertUserGithub(userGithub);
         insertUser(user);
     }
+
+    @Update("""
+            update `user_github`
+            set `name` = #{name},
+                `avatar_url` = #{avatarUrl},
+                `email` = #{email},
+                `bio` = #{bio},
+                `html_url` = #{htmlUrl},
+                `github_token` = #{githubToken}
+            where `github_id` = #{githubId}
+            """)
+    int updateUserGithubByGithubId(UserGithub userGithub);
 }

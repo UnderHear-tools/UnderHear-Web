@@ -12,6 +12,7 @@ public final class ToEntity {
     private ToEntity() {
     }
 
+    //github第一次登录时用到
     public static UserGithub toUserGithub(UserGithubDort userGithubDort) {
         UserGithub userGithub = new UserGithub();
         userGithub.setUuid(ShortUuidGenerator.next());
@@ -25,7 +26,19 @@ public final class ToEntity {
         return userGithub;
     }
 
-    //github第一次登录时会用到
+    //github非第一次登录时用到
+    public static UserGithub toUpdateUserGithub(UserGithubDort userGithubDort) {
+        UserGithub userGithub = new UserGithub();
+        userGithub.setName(userGithubDort.getName());
+        userGithub.setAvatarUrl(userGithubDort.getAvatarUrl());
+        userGithub.setEmail(userGithubDort.getEmail());
+        userGithub.setBio(userGithubDort.getBio());
+        userGithub.setHtmlUrl(userGithubDort.getHtmlUrl());
+        userGithub.setGithubToken(userGithubDort.getGithubToken());
+        return userGithub;
+    }
+
+    //github第一次登录时会用
     public static User toUser(UserGithub userGithub) {
         User user = new User();
         user.setUuid(userGithub.getUuid());
@@ -38,4 +51,10 @@ public final class ToEntity {
         return user;
     }
     
+
+    public static User toUpdateUser(User user, LocalDateTime lastLoginAt, String lastLoginSource) {
+        user.setLastLoginAt(lastLoginAt);
+        user.setLastLoginSource(lastLoginSource);
+        return user;
+    }
 }
