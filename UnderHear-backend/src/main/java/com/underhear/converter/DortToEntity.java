@@ -25,6 +25,7 @@ public final class DortToEntity {
         return userGithub;
     }
 
+    //github第一次登录时会用到
     public static User toUser(UserGithub userGithub) {
         User user = new User();
         user.setUuid(userGithub.getUuid());
@@ -32,6 +33,8 @@ public final class DortToEntity {
         user.setAvatarUrl(userGithub.getAvatarUrl());
         user.setCreatedAt(LocalDateTime.now());
         user.setUpdatedAt(LocalDateTime.now());
+        user.setLastLoginAt(LocalDateTime.now());
+        user.setLastLoginSource("GITHUB_OAUTH");
         return user;
     }
     

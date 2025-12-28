@@ -8,6 +8,7 @@ import com.underhear.converter.DortToEntity;
 import com.underhear.converter.OtherToDort;
 import com.underhear.mapper.oauth.AuthGithubMapper;
 import com.underhear.pojo.dto.request.UserGithubDort;
+import com.underhear.pojo.dto.response.UserLoginDore;
 import com.underhear.pojo.entity.UserGithub;
 import com.underhear.pojo.entity.User;
 import com.underhear.security.JwtTokenService;
@@ -53,16 +54,20 @@ public class AuthGithubServiceImpl implements AuthGithubService {
         UserGithubDort userGithubDort = OtherToDort.toUserGithubDort(authUser.getRawUserInfo(), githubToken);
         
         User user = null;
+        UserLoginDore userLoginDore = null;
+
+        //如果不存在：注册+登录
         if (!exists(userGithubDort)) {
             UserGithub userGithub = DortToEntity.toUserGithub(userGithubDort);
             user = DortToEntity.toUser(userGithub);
             authGithubMapper.saveUserGithubAndUser(userGithub, user);
             String token = jwtTokenService.generateToken(user.getUuid());
+            return token;
         }
 
+        //登录
         user = userService.getUserByGithubId(userGithubDort.getGithubId());
         String token = jwtTokenService.generateToken(user.getUuid());
-
         return token;
     }
 
