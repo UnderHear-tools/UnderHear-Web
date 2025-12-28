@@ -1,6 +1,7 @@
 package com.underhear.converter;
 
 import com.alibaba.fastjson.JSONObject;
+import com.underhear.pojo.dto.request.UserGiteeDort;
 import com.underhear.pojo.dto.request.UserGithubDort;
 
 import me.zhyd.oauth.model.AuthToken;
@@ -21,6 +22,19 @@ public final class ToDort {
         userGithubDort.setHtmlUrl(rawUserInfoJSON.getString("html_url"));
         userGithubDort.setGithubToken(token.getAccessToken());
         return userGithubDort;
+    }
+
+    public static UserGiteeDort toUserGiteeDort(Object rawUserInfo, AuthToken token) {
+        JSONObject rawUserInfoJSON = (JSONObject) rawUserInfo;
+        UserGiteeDort userGiteeDort = new UserGiteeDort();
+        userGiteeDort.setGiteeId(rawUserInfoJSON.getLong("id"));
+        userGiteeDort.setName(rawUserInfoJSON.getString("name"));
+        userGiteeDort.setAvatarUrl(rawUserInfoJSON.getString("avatar_url"));
+        userGiteeDort.setEmail(rawUserInfoJSON.getString("email"));
+        userGiteeDort.setBio(rawUserInfoJSON.getString("bio"));
+        userGiteeDort.setHtmlUrl(rawUserInfoJSON.getString("html_url"));
+        userGiteeDort.setGiteeToken(token.getAccessToken());
+        return userGiteeDort;
     }
 
 }
