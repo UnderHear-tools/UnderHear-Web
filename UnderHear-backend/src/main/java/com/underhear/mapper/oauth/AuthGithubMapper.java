@@ -28,9 +28,9 @@ public interface AuthGithubMapper {
 
     @Insert("""
             insert into `user`
-            (`uuid`, `nickname`, `avatar_url`, `created_at`, `updated_at`, `last_login_at`, `last_login_source`)
+            (`uuid`, `nickname`, `avatar_url`, `last_login_source`)
             values
-            (#{uuid}, #{nickName}, #{avatarUrl}, #{createdAt}, #{updatedAt}, #{lastLoginAt}, #{lastLoginSource})
+            (#{uuid}, #{nickName}, #{avatarUrl},  #{lastLoginSource})
             """)
     int insertUser(User user);
 

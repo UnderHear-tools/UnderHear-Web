@@ -44,9 +44,6 @@ public final class ToEntity {
         user.setUuid(userGithub.getUuid());
         user.setNickName(userGithub.getName());
         user.setAvatarUrl(userGithub.getAvatarUrl());
-        user.setCreatedAt(LocalDateTime.now());
-        user.setUpdatedAt(LocalDateTime.now());
-        user.setLastLoginAt(LocalDateTime.now());
         user.setLastLoginSource("GITHUB_OAUTH");
         return user;
     }
