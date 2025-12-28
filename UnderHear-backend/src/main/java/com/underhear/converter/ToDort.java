@@ -5,9 +5,9 @@ import com.underhear.pojo.dto.request.UserGithubDort;
 
 import me.zhyd.oauth.model.AuthToken;
 
-public final class OtherToDort {
+public final class ToDort {
 
-    private OtherToDort() {
+    private ToDort() {
     }
 
     public static UserGithubDort toUserGithubDort(Object rawUserInfo, AuthToken token) {

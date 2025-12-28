@@ -4,9 +4,9 @@ import com.underhear.pojo.dto.response.UserInfoDore;
 import com.underhear.pojo.dto.response.UserLoginDore;
 import com.underhear.pojo.entity.User;
 
-public final class EntityToDore {
+public final class ToDore {
 
-    private EntityToDore() {
+    private ToDore() {
     }
 
     public static UserInfoDore toUserInfoDore(User user) {

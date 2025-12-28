@@ -4,9 +4,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.underhear.converter.DortToEntity;
-import com.underhear.converter.EntityToDore;
-import com.underhear.converter.OtherToDort;
+import com.underhear.converter.ToDore;
+import com.underhear.converter.ToDort;
+import com.underhear.converter.ToEntity;
 import com.underhear.mapper.oauth.AuthGithubMapper;
 import com.underhear.pojo.dto.request.UserGithubDort;
 import com.underhear.pojo.dto.response.UserLoginDore;
@@ -52,23 +52,23 @@ public class AuthGithubServiceImpl implements AuthGithubService {
             throw new IllegalStateException("github access token is empty");
         }
         
-        UserGithubDort userGithubDort = OtherToDort.toUserGithubDort(authUser.getRawUserInfo(), githubToken);
+        UserGithubDort userGithubDort = ToDort.toUserGithubDort(authUser.getRawUserInfo(), githubToken);
         
         User user = null;
 
         //如果不存在：注册+登录
         if (!exists(userGithubDort)) {
-            UserGithub userGithub = DortToEntity.toUserGithub(userGithubDort);
-            user = DortToEntity.toUser(userGithub);
+            UserGithub userGithub = ToEntity.toUserGithub(userGithubDort);
+            user = ToEntity.toUser(userGithub);
             authGithubMapper.saveUserGithubAndUser(userGithub, user);
             String token = jwtTokenService.generateToken(user.getUuid());
-            return EntityToDore.toUserLoginDore(user, token);
+            return ToDore.toUserLoginDore(user, token);
         }
 
         //登录
         user = userService.getUserByGithubId(userGithubDort.getGithubId());
         String token = jwtTokenService.generateToken(user.getUuid());
-        return EntityToDore.toUserLoginDore(user, token);
+        return ToDore.toUserLoginDore(user, token);
     }
 
     @Override

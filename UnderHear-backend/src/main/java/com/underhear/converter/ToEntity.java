@@ -7,9 +7,9 @@ import com.underhear.pojo.entity.User;
 import com.underhear.pojo.entity.UserGithub;
 import com.underhear.util.ShortUuidGenerator;
 
-public final class DortToEntity {
+public final class ToEntity {
 
-    private DortToEntity() {
+    private ToEntity() {
     }
 
     public static UserGithub toUserGithub(UserGithubDort userGithubDort) {
