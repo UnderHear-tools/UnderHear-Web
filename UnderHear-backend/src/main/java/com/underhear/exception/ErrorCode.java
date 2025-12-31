@@ -5,24 +5,32 @@ import org.springframework.http.HttpStatusCode;
 import org.springframework.lang.NonNull; 
 
 public enum ErrorCode {
-    BAD_REQUEST(400, "bad request", HttpStatus.BAD_REQUEST),
-    UNAUTHORIZED(401, "unauthorized", HttpStatus.UNAUTHORIZED),
-    FORBIDDEN(403, "forbidden", HttpStatus.FORBIDDEN),
-    NOT_FOUND(404, "not found", HttpStatus.NOT_FOUND),
-    INTERNAL_ERROR(500, "internal server error", HttpStatus.INTERNAL_SERVER_ERROR);
 
-    private final int code;
+    //常见错误
+    BAD_REQUEST("BAD_REQUEST", "请求错误", HttpStatus.BAD_REQUEST),
+    UNAUTHORIZED("UNAUTHORIZED", "未授权", HttpStatus.UNAUTHORIZED),
+    FORBIDDEN("FORBIDDEN", "禁止访问", HttpStatus.FORBIDDEN),
+    NOT_FOUND("NOT_FOUND", "未找到资源", HttpStatus.NOT_FOUND),
+    INTERNAL_ERROR("INTERNAL_ERROR", "服务器内部错误", HttpStatus.INTERNAL_SERVER_ERROR),
+    //自定义错误
+    USER_NOT_FOUND("USER_NOT_FOUND", "未找到该用户", HttpStatus.NOT_FOUND),
+    BAD_AUTHORIZED("BAD_AUTHORIZED", "授权失败", HttpStatus.UNAUTHORIZED),
+
+    //万能错误
+    UNKNOWN_ERROR("UNKNOWN_ERROR", "未知错误", HttpStatus.INTERNAL_SERVER_ERROR);
+
+    private final String code;
     private final String message;
     @NonNull
     private final HttpStatusCode status;
 
-    ErrorCode(int code, String message,@NonNull HttpStatus status) {
+    ErrorCode(String code, String message,@NonNull HttpStatus status) {
         this.code = code;
         this.message = message;
         this.status = status;
     }
 
-    public int getCode() {
+    public String getCode() {
         return code;
     }
 

@@ -9,6 +9,8 @@ import org.springframework.transaction.annotation.Transactional;
 import com.underhear.converter.ToDore;
 import com.underhear.converter.ToDort;
 import com.underhear.converter.ToEntity;
+import com.underhear.exception.BizException;
+import com.underhear.exception.ErrorCode;
 import com.underhear.mapper.oauth.AuthGiteeMapper;
 import com.underhear.pojo.dto.request.UserGiteeDort;
 import com.underhear.pojo.dto.response.UserLoginDore;
@@ -38,20 +40,14 @@ public class AuthGiteeServiceImpl implements AuthGiteeService {
     @Transactional
     //gitee oauth登录/注册
     public UserLoginDore login(AuthResponse<AuthUser> authResponse) {
-        if (authResponse == null) {
-            throw new IllegalArgumentException("authResponse is null");
-        }
-        if (!authResponse.ok()) {
-            String message = authResponse.getMsg() == null ? "unknown error" : authResponse.getMsg();
-            throw new IllegalStateException("gitee auth failed: " + message);
+        if (authResponse == null || !authResponse.ok() || authResponse.getData() == null) {
+            throw new BizException(ErrorCode.BAD_AUTHORIZED);
         }
         AuthUser authUser = authResponse.getData();
-        if (authUser == null) {
-            throw new IllegalStateException("gitee user info is empty");
-        }
         AuthToken giteeToken = authUser.getToken();
-        if (giteeToken == null || giteeToken.getAccessToken() == null || giteeToken.getAccessToken().isBlank()) {
-            throw new IllegalStateException("gitee access token is empty");
+        String accessToken = giteeToken == null ? null : giteeToken.getAccessToken();
+        if (accessToken == null || accessToken.isBlank()) {
+            throw new BizException(ErrorCode.BAD_AUTHORIZED);
         }
         
         UserGiteeDort userGiteeDort = ToDort.toUserGiteeDort(authUser.getRawUserInfo(), giteeToken);

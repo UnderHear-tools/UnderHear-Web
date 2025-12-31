@@ -4,7 +4,7 @@ import org.springframework.http.HttpStatusCode;
 import org.springframework.lang.NonNull;
 
 public class BizException extends RuntimeException {
-    private int code;
+    private String code;
     @NonNull
     private HttpStatusCode status;
 
@@ -20,13 +20,13 @@ public class BizException extends RuntimeException {
         this.status = errorCode.getStatus();
     }
 
-    public BizException(int code, String message, @NonNull HttpStatusCode status) {
+    public BizException(String code, String message, @NonNull HttpStatusCode status) {
         super(message);
         this.code = code;
         this.status = status;
     }
 
-    public int getCode() {
+    public String getCode() {
         return code;
     }
 
