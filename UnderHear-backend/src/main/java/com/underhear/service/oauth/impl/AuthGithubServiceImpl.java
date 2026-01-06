@@ -9,6 +9,8 @@ import org.springframework.transaction.annotation.Transactional;
 import com.underhear.converter.ToDore;
 import com.underhear.converter.ToDort;
 import com.underhear.converter.ToEntity;
+import com.underhear.exception.BizException;
+import com.underhear.exception.ErrorCode;
 import com.underhear.mapper.oauth.AuthGithubMapper;
 import com.underhear.pojo.dto.request.UserGithubDort;
 import com.underhear.pojo.dto.response.UserLoginDore;
@@ -38,20 +40,14 @@ public class AuthGithubServiceImpl implements AuthGithubService {
     @Transactional
     //github oauth登录/注册
     public UserLoginDore login(AuthResponse<AuthUser> authResponse) {
-        if (authResponse == null) {
-            throw new IllegalArgumentException("authResponse is null");
-        }
-        if (!authResponse.ok()) {
-            String message = authResponse.getMsg() == null ? "unknown error" : authResponse.getMsg();
-            throw new IllegalStateException("github auth failed: " + message);
+        if (authResponse == null || !authResponse.ok() || authResponse.getData() == null) {
+            throw new BizException(ErrorCode.BAD_AUTHORIZED);
         }
         AuthUser authUser = authResponse.getData();
-        if (authUser == null) {
-            throw new IllegalStateException("github user info is empty");
-        }
         AuthToken githubToken = authUser.getToken();
-        if (githubToken == null || githubToken.getAccessToken() == null || githubToken.getAccessToken().isBlank()) {
-            throw new IllegalStateException("github access token is empty");
+        String accessToken = githubToken == null ? null : githubToken.getAccessToken();
+        if (accessToken == null || accessToken.isBlank()) {
+            throw new BizException(ErrorCode.BAD_AUTHORIZED);
         }
         
         UserGithubDort userGithubDort = ToDort.toUserGithubDort(authUser.getRawUserInfo(), githubToken);
