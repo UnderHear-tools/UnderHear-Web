@@ -68,7 +68,7 @@ import { zLink } from '@/components/z-ui/link/zlink'
 .creator-card {
 	display: flex;
 	flex-direction: column;
-	border: 1px solid #d1d9e1;
+	border: 1px solid var(--border-gray);
 	border-radius: 6px;
 	padding: 1.5rem 1.6rem 1.1rem;
 	text-decoration: none;
@@ -93,7 +93,7 @@ import { zLink } from '@/components/z-ui/link/zlink'
 	border-radius: 50%;
 	object-fit: cover;
 	box-shadow: 0 0 0 1px #1f232826;
-	border: 1px solid #d1d9e0;
+	border: 1px solid var(--border-gray);
 }
 
 .info {

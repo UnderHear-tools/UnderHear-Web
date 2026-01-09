@@ -217,7 +217,7 @@ function handleOtherOpen(e: Event) {
     width: max-content;
     /* 允许宽度跟随最长选项，但不小于触发器 */
     background: #fff;
-    border: 1px solid #d1d9e1;
+    border: 1px solid #d1d9e0;
     border-radius: 8px;
     box-shadow: 0 6px 18px rgba(15, 23, 42, 0.08);
     z-index: 20;

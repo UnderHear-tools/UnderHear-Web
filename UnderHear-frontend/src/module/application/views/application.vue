@@ -102,7 +102,7 @@ onMounted(() => {
 
 .application-card {
   background: white;
-  border: 1px solid #d1d9e1;
+  border: 1px solid var(--border-gray);
   border-radius: 6px;
   padding: 2rem;
   display: flex;

@@ -110,7 +110,7 @@ const getStatusClass = (status: string) => {
 
 .project-card {
 	background: white;
-	border: 1px solid #d1d9e1;
+	border: 1px solid var(--border-gray);
 	border-radius: 4px;
 	padding: 1.5rem;
 }

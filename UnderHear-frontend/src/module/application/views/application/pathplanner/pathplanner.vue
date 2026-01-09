@@ -646,7 +646,7 @@ watch(isCoverage, (v) => {
 
 .pathplanner-card {
   background: white;
-  border: 1px solid #d1d9e1;
+  border: 1px solid var(--border-gray);
   padding: 1rem 1.25rem;
   transition: all 0.2s ease;
 }

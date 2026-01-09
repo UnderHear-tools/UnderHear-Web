@@ -5,7 +5,7 @@
 <style scoped>
 .z-divider {
   height: 1px;
-  background: #d1d9e1;
+  background: #d1d9e0;
   opacity: 0.6;
   margin: 0.4rem 0;
 }

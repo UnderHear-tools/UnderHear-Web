@@ -43,7 +43,7 @@ function onInput(event: Event) {
 <style scoped>
 .z-textarea {
   width: 100%;
-  border: 1px solid #d1d9e1;
+  border: 1px solid #d1d9e0;
   border-radius: 6px;
   padding: 0.6rem 0.7rem;
   font-size: 0.95rem;

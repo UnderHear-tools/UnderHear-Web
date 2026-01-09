@@ -168,7 +168,7 @@ onMounted(() => {
 
 .right-column {
     padding: 24px;
-    border: 1px solid #d1d9e1;
+    border: 1px solid var(--border-gray);
     border-radius: 6px;
     width: 78%;
 }
@@ -364,7 +364,7 @@ onMounted(() => {
 }
 
 .repo {
-    border: 1px solid #d1d9e1;
+    border: 1px solid var(--border-gray);
     border-radius: 6px;
     padding: 16px;
 }
@@ -373,11 +373,11 @@ onMounted(() => {
     margin-top: 20px;
     display: flex;
     flex-direction: column;
-    border: 1px solid #d1d9e1;
+    border: 1px solid var(--border-gray);
 }
 
 .project-card {
-    border-bottom: 1px solid #d1d9e1;
+    border-bottom: 1px solid var(--border-gray);
     padding: 20px;
     background-color: #fff;
     transition: box-shadow 0.2s ease;
@@ -472,7 +472,7 @@ onMounted(() => {
         height: 66.4px;
         margin-right: 16px;
         box-shadow: 0 0 0 1px #1f232826;
-        border: 1px solid #d1d9e0;
+        border: 1px solid var(--border-gray);
     }
 
     .profile-info {

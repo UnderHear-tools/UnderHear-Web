@@ -90,7 +90,7 @@ function goCollect() {
   appearance: none;
   width: 100%;
   text-align: left;
-  border: 1px solid #d1d9e1;
+  border: 1px solid var(--border-gray);
   border-radius: 6px;
   background: #fafafa;
   padding: 1.5rem;
