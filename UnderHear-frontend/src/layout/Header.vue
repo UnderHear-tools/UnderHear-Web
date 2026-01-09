@@ -74,6 +74,7 @@ watch(() => route.path, () => {
   position: relative;
   display: flex;
   height: 4rem;
+  padding: 6px 8px;
   align-items: center;
   justify-content: center;
 }
