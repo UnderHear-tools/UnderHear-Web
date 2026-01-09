@@ -73,10 +73,9 @@ watch(() => route.path, () => {
 .header-inner {
   position: relative;
   display: flex;
-  height: 5rem;
+  height: 4rem;
   align-items: center;
   justify-content: center;
-  padding: 6px 8px;
 }
 
 .nav-list {

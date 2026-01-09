@@ -286,7 +286,7 @@ onBeforeUnmount(() => {
 .preview-overlay {
   position: fixed;
   inset: 0;
-  background: rgba(15, 23, 42, 0.6);
+  background: rgba(0, 0, 0, 0.1);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -295,14 +295,14 @@ onBeforeUnmount(() => {
 }
 
 .preview-panel {
-  width: min(1200px, 96vw);
-  height: min(820px, 92vh);
+  width: min(1500px, 96vw);
+  height: min(900px, 92vh);
   background: #fff;
   border-radius: 6px;
+  outline: 1px solid var(--border-gray);
   display: flex;
   flex-direction: column;
   overflow: hidden;
-  box-shadow: 0 22px 50px rgba(15, 23, 42, 0.35);
 }
 
 .preview-bar {
