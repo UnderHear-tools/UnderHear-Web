@@ -73,6 +73,18 @@
       </div>
     </div>
 
+    <div v-if="isPreviewOpen" class="preview-overlay" @click.self="closePreview">
+      <div class="preview-panel">
+        <div class="preview-bar">
+          <span class="preview-title">预览</span>
+          <div class="preview-actions">
+            <button type="button" class="preview-button preview-close" @click="closePreview">关闭</button>
+          </div>
+        </div>
+        <iframe class="preview-iframe" :srcdoc="previewHtml" sandbox="allow-scripts"></iframe>
+      </div>
+    </div>
+
   </zContainer>
 </template>
 
@@ -88,6 +100,9 @@ import { zLink } from '@/components/z-ui/link/zlink'
 
 const editorContainer = ref<HTMLElement | null>(null)
 let editor: monaco.editor.IStandaloneCodeEditor | undefined
+
+const isPreviewOpen = ref(false)
+const previewHtml = ref('')
 
 const form = ref({
   title: '',
@@ -114,27 +129,18 @@ function handleSubmit() {
   console.log('[application/create] submit (placeholder)', form.value)
 }
 
-function refreshPreview() {
+function getPreviewHtml() {
   const code = editor?.getValue() ?? defaultTemplate
   return `<!doctype html><head><meta charset="utf-8"></head><html><body style="margin:0">${code}</body></html>`
 }
 
 function openPreview() {
-  const previewWindow = window.open('about:blank', '_blank')
-  if (!previewWindow) return
+  previewHtml.value = getPreviewHtml()
+  isPreviewOpen.value = true
+}
 
-  const html = refreshPreview()
-  const blob = new Blob([html], { type: 'text/html' })
-  const url = URL.createObjectURL(blob)
-
-  previewWindow.location.replace(url)
-  previewWindow.addEventListener(
-    'load',
-    () => {
-      URL.revokeObjectURL(url)
-    },
-    { once: true }
-  )
+function closePreview() {
+  isPreviewOpen.value = false
 }
 
 onMounted(() => {
@@ -186,7 +192,7 @@ onBeforeUnmount(() => {
 
 .panel {
   background: #fff;
-  border: 1px solid #d1d9e1;
+  border: 1px solid var(--border-gray);
   border-radius: 6px;
   padding: 1.5rem;
 }
@@ -266,7 +272,7 @@ onBeforeUnmount(() => {
 .editor {
   width: 100%;
   height: 520px;
-  border: 1px solid #d1d9e1;
+  border: 1px solid var(--border-gray);
   overflow: hidden;
 }
 
@@ -275,6 +281,58 @@ onBeforeUnmount(() => {
   color: var(--font-gray);
   font-size: 0.9rem;
   line-height: 1.6;
+}
+
+.preview-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(15, 23, 42, 0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 999;
+  padding: 1.5rem;
+}
+
+.preview-panel {
+  width: min(1200px, 96vw);
+  height: min(820px, 92vh);
+  background: #fff;
+  border-radius: 6px;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  box-shadow: 0 22px 50px rgba(15, 23, 42, 0.35);
+}
+
+.preview-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0.75rem 1rem;
+  border-bottom: 1px solid #e2e8f0;
+}
+
+.preview-title {
+  font-weight: 700;
+  color: var(--font-black);
+}
+
+.preview-actions {
+  display: flex;
+  gap: 0.8rem;
+}
+
+.preview-close {
+  color: #d12b2b;
+}
+
+.preview-iframe {
+  border: none;
+  width: 100%;
+  flex: 1;
+  background: #fff;
 }
 
 @media (max-width: 920px) {
@@ -290,6 +348,16 @@ onBeforeUnmount(() => {
 
   .subtitle {
     font-size: 1rem;
+  }
+
+  .preview-overlay {
+    padding: 0;
+  }
+
+  .preview-panel {
+    width: 100vw;
+    height: 100vh;
+    border-radius: 0;
   }
 }
 </style>

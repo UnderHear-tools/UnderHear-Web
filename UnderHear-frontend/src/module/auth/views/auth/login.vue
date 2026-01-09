@@ -141,7 +141,7 @@ onMounted(async () => {
 .login-card {
   width: 100%;
   max-width: 28rem;
-  border: 1px solid #d1d9e6;
+  border: 1px solid var(--border-gray);
   background: #ffffff;
   border-radius: 8px;
   padding: 32px;
@@ -198,7 +198,7 @@ onMounted(async () => {
   justify-content: center;
   gap: 8px;
   border-radius: 6px;
-  border: 1px solid #d1d5db;
+  border: 1px solid var(--border-gray);
   background: #f6f8fa;
   color: #111111;
   padding: 10px 12px;
