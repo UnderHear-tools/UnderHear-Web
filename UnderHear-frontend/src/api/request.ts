@@ -8,7 +8,14 @@ const request = axios.create({
 })
 
 request.interceptors.response.use(
-  (response) => response.data,
+  (response) => {
+    const responseData = response.data as { code?: string; message?: string; data?: unknown }
+    if (responseData && responseData.code && responseData.code !== 'OK') {
+      const message = responseData.message ?? '请求失败'
+      return Promise.reject(new Error(message))
+    }
+    return responseData?.data ?? response.data
+  },
   (error) => {
     if (axios.isAxiosError(error)) {
       const responseData = error.response?.data as { message?: string } | undefined
