@@ -76,11 +76,15 @@
 
 <script setup lang="ts">
 import { computed, onMounted, onUnmounted, ref } from 'vue'
-import { useRouter } from 'vue-router'
-import { getStoredUser, logout, type UserProfile as AuthUserProfile } from '@/api/auth'
 import { icons } from '@/components/z-ui/user-menu/icons'
 
-export type UserProfile = AuthUserProfile
+export interface UserProfile {
+  login: string
+  name: string
+  email?: string
+  avatarUrl?: string
+  htmlUrl?: string
+}
 
 export interface MenuItem {
   label: string
@@ -92,31 +96,31 @@ export interface MenuItem {
   onClick?: () => void
 }
 
-const router = useRouter()
-const currentUser = ref<UserProfile | null>(getStoredUser())
+const mockUser: UserProfile = {
+  login: 'underhear',
+  name: 'UnderHear Studio',
+  email: 'hello@underhear.audio',
+  avatarUrl: '',
+  htmlUrl: 'https://github.com/underhear'
+}
+
+const currentUser = ref<UserProfile | null>(mockUser)
 const isOpen = ref(false)
 const menuRef = ref<HTMLElement | null>(null)
 
-const refreshUser = () => {
-  currentUser.value = getStoredUser()
-  if (!currentUser.value) {
-    isOpen.value = false
-  }
-}
-
 const handleSignIn = () => {
-  router.push('/auth/login')
+  currentUser.value = mockUser
+  isOpen.value = true
 }
 
 const handleLogout = () => {
-  logout()
-  refreshUser()
-  router.push('/')
+  currentUser.value = null
+  isOpen.value = false
 }
 
 const menuItems = computed<MenuItem[]>(() => [
   {
-    label: '前往 GitHub 页面',
+    label: '前往 GitHub',
     icon: icons.person,
     href: currentUser.value?.htmlUrl || '',
     external: true
@@ -157,23 +161,14 @@ const handleEscape = (event: KeyboardEvent) => {
   }
 }
 
-const handleStorageChange = (event: StorageEvent) => {
-  if (event.key === 'underhear_user') {
-    refreshUser()
-  }
-}
-
 onMounted(() => {
-  refreshUser()
   document.addEventListener('click', handleClickOutside)
   document.addEventListener('keydown', handleEscape)
-  window.addEventListener('storage', handleStorageChange)
 })
 
 onUnmounted(() => {
   document.removeEventListener('click', handleClickOutside)
   document.removeEventListener('keydown', handleEscape)
-  window.removeEventListener('storage', handleStorageChange)
 })
 </script>
 
@@ -399,4 +394,3 @@ onUnmounted(() => {
   }
 }
 </style>
-
