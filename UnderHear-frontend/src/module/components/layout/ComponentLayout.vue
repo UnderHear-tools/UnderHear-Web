@@ -46,30 +46,16 @@ const navSections = ref([
     items: [
       { path: '/component/container', label: 'Container 布局容器' },
       { path: '/component/link', label: 'Link 链接' },
-      { path: '/component/divider', label: 'Divider 分隔线' }
+      { path: '/component/divider', label: 'Divider 分隔线' },
+      { path: '/component/tag', label: 'Tag 标签' }
     ]
   },
   {
     title: 'Form 表单组件',
     items: [
-      { path: '/component/input', label: 'Input 输入框' }
+      { path: '/component/input', label: 'Input 输入框' },
+      { path: '/component/select', label: 'Select 选择器' }
     ]
-  },
-  {
-    title: 'Data 数据展示',
-    items: []
-  },
-  {
-    title: 'Navigation 导航',
-    items: []
-  },
-  {
-    title: 'Feedback 反馈组件',
-    items: []
-  },
-  {
-    title: 'Others 其他',
-    items: []
   }
 ])
 </script>
