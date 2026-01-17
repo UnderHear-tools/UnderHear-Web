@@ -6,7 +6,7 @@
       <div class="sidebar-content">
         <!-- Overview 组件总览 -->
         <div class="nav-section">
-          <h3 class="section-title">Overview 组件总览</h3>
+          <div class="section-title">Overview 组件总览</div>
           <router-link 
             to="/component/overview" 
             class="nav-item"
@@ -18,7 +18,7 @@
 
         <!-- Basic 基础组件 -->
         <div class="nav-section">
-          <h3 class="section-title">Basic 基础组件</h3>
+          <div class="section-title">Basic 基础组件</div>
           <router-link 
             to="/component/button" 
             class="nav-item"
@@ -68,14 +68,13 @@
           >
             Link 链接
           </router-link>
-          <div class="nav-item with-version">
+          <div class="nav-item">
             <router-link 
               to="/component/text" 
               :class="{ active: $route.path === '/component/text' }"
             >
               Text 文字
             </router-link>
-            <span class="version-tag">2.3.0</span>
           </div>
           <router-link 
             to="/component/scrollbar" 
@@ -91,14 +90,13 @@
           >
             Space 间距
           </router-link>
-          <div class="nav-item with-version">
+          <div class="nav-item">
             <router-link 
               to="/component/splitter" 
               :class="{ active: $route.path === '/component/splitter' }"
             >
               Splitter 分隔面板
             </router-link>
-            <span class="version-tag">2.10.0</span>
           </div>
           <router-link 
             to="/component/typography" 
@@ -111,7 +109,7 @@
 
         <!-- 配置组件 -->
         <div class="nav-section">
-          <h3 class="section-title">配置组件</h3>
+          <div class="section-title">配置组件</div>
           <router-link 
             to="/component/config-provider" 
             class="nav-item"
@@ -123,7 +121,7 @@
 
         <!-- Form 表单组件 -->
         <div class="nav-section">
-          <h3 class="section-title">Form 表单组件</h3>
+          <div class="section-title">Form 表单组件</div>
           <router-link 
             to="/component/autocomplete" 
             class="nav-item"
@@ -182,19 +180,14 @@
 <style scoped>
 .component-layout {
   display: flex;
-  min-height: 100vh;
-  background-color: #f8f9fa;
 }
 
 .sidebar {
-  width: 280px;
-  background-color: #fff;
+  width: 300px;
   border-right: 1px solid #e1e4e8;
   position: fixed;
-  top: 0;
   left: 0;
   height: 100vh;
-  z-index: 100;
   display: flex;
   flex-direction: column;
 }
@@ -202,74 +195,48 @@
 .sidebar-content {
   flex: 1;
   overflow-y: auto;
-  padding: 1.5rem 0;
+  padding: 2rem;
 }
 
 .nav-section {
-  margin-bottom: 2rem;
+  display: grid;
+  gap: 4px;
 }
 
 .section-title {
   font-size: 1rem;
   font-weight: 600;
   color: var(--font-black);
-  margin: 0 0 0.75rem 1.5rem;
-  padding: 0;
+  margin-top: 10px;
+  margin-bottom: 6px;
 }
 
 .nav-item {
   display: block;
-  padding: 0.5rem 1.5rem;
+  padding: 0.5rem 1rem;
   color: var(--font-gray);
   text-decoration: none;
   font-size: 0.875rem;
   transition: all 0.2s ease;
-  border-left: 3px solid transparent;
   position: relative;
+  border-radius: 6px;
 }
 
 .nav-item:hover {
-  background-color: #f6f8fa;
+  background-color: #f0f0f0;
   color: var(--font-black);
 }
 
 .nav-item.active {
-  background-color: #dbeafe;
-  color: #1e40af;
-  border-left-color: #3b82f6;
-  font-weight: 500;
-}
-
-.nav-item.with-version {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 0;
-}
-
-.nav-item.with-version a {
-  flex: 1;
-  padding: 0.5rem 0 0.5rem 1.5rem;
-  color: inherit;
-  text-decoration: none;
-}
-
-.version-tag {
-  background-color: var(--font-blue);
-  color: white;
-  font-size: 0.75rem;
-  padding: 0.125rem 0.375rem;
-  border-radius: 0.25rem;
-  margin-right: 1rem;
-  font-weight: 500;
+  background-color: #e2e2e2;
+  color: #000000;
 }
 
 .main-content {
   flex: 1;
-  margin-left: 280px;
+  margin-left: 300px;
+  margin-right: 300px;
   padding: 2rem;
-  background-color: #fff;
-  min-height: 100vh;
 }
 
 /* 底部导航 */
@@ -312,6 +279,11 @@
 }
 
 /* 响应式设计 */
+@media (max-width: 1420px) {
+  .main-content {
+    margin-right: 0px;
+  }
+}
 @media (max-width: 768px) {
   .sidebar {
     transform: translateX(-100%);
