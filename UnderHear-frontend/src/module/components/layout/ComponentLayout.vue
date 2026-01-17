@@ -54,6 +54,22 @@ const navSections = ref([
     items: [
       { path: '/component/input', label: 'Input 输入框' }
     ]
+  },
+  {
+    title: 'Data 数据展示',
+    items: []
+  },
+  {
+    title: 'Navigation 导航',
+    items: []
+  },
+  {
+    title: 'Feedback 反馈组件',
+    items: []
+  },
+  {
+    title: 'Others 其他',
+    items: []
   }
 ])
 </script>
