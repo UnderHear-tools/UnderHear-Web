@@ -11,6 +11,11 @@ export const componentRoutes: Array<RouteRecordRaw> = [
         component: () => import('../layout/ComponentLayout.vue'),
         children: [
             {
+                path: 'guide',
+                name: 'Guide',
+                component: () => import('../views/components/guide.vue')
+            },
+            {
                 path: 'overview',
                 name: 'Overview',
                 component: () => import('../views/components/overview.vue')
