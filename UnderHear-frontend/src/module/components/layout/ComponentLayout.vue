@@ -4,151 +4,20 @@
     <aside class="sidebar">
       <!-- 可滚动的导航内容区域 -->
       <div class="sidebar-content">
-        <!-- Overview 组件总览 -->
-        <div class="nav-section">
-          <div class="section-title">Overview 组件总览</div>
+        <div 
+          v-for="section in navSections" 
+          :key="section.title" 
+          class="nav-section"
+        >
+          <div class="section-title">{{ section.title }}</div>
           <router-link 
-            to="/component/overview" 
+            v-for="item in section.items" 
+            :key="item.path"
+            :to="item.path" 
             class="nav-item"
-            :class="{ active: $route.path === '/component/overview' }"
+            :class="{ active: $route.path === item.path }"
           >
-            Overview 组件总览
-          </router-link>
-        </div>
-
-        <!-- Basic 基础组件 -->
-        <div class="nav-section">
-          <div class="section-title">Basic 基础组件</div>
-          <router-link 
-            to="/component/button" 
-            class="nav-item"
-            :class="{ active: $route.path === '/component/button' }"
-          >
-            Button 按钮
-          </router-link>
-          <router-link 
-            to="/component/border" 
-            class="nav-item"
-            :class="{ active: $route.path === '/component/border' }"
-          >
-            Border 边框
-          </router-link>
-          <router-link 
-            to="/component/color" 
-            class="nav-item"
-            :class="{ active: $route.path === '/component/color' }"
-          >
-            Color 色彩
-          </router-link>
-          <router-link 
-            to="/component/container" 
-            class="nav-item"
-            :class="{ active: $route.path === '/component/container' }"
-          >
-            Container 布局容器
-          </router-link>
-          <router-link 
-            to="/component/icon" 
-            class="nav-item"
-            :class="{ active: $route.path === '/component/icon' }"
-          >
-            Icon 图标
-          </router-link>
-          <router-link 
-            to="/component/layout" 
-            class="nav-item"
-            :class="{ active: $route.path === '/component/layout' }"
-          >
-            Layout 布局
-          </router-link>
-          <router-link 
-            to="/component/link" 
-            class="nav-item"
-            :class="{ active: $route.path === '/component/link' }"
-          >
-            Link 链接
-          </router-link>
-          <div class="nav-item">
-            <router-link 
-              to="/component/text" 
-              :class="{ active: $route.path === '/component/text' }"
-            >
-              Text 文字
-            </router-link>
-          </div>
-          <router-link 
-            to="/component/scrollbar" 
-            class="nav-item"
-            :class="{ active: $route.path === '/component/scrollbar' }"
-          >
-            Scrollbar 滚动条
-          </router-link>
-          <router-link 
-            to="/component/space" 
-            class="nav-item"
-            :class="{ active: $route.path === '/component/space' }"
-          >
-            Space 间距
-          </router-link>
-          <div class="nav-item">
-            <router-link 
-              to="/component/splitter" 
-              :class="{ active: $route.path === '/component/splitter' }"
-            >
-              Splitter 分隔面板
-            </router-link>
-          </div>
-          <router-link 
-            to="/component/typography" 
-            class="nav-item"
-            :class="{ active: $route.path === '/component/typography' }"
-          >
-            Typography 排版
-          </router-link>
-        </div>
-
-        <!-- 配置组件 -->
-        <div class="nav-section">
-          <div class="section-title">配置组件</div>
-          <router-link 
-            to="/component/config-provider" 
-            class="nav-item"
-            :class="{ active: $route.path === '/component/config-provider' }"
-          >
-            Config Provider 全局配置
-          </router-link>
-        </div>
-
-        <!-- Form 表单组件 -->
-        <div class="nav-section">
-          <div class="section-title">Form 表单组件</div>
-          <router-link 
-            to="/component/autocomplete" 
-            class="nav-item"
-            :class="{ active: $route.path === '/component/autocomplete' }"
-          >
-            Autocomplete 自动补全输入框
-          </router-link>
-          <router-link 
-            to="/component/cascader" 
-            class="nav-item"
-            :class="{ active: $route.path === '/component/cascader' }"
-          >
-            Cascader 级联选择器
-          </router-link>
-          <router-link 
-            to="/component/checkbox" 
-            class="nav-item"
-            :class="{ active: $route.path === '/component/checkbox' }"
-          >
-            Checkbox 多选框
-          </router-link>
-          <router-link 
-            to="/component/select" 
-            class="nav-item"
-            :class="{ active: $route.path === '/component/select' }"
-          >
-            Select 选择器
+            {{ item.label }}
           </router-link>
         </div>
       </div>
@@ -160,6 +29,51 @@
     </main>
   </div>
 </template>
+
+<script setup>
+import { ref } from 'vue'
+
+const navSections = ref([
+  {
+    title: 'Overview 组件总览',
+    items: [
+      { path: '/component/overview', label: 'Overview 组件总览' }
+    ]
+  },
+  {
+    title: 'Basic 基础组件',
+    items: [
+      { path: '/component/button', label: 'Button 按钮' },
+      { path: '/component/border', label: 'Border 边框' },
+      { path: '/component/color', label: 'Color 色彩' },
+      { path: '/component/container', label: 'Container 布局容器' },
+      { path: '/component/icon', label: 'Icon 图标' },
+      { path: '/component/layout', label: 'Layout 布局' },
+      { path: '/component/link', label: 'Link 链接' },
+      { path: '/component/text', label: 'Text 文字' },
+      { path: '/component/scrollbar', label: 'Scrollbar 滚动条' },
+      { path: '/component/space', label: 'Space 间距' },
+      { path: '/component/splitter', label: 'Splitter 分隔面板' },
+      { path: '/component/typography', label: 'Typography 排版' }
+    ]
+  },
+  {
+    title: '配置组件',
+    items: [
+      { path: '/component/config-provider', label: 'Config Provider 全局配置' }
+    ]
+  },
+  {
+    title: 'Form 表单组件',
+    items: [
+      { path: '/component/autocomplete', label: 'Autocomplete 自动补全输入框' },
+      { path: '/component/cascader', label: 'Cascader 级联选择器' },
+      { path: '/component/checkbox', label: 'Checkbox 多选框' },
+      { path: '/component/select', label: 'Select 选择器' }
+    ]
+  }
+])
+</script>
 
 <style scoped>
 .component-layout {
