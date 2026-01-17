@@ -81,15 +81,15 @@ const navSections = ref([
 
 .nav-section {
   display: grid;
-  gap: 4px;
+  gap: 10px;
 }
 
 .section-title {
   font-size: 1rem;
   font-weight: 600;
   color: var(--font-black);
-  margin-top: 10px;
-  margin-bottom: 6px;
+  margin-top: 1.5rem;
+  margin-bottom: 0.5rem;
 }
 
 .nav-item {
