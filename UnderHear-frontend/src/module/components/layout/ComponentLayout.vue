@@ -44,33 +44,15 @@ const navSections = ref([
   {
     title: 'Basic 基础组件',
     items: [
-      { path: '/component/button', label: 'Button 按钮' },
-      { path: '/component/border', label: 'Border 边框' },
-      { path: '/component/color', label: 'Color 色彩' },
       { path: '/component/container', label: 'Container 布局容器' },
-      { path: '/component/icon', label: 'Icon 图标' },
-      { path: '/component/layout', label: 'Layout 布局' },
       { path: '/component/link', label: 'Link 链接' },
-      { path: '/component/text', label: 'Text 文字' },
-      { path: '/component/scrollbar', label: 'Scrollbar 滚动条' },
-      { path: '/component/space', label: 'Space 间距' },
-      { path: '/component/splitter', label: 'Splitter 分隔面板' },
-      { path: '/component/typography', label: 'Typography 排版' }
-    ]
-  },
-  {
-    title: '配置组件',
-    items: [
-      { path: '/component/config-provider', label: 'Config Provider 全局配置' }
+      { path: '/component/divider', label: 'Divider 分隔线' }
     ]
   },
   {
     title: 'Form 表单组件',
     items: [
-      { path: '/component/autocomplete', label: 'Autocomplete 自动补全输入框' },
-      { path: '/component/cascader', label: 'Cascader 级联选择器' },
-      { path: '/component/checkbox', label: 'Checkbox 多选框' },
-      { path: '/component/select', label: 'Select 选择器' }
+      { path: '/component/input', label: 'Input 输入框' }
     ]
   }
 ])
