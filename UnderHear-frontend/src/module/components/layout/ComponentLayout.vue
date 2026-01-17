@@ -152,22 +152,6 @@
           </router-link>
         </div>
       </div>
-      
-      <!-- 固定在底部的导航 -->
-      <nav class="bottom-nav">
-        <router-link to="/" class="bottom-nav-item">
-          <span class="nav-text">首页</span>
-        </router-link>
-        <router-link to="/application" class="bottom-nav-item">
-          <span class="nav-text">应用</span>
-        </router-link>
-        <router-link to="/component" class="bottom-nav-item">
-          <span class="nav-text">组件</span>
-        </router-link>
-        <router-link to="/namecard" class="bottom-nav-item">
-          <span class="nav-text">名片</span>
-        </router-link>
-      </nav>
     </aside>
 
     <!-- 主内容区域 -->
@@ -184,10 +168,9 @@
 
 .sidebar {
   width: 300px;
-  border-right: 1px solid #e1e4e8;
   position: fixed;
   left: 0;
-  height: 100vh;
+  height: calc(100vh - 64px);
   display: flex;
   flex-direction: column;
 }
@@ -195,6 +178,7 @@
 .sidebar-content {
   flex: 1;
   overflow-y: auto;
+  scrollbar-color: rgb(192, 192, 192) #ffffff;
   padding: 2rem;
 }
 
@@ -248,34 +232,6 @@
   display: flex;
   justify-content: center;
   gap: 0.5rem;
-}
-
-.bottom-nav-item {
-  display: flex;
-  align-items: center;
-  padding: 0.3rem 0.5rem;
-  text-decoration: none;
-  color: var(--font-gray);
-  transition: all 0.2s ease;
-  border-left: 3px solid transparent;
-  border-radius: 4px;
-}
-
-.bottom-nav-item:hover {
-  background-color: #E6E6E6;
-  color: var(--font-black);
-}
-
-.bottom-nav-item.router-link-active {
-  background-color: #dbeafe;
-  color: #1e40af;
-  border-left-color: #3b82f6;
-  font-weight: 500;
-}
-
-.nav-text {
-  font-size: 14px;
-  font-weight: 500;
 }
 
 /* 响应式设计 */
