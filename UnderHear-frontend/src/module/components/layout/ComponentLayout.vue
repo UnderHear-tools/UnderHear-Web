@@ -201,6 +201,9 @@ const navSections = ref([
 }
 
 @media (max-width: 768px) {
+  .main-content {
+    padding: 1.5rem;
+  }
   .sidebar {
     top: 0;
     transform: translateX(-100%);

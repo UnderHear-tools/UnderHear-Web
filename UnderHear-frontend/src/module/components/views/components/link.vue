@@ -17,8 +17,8 @@
         </div>
         
         <div class="demo-actions">
-          <zTooltip content="复制代码" placement="bottom">
-            <button class="action-btn" @click="copyCode(demo1Code)">
+          <zTooltip :content="demo1Copied ? '已复制' : '复制代码'" placement="bottom">
+            <button class="action-btn" @click="copyDemo1Code">
               <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
                 <path d="M0 6.75C0 5.784.784 5 1.75 5h1.5a.75.75 0 0 1 0 1.5h-1.5a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-1.5a.75.75 0 0 1 1.5 0v1.5A1.75 1.75 0 0 1 9.25 16h-7.5A1.75 1.75 0 0 1 0 14.25Z"/>
                 <path d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0 1 14.25 11h-7.5A1.75 1.75 0 0 1 5 9.25Zm1.75-.25a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-7.5a.25.25 0 0 0-.25-.25Z"/>
@@ -34,14 +34,16 @@
           </zTooltip>
         </div>
         
-        <div v-if="demo1Visible" class="demo-code">
-          <pre><code>{{ demo1Code }}</code></pre>
-          <div class="code-footer">
-            <button class="hide-code-btn" @click="demo1Visible = false">
-              隐藏源代码
-            </button>
+        <transition name="code-expand">
+          <div v-if="demo1Visible" class="demo-code">
+            <pre><code>{{ demo1Code }}</code></pre>
+            <div class="code-footer">
+              <button class="hide-code-btn" @click="demo1Visible = false">
+                隐藏源代码
+              </button>
+            </div>
           </div>
-        </div>
+        </transition>
       </div>
     </section>
 
@@ -58,8 +60,8 @@
         </div>
         
         <div class="demo-actions">
-          <zTooltip content="复制代码" placement="bottom">
-            <button class="action-btn" @click="copyCode(demo2Code)">
+          <zTooltip :content="demo2Copied ? '已复制' : '复制代码'" placement="bottom">
+            <button class="action-btn" @click="copyDemo2Code">
               <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
                 <path d="M0 6.75C0 5.784.784 5 1.75 5h1.5a.75.75 0 0 1 0 1.5h-1.5a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-1.5a.75.75 0 0 1 1.5 0v1.5A1.75 1.75 0 0 1 9.25 16h-7.5A1.75 1.75 0 0 1 0 14.25Z"/>
                 <path d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0 1 14.25 11h-7.5A1.75 1.75 0 0 1 5 9.25Zm1.75-.25a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-7.5a.25.25 0 0 0-.25-.25Z"/>
@@ -75,14 +77,16 @@
           </zTooltip>
         </div>
         
-        <div v-if="demo2Visible" class="demo-code">
-          <pre><code>{{ demo2Code }}</code></pre>
-          <div class="code-footer">
-            <button class="hide-code-btn" @click="demo2Visible = false">
-              隐藏源代码
-            </button>
+        <transition name="code-expand">
+          <div v-if="demo2Visible" class="demo-code">
+            <pre><code>{{ demo2Code }}</code></pre>
+            <div class="code-footer">
+              <button class="hide-code-btn" @click="demo2Visible = false">
+                隐藏源代码
+              </button>
+            </div>
           </div>
-        </div>
+        </transition>
       </div>
     </section>
 
@@ -100,8 +104,8 @@
         </div>
         
         <div class="demo-actions">
-          <zTooltip content="复制代码" placement="bottom">
-            <button class="action-btn" @click="copyCode(demo3Code)">
+          <zTooltip :content="demo3Copied ? '已复制' : '复制代码'" placement="bottom">
+            <button class="action-btn" @click="copyDemo3Code">
               <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
                 <path d="M0 6.75C0 5.784.784 5 1.75 5h1.5a.75.75 0 0 1 0 1.5h-1.5a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-1.5a.75.75 0 0 1 1.5 0v1.5A1.75 1.75 0 0 1 9.25 16h-7.5A1.75 1.75 0 0 1 0 14.25Z"/>
                 <path d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0 1 14.25 11h-7.5A1.75 1.75 0 0 1 5 9.25Zm1.75-.25a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-7.5a.25.25 0 0 0-.25-.25Z"/>
@@ -117,14 +121,16 @@
           </zTooltip>
         </div>
         
-        <div v-if="demo3Visible" class="demo-code">
-          <pre><code>{{ demo3Code }}</code></pre>
-          <div class="code-footer">
-            <button class="hide-code-btn" @click="demo3Visible = false">
-              隐藏源代码
-            </button>
+        <transition name="code-expand">
+          <div v-if="demo3Visible" class="demo-code">
+            <pre><code>{{ demo3Code }}</code></pre>
+            <div class="code-footer">
+              <button class="hide-code-btn" @click="demo3Visible = false">
+                隐藏源代码
+              </button>
+            </div>
           </div>
-        </div>
+        </transition>
       </div>
     </section>
 
@@ -208,6 +214,9 @@ import { zTooltip } from '@/components/z-ui/tooltip/zTooltip'
 const demo1Visible = ref(false)
 const demo2Visible = ref(false)
 const demo3Visible = ref(false)
+const demo1Copied = ref(false)
+const demo2Copied = ref(false)
+const demo3Copied = ref(false)
 
 const demo1Code = `<template>
   <div style="max-width: 600px">
@@ -256,8 +265,31 @@ const demo3Code = `<template>
 }
 </style>`
 
-function copyCode(code: string) {
-  navigator.clipboard.writeText(code)
+function copyDemo1Code() {
+  navigator.clipboard.writeText(demo1Code).then(() => {
+    demo1Copied.value = true
+    setTimeout(() => {
+      demo1Copied.value = false
+    }, 2000)
+  })
+}
+
+function copyDemo2Code() {
+  navigator.clipboard.writeText(demo2Code).then(() => {
+    demo2Copied.value = true
+    setTimeout(() => {
+      demo2Copied.value = false
+    }, 2000)
+  })
+}
+
+function copyDemo3Code() {
+  navigator.clipboard.writeText(demo3Code).then(() => {
+    demo3Copied.value = true
+    setTimeout(() => {
+      demo3Copied.value = false
+    }, 2000)
+  })
 }
 </script>
 
@@ -358,6 +390,19 @@ function copyCode(code: string) {
 .demo-code {
   background: #f6f8fa;
   border-radius: 0 0 6px 6px;
+  overflow: hidden;
+}
+
+.code-expand-enter-active,
+.code-expand-leave-active {
+  transition: all 0.3s ease-in-out;
+  max-height: 1000px;
+}
+
+.code-expand-enter-from,
+.code-expand-leave-to {
+  max-height: 0;
+  opacity: 0;
 }
 
 .code-footer {
@@ -461,9 +506,87 @@ function copyCode(code: string) {
 }
 
 @media (max-width: 768px) {
+  .page-title {
+    font-size: 1.5rem;
+    margin-bottom: 0.375rem;
+  }
+
+  .page-description {
+    font-size: 0.875rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .demo-section {
+    margin-bottom: 2rem;
+  }
+
+  .section-title {
+    font-size: 1.25rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .section-description {
+    font-size: 0.8125rem;
+  }
+
+  .demo-content {
+    padding: 1.25rem;
+  }
+
   .link-row {
     flex-direction: column;
     align-items: flex-start;
+    gap: 1rem;
+  }
+
+  .link-column {
+    gap: 0.75rem;
+  }
+
+  .action-btn {
+    width: 36px;
+    height: 36px;
+  }
+
+  .demo-code pre {
+    padding: 1rem;
+    font-size: 0.75rem;
+  }
+
+  .demo-code code {
+    font-size: 0.75rem;
+    line-height: 1.5;
+  }
+
+  .code-footer {
+    padding: 0.625rem;
+  }
+
+  .hide-code-btn {
+    font-size: 0.8125rem;
+  }
+
+  .api-section {
+    margin-top: 2rem;
+  }
+
+  .api-subtitle {
+    font-size: 1.125rem;
+  }
+
+  .api-table {
+    font-size: 0.75rem;
+  }
+
+  .api-table th,
+  .api-table td {
+    padding: 0.5rem 0.75rem;
+    font-size: 0.75rem;
+  }
+
+  .api-table code {
+    font-size: 0.75em;
+    padding: 0.1rem 0.25rem;
   }
 }
 </style>
