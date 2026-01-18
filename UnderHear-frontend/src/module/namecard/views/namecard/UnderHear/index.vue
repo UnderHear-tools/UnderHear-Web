@@ -104,7 +104,7 @@
                             <zTechTag v-for="tech in project.technologies" :key="tech">{{ tech }}</zTechTag>
                         </div>
                     </div>
-                    <a href="/namecard/UnderHear/project" class="view-more-simple">Read more...</a>
+                    <RouterLink to="/namecard/UnderHear/project" class="view-more-simple">Read more...</RouterLink>
                 </div>
             </div>
         </div>

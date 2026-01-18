@@ -16,10 +16,10 @@
       <div class="sidebar-content">
         <div v-for="section in navSections" :key="section.title" class="nav-section">
           <div class="section-title">{{ section.title }}</div>
-          <router-link v-for="item in section.items" :key="item.path" :to="item.path" class="nav-item"
+          <RouterLink v-for="item in section.items" :key="item.path" :to="item.path" class="nav-item"
             :class="{ active: $route.path === item.path }" @click="closeSidebar">
             {{ item.label }}
-          </router-link>
+          </RouterLink>
         </div>
       </div>
     </aside>
