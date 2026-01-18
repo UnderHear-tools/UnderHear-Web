@@ -1,22 +1,26 @@
 <template>
   <div class="component-layout">
+    <!-- 移动端菜单按钮 -->
+    <button class="mobile-menu-btn" @click="toggleSidebar" aria-label="切换菜单">
+      <svg v-if="!sidebarOpen" width="24" height="24" viewBox="0 0 24 24" fill="none">
+        <path d="M3 12h18M3 6h18M3 18h18" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+      </svg>
+      <svg v-else width="24" height="24" viewBox="0 0 24 24" fill="none">
+        <path d="M18 6L6 18M6 6l12 12" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+      </svg>
+    </button>
+
+    <!-- 遮罩层 -->
+    <div v-if="sidebarOpen" class="sidebar-overlay" @click="closeSidebar"></div>
+
     <!-- 左侧导航栏 -->
-    <aside class="sidebar">
+    <aside class="sidebar" :class="{ open: sidebarOpen }">
       <!-- 可滚动的导航内容区域 -->
       <div class="sidebar-content">
-        <div 
-          v-for="section in navSections" 
-          :key="section.title" 
-          class="nav-section"
-        >
+        <div v-for="section in navSections" :key="section.title" class="nav-section">
           <div class="section-title">{{ section.title }}</div>
-          <router-link 
-            v-for="item in section.items" 
-            :key="item.path"
-            :to="item.path" 
-            class="nav-item"
-            :class="{ active: $route.path === item.path }"
-          >
+          <router-link v-for="item in section.items" :key="item.path" :to="item.path" class="nav-item"
+            :class="{ active: $route.path === item.path }" @click="closeSidebar">
             {{ item.label }}
           </router-link>
         </div>
@@ -32,6 +36,16 @@
 
 <script setup>
 import { ref } from 'vue'
+
+const sidebarOpen = ref(false)
+
+const toggleSidebar = () => {
+  sidebarOpen.value = !sidebarOpen.value
+}
+
+const closeSidebar = () => {
+  sidebarOpen.value = false
+}
 
 const navSections = ref([
   {
@@ -123,29 +137,87 @@ const navSections = ref([
   min-height: calc(100vh - 64px);
 }
 
-/* 底部导航 */
-.bottom-nav {
-  flex-shrink: 0;
-  padding: 1rem 0;
-  border-top: 1px solid #e5e7eb;
-  background-color: #fff;
-  display: flex;
-  justify-content: center;
-  gap: 0.5rem;
-}
-
 /* 响应式设计 */
 @media (max-width: 1420px) {
   .main-content {
     margin-right: 0px;
   }
 }
+
 @media (max-width: 768px) {
   .sidebar {
+    top: 0;
     transform: translateX(-100%);
     transition: transform 0.3s ease;
+    z-index: 1000;
+    height: 100vh;
   }
-  
+
+  .sidebar-content{
+    scrollbar-width: none;
+    background-color: #fff;
+  }
+  /* 移动端菜单按钮 */
+  .mobile-menu-btn {
+    display: none;
+    position: fixed;
+    top: 1rem;
+    left: 1rem;
+    z-index: 1001;
+    width: 40px;
+    height: 40px;
+    border: none;
+    border-radius: 6px;
+    background: #fff;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+    cursor: pointer;
+    align-items: center;
+    justify-content: center;
+    color: var(--font-black);
+    transition: all 0.2s ease;
+  }
+
+  .mobile-menu-btn:hover {
+    background: #f6f8fa;
+  }
+
+  .mobile-menu-btn:active {
+    transform: scale(0.95);
+  }
+
+  /* 遮罩层 */
+  .sidebar-overlay {
+    display: block;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: 100vh;
+    width: 100vw;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 999;
+    animation: fadeIn 0.3s ease;
+  }
+
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+    }
+
+    to {
+      opacity: 1;
+    }
+  }
+
+  .mobile-menu-btn {
+    display: flex;
+  }
+
+  .sidebar.open {
+    transform: translateX(0);
+  }
+
   .main-content {
     margin-left: 0;
   }
