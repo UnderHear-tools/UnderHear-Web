@@ -25,7 +25,7 @@
     </aside>
 
     <!-- 主内容区域 -->
-    <main class="main-content">
+    <main ref="mainContentRef" class="main-content">
       <router-view />
     </main>
 
@@ -34,7 +34,15 @@
       <div class="toc-content">
         <div class="toc-title">目录</div>
         <nav class="toc-nav">
-          <!-- 目录内容将通过组件动态生成 -->
+          <a
+            v-for="item in tocItems"
+            :key="item.id"
+            class="toc-link"
+            :class="`toc-${item.level}`"
+            :href="`#${item.id}`"
+          >
+            {{ item.text }}
+          </a>
         </nav>
       </div>
     </aside>
@@ -42,9 +50,13 @@
 </template>
 
 <script setup>
-import { ref } from 'vue'
+import { nextTick, onMounted, ref, watch } from 'vue'
+import { useRoute } from 'vue-router'
 
 const sidebarOpen = ref(false)
+const mainContentRef = ref(null)
+const tocItems = ref([])
+const route = useRoute()
 
 const toggleSidebar = () => {
   sidebarOpen.value = !sidebarOpen.value
@@ -53,6 +65,71 @@ const toggleSidebar = () => {
 const closeSidebar = () => {
   sidebarOpen.value = false
 }
+
+const slugify = (text, index) => {
+  const base = text
+    .toLowerCase()
+    .replace(/\s+/g, '-')
+    .replace(/[^a-z0-9-]/g, '')
+  return base || `section-${index + 1}`
+}
+
+const updateToc = () => {
+  const container = mainContentRef.value
+  if (!container) {
+    tocItems.value = []
+    return
+  }
+
+  let headings = Array.from(container.querySelectorAll('h2, h3'))
+  if (headings.length === 0) {
+    headings = Array.from(container.querySelectorAll('h1'))
+  }
+
+  const usedIds = new Set()
+  const items = headings.map((heading, index) => {
+    const text = heading.textContent?.trim() || `Section ${index + 1}`
+    let id = heading.id
+
+    if (!id || usedIds.has(id)) {
+      const baseId = slugify(text, index)
+      let candidateId = baseId
+      let suffix = 1
+      while (usedIds.has(candidateId)) {
+        suffix += 1
+        candidateId = `${baseId}-${suffix}`
+      }
+      id = candidateId
+      heading.id = id
+    }
+
+    usedIds.add(id)
+
+    return {
+      id,
+      text,
+      level: heading.tagName.toLowerCase()
+    }
+  })
+
+  tocItems.value = items
+}
+
+const refreshToc = async () => {
+  await nextTick()
+  updateToc()
+}
+
+onMounted(() => {
+  refreshToc()
+})
+
+watch(
+  () => route.fullPath,
+  () => {
+    refreshToc()
+  }
+)
 
 const navSections = ref([
   {
@@ -147,7 +224,7 @@ const navSections = ref([
 
 /* 右侧目录区 */
 .toc-sidebar {
-  width: 260px;
+  width: 300px;
   position: fixed;
   right: 0;
   top: 64px;
@@ -167,8 +244,7 @@ const navSections = ref([
 }
 
 .toc-title {
-  font-size: 0.875rem;
-  font-weight: 600;
+  font-weight: bold;
   color: var(--font-black);
   margin-bottom: 1rem;
   text-transform: uppercase;
@@ -179,6 +255,32 @@ const navSections = ref([
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
+}
+
+.toc-link {
+  color: var(--font-gray);
+  text-decoration: none;
+  font-size: 0.875rem;
+  line-height: 1.5;
+  padding: 0.25rem 0 0.25rem 0.75rem;
+  border-left: 2px solid transparent;
+  transition: all 0.2s ease;
+}
+
+.toc-link:hover {
+  color: var(--font-black);
+  border-left-color: #d1d9e0;
+}
+
+.toc-h3 {
+  padding-left: 1.5rem;
+  font-size: 0.8125rem;
+}
+
+.main-content :deep(h1),
+.main-content :deep(h2),
+.main-content :deep(h3) {
+  scroll-margin-top: 90px;
 }
 
 /* 默认隐藏移动端菜单按钮 */
