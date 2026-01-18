@@ -36,6 +36,19 @@ import { zContainer } from '@/components/z-ui/container/zContainer'
   margin: 0 auto;
 }
 
+.link {
+  display: inline-block;
+  margin-top: 2rem;
+  padding: 0.75rem 2rem;
+  background-color: var(--font-blue);
+  color: #ffffff;
+  border-radius: 6px;
+}
+
+.link:hover {
+  background-color: #0860ca;
+}
+
 .components-preview {
   margin: 0 auto;
   width: 800px;
