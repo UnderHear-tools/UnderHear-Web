@@ -142,6 +142,7 @@ const navSections = ref([
   margin-right: 300px;
   padding: 2rem;
   min-height: calc(100vh - 64px);
+  min-width: 0;
 }
 
 /* 右侧目录区 */
