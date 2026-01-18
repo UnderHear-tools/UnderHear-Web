@@ -40,7 +40,7 @@
             class="toc-link"
             :class="[`toc-${item.level}`, { active: activeTocId === item.id }]"
             :href="`#${item.id}`"
-            @click="activeTocId = item.id"
+            @click="handleTocClick(item.id)"
           >
             {{ item.text }}
           </a>
@@ -59,6 +59,7 @@ const mainContentRef = ref(null)
 const tocItems = ref([])
 const tocHeadings = ref([])
 const activeTocId = ref('')
+const lockedTocId = ref('')
 const scrollTicking = ref(false)
 const route = useRoute()
 
@@ -68,6 +69,11 @@ const toggleSidebar = () => {
 
 const closeSidebar = () => {
   sidebarOpen.value = false
+}
+
+const handleTocClick = (id) => {
+  lockedTocId.value = id
+  activeTocId.value = id
 }
 
 const slugify = (text, index) => {
@@ -83,6 +89,19 @@ const setActiveFromScroll = () => {
   if (!headings.length) {
     activeTocId.value = ''
     return
+  }
+
+  if (lockedTocId.value) {
+    const lockedHeading = headings.find((heading) => heading.id === lockedTocId.value)
+    if (lockedHeading) {
+      const rect = lockedHeading.getBoundingClientRect()
+      const isVisible = rect.bottom > 0 && rect.top < window.innerHeight
+      if (isVisible) {
+        activeTocId.value = lockedTocId.value
+        return
+      }
+    }
+    lockedTocId.value = ''
   }
 
   const offset = 120
