@@ -38,8 +38,9 @@
             v-for="item in tocItems"
             :key="item.id"
             class="toc-link"
-            :class="`toc-${item.level}`"
+            :class="[`toc-${item.level}`, { active: activeTocId === item.id }]"
             :href="`#${item.id}`"
+            @click="activeTocId = item.id"
           >
             {{ item.text }}
           </a>
@@ -50,12 +51,15 @@
 </template>
 
 <script setup>
-import { nextTick, onMounted, ref, watch } from 'vue'
+import { nextTick, onBeforeUnmount, onMounted, ref, watch } from 'vue'
 import { useRoute } from 'vue-router'
 
 const sidebarOpen = ref(false)
 const mainContentRef = ref(null)
 const tocItems = ref([])
+const tocHeadings = ref([])
+const activeTocId = ref('')
+const scrollTicking = ref(false)
 const route = useRoute()
 
 const toggleSidebar = () => {
@@ -74,10 +78,46 @@ const slugify = (text, index) => {
   return base || `section-${index + 1}`
 }
 
+const setActiveFromScroll = () => {
+  const headings = tocHeadings.value
+  if (!headings.length) {
+    activeTocId.value = ''
+    return
+  }
+
+  const offset = 120
+  let current = headings[0]
+
+  for (const heading of headings) {
+    const top = heading.getBoundingClientRect().top - offset
+    if (top <= 0) {
+      current = heading
+    } else {
+      break
+    }
+  }
+
+  activeTocId.value = current.id
+}
+
+const handleScroll = () => {
+  if (scrollTicking.value) {
+    return
+  }
+
+  scrollTicking.value = true
+  requestAnimationFrame(() => {
+    setActiveFromScroll()
+    scrollTicking.value = false
+  })
+}
+
 const updateToc = () => {
   const container = mainContentRef.value
   if (!container) {
     tocItems.value = []
+    tocHeadings.value = []
+    activeTocId.value = ''
     return
   }
 
@@ -112,7 +152,9 @@ const updateToc = () => {
     }
   })
 
+  tocHeadings.value = headings
   tocItems.value = items
+  setActiveFromScroll()
 }
 
 const refreshToc = async () => {
@@ -121,7 +163,12 @@ const refreshToc = async () => {
 }
 
 onMounted(() => {
+  window.addEventListener('scroll', handleScroll, { passive: true })
   refreshToc()
+})
+
+onBeforeUnmount(() => {
+  window.removeEventListener('scroll', handleScroll)
 })
 
 watch(
@@ -270,6 +317,11 @@ const navSections = ref([
 .toc-link:hover {
   color: var(--font-black);
   border-left-color: #d1d9e0;
+}
+
+.toc-link.active {
+  color: var(--font-blue);
+  border-left-color: var(--font-blue);
 }
 
 .toc-h3 {
