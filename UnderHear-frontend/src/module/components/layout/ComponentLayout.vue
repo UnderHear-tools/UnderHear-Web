@@ -120,6 +120,7 @@ const navSections = ref([
   margin-left: 300px;
   margin-right: 300px;
   padding: 2rem;
+  min-height: calc(100vh - 64px);
 }
 
 /* 底部导航 */
