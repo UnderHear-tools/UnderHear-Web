@@ -4,7 +4,7 @@
       <h1 class="title">UI 组件库 zLight</h1>
       <p class="subtitle">这里展示本站自研的 UI 组件库，提供现代化、美观且易用的组件。</p>
       <p class="subtitle">所有组件都经过精心设计，支持 TypeScript 并遵循最佳实践。
-        <zLink href="/component/overview" link-text="立即前往" :external="true" target="_blank" />
+        <zLink href="/component/overview" link-text="立即前往" :external="true" />
       </p>
       <img src="@/assets/components.svg" alt="Components Preview" class="components-preview" />
     </div>

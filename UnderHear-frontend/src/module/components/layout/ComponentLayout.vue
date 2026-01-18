@@ -2,11 +2,8 @@
   <div class="component-layout">
     <!-- 移动端菜单按钮 -->
     <button class="mobile-menu-btn" @click="toggleSidebar" aria-label="切换菜单">
-      <svg v-if="!sidebarOpen" width="24" height="24" viewBox="0 0 24 24" fill="none">
-        <path d="M3 12h18M3 6h18M3 18h18" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
-      </svg>
-      <svg v-else width="24" height="24" viewBox="0 0 24 24" fill="none">
-        <path d="M18 6L6 18M6 6l12 12" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+        <path d="M3 12h18M3 6h18M3 18h18" stroke="#d1d9e0" stroke-width="2" stroke-linecap="round" />
       </svg>
     </button>
 
@@ -137,6 +134,15 @@ const navSections = ref([
   min-height: calc(100vh - 64px);
 }
 
+/* 默认隐藏移动端菜单按钮 */
+.mobile-menu-btn {
+  display: none;
+}
+
+.sidebar-overlay {
+  display: none;
+}
+
 /* 响应式设计 */
 @media (max-width: 1420px) {
   .main-content {
@@ -157,32 +163,21 @@ const navSections = ref([
     scrollbar-width: none;
     background-color: #fff;
   }
-  /* 移动端菜单按钮 */
+
+  /* 移动端菜单按钮样式 */
   .mobile-menu-btn {
-    display: none;
+    display: flex;
     position: fixed;
-    top: 1rem;
-    left: 1rem;
-    z-index: 1001;
-    width: 40px;
-    height: 40px;
-    border: none;
-    border-radius: 6px;
-    background: #fff;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+    top: 50%;
+    height: 3rem;
+    width: 3rem;
+    border-radius: 50%;
+    transform: translate(-50%,-50%);
     cursor: pointer;
     align-items: center;
     justify-content: center;
-    color: var(--font-black);
     transition: all 0.2s ease;
-  }
-
-  .mobile-menu-btn:hover {
-    background: #f6f8fa;
-  }
-
-  .mobile-menu-btn:active {
-    transform: scale(0.95);
+    border: 1px solid var(--border-gray);
   }
 
   /* 遮罩层 */
@@ -208,10 +203,6 @@ const navSections = ref([
     to {
       opacity: 1;
     }
-  }
-
-  .mobile-menu-btn {
-    display: flex;
   }
 
   .sidebar.open {
