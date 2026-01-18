@@ -113,6 +113,7 @@ watch(() => route.path, () => {
     top: 1rem;
     width: fit-content;
     margin: 0 auto;
+    margin-top: 1rem;
     border-radius: 24px;
     box-shadow: none;
   }
