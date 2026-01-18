@@ -28,6 +28,16 @@
     <main class="main-content">
       <router-view />
     </main>
+
+    <!-- 右侧目录区 -->
+    <aside class="toc-sidebar">
+      <div class="toc-content">
+        <div class="toc-title">目录</div>
+        <nav class="toc-nav">
+          <!-- 目录内容将通过组件动态生成 -->
+        </nav>
+      </div>
+    </aside>
   </div>
 </template>
 
@@ -134,6 +144,42 @@ const navSections = ref([
   min-height: calc(100vh - 64px);
 }
 
+/* 右侧目录区 */
+.toc-sidebar {
+  width: 260px;
+  position: fixed;
+  right: 0;
+  top: 64px;
+  height: calc(100vh - 64px);
+  display: flex;
+  flex-direction: column;
+  border-left: 1px solid #e1e4e8;
+  background-color: #ffffff;
+}
+
+.toc-content {
+  flex: 1;
+  overflow-y: auto;
+  padding: 2rem 1.5rem;
+  scrollbar-width: thin;
+  scrollbar-color: rgb(192, 192, 192) #ffffff;
+}
+
+.toc-title {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--font-black);
+  margin-bottom: 1rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.toc-nav {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
 /* 默认隐藏移动端菜单按钮 */
 .mobile-menu-btn {
   display: none;
@@ -147,6 +193,10 @@ const navSections = ref([
 @media (max-width: 1420px) {
   .main-content {
     margin-right: 0px;
+  }
+
+  .toc-sidebar {
+    display: none;
   }
 }
 
