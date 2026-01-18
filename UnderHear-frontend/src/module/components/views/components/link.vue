@@ -18,20 +18,29 @@
         
         <div class="demo-actions">
           <zTooltip content="复制代码" placement="bottom">
-            <button class="action-btn">
+            <button class="action-btn" @click="copyCode(demo1Code)">
               <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
                 <path d="M0 6.75C0 5.784.784 5 1.75 5h1.5a.75.75 0 0 1 0 1.5h-1.5a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-1.5a.75.75 0 0 1 1.5 0v1.5A1.75 1.75 0 0 1 9.25 16h-7.5A1.75 1.75 0 0 1 0 14.25Z"/>
                 <path d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0 1 14.25 11h-7.5A1.75 1.75 0 0 1 5 9.25Zm1.75-.25a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-7.5a.25.25 0 0 0-.25-.25Z"/>
               </svg>
             </button>
           </zTooltip>
-          <zTooltip content="查看代码" placement="bottom">
-            <button class="action-btn">
+          <zTooltip :content="demo1Visible ? '隐藏代码' : '查看代码'" placement="bottom">
+            <button class="action-btn" @click="demo1Visible = !demo1Visible">
               <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
                 <path d="M4.72 3.22a.75.75 0 0 1 1.06 1.06L2.06 8l3.72 3.72a.75.75 0 1 1-1.06 1.06L.47 8.53a.75.75 0 0 1 0-1.06l4.25-4.25Zm6.56 0a.75.75 0 1 0-1.06 1.06L13.94 8l-3.72 3.72a.75.75 0 1 0 1.06 1.06l4.25-4.25a.75.75 0 0 0 0-1.06l-4.25-4.25Z"/>
               </svg>
             </button>
           </zTooltip>
+        </div>
+        
+        <div v-if="demo1Visible" class="demo-code">
+          <pre><code>{{ demo1Code }}</code></pre>
+          <div class="code-footer">
+            <button class="hide-code-btn" @click="demo1Visible = false">
+              隐藏源代码
+            </button>
+          </div>
         </div>
       </div>
     </section>
@@ -50,20 +59,29 @@
         
         <div class="demo-actions">
           <zTooltip content="复制代码" placement="bottom">
-            <button class="action-btn">
+            <button class="action-btn" @click="copyCode(demo2Code)">
               <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
                 <path d="M0 6.75C0 5.784.784 5 1.75 5h1.5a.75.75 0 0 1 0 1.5h-1.5a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-1.5a.75.75 0 0 1 1.5 0v1.5A1.75 1.75 0 0 1 9.25 16h-7.5A1.75 1.75 0 0 1 0 14.25Z"/>
                 <path d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0 1 14.25 11h-7.5A1.75 1.75 0 0 1 5 9.25Zm1.75-.25a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-7.5a.25.25 0 0 0-.25-.25Z"/>
               </svg>
             </button>
           </zTooltip>
-          <zTooltip content="查看代码" placement="bottom">
-            <button class="action-btn">
+          <zTooltip :content="demo2Visible ? '隐藏代码' : '查看代码'" placement="bottom">
+            <button class="action-btn" @click="demo2Visible = !demo2Visible">
               <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
                 <path d="M4.72 3.22a.75.75 0 0 1 1.06 1.06L2.06 8l3.72 3.72a.75.75 0 1 1-1.06 1.06L.47 8.53a.75.75 0 0 1 0-1.06l4.25-4.25Zm6.56 0a.75.75 0 1 0-1.06 1.06L13.94 8l-3.72 3.72a.75.75 0 1 0 1.06 1.06l4.25-4.25a.75.75 0 0 0 0-1.06l-4.25-4.25Z"/>
               </svg>
             </button>
           </zTooltip>
+        </div>
+        
+        <div v-if="demo2Visible" class="demo-code">
+          <pre><code>{{ demo2Code }}</code></pre>
+          <div class="code-footer">
+            <button class="hide-code-btn" @click="demo2Visible = false">
+              隐藏源代码
+            </button>
+          </div>
         </div>
       </div>
     </section>
@@ -83,20 +101,29 @@
         
         <div class="demo-actions">
           <zTooltip content="复制代码" placement="bottom">
-            <button class="action-btn">
+            <button class="action-btn" @click="copyCode(demo3Code)">
               <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
                 <path d="M0 6.75C0 5.784.784 5 1.75 5h1.5a.75.75 0 0 1 0 1.5h-1.5a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-1.5a.75.75 0 0 1 1.5 0v1.5A1.75 1.75 0 0 1 9.25 16h-7.5A1.75 1.75 0 0 1 0 14.25Z"/>
                 <path d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0 1 14.25 11h-7.5A1.75 1.75 0 0 1 5 9.25Zm1.75-.25a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-7.5a.25.25 0 0 0-.25-.25Z"/>
               </svg>
             </button>
           </zTooltip>
-          <zTooltip content="查看代码" placement="bottom">
-            <button class="action-btn">
+          <zTooltip :content="demo3Visible ? '隐藏代码' : '查看代码'" placement="bottom">
+            <button class="action-btn" @click="demo3Visible = !demo3Visible">
               <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
                 <path d="M4.72 3.22a.75.75 0 0 1 1.06 1.06L2.06 8l3.72 3.72a.75.75 0 1 1-1.06 1.06L.47 8.53a.75.75 0 0 1 0-1.06l4.25-4.25Zm6.56 0a.75.75 0 1 0-1.06 1.06L13.94 8l-3.72 3.72a.75.75 0 1 0 1.06 1.06l4.25-4.25a.75.75 0 0 0 0-1.06l-4.25-4.25Z"/>
               </svg>
             </button>
           </zTooltip>
+        </div>
+        
+        <div v-if="demo3Visible" class="demo-code">
+          <pre><code>{{ demo3Code }}</code></pre>
+          <div class="code-footer">
+            <button class="hide-code-btn" @click="demo3Visible = false">
+              隐藏源代码
+            </button>
+          </div>
         </div>
       </div>
     </section>
@@ -174,8 +201,64 @@
 </template>
 
 <script setup lang="ts">
+import { ref } from 'vue'
 import { zLink } from '@/components/z-ui/link/zlink'
 import { zTooltip } from '@/components/z-ui/tooltip/zTooltip'
+
+const demo1Visible = ref(false)
+const demo2Visible = ref(false)
+const demo3Visible = ref(false)
+
+const demo1Code = `<template>
+  <div style="max-width: 600px">
+    <zLink href="#" link-text="Primary Link" variant="primary" />
+    <zLink href="#" link-text="Secondary Link" variant="secondary" />
+    <zLink href="#" link-text="Danger Link" variant="danger" />
+  </div>
+</template>
+
+<style scoped>
+.link-row {
+  display: flex;
+  gap: 20px;
+  align-items: center;
+}
+</style>`
+
+const demo2Code = `<template>
+  <div style="max-width: 600px">
+    <zLink href="https://github.com" link-text="GitHub" :external="true" target="_blank" />
+    <zLink href="https://vuejs.org" link-text="Vue.js" :external="true" target="_blank" variant="secondary" />
+  </div>
+</template>
+
+<style scoped>
+.link-row {
+  display: flex;
+  gap: 20px;
+  align-items: center;
+}
+</style>`
+
+const demo3Code = `<template>
+  <div style="max-width: 600px">
+    <zLink href="/component" link-text="组件文档" prefix-text="查看" />
+    <zLink href="/component" link-text="组件文档" suffix-text="了解更多" />
+    <zLink href="/component" link-text="组件文档" prefix-text="前往" suffix-text="查看详情" />
+  </div>
+</template>
+
+<style scoped>
+.link-column {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+</style>`
+
+function copyCode(code: string) {
+  navigator.clipboard.writeText(code)
+}
 </script>
 
 <style scoped>
@@ -270,6 +353,52 @@ import { zTooltip } from '@/components/z-ui/tooltip/zTooltip'
 .action-btn:hover {
   background: #e1e4e8;
   color: var(--font-black);
+}
+
+.demo-code {
+  background: #f6f8fa;
+  border-radius: 0 0 6px 6px;
+}
+
+.code-footer {
+  display: flex;
+  justify-content: center;
+  padding: 0.5rem;
+  border-top: 1px solid #d1d9e0;
+  background: #ffffff;
+  border-radius: 0 0 6px 6px;
+}
+
+.hide-code-btn {
+  display: flex;
+  align-items: center;
+  gap: 0.375rem;
+  background: transparent;
+  border: none;
+  color: var(--font-gray);
+  font-size: 0.875rem;
+  cursor: pointer;
+  border-radius: 4px;
+  transition: all 0.2s ease;
+}
+
+.hide-code-btn:hover {
+  color: var(--font-blue);
+}
+
+.demo-code pre {
+  margin: 0;
+  padding: 1.5rem;
+  overflow-x: auto;
+}
+
+.demo-code code {
+  display: block;
+  font-family: 'Consolas', 'Monaco', 'Courier New', monospace;
+  font-size: 0.875rem;
+  line-height: 1.6;
+  color: var(--font-black);
+  white-space: pre;
 }
 
 .api-section {
