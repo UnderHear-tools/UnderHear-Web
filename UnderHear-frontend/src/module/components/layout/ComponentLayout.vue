@@ -279,6 +279,19 @@ const navSections = ref([
   color: #000000;
 }
 
+.nav-item.active::before {
+  content: '';
+  position: absolute;
+  left: -10px;
+  top: 50%;
+  bottom: 0;
+  width: 4px;
+  height: 30px;
+  transform: translate(0,-50%);
+  background-color: var(--font-blue);
+  border-radius: 2px;
+}
+
 .main-content {
   flex: 1;
   margin-left: 300px;
