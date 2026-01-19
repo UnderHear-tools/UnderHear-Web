@@ -206,6 +206,12 @@ const navSections = ref([
     ]
   },
   {
+    title: 'Icon 图标',
+    items: [
+      { path: '/component/octicons-vue', label: 'Octicons-vue 图标' }
+    ]
+  },
+  {
     title: 'Basic 基础组件',
     items: [
       { path: '/component/container', label: 'Container 布局容器' },
