@@ -310,6 +310,8 @@ function copyDemo3Code() {
 <style scoped>
 .link-docs {
   max-width: 1200px;
+  margin: 0 auto;
+  width: 100%;
 }
 
 .page-title {
