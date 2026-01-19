@@ -1,0 +1,19 @@
+<template>
+  <svg
+    aria-hidden="true"
+    focusable="false"
+    :width="size"
+    :height="size"
+    viewBox="0 0 16 16"
+    fill="currentColor"
+  >
+    <path d="M14 8A6 6 0 1 1 2 8a6 6 0 0 1 12 0Zm-1.5 0a4.5 4.5 0 1 0-9 0 4.5 4.5 0 0 0 9 0Z"></path>
+    <path d="M5 7.25a.75.75 0 0 1 0 1.5H1a.75.75 0 0 1 0-1.5Zm3-7a.75.75 0 0 1 .75.75v4a.75.75 0 0 1-1.5 0V1A.75.75 0 0 1 8 .25Zm7 7a.75.75 0 0 1 0 1.5h-4a.75.75 0 0 1 0-1.5Zm-7 3a.75.75 0 0 1 .75.75v4a.75.75 0 0 1-1.5 0v-4a.75.75 0 0 1 .75-.75Z"></path>
+  </svg>
+</template>
+
+<script setup lang="ts">
+withDefaults(defineProps<{ size?: number | string }>(), {
+  size: 16,
+})
+</script>

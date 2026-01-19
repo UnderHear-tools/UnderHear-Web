@@ -1,0 +1,18 @@
+<template>
+  <svg
+    aria-hidden="true"
+    focusable="false"
+    :width="size"
+    :height="size"
+    viewBox="0 0 16 16"
+    fill="currentColor"
+  >
+    <path d="M7.47 10.78a.749.749 0 0 0 1.06 0l3.75-3.75a.749.749 0 1 0-1.06-1.06L8.75 8.439V1.75a.75.75 0 0 0-1.5 0v6.689L4.78 5.97a.749.749 0 1 0-1.06 1.06l3.75 3.75ZM3.75 13a.75.75 0 0 0 0 1.5h8.5a.75.75 0 0 0 0-1.5h-8.5Z"></path>
+  </svg>
+</template>
+
+<script setup lang="ts">
+withDefaults(defineProps<{ size?: number | string }>(), {
+  size: 16,
+})
+</script>
