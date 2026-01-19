@@ -20,6 +20,12 @@ export const componentRoutes: Array<RouteRecordRaw> = [
                 name: 'Overview',
                 component: () => import('../views/components/overview.vue')
             },
+            // Icon 图标组件
+            {
+                path: 'octicons-vue',
+                name: 'OcticonsVue',
+                component: () => import('../views/components/octicons-vue.vue')
+            },
             // Basic 基础组件
             {
                 path: 'container',
