@@ -36,7 +36,9 @@
         
         <transition name="code-expand">
           <div v-if="demo1Visible" class="demo-code">
-            <pre><code>{{ demo1Code }}</code></pre>
+            <pre class="language-markup">
+              <code class="language-markup" v-html="demo1Highlighted"></code>
+            </pre>
             <div class="code-footer">
               <button class="hide-code-btn" @click="demo1Visible = false">
                 隐藏源代码
@@ -79,7 +81,9 @@
         
         <transition name="code-expand">
           <div v-if="demo2Visible" class="demo-code">
-            <pre><code>{{ demo2Code }}</code></pre>
+            <pre class="language-markup">
+              <code class="language-markup" v-html="demo2Highlighted"></code>
+            </pre>
             <div class="code-footer">
               <button class="hide-code-btn" @click="demo2Visible = false">
                 隐藏源代码
@@ -123,7 +127,9 @@
         
         <transition name="code-expand">
           <div v-if="demo3Visible" class="demo-code">
-            <pre><code>{{ demo3Code }}</code></pre>
+            <pre class="language-markup">
+              <code class="language-markup" v-html="demo3Highlighted"></code>
+            </pre>
             <div class="code-footer">
               <button class="hide-code-btn" @click="demo3Visible = false">
                 隐藏源代码
@@ -207,7 +213,9 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue'
+import { computed, ref } from 'vue'
+import * as Prism from 'prismjs'
+import 'prismjs/themes/prism.css'
 import { zLink } from '@/components/z-ui/link/zlink'
 import { zTooltip } from '@/components/z-ui/tooltip/zTooltip'
 
@@ -264,6 +272,12 @@ const demo3Code = `<template>
   gap: 1rem;
 }
 </style>`
+
+const highlightCode = (code: string) =>
+  Prism.highlight(code, Prism.languages.markup, 'markup')
+const demo1Highlighted = computed(() => highlightCode(demo1Code))
+const demo2Highlighted = computed(() => highlightCode(demo2Code))
+const demo3Highlighted = computed(() => highlightCode(demo3Code))
 
 function copyDemo1Code() {
   navigator.clipboard.writeText(demo1Code).then(() => {
@@ -431,19 +445,21 @@ function copyDemo3Code() {
   color: var(--font-blue);
 }
 
-.demo-code pre {
+.demo-code pre[class*='language-'] {
   margin: 0;
   padding: 1.5rem;
   overflow-x: auto;
+  background: transparent;
 }
 
-.demo-code code {
+.demo-code code[class*='language-'] {
   display: block;
   font-family: 'Consolas', 'Monaco', 'Courier New', monospace;
   font-size: 0.875rem;
   line-height: 1.6;
   color: var(--font-black);
   white-space: pre;
+  background: transparent;
 }
 
 .api-section {
@@ -548,12 +564,12 @@ function copyDemo3Code() {
     height: 36px;
   }
 
-  .demo-code pre {
+  .demo-code pre[class*='language-'] {
     padding: 1rem;
     font-size: 0.75rem;
   }
 
-  .demo-code code {
+  .demo-code code[class*='language-'] {
     font-size: 0.75rem;
     line-height: 1.5;
   }
