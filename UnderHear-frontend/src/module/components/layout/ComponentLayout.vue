@@ -76,14 +76,6 @@ const handleTocClick = (id) => {
   activeTocId.value = id
 }
 
-const slugify = (text, index) => {
-  const base = text
-    .toLowerCase()
-    .replace(/\s+/g, '-')
-    .replace(/[^a-z0-9-]/g, '')
-  return base || `section-${index + 1}`
-}
-
 const setActiveFromScroll = () => {
   const headings = tocHeadings.value
   if (!headings.length) {
@@ -140,29 +132,11 @@ const updateToc = () => {
     return
   }
 
-  let headings = Array.from(container.querySelectorAll('h2, h3'))
-  if (headings.length === 0) {
-    headings = Array.from(container.querySelectorAll('h1'))
-  }
-
-  const usedIds = new Set()
-  const items = headings.map((heading, index) => {
-    const text = heading.textContent?.trim() || `Section ${index + 1}`
-    let id = heading.id
-
-    if (!id || usedIds.has(id)) {
-      const baseId = slugify(text, index)
-      let candidateId = baseId
-      let suffix = 1
-      while (usedIds.has(candidateId)) {
-        suffix += 1
-        candidateId = `${baseId}-${suffix}`
-      }
-      id = candidateId
-      heading.id = id
-    }
-
-    usedIds.add(id)
+  const headings = Array.from(container.querySelectorAll('h2, h3'))
+  const items = headings.map((heading) => {
+    const text = heading.textContent
+    const id = text
+    heading.id = id
 
     return {
       id,
