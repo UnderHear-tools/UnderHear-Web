@@ -33,7 +33,6 @@ withDefaults(
 }
 
 .section-description {
-  font-size: 0.875rem;
   color: var(--font-gray);
   margin-bottom: 1rem;
   line-height: 1.6;
@@ -64,7 +63,7 @@ withDefaults(
   }
 
   .section-description {
-    font-size: 0.8125rem;
+    font-size: 0.875rem;
   }
 
   .api-section {

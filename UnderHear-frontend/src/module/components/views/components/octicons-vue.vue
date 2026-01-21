@@ -84,9 +84,6 @@ import ComponentDocsHeader from '@/module/components/components/ComponentDocsPag
 import ComponentDocsPage from '@/module/components/components/ComponentDocsPage/ComponentDocsPage.vue'
 import ComponentDocsSection from '@/module/components/components/ComponentDocsPage/ComponentDocsSection.vue'
 
-import { zDivider } from '@/components/z-ui/divider/zDivider'
-import ZDivider from '@/components/z-ui/divider/zDivider/zDivider.vue'
-
 type IconEntry = {
   name: string
   component: Component
@@ -108,14 +105,14 @@ const demoLabels = {
 }
 
 const demo1Code = `<script setup lang="ts">
-import { telescopeFill, markGithub, heartFill } from '@/components/z-ui/icon/Octicons-vue/index.ts'
+import { TelescopeFill, MarkGithub, HeartFill } from '@/components/z-ui/icon/Octicons-vue/index.ts'
 </scr` + `ipt>
 
 <template>
   <div class="icon-demo-row">
-    <telescopeFill :size="32" />
-    <markGithub :size="32" />
-    <heartFill :size="32" />
+    <TelescopeFill :size="32" />
+    <MarkGithub :size="32" />
+    <HeartFill :size="32" />
   </div>
 </template>
 
@@ -129,14 +126,14 @@ import { telescopeFill, markGithub, heartFill } from '@/components/z-ui/icon/Oct
 </style>`
 
 const demo2Code = `<script setup lang="ts">
-import { telescopeFill, markGithub, heartFill } from '@/components/z-ui/icon/Octicons-vue/index.ts'
+import { TelescopeFill, MarkGithub, HeartFill } from '@/components/z-ui/icon/Octicons-vue/index.ts'
 </scr` + `ipt>
 
 <template>
   <div class="icon-demo-row">
-    <telescopeFill :size="16" class="icon-muted" />
-    <markGithub :size="24" class="icon-primary" />
-    <heartFill :size="32" class="icon-danger" />
+    <TelescopeFill :size="16" class="icon-muted" />
+    <MarkGithub :size="24" class="icon-primary" />
+    <HeartFill :size="32" class="icon-danger" />
   </div>
 </template>
 
@@ -162,27 +159,27 @@ import { telescopeFill, markGithub, heartFill } from '@/components/z-ui/icon/Oct
 </style>`
 
 const basicIconEntries: IconEntry[] = [
-  { name: 'telescopeFill', component: octicons.telescopeFill as Component },
-  { name: 'markGithub', component: octicons.markGithub as Component },
-  { name: 'heartFill', component: octicons.heartFill as Component }
+  { name: 'TelescopeFill', component: octicons.TelescopeFill as Component },
+  { name: 'MarkGithub', component: octicons.MarkGithub as Component },
+  { name: 'HeartFill', component: octicons.HeartFill as Component }
 ]
 
 const sizeDemoEntries: SizeDemoEntry[] = [
   {
-    name: 'telescopeFill',
-    component: octicons.telescopeFill as Component,
+    name: 'TelescopeFill',
+    component: octicons.TelescopeFill as Component,
     size: 16,
     className: 'icon-muted'
   },
   {
-    name: 'markGithub',
-    component: octicons.markGithub as Component,
+    name: 'MarkGithub',
+    component: octicons.MarkGithub as Component,
     size: 24,
     className: 'icon-primary'
   },
   {
-    name: 'heartFill',
-    component: octicons.heartFill as Component,
+    name: 'HeartFill',
+    component: octicons.HeartFill as Component,
     size: 32,
     className: 'icon-danger'
   }
