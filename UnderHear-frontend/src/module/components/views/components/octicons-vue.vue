@@ -49,8 +49,18 @@
         当前共 {{ iconEntries.length }} 个图标，展示预览尺寸为 {{ iconSize }}px。
       </template>
 
+      <div class="icon-search">
+        <input
+          v-model="searchQuery"
+          type="text"
+          class="icon-search-input"
+          placeholder="Search icons..."
+          aria-label="搜索图标名称"
+        />
+      </div>
+
       <div class="icon-grid">
-        <div v-for="icon in iconEntries" :key="icon.name" class="icon-card">
+        <div v-for="icon in filteredIconEntries" :key="icon.name" class="icon-card">
           <component :is="icon.component" :size="iconSize" class="icon-svg" />
           <span class="icon-name">{{ icon.name }}</span>
         </div>
@@ -64,6 +74,7 @@
 </template>
 
 <script setup lang="ts">
+import { computed, ref } from 'vue'
 import type { Component } from 'vue'
 import * as octicons from '@/components/z-ui/icon/Octicons-vue/index.ts'
 import { zLink } from '@/components/z-ui/link/zlink'
@@ -72,6 +83,9 @@ import ComponentDocsDemoBlock from '@/module/components/components/ComponentDocs
 import ComponentDocsHeader from '@/module/components/components/ComponentDocsPage/ComponentDocsHeader.vue'
 import ComponentDocsPage from '@/module/components/components/ComponentDocsPage/ComponentDocsPage.vue'
 import ComponentDocsSection from '@/module/components/components/ComponentDocsPage/ComponentDocsSection.vue'
+
+import { zDivider } from '@/components/z-ui/divider/zDivider'
+import ZDivider from '@/components/z-ui/divider/zDivider/zDivider.vue'
 
 type IconEntry = {
   name: string
@@ -135,11 +149,11 @@ import { telescopeFill, markGithub, heartFill } from '@/components/z-ui/icon/Oct
 }
 
 .icon-muted {
-  color: var(--font-gray);
+  color: #656d76;
 }
 
 .icon-primary {
-  color: var(--font-blue);
+  color: #0969da;
 }
 
 .icon-danger {
@@ -182,6 +196,16 @@ const iconEntries: IconEntry[] = Object.entries(octicons)
   }))
   .sort((a, b) => a.name.localeCompare(b.name))
 
+const searchQuery = ref('')
+const filteredIconEntries = computed(() => {
+  const query = searchQuery.value.trim().toLowerCase()
+  if (!query) {
+    return iconEntries
+  }
+
+  return iconEntries.filter((icon) => icon.name.toLowerCase().includes(query))
+})
+
 const apiColumns = ['属性名', '说明', '类型', '可选值', '默认值']
 const apiRows: Array<Array<{ text: string; code?: boolean }>> = [
   [
@@ -195,6 +219,33 @@ const apiRows: Array<Array<{ text: string; code?: boolean }>> = [
 </script>
 
 <style scoped>
+.icon-search {
+  display: flex;
+  align-items: center;
+  margin-bottom: 2rem;
+}
+
+.icon-search-input {
+  width: 100%;
+  padding: 0.5rem 0.75rem;
+  height: 40px;
+  border: 1px solid #d1d9e0;
+  border-radius: 6px;
+  font-size: 0.875rem;
+  color: var(--font-black);
+  background: #ffffff;
+  box-shadow: inset 0px 1px 0px 0px #1f23280a;
+}
+
+.icon-search-input::placeholder {
+  color: var(--font-gray);
+}
+
+.icon-search-input:focus {
+  outline: 2px solid var(--font-blue);
+  outline-offset: -1px;
+}
+
 .icon-demo-row {
   display: flex;
   gap: 1.5rem;
@@ -248,6 +299,10 @@ const apiRows: Array<Array<{ text: string; code?: boolean }>> = [
 }
 
 @media (max-width: 768px) {
+  .icon-search {
+    margin-bottom: 0.75rem;
+  }
+
   .icon-demo-row {
     flex-direction: column;
     align-items: flex-start;
