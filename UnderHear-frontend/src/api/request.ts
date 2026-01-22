@@ -40,10 +40,4 @@ export const get = <T>(url: string, config?: AxiosRequestConfig) =>
 export const post = <T>(url: string, data?: unknown, config?: AxiosRequestConfig) =>
   request.post<T, T>(url, data, config)
 
-export const put = <T>(url: string, data?: unknown, config?: AxiosRequestConfig) =>
-  request.put<T, T>(url, data, config)
-
-export const del = <T>(url: string, config?: AxiosRequestConfig) =>
-  request.delete<T, T>(url, config)
-
 export default request
