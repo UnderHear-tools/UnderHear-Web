@@ -68,7 +68,7 @@ UnderHear-frontend/*.sln
 UnderHear-frontend/*.sw?
 
 # Environment variables
-UnderHear-frontend/.env
+# UnderHear-frontend/.env
 UnderHear-frontend/.env.local
 UnderHear-frontend/.env.*.local
 
@@ -92,7 +92,7 @@ $RECYCLE.BIN/
 *.log
 
 # Environment variables
-.env
+# .env
 .env.local
 .env.*.local
 
