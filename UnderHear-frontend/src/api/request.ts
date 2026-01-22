@@ -1,30 +1,18 @@
 import axios, { type AxiosRequestConfig } from 'axios'
 
 import { API_BASE_URL } from './config'
+import { unwrapApiResponse } from './response'
+import type { ApiResponse } from './types'
 
 const request = axios.create({
   baseURL: API_BASE_URL,
   timeout: 15000,
 })
 
-request.interceptors.response.use(
-  (response) => {
-    const responseData = response.data as { code?: string; message?: string; data?: unknown }
-    if (responseData && responseData.code && responseData.code !== 'OK') {
-      const message = responseData.message ?? '请求失败'
-      return Promise.reject(new Error(message))
-    }
-    return responseData?.data ?? response.data
-  },
-  (error) => {
-    if (axios.isAxiosError(error)) {
-      const responseData = error.response?.data as { message?: string } | undefined
-      const message = responseData?.message ?? error.message
-      return Promise.reject(new Error(message))
-    }
-    return Promise.reject(error)
-  }
-)
+request.interceptors.response.use((response) => {
+  response.data = unwrapApiResponse(response.data as ApiResponse<unknown>)
+  return response
+})
 
 export const setAuthToken = (token?: string) => {
   if (token) {
@@ -34,10 +22,14 @@ export const setAuthToken = (token?: string) => {
   delete request.defaults.headers.common.Authorization
 }
 
-export const get = <T>(url: string, config?: AxiosRequestConfig) =>
-  request.get<T, T>(url, config)
+export const get = async <T>(url: string, config?: AxiosRequestConfig) => {
+  const response = await request.get<T>(url, config)
+  return response.data
+}
 
-export const post = <T>(url: string, data?: unknown, config?: AxiosRequestConfig) =>
-  request.post<T, T>(url, data, config)
+export const post = async <T>(url: string, data?: unknown, config?: AxiosRequestConfig) => {
+  const response = await request.post<T>(url, data, config)
+  return response.data
+}
 
 export default request
