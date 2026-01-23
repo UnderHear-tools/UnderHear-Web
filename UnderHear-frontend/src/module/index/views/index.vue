@@ -13,7 +13,9 @@
     <div class="relative mx-auto h-full w-full max-w-[1440px] px-6 sm:px-10 lg:px-16"><img
         alt="Clouds overlay pattern in background" aria-hidden="true" loading="eager" decoding="async" data-nimg="fill"
         style="position:absolute;height:100%;width:100%;left:0;top:0;right:0;bottom:0;object-fit:cover;color:transparent"
-        src="https://kurzgesagt.org/_next/static/media/background-clouds-overlay.1a853003.svg"><img
+        src="https://kurzgesagt.org/_next/static/media/background-clouds-overlay.1a853003.svg">
+      <div class="absolute inset-0 translate-y-20">
+        <img
         alt="Decorative cloud formations in the background" aria-hidden="true" loading="eager" width="2427"
         height="1503" decoding="async" data-nimg="1"
         class="absolute -left-[min(8.255vw,7.4295rem)] -top-[min(2.95vw,2.655rem)] w-[min(125vw,112.5rem)] max-w-[125vw] mobile:-left-[60.5vw] mobile:w-[250vw] mobile:max-w-[250vw]"
@@ -43,14 +45,26 @@
         alt="Secondary decorative dot connecting the lines" aria-hidden="true" loading="eager" width="17" height="17"
         decoding="async" data-nimg="1"
         class="absolute right-[min(34.5vw,31.05rem)] top-[min(9.925vw,8.9325rem)] h-[min(1.2vw,1.08rem)] w-[min(1.2vw,1.08rem)] mobile:right-[13.1vw] mobile:top-[22.85vw] mobile:h-[2.35vw] mobile:w-[2.35vw]"
-        style="color:transparent" src="https://kurzgesagt.org/_next/static/media/star-highlight.32fe6ada.svg"></div>
+        style="color:transparent" src="https://kurzgesagt.org/_next/static/media/star-highlight.32fe6ada.svg"></div></div>
   </div>
+  <div class="title">EXPLORE</div>
 </template>
 
 <script setup lang="ts">
 </script>
 
 <style scoped>
+.title{
+  font-family: 'Arial Black', sans-serif;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 6rem;
+  color: white;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
+  pointer-events: none;
+}
 @keyframes stretch-vertical {
   0% {
     transform: scaleY(0);
@@ -107,5 +121,11 @@
 .animate-stretch-horizontal-loop {
   transform-origin: center;
   animation: pulse-horizontal 1.6s ease-in-out infinite;
+}
+
+@media (max-width: 768px) {
+  .title {
+    font-size: 3.5rem;
+  }
 }
 </style>
