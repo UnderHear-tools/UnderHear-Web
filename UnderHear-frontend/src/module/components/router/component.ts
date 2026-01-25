@@ -57,6 +57,12 @@ export const componentRoutes: Array<RouteRecordRaw> = [
                 path: 'select',
                 name: 'Select',
                 component: () => import('../views/components/select.vue')
+            },
+            // Data 数据展示
+            {
+                path: 'table',
+                name: 'Table',
+                component: () => import('../views/components/table.vue')
             }
         ]
     }

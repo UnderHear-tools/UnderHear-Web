@@ -200,6 +200,12 @@ const navSections = ref([
       { path: '/component/input', label: 'Input 输入框' },
       { path: '/component/select', label: 'Select 选择器' }
     ]
+  },
+  {
+    title: 'Data 数据展示',
+    items: [
+      { path: '/component/table', label: 'Table 表格' }
+    ]
   }
 ])
 </script>
