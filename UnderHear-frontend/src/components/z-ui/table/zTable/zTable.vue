@@ -302,7 +302,7 @@ function cellSlotName(column: ZTableColumn) {
 }
 
 .z-table__cell {
-  padding: 0.75rem 1rem;
+  padding: 0.6rem 0.9rem;
   border-bottom: 1px solid var(--border-gray);
   vertical-align: middle;
   background-clip: padding-box;
