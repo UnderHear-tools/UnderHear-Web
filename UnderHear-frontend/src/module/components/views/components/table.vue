@@ -124,7 +124,13 @@
     </ComponentDocsSection>
 
     <ComponentDocsSection title="API" variant="api">
-      <ComponentDocsApiTable title="属性" :columns="apiColumns" :rows="apiRows" />
+      <zTable
+        :columns="apiTableColumns"
+        :data="apiTableRows"
+        row-key="name"
+        compact
+        :hoverable="false"
+      />
     </ComponentDocsSection>
   </ComponentDocsPage>
 </template>
@@ -132,7 +138,6 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 import { zTable, type RowData, type ZTableColumn } from '@/components/z-ui/table/zTable'
-import ComponentDocsApiTable from '@/module/components/components/ComponentDocsPage/ComponentDocsApiTable.vue'
 import ComponentDocsDemoBlock from '@/module/components/components/ComponentDocsPage/ComponentDocsDemoBlock.vue'
 import ComponentDocsHeader from '@/module/components/components/ComponentDocsPage/ComponentDocsHeader.vue'
 import ComponentDocsPage from '@/module/components/components/ComponentDocsPage/ComponentDocsPage.vue'
@@ -471,71 +476,78 @@ const rows: Row[] = [
 ]
 <\/script>`
 
-const apiColumns = ['属性名', '说明', '类型', '可选值', '默认值']
-const apiRows: Array<Array<{ text: string; code?: boolean }>> = [
-  [
-    { text: 'columns', code: true },
-    { text: '列配置数组' },
-    { text: 'ZTableColumn[]', code: true },
-    { text: '—' },
-    { text: '[]', code: true }
-  ],
-  [
-    { text: 'data', code: true },
-    { text: '表格数据源' },
-    { text: 'RowData[]', code: true },
-    { text: '—' },
-    { text: '[]', code: true }
-  ],
-  [
-    { text: 'row-key', code: true },
-    { text: '行唯一键，支持字段名或函数' },
-    { text: 'string | (row, index) => string | number', code: true },
-    { text: '—' },
-    { text: 'id', code: true }
-  ],
-  [
-    { text: 'caption / aria-label', code: true },
-    { text: '表格描述与无障碍标签' },
-    { text: 'string', code: true },
-    { text: '—' },
-    { text: '"" / "Data table"', code: true }
-  ],
-  [
-    { text: 'hoverable', code: true },
-    { text: '行悬浮高亮' },
-    { text: 'boolean', code: true },
-    { text: 'true / false' },
-    { text: 'true', code: true }
-  ],
-  [
-    { text: 'bordered', code: true },
-    { text: '是否显示外边框' },
-    { text: 'boolean', code: true },
-    { text: 'true / false' },
-    { text: 'true', code: true }
-  ],
-  [
-    { text: 'compact', code: true },
-    { text: '是否使用紧凑密度' },
-    { text: 'boolean', code: true },
-    { text: 'true / false' },
-    { text: 'false', code: true }
-  ],
-  [
-    { text: 'row-clickable', code: true },
-    { text: '是否启用行点击事件' },
-    { text: 'boolean', code: true },
-    { text: 'true / false' },
-    { text: 'false', code: true }
-  ],
-  [
-    { text: 'empty-text / placeholder-text', code: true },
-    { text: '空状态文本与空值占位符' },
-    { text: 'string', code: true },
-    { text: '—' },
-    { text: '暂无数据 / ""', code: true }
-  ]
+const apiTableColumns: ZTableColumn[] = [
+  { key: 'name', label: '属性名', rowHeader: true, minWidth: '160px' },
+  { key: 'description', label: '说明', minWidth: '240px', wrap: true },
+  { key: 'type', label: '类型', minWidth: '200px', wrap: true },
+  { key: 'options', label: '可选值', minWidth: '200px', wrap: true },
+  { key: 'default', label: '默认值', minWidth: '140px' }
+]
+
+const apiTableRows = [
+  {
+    name: 'columns',
+    description: '列配置数组',
+    type: 'ZTableColumn[]',
+    options: '—',
+    default: '[]'
+  },
+  {
+    name: 'data',
+    description: '表格数据源',
+    type: 'RowData[]',
+    options: '—',
+    default: '[]'
+  },
+  {
+    name: 'row-key',
+    description: '行唯一键，支持字段名或函数',
+    type: 'string | (row, index) => string | number',
+    options: '—',
+    default: 'id'
+  },
+  {
+    name: 'caption / aria-label',
+    description: '表格描述与无障碍标签',
+    type: 'string',
+    options: '—',
+    default: '空字符串 / Data table'
+  },
+  {
+    name: 'hoverable',
+    description: '行悬浮高亮',
+    type: 'boolean',
+    options: 'true / false',
+    default: 'true'
+  },
+  {
+    name: 'bordered',
+    description: '是否显示外边框',
+    type: 'boolean',
+    options: 'true / false',
+    default: 'true'
+  },
+  {
+    name: 'compact',
+    description: '是否使用紧凑密度',
+    type: 'boolean',
+    options: 'true / false',
+    default: 'false'
+  },
+  {
+    name: 'row-clickable',
+    description: '是否启用行点击事件',
+    type: 'boolean',
+    options: 'true / false',
+    default: 'false'
+  },
+  {
+    name: 'empty-text / placeholder-text',
+    description: '空状态文本与空值占位符',
+    type: 'string',
+    options: '—',
+    default: '暂无数据 / 空字符串'
+  }
 ]
 </script>
 

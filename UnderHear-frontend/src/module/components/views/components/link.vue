@@ -46,14 +46,20 @@
     </ComponentDocsSection>
 
     <ComponentDocsSection title="API" variant="api">
-      <ComponentDocsApiTable title="属性" :columns="apiColumns" :rows="apiRows" />
+      <zTable
+        :columns="apiTableColumns"
+        :data="apiTableRows"
+        row-key="name"
+        compact
+        :hoverable="false"
+      />
     </ComponentDocsSection>
   </ComponentDocsPage>
 </template>
 
 <script setup lang="ts">
 import { zLink } from '@/components/z-ui/link/zlink'
-import ComponentDocsApiTable from '@/module/components/components/ComponentDocsPage/ComponentDocsApiTable.vue'
+import { zTable, type ZTableColumn } from '@/components/z-ui/table/zTable'
 import ComponentDocsDemoBlock from '@/module/components/components/ComponentDocsPage/ComponentDocsDemoBlock.vue'
 import ComponentDocsHeader from '@/module/components/components/ComponentDocsPage/ComponentDocsHeader.vue'
 import ComponentDocsPage from '@/module/components/components/ComponentDocsPage/ComponentDocsPage.vue'
@@ -114,57 +120,64 @@ const demo3Code = `<template>
 }
 </style>`
 
-const apiColumns = ['属性名', '说明', '类型', '可选值', '默认值']
-const apiRows: Array<Array<{ text: string; code?: boolean }>> = [
-  [
-    { text: 'href', code: true },
-    { text: '链接地址' },
-    { text: 'string', code: true },
-    { text: '—' },
-    { text: '—' }
-  ],
-  [
-    { text: 'link-text', code: true },
-    { text: '链接文本' },
-    { text: 'string', code: true },
-    { text: '—' },
-    { text: '—' }
-  ],
-  [
-    { text: 'prefix-text', code: true },
-    { text: '前置文本' },
-    { text: 'string', code: true },
-    { text: '—' },
-    { text: '—' }
-  ],
-  [
-    { text: 'suffix-text', code: true },
-    { text: '后置文本' },
-    { text: 'string', code: true },
-    { text: '—' },
-    { text: '—' }
-  ],
-  [
-    { text: 'external', code: true },
-    { text: '是否为外部链接' },
-    { text: 'boolean', code: true },
-    { text: '—' },
-    { text: 'false', code: true }
-  ],
-  [
-    { text: 'target', code: true },
-    { text: '链接打开方式' },
-    { text: 'string', code: true },
-    { text: '_blank / _self / _parent / _top' },
-    { text: '_self', code: true }
-  ],
-  [
-    { text: 'variant', code: true },
-    { text: '链接样式变体' },
-    { text: 'string', code: true },
-    { text: 'primary / secondary / danger / default' },
-    { text: 'primary', code: true }
-  ]
+const apiTableColumns: ZTableColumn[] = [
+  { key: 'name', label: '属性名', rowHeader: true, minWidth: '140px' },
+  { key: 'description', label: '说明', minWidth: '200px', wrap: true },
+  { key: 'type', label: '类型', minWidth: '160px', wrap: true },
+  { key: 'options', label: '可选值', minWidth: '200px', wrap: true },
+  { key: 'default', label: '默认值', minWidth: '120px' }
+]
+
+const apiTableRows = [
+  {
+    name: 'href',
+    description: '链接地址',
+    type: 'string',
+    options: '—',
+    default: '—'
+  },
+  {
+    name: 'link-text',
+    description: '链接文本',
+    type: 'string',
+    options: '—',
+    default: '—'
+  },
+  {
+    name: 'prefix-text',
+    description: '前置文本',
+    type: 'string',
+    options: '—',
+    default: '—'
+  },
+  {
+    name: 'suffix-text',
+    description: '后置文本',
+    type: 'string',
+    options: '—',
+    default: '—'
+  },
+  {
+    name: 'external',
+    description: '是否为外部链接',
+    type: 'boolean',
+    options: 'true / false',
+    default: 'false'
+  },
+  {
+    name: 'target',
+    description: '链接打开方式',
+    type: 'string',
+    options: '_blank / _self / _parent / _top',
+    default: '_self'
+  },
+  {
+    name: 'variant',
+    description: '链接样式变体',
+    type: 'string',
+    options: 'primary / secondary / danger / default',
+    default: 'primary'
+  }
 ]
 </script>
 

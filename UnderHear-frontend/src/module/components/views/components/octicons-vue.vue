@@ -68,7 +68,13 @@
     </ComponentDocsSection>
 
     <ComponentDocsSection title="API" variant="api">
-      <ComponentDocsApiTable title="属性" :columns="apiColumns" :rows="apiRows" />
+      <zTable
+        :columns="apiTableColumns"
+        :data="apiTableRows"
+        row-key="name"
+        compact
+        :hoverable="false"
+      />
     </ComponentDocsSection>
   </ComponentDocsPage>
 </template>
@@ -78,7 +84,7 @@ import { computed, ref } from 'vue'
 import type { Component } from 'vue'
 import * as octicons from '@/components/z-ui/icon/Octicons-vue/index.ts'
 import { zLink } from '@/components/z-ui/link/zlink'
-import ComponentDocsApiTable from '@/module/components/components/ComponentDocsPage/ComponentDocsApiTable.vue'
+import { zTable, type ZTableColumn } from '@/components/z-ui/table/zTable'
 import ComponentDocsDemoBlock from '@/module/components/components/ComponentDocsPage/ComponentDocsDemoBlock.vue'
 import ComponentDocsHeader from '@/module/components/components/ComponentDocsPage/ComponentDocsHeader.vue'
 import ComponentDocsPage from '@/module/components/components/ComponentDocsPage/ComponentDocsPage.vue'
@@ -203,15 +209,22 @@ const filteredIconEntries = computed(() => {
   return iconEntries.filter((icon) => icon.name.toLowerCase().includes(query))
 })
 
-const apiColumns = ['属性名', '说明', '类型', '可选值', '默认值']
-const apiRows: Array<Array<{ text: string; code?: boolean }>> = [
-  [
-    { text: 'size', code: true },
-    { text: '图标尺寸' },
-    { text: 'number | string', code: true },
-    { text: '—' },
-    { text: '16', code: true }
-  ]
+const apiTableColumns: ZTableColumn[] = [
+  { key: 'name', label: '属性名', rowHeader: true, minWidth: '140px' },
+  { key: 'description', label: '说明', minWidth: '200px', wrap: true },
+  { key: 'type', label: '类型', minWidth: '160px', wrap: true },
+  { key: 'options', label: '可选值', minWidth: '140px', wrap: true },
+  { key: 'default', label: '默认值', minWidth: '100px' }
+]
+
+const apiTableRows = [
+  {
+    name: 'size',
+    description: '图标尺寸',
+    type: 'number | string',
+    options: '—',
+    default: '16'
+  }
 ]
 </script>
 
