@@ -106,7 +106,7 @@ const demoLabels = {
 
 const demo1Code = `<script setup lang="ts">
 import { TelescopeFill, MarkGithub, HeartFill } from '@/components/z-ui/icon/Octicons-vue/index.ts'
-</scr` + `ipt>
+<\/script>
 
 <template>
   <div class="icon-demo-row">
@@ -127,7 +127,7 @@ import { TelescopeFill, MarkGithub, HeartFill } from '@/components/z-ui/icon/Oct
 
 const demo2Code = `<script setup lang="ts">
 import { TelescopeFill, MarkGithub, HeartFill } from '@/components/z-ui/icon/Octicons-vue/index.ts'
-</scr` + `ipt>
+<\/script>
 
 <template>
   <div class="icon-demo-row">

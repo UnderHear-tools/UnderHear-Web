@@ -274,7 +274,33 @@ const basicDemoCode = `<template>
     :data="rows"
     row-key="id"
   />
-</template>`
+</template>
+
+<script setup lang="ts">
+import { type ZTableColumn } from '@/components/z-ui/table/zTable'
+
+interface Row {
+  id: number
+  name: string
+  visibility: string
+  updatedAt: string
+  stars: number
+  owner: string
+}
+
+const columns: ZTableColumn[] = [
+  { key: 'name', label: 'Repository', rowHeader: true, minWidth: '240px' },
+  { key: 'visibility', label: 'Visibility', width: '120px' },
+  { key: 'updatedAt', label: 'Updated', width: '150px' },
+  { key: 'stars', label: 'Stars', align: 'right', width: '110px' },
+  { key: 'owner', label: 'Owner', minWidth: '140px' }
+]
+
+const rows: Row[] = [
+  { id: 1, name: 'underhear-web', visibility: 'Public', updatedAt: '2026-01-20', stars: 128, owner: 'UnderHear' },
+  { id: 2, name: 'audio-pipeline', visibility: 'Internal', updatedAt: '2026-01-18', stars: 76, owner: 'UnderHear' }
+]
+<\/script>`
 
 const compactDemoCode = `<template>
   <div class="table-demo table-demo--split">
@@ -288,23 +314,114 @@ const compactDemoCode = `<template>
       :hoverable="false"
     />
   </div>
-</template>`
+</template>
+
+<script setup lang="ts">
+import { type ZTableColumn } from '@/components/z-ui/table/zTable'
+
+interface Row {
+  id: number
+  name: string
+  visibility: string
+  updatedAt: string
+  stars: number
+  owner: string
+}
+
+const columns: ZTableColumn[] = [
+  { key: 'name', label: 'Repository', rowHeader: true, minWidth: '240px' },
+  { key: 'visibility', label: 'Visibility', width: '120px' },
+  { key: 'updatedAt', label: 'Updated', width: '150px' },
+  { key: 'stars', label: 'Stars', align: 'right', width: '110px' },
+  { key: 'owner', label: 'Owner', minWidth: '140px' }
+]
+
+const rows: Row[] = [
+  { id: 1, name: 'underhear-web', visibility: 'Public', updatedAt: '2026-01-20', stars: 128, owner: 'UnderHear' },
+  { id: 2, name: 'audio-pipeline', visibility: 'Internal', updatedAt: '2026-01-18', stars: 76, owner: 'UnderHear' }
+]
+<\/script>`
 
 const clickableDemoCode = `<template>
+  <div class="status-bar" v-if="selectedName">
+    最近点击：<strong>{{ selectedName }}</strong>
+  </div>
   <zTable
     :columns="columns"
     :data="rows"
     row-clickable
     @row-click="handleRowClick"
   />
-</template>`
+</template>
+
+<script setup lang="ts">
+import { ref } from 'vue'
+import { type RowData, type ZTableColumn } from '@/components/z-ui/table/zTable'
+
+interface Row {
+  id: number
+  name: string
+  visibility: string
+  updatedAt: string
+  stars: number
+  owner: string
+}
+
+const selectedName = ref('')
+
+const columns: ZTableColumn[] = [
+  { key: 'name', label: 'Repository', rowHeader: true, minWidth: '240px' },
+  { key: 'visibility', label: 'Visibility', width: '120px' },
+  { key: 'updatedAt', label: 'Updated', width: '150px' },
+  { key: 'stars', label: 'Stars', align: 'right', width: '110px' },
+  { key: 'owner', label: 'Owner', minWidth: '140px' }
+]
+
+const rows: Row[] = [
+  { id: 1, name: 'underhear-web', visibility: 'Public', updatedAt: '2026-01-20', stars: 128, owner: 'UnderHear' },
+  { id: 2, name: 'audio-pipeline', visibility: 'Internal', updatedAt: '2026-01-18', stars: 76, owner: 'UnderHear' }
+]
+
+function handleRowClick(payload: { row: RowData; rowIndex: number }) {
+  const row = payload.row as Row
+  selectedName.value = row.name
+}
+<\/script>`
 
 const emptyDemoCode = `<template>
   <div class="table-demo table-demo--split">
-    <zTable :columns="columns" :data="[]" empty-text="暂无记录" />
-    <zTable :columns="columns" :data="rows" placeholder-text="—" />
+    <zTable :columns="columns" :data="emptyRows" empty-text="暂无记录" />
+    <zTable :columns="columns" :data="placeholderRows" placeholder-text="—" />
   </div>
-</template>`
+</template>
+
+<script setup lang="ts">
+import { type ZTableColumn } from '@/components/z-ui/table/zTable'
+
+interface Row {
+  id: number
+  name: string
+  visibility: string
+  updatedAt: string
+  stars: number
+  owner: string
+}
+
+const columns: ZTableColumn[] = [
+  { key: 'name', label: 'Repository', rowHeader: true, minWidth: '240px' },
+  { key: 'visibility', label: 'Visibility', width: '120px' },
+  { key: 'updatedAt', label: 'Updated', width: '150px' },
+  { key: 'stars', label: 'Stars', align: 'right', width: '110px' },
+  { key: 'owner', label: 'Owner', minWidth: '140px' }
+]
+
+const placeholderRows: Row[] = [
+  { id: 1, name: 'underhear-web', visibility: 'Public', updatedAt: '', stars: 128, owner: 'UnderHear' },
+  { id: 2, name: 'audio-pipeline', visibility: 'Internal', updatedAt: '2026-01-18', stars: 76, owner: '' }
+]
+
+const emptyRows: Row[] = []
+<\/script>`
 
 const wrapDemoCode = `<template>
   <zTable
@@ -312,7 +429,47 @@ const wrapDemoCode = `<template>
     :data="rows"
     row-key="id"
   />
-</template>`
+</template>
+
+<script setup lang="ts">
+import { type ZTableColumn } from '@/components/z-ui/table/zTable'
+
+interface Row {
+  id: number
+  name: string
+  visibility: string
+  updatedAt: string
+  stars: number
+  owner: string
+}
+
+const wrapColumns: ZTableColumn[] = [
+  { key: 'name', label: 'Repository', rowHeader: true, minWidth: '240px', wrap: true },
+  { key: 'visibility', label: 'Visibility', width: '120px' },
+  { key: 'updatedAt', label: 'Updated', width: '150px' },
+  { key: 'stars', label: 'Stars', align: 'right', width: '110px' },
+  { key: 'owner', label: 'Owner', minWidth: '200px', wrap: true }
+]
+
+const rows: Row[] = [
+  {
+    id: 101,
+    name: 'underhear-audio-research-platform-with-extended-metadata',
+    visibility: 'Public',
+    updatedAt: '2026-01-21',
+    stars: 321,
+    owner: 'UnderHear Research Team'
+  },
+  {
+    id: 102,
+    name: 'interactive-sound-experiments-for-community-creators',
+    visibility: 'Internal',
+    updatedAt: '2026-01-14',
+    stars: 188,
+    owner: 'OpenAudio Collaboration Group'
+  }
+]
+<\/script>`
 
 const apiColumns = ['属性名', '说明', '类型', '可选值', '默认值']
 const apiRows: Array<Array<{ text: string; code?: boolean }>> = [
