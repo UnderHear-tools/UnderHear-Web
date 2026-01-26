@@ -34,7 +34,6 @@ UnderHear-backend/spring.log
 
 # Dependencies
 UnderHear-frontend/node_modules/
-UnderHear-frontend/package-lock.json
 UnderHear-frontend/pnpm-lock.yaml
 
 # Build output
