@@ -1,16 +1,6 @@
 ﻿<template>
   <div class="z-table" :class="tableClasses">
-    <div v-if="showHeader" class="z-table__header">
-      <div class="z-table__title-group">
-        <div v-if="title" class="z-table__title">{{ title }}</div>
-        <div v-if="description" class="z-table__description">{{ description }}</div>
-      </div>
-      <div v-if="hasActionsSlot" class="z-table__actions">
-        <slot name="actions" />
-      </div>
-    </div>
-
-    <div class="z-table__container" :style="containerStyle">
+    <div class="z-table__container">
       <table class="z-table__table" :aria-label="ariaLabel">
         <caption v-if="caption" class="z-table__sr-caption">{{ caption }}</caption>
         <thead class="z-table__head">
@@ -19,14 +9,12 @@
               v-for="column in columns"
               :key="column.key"
               class="z-table__cell z-table__cell--head"
-              :class="[alignClass(column.align), column.headerClassName]"
+              :class="[alignClass(column.align), column.headerClassName, { 'is-wrap': column.wrap }]"
               :style="columnStyle(column)"
               scope="col"
             >
               <span class="z-table__header-label">
-                <slot :name="headerSlotName(column)" :column="column">
-                  {{ column.label }}
-                </slot>
+                {{ column.label }}
               </span>
             </th>
           </tr>
@@ -44,19 +32,15 @@
               <component
                 :is="column.rowHeader ? 'th' : 'td'"
                 class="z-table__cell z-table__cell--body"
-                :class="[alignClass(column.align), column.className, { 'is-row-header': column.rowHeader }]"
+                :class="[
+                  alignClass(column.align),
+                  column.className,
+                  { 'is-row-header': column.rowHeader, 'is-wrap': column.wrap }
+                ]"
                 :style="columnStyle(column)"
                 :scope="column.rowHeader ? 'row' : undefined"
               >
-                <slot
-                  :name="cellSlotName(column)"
-                  :row="row"
-                  :row-index="rowIndex"
-                  :column="column"
-                  :value="getValue(row, column)"
-                >
-                  {{ formatValue(getValue(row, column), row, column, rowIndex) }}
-                </slot>
+                {{ formatValue(getValue(row, column), row, column, rowIndex) }}
               </component>
             </template>
           </tr>
@@ -65,7 +49,7 @@
         <tbody v-else class="z-table__body">
           <tr class="z-table__row z-table__row--empty">
             <td class="z-table__cell z-table__cell--empty" :colspan="colspan">
-              <slot name="empty">{{ emptyText }}</slot>
+              {{ emptyText }}
             </td>
           </tr>
         </tbody>
@@ -75,7 +59,7 @@
 </template>
 
 <script setup lang="ts">
-import { computed, useSlots } from 'vue'
+import { computed } from 'vue'
 
 export type RowData = object
 export type ZTableAlign = 'left' | 'center' | 'right'
@@ -87,6 +71,7 @@ export interface ZTableColumn {
   width?: string
   minWidth?: string
   rowHeader?: boolean
+  wrap?: boolean
   className?: string
   headerClassName?: string
   formatter?: (value: unknown, row: RowData, column: ZTableColumn, rowIndex: number) => unknown
@@ -97,8 +82,6 @@ const props = withDefaults(
     columns: ZTableColumn[]
     data: RowData[]
     rowKey?: string | ((row: RowData, index: number) => string | number)
-    title?: string
-    description?: string
     caption?: string
     ariaLabel?: string
     emptyText?: string
@@ -106,23 +89,17 @@ const props = withDefaults(
     hoverable?: boolean
     bordered?: boolean
     compact?: boolean
-    stickyHeader?: boolean
-    maxHeight?: string
     rowClickable?: boolean
   }>(),
   {
     rowKey: 'id',
-    title: '',
-    description: '',
     caption: '',
     ariaLabel: 'Data table',
     emptyText: '暂无数据',
-    placeholderText: '—',
+    placeholderText: '',
     hoverable: true,
     bordered: true,
     compact: false,
-    stickyHeader: false,
-    maxHeight: '',
     rowClickable: false
   }
 )
@@ -131,29 +108,13 @@ const emit = defineEmits<{
   'row-click': [{ row: RowData; rowIndex: number }]
 }>()
 
-const slots = useSlots()
-
-const hasActionsSlot = computed(() => Boolean(slots.actions))
-const showHeader = computed(() => Boolean(props.title || props.description || hasActionsSlot.value))
-
 const colspan = computed(() => Math.max(props.columns.length, 1))
 
 const tableClasses = computed(() => ({
   'is-bordered': props.bordered,
   'is-hoverable': props.hoverable,
-  'is-compact': props.compact,
-  'is-sticky': props.stickyHeader,
-  'has-header': showHeader.value
+  'is-compact': props.compact
 }))
-
-const containerStyle = computed(() => {
-  const resolvedMaxHeight = props.stickyHeader ? props.maxHeight || '420px' : props.maxHeight
-  if (!resolvedMaxHeight) return undefined
-  return {
-    maxHeight: resolvedMaxHeight,
-    overflow: 'auto'
-  }
-})
 
 const displayRows = computed(() => props.data.slice())
 
@@ -219,13 +180,6 @@ function columnStyle(column: ZTableColumn) {
   return style
 }
 
-function headerSlotName(column: ZTableColumn) {
-  return `header-${column.key}`
-}
-
-function cellSlotName(column: ZTableColumn) {
-  return `cell-${column.key}`
-}
 </script>
 
 <style scoped>
@@ -242,34 +196,6 @@ function cellSlotName(column: ZTableColumn) {
   border-radius: 0;
 }
 
-.z-table__header {
-  display: flex;
-  align-items: flex-start;
-  justify-content: space-between;
-  gap: 1rem;
-  padding: 1rem 1.25rem;
-  border-bottom: 1px solid var(--border-gray);
-  background: #ffffff;
-}
-
-.z-table__title {
-  font-size: 1rem;
-  font-weight: 600;
-  color: var(--font-black);
-}
-
-.z-table__description {
-  margin-top: 0.25rem;
-  color: var(--font-gray);
-  font-size: 0.875rem;
-}
-
-.z-table__actions {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  flex-shrink: 0;
-}
 
 .z-table__container {
   width: 100%;
@@ -306,6 +232,12 @@ function cellSlotName(column: ZTableColumn) {
   border-bottom: 1px solid var(--border-gray);
   vertical-align: middle;
   background-clip: padding-box;
+  white-space: nowrap;
+}
+
+.z-table__cell.is-wrap {
+  white-space: normal;
+  overflow-wrap: break-word;
 }
 
 .z-table__cell--head {
@@ -313,12 +245,6 @@ function cellSlotName(column: ZTableColumn) {
   color: var(--font-black);
   background: #f6f8fa;
   position: relative;
-}
-
-.z-table.is-sticky .z-table__cell--head {
-  position: sticky;
-  top: 0;
-  z-index: 2;
 }
 
 .z-table__row--body:last-child .z-table__cell {
@@ -344,9 +270,6 @@ function cellSlotName(column: ZTableColumn) {
   font-weight: 500;
 }
 
-.z-table.is-compact .z-table__header {
-  padding: 0.75rem 1rem;
-}
 
 .z-table.is-compact .z-table__cell {
   padding: 0.6rem 0.75rem;
@@ -357,10 +280,7 @@ function cellSlotName(column: ZTableColumn) {
   display: inline-flex;
   align-items: center;
   gap: 0.35rem;
-  min-width: 0;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
+  white-space: inherit;
 }
 
 .is-row-header {
@@ -378,15 +298,10 @@ function cellSlotName(column: ZTableColumn) {
 
 .is-align-right {
   text-align: right;
+  font-variant-numeric: tabular-nums;
 }
 
 @media (max-width: 768px) {
-  .z-table__header {
-    padding: 0.85rem 1rem;
-    flex-direction: column;
-    align-items: flex-start;
-  }
-
   .z-table__cell {
     padding: 0.65rem 0.85rem;
   }

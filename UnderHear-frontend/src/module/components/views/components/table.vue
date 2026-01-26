@@ -7,14 +7,12 @@
 
     <ComponentDocsSection title="基础用法">
       <template #description>
-        通过 <code>columns</code> 定义列，通过 <code>data</code> 提供数据。
+        通过 <code>columns</code> 定义列，通过 <code>data</code> 提供数据。单元格默认不换行，必要时可在列配置中设置 <code>wrap</code> 允许换行。
       </template>
 
       <ComponentDocsDemoBlock :code="basicDemoCode" v-bind="demoLabels">
         <div class="table-demo">
           <zTable
-            title="Repositories"
-            description="A clean, Primer-inspired data table."
             caption="Repository metadata"
             :columns="columns"
             :data="repoRows"
@@ -24,37 +22,103 @@
       </ComponentDocsDemoBlock>
     </ComponentDocsSection>
 
-    <ComponentDocsSection title="粘性表头与插槽">
+    <ComponentDocsSection title="紧凑与无边框">
       <template #description>
-        开启 <code>sticky-header</code> 并设置 <code>max-height</code>，可在滚动时固定表头。
+        通过 <code>compact</code> 与 <code>bordered</code> 调整表格密度和边框，可同时关闭 <code>hoverable</code>。
       </template>
 
-      <ComponentDocsDemoBlock :code="advancedDemoCode" v-bind="demoLabels">
+      <ComponentDocsDemoBlock :code="compactDemoCode" v-bind="demoLabels">
+        <div class="table-demo table-demo--split">
+          <div class="table-demo__panel">
+            <div class="table-demo__label">默认</div>
+            <zTable
+              caption="Default table"
+              :columns="columns"
+              :data="repoRows"
+              row-key="id"
+            />
+          </div>
+          <div class="table-demo__panel">
+            <div class="table-demo__label">紧凑 / 无边框 / 关闭悬浮</div>
+            <zTable
+              caption="Compact table"
+              :columns="columns"
+              :data="repoRows"
+              row-key="id"
+              compact
+              :bordered="false"
+              :hoverable="false"
+            />
+          </div>
+        </div>
+      </ComponentDocsDemoBlock>
+    </ComponentDocsSection>
+
+    <ComponentDocsSection title="行点击">
+      <template #description>
+        开启 <code>row-clickable</code> 并监听 <code>row-click</code> 获取当前行。
+      </template>
+
+      <ComponentDocsDemoBlock :code="clickableDemoCode" v-bind="demoLabels">
         <div class="table-demo">
           <div class="status-bar" v-if="selectedName">
             最近点击：<strong>{{ selectedName }}</strong>
           </div>
-
           <zTable
-            title="Repositories"
-            description="Header stays visible while scrolling."
-            caption="Repository table"
+            caption="Clickable rows"
             :columns="columns"
-            :data="extendedRows"
-            sticky-header
-            max-height="360px"
-            compact
+            :data="repoRows"
             row-clickable
             row-key="id"
             @row-click="handleRowClick"
-          >
-            <template #cell-stars="{ value }">
-              <span class="star-cell">
-                <span class="star-icon">★</span>
-                {{ value }}
-              </span>
-            </template>
-          </zTable>
+          />
+        </div>
+      </ComponentDocsDemoBlock>
+    </ComponentDocsSection>
+
+    <ComponentDocsSection title="空状态与占位符">
+      <template #description>
+        通过 <code>empty-text</code> 设置空数据提示，通过 <code>placeholder-text</code> 指定空值占位符。
+      </template>
+
+      <ComponentDocsDemoBlock :code="emptyDemoCode" v-bind="demoLabels">
+        <div class="table-demo table-demo--split">
+          <div class="table-demo__panel">
+            <div class="table-demo__label">空状态</div>
+            <zTable
+              caption="Empty table"
+              :columns="columns"
+              :data="emptyRows"
+              empty-text="暂无记录"
+            />
+          </div>
+          <div class="table-demo__panel">
+            <div class="table-demo__label">空值占位符</div>
+            <zTable
+              caption="Placeholder table"
+              :columns="columns"
+              :data="placeholderRows"
+              row-key="id"
+              placeholder-text="—"
+            />
+          </div>
+        </div>
+      </ComponentDocsDemoBlock>
+    </ComponentDocsSection>
+
+    <ComponentDocsSection title="长文本换行">
+      <template #description>
+        列配置设置 <code>wrap</code> 后允许单元格内容换行，适合长文本。
+      </template>
+
+      <ComponentDocsDemoBlock :code="wrapDemoCode" v-bind="demoLabels">
+        <div class="table-demo">
+          <zTable
+            caption="Wrapped content"
+            :columns="wrapColumns"
+            :data="wrapRows"
+            row-key="id"
+          />
         </div>
       </ComponentDocsDemoBlock>
     </ComponentDocsSection>
@@ -92,15 +156,13 @@ const repoRows: RepoRow[] = [
   { id: 6, name: 'voice-notes', visibility: 'Public', updatedAt: '2026-01-04', stars: 89, owner: 'Community' }
 ]
 
-const extendedRows: RepoRow[] = Array.from({ length: 24 }, (_, index) => {
-  const base = repoRows[index % repoRows.length]
-  return {
-    ...base,
-    id: index + 1,
-    name: `${base.name}-${index + 1}`,
-    stars: base.stars + index * 3
-  }
-})
+const emptyRows: RepoRow[] = []
+
+const placeholderRows: RepoRow[] = repoRows.map((row, index) => ({
+  ...row,
+  updatedAt: index % 2 === 0 ? '' : row.updatedAt,
+  owner: index % 3 === 0 ? '' : row.owner
+}))
 
 const columns: ZTableColumn[] = [
   {
@@ -132,11 +194,70 @@ const columns: ZTableColumn[] = [
   }
 ]
 
+const wrapColumns: ZTableColumn[] = [
+  {
+    key: 'name',
+    label: 'Repository',
+    rowHeader: true,
+    minWidth: '240px',
+    wrap: true
+  },
+  {
+    key: 'visibility',
+    label: 'Visibility',
+    width: '120px'
+  },
+  {
+    key: 'updatedAt',
+    label: 'Updated',
+    width: '150px'
+  },
+  {
+    key: 'stars',
+    label: 'Stars',
+    align: 'right',
+    width: '110px'
+  },
+  {
+    key: 'owner',
+    label: 'Owner',
+    minWidth: '200px',
+    wrap: true
+  }
+]
+
+const wrapRows: RepoRow[] = [
+  {
+    id: 101,
+    name: 'underhear-audio-research-platform-with-extended-metadata',
+    visibility: 'Public',
+    updatedAt: '2026-01-21',
+    stars: 321,
+    owner: 'UnderHear Research Team'
+  },
+  {
+    id: 102,
+    name: 'interactive-sound-experiments-for-community-creators',
+    visibility: 'Internal',
+    updatedAt: '2026-01-14',
+    stars: 188,
+    owner: 'OpenAudio Collaboration Group'
+  },
+  {
+    id: 103,
+    name: 'waveform-visualization-library-with-extended-guides',
+    visibility: 'Public',
+    updatedAt: '2026-01-09',
+    stars: 97,
+    owner: 'Studio Tools Initiative'
+  }
+]
+
 const selectedName = ref('')
 
 function handleRowClick(payload: { row: RowData; rowIndex: number }) {
-  const record = payload.row as Record<string, unknown>
-  selectedName.value = String(record.name ?? '')
+  const row = payload.row as RepoRow
+  selectedName.value = row.name
 }
 
 const demoLabels = {
@@ -149,27 +270,48 @@ const demoLabels = {
 
 const basicDemoCode = `<template>
   <zTable
-    title="Repositories"
     :columns="columns"
     :data="rows"
     row-key="id"
   />
 </template>`
 
-const advancedDemoCode = `<template>
+const compactDemoCode = `<template>
+  <div class="table-demo table-demo--split">
+    <zTable :columns="columns" :data="rows" row-key="id" />
+    <zTable
+      :columns="columns"
+      :data="rows"
+      row-key="id"
+      compact
+      :bordered="false"
+      :hoverable="false"
+    />
+  </div>
+</template>`
+
+const clickableDemoCode = `<template>
   <zTable
     :columns="columns"
     :data="rows"
-    sticky-header
-    max-height="360px"
-    compact
     row-clickable
     @row-click="handleRowClick"
-  >
-    <template #cell-stars="{ value }">
-      <span class="star-cell">★ {{ value }}</span>
-    </template>
-  </zTable>
+  />
+</template>`
+
+const emptyDemoCode = `<template>
+  <div class="table-demo table-demo--split">
+    <zTable :columns="columns" :data="[]" empty-text="暂无记录" />
+    <zTable :columns="columns" :data="rows" placeholder-text="—" />
+  </div>
+</template>`
+
+const wrapDemoCode = `<template>
+  <zTable
+    :columns="wrapColumns"
+    :data="rows"
+    row-key="id"
+  />
 </template>`
 
 const apiColumns = ['属性名', '说明', '类型', '可选值', '默认值']
@@ -196,11 +338,11 @@ const apiRows: Array<Array<{ text: string; code?: boolean }>> = [
     { text: 'id', code: true }
   ],
   [
-    { text: 'title / description', code: true },
-    { text: '表格标题与描述' },
+    { text: 'caption / aria-label', code: true },
+    { text: '表格描述与无障碍标签' },
     { text: 'string', code: true },
     { text: '—' },
-    { text: '""', code: true }
+    { text: '"" / "Data table"', code: true }
   ],
   [
     { text: 'hoverable', code: true },
@@ -210,18 +352,18 @@ const apiRows: Array<Array<{ text: string; code?: boolean }>> = [
     { text: 'true', code: true }
   ],
   [
-    { text: 'sticky-header', code: true },
-    { text: '是否启用粘性表头' },
+    { text: 'bordered', code: true },
+    { text: '是否显示外边框' },
+    { text: 'boolean', code: true },
+    { text: 'true / false' },
+    { text: 'true', code: true }
+  ],
+  [
+    { text: 'compact', code: true },
+    { text: '是否使用紧凑密度' },
     { text: 'boolean', code: true },
     { text: 'true / false' },
     { text: 'false', code: true }
-  ],
-  [
-    { text: 'max-height', code: true },
-    { text: '表格容器最大高度（用于滚动）' },
-    { text: 'string', code: true },
-    { text: '如 360px / 50vh' },
-    { text: '""', code: true }
   ],
   [
     { text: 'row-clickable', code: true },
@@ -235,7 +377,7 @@ const apiRows: Array<Array<{ text: string; code?: boolean }>> = [
     { text: '空状态文本与空值占位符' },
     { text: 'string', code: true },
     { text: '—' },
-    { text: '暂无数据 / —', code: true }
+    { text: '暂无数据 / ""', code: true }
   ]
 ]
 </script>
@@ -246,6 +388,21 @@ const apiRows: Array<Array<{ text: string; code?: boolean }>> = [
   gap: 1rem;
 }
 
+.table-demo--split {
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  align-items: start;
+}
+
+.table-demo__panel {
+  display: grid;
+  gap: 0.5rem;
+}
+
+.table-demo__label {
+  font-size: 0.8125rem;
+  color: var(--font-gray);
+}
+
 .status-bar {
   font-size: 0.9rem;
   color: var(--font-gray);
@@ -253,18 +410,5 @@ const apiRows: Array<Array<{ text: string; code?: boolean }>> = [
 
 .status-bar strong {
   color: var(--font-black);
-}
-
-.star-cell {
-  display: inline-flex;
-  align-items: center;
-  justify-content: flex-end;
-  gap: 0.35rem;
-  font-weight: 600;
-  color: var(--font-black);
-}
-
-.star-icon {
-  color: #e3b341;
 }
 </style>
