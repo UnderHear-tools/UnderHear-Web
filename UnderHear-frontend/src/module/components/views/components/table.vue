@@ -389,7 +389,7 @@ const apiRows: Array<Array<{ text: string; code?: boolean }>> = [
 }
 
 .table-demo--split {
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  grid-template-columns: 1fr;
   align-items: start;
 }
 

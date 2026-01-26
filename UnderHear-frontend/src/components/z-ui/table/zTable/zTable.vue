@@ -48,7 +48,7 @@
 
         <tbody v-else class="z-table__body">
           <tr class="z-table__row z-table__row--empty">
-            <td class="z-table__cell z-table__cell--empty" :colspan="colspan">
+            <td class="z-table__cell--empty" :colspan="colspan">
               {{ emptyText }}
             </td>
           </tr>
@@ -184,8 +184,8 @@ function columnStyle(column: ZTableColumn) {
 
 <style scoped>
 .z-table {
-  border: 1px solid var(--border-gray);
-  border-radius: 8px;
+  outline: 1px solid var(--border-gray);
+  border-radius: 6px;
   background: #ffffff;
   color: var(--font-black);
   overflow: hidden;
