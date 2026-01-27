@@ -2,38 +2,22 @@
   <div class="background-root">
     <img
       alt="Who We Are page background with space theme"
-      aria-hidden="true"
-      loading="eager"
-      decoding="async"
-      data-nimg="fill"
       class="background-0"
       src="../assests/background-0.svg"
     >
     <img
       alt="Background gradient overlay for visual effect"
-      aria-hidden="true"
-      loading="eager"
-      decoding="async"
-      data-nimg="fill"
       class="background-1"
       src="../assests/background-1.svg"
     >
     <img
       alt="Stars overlay pattern in background"
-      aria-hidden="true"
-      loading="eager"
-      decoding="async"
-      data-nimg="fill"
       class="background-2"
       src="../assests/background-2.svg"
     >
     <div class="relative mx-auto h-full w-full max-w-[1440px] px-6 sm:px-10 lg:px-16">
     <img
       alt="Clouds overlay pattern in background"
-      aria-hidden="true"
-      loading="eager"
-      decoding="async"
-      data-nimg="fill"
       class="background-3"
       src="../assests/background-3.svg"
     >
@@ -50,67 +34,31 @@
     >
     <img
       alt="Decorative vertical line element"
-      aria-hidden="true"
-      loading="eager"
-      width="10"
-      height="537"
-      decoding="async"
-      data-nimg="1"
       class="background-5 animate-stretch-vertical-loop"
       src="../assests/background-5.svg"
     >
     <img
       alt="Decorative horizontal line element"
-      aria-hidden="true"
-      loading="eager"
-      width="355"
-      height="10"
-      decoding="async"
-      data-nimg="1"
       class="background-6 animate-stretch-horizontal-loop"
       src="../assests/background-6.svg"
     >
     <img
       alt="Decorative dot connecting the lines"
-      aria-hidden="true"
-      loading="eager"
-      width="19"
-      height="19"
-      decoding="async"
-      data-nimg="1"
       class="background-7"
       src="../assests/background-7.svg"
     >
     <img
       alt="Secondary decorative vertical line element"
-      aria-hidden="true"
-      loading="eager"
-      width="11"
-      height="135"
-      decoding="async"
-      data-nimg="1"
       class="background-8 animate-stretch-vertical-loop"
       src="../assests/background-8.svg"
     >
     <img
       alt="Secondary decorative horizontal line element"
-      aria-hidden="true"
-      loading="eager"
-      width="246"
-      height="11"
-      decoding="async"
-      data-nimg="1"
       class="background-9 animate-stretch-horizontal-loop"
       src="../assests/background-9.svg"
     >
     <img
       alt="Secondary decorative dot connecting the lines"
-      aria-hidden="true"
-      loading="eager"
-      width="17"
-      height="17"
-      decoding="async"
-      data-nimg="1"
       class="background-10"
       src="../assests/background-10.svg"
     >
@@ -132,10 +80,7 @@
   --bg-offset: 80px;
 }
 
-.background-0,
-.background-1,
-.background-2,
-.background-3 {
+.background-1 {
   position: absolute;
   height: 100%;
   width: 100%;
@@ -164,7 +109,9 @@
 .background-0,
 .background-2, 
 .background-3 {
-  object-fit: cover;
+  position: absolute;
+  width: 100%;
+  height: 100%;
 }
 
 .background-4 {
