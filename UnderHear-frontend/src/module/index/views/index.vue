@@ -7,7 +7,7 @@
       decoding="async"
       data-nimg="fill"
       class="background-0"
-      src="https://kurzgesagt.org/_next/static/media/who-we-are_background.17ca4a9d.svg"
+      src="../assests/backgorund-0.svg"
     >
     <img
       alt="Background gradient overlay for visual effect"
@@ -16,7 +16,7 @@
       decoding="async"
       data-nimg="fill"
       class="background-1"
-      src="https://kurzgesagt.org/_next/static/media/background-gradient.d978676c.svg"
+      src="../assests/backgorund-1.svg"
     >
     <img
       alt="Stars overlay pattern in background"
@@ -25,7 +25,7 @@
       decoding="async"
       data-nimg="fill"
       class="background-2"
-      src="https://kurzgesagt.org/_next/static/media/background-stars-overlay.d476870e.svg"
+      src="../assests/backgorund-2.svg"
     >
     <div class="relative mx-auto h-full w-full max-w-[1440px] px-6 sm:px-10 lg:px-16">
     <img
@@ -35,7 +35,7 @@
       decoding="async"
       data-nimg="fill"
       class="background-3"
-      src="https://kurzgesagt.org/_next/static/media/background-clouds-overlay.1a853003.svg"
+      src="../assests/backgorund-3.svg"
     >
     <img
       alt="Decorative cloud formations in the background"
@@ -46,7 +46,7 @@
       decoding="async"
       data-nimg="1"
       class="background-4"
-      src="https://kurzgesagt.org/_next/static/media/clouds-stars.d64c771f.svg"
+      src="../assests/backgorund-4.svg"
     >
     <img
       alt="Decorative vertical line element"
@@ -57,7 +57,7 @@
       decoding="async"
       data-nimg="1"
       class="background-5 animate-stretch-vertical-loop"
-      src="https://kurzgesagt.org/_next/static/media/vertical-line.77d2df7b.svg"
+      src="../assests/backgorund-5.svg"
     >
     <img
       alt="Decorative horizontal line element"
@@ -68,7 +68,7 @@
       decoding="async"
       data-nimg="1"
       class="background-6 animate-stretch-horizontal-loop"
-      src="https://kurzgesagt.org/_next/static/media/horizontal-line.49db1da0.svg"
+      src="../assests/backgorund-6.svg"
     >
     <img
       alt="Decorative dot connecting the lines"
@@ -79,7 +79,7 @@
       decoding="async"
       data-nimg="1"
       class="background-7"
-      src="https://kurzgesagt.org/_next/static/media/middle-dot.a868fd82.svg"
+      src="../assests/backgorund-7.svg"
     >
     <img
       alt="Secondary decorative vertical line element"
@@ -90,7 +90,7 @@
       decoding="async"
       data-nimg="1"
       class="background-8 animate-stretch-vertical-loop"
-      src="https://kurzgesagt.org/_next/static/media/star-vertical.7f37c124.svg"
+      src="../assests/backgorund-8.svg"
     >
     <img
       alt="Secondary decorative horizontal line element"
@@ -101,7 +101,7 @@
       decoding="async"
       data-nimg="1"
       class="background-9 animate-stretch-horizontal-loop"
-      src="https://kurzgesagt.org/_next/static/media/star-horizontal.04eb44ca.svg"
+      src="../assests/backgorund-9.svg"
     >
     <img
       alt="Secondary decorative dot connecting the lines"
@@ -112,7 +112,7 @@
       decoding="async"
       data-nimg="1"
       class="background-10"
-      src="https://kurzgesagt.org/_next/static/media/star-highlight.32fe6ada.svg"
+      src="../assests/backgorund-10.svg"
     >
     </div>
     <div class="title">EXPLORE</div>

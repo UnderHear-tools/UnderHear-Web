@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg id="Ebene_2" data-name="Ebene 2" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 10.58 135.28">
+  <defs>
+    <style>
+      .cls-1 {
+        clip-path: url(#clippath);
+      }
+
+      .cls-2 {
+        fill: none;
+        stroke-width: 0px;
+      }
+
+      .cls-3 {
+        clip-path: url(#clippath-1);
+      }
+
+      .cls-4 {
+        clip-path: url(#clippath-3);
+      }
+
+      .cls-5 {
+        clip-path: url(#clippath-2);
+      }
+    </style>
+    <clipPath id="clippath">
+      <path class="cls-2" d="m0,22.13v-.98C0,18.23,2.37,15.87,5.29,15.87s5.29,2.37,5.29,5.29v.98H0Z"/>
+    </clipPath>
+    <clipPath id="clippath-1">
+      <path class="cls-2" d="m10.58,64.76v.98c0,2.92-2.37,5.29-5.29,5.29S0,68.66,0,65.74v-.98h10.58Z"/>
+    </clipPath>
+    <clipPath id="clippath-2">
+      <path class="cls-2" d="m10.58,113.15v.98c0,2.92-2.37,5.29-5.29,5.29S0,117.05,0,114.13v-.98h10.58Z"/>
+    </clipPath>
+    <clipPath id="clippath-3">
+      <path class="cls-2" d="m0,66.72v-.98C0,62.82,2.37,60.45,5.29,60.45s5.29,2.37,5.29,5.29v.98H0Z"/>
+    </clipPath>
+    <image id="image" width="11" height="23" xlink:href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAsAAAAXCAYAAADduLXGAAAACXBIWXMAAAsSAAALEgHS3X78AAAAHElEQVQ4jWP8P5XhPwORgIlYhaOKRxWPKh5iigHDygLB8zc0lQAAAABJRU5ErkJggg=="/>
+  </defs>
+  <g id="Export">
+    <g>
+      <g>
+        <g class="cls-1">
+          <image width="11" height="23" transform="translate(-.26 -.73)" xlink:href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAsAAAAXCAYAAADduLXGAAAACXBIWXMAAAsSAAALEgHS3X78AAAAK0lEQVQ4je3KQQ0AMRDDwAnexVO86asH4rTztMxa65/SI5DRHskovP6NoxfwhAkCWZTYZQAAAABJRU5ErkJggg=="/>
+        </g>
+        <image width="11" height="46" transform="translate(-.26 20.27)" xlink:href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAsAAAAuCAYAAAD+zeOjAAAACXBIWXMAAAsSAAALEgHS3X78AAAA6klEQVRIie2U3RJDQAxGjxWU/rhsX7wv2jta9EKYWEuZ6aXMGPHl7LexMmBHRN2TaCssgPO0GGgCOQJkCyazXIDEAx3QBvIRnmynzzaPgUaAQlc7s8tbjVq9YsAt9RzSECBl5QSsJsBVi40uBKi9fIRTz8Vqk7oA5x89j/kAL56t1QS4AB/tOdF76+Vjz2egMyIKOdU739m6Qf9RYtUmcBF4wWAIUO6Bb3tgv42EvudN8LAgCD+ASq+lliqgGkY0OJImssH5pI6vLc53+snKtZDSj6WNEqjtOeemmDOP3P9nrMYBH/AB/x3+An7hNXzB4HAQAAAAAElFTkSuQmCC"/>
+        <g class="cls-3">
+          <use transform="translate(-.26 64.27)" xlink:href="#image"/>
+        </g>
+      </g>
+      <g>
+        <g class="cls-5">
+          <image width="11" height="24" transform="translate(-.26 112.27)" xlink:href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAsAAAAYCAYAAAAs7gcTAAAACXBIWXMAAAsSAAALEgHS3X78AAAAIElEQVQ4jWP8P5WBkYFS8H8qAyOyQVQxdBSMglEwSAEATHQGVhESW+cAAAAASUVORK5CYII="/>
+        </g>
+        <image width="11" height="49" transform="translate(-.26 65.27)" xlink:href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAsAAAAxCAYAAAAMTVPtAAAACXBIWXMAAAsSAAALEgHS3X78AAABCElEQVRIie2Sy26DQAxFzzyIsunn841VF5GapLRhGEoXtak7GWhYVsIS4uI5mGtsN7VMPBj+UXCHd3iH/xkcgfMW+Bl4WmGucn6NQAJOfxQ9aeXbFhsvW+B34CB2luIAJIV7YCyAYHI9MEbgYoAGGCp6tnEGjtw3anNH4Ka/ruY3lToCr8aflytLUwoGIESgM7AFhhrcyxeyaI1Rcuoga4ONJDQ+tJpUboAYgWmhyWwqJ2QoXeVPVCMCb6bBRvJDoQPg1xq0em7Q+vXAZ0XPQ1nbtjvPnaniRI+F9shQhgJ2oqPcs76ksN1dDbueQeHEzwJp/BqznusEx0plW33p/DumFje1OPv8BcswY1PT74dMAAAAAElFTkSuQmCC"/>
+        <g class="cls-4">
+          <use transform="translate(-.26 44.27)" xlink:href="#image"/>
+        </g>
+      </g>
+    </g>
+  </g>
+</svg>
