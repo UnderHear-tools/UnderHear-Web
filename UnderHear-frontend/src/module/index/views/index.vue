@@ -22,11 +22,8 @@
 
 <style scoped>
 .background-root {
-  position: absolute;
-  inset: 0;
+  height: calc(100vh - 64px);
   overflow: hidden;
-  transform: translateZ(0);
-  transform-origin: 0% 0%;
   --bg-offset: 80px;
 }
 
