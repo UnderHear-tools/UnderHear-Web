@@ -80,7 +80,10 @@
   --bg-offset: 80px;
 }
 
-.background-1 {
+.background-0,
+.background-1,
+.background-2,
+.background-3 {
   position: absolute;
   height: 100%;
   width: 100%;
@@ -109,9 +112,7 @@
 .background-0,
 .background-2, 
 .background-3 {
-  position: absolute;
-  width: 100%;
-  height: 100%;
+  object-fit: cover;
 }
 
 .background-4 {
