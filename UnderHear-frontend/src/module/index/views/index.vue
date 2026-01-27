@@ -7,7 +7,7 @@
       decoding="async"
       data-nimg="fill"
       class="background-0"
-      src="../assests/backgorund-0.svg"
+      src="../assests/background-0.svg"
     >
     <img
       alt="Background gradient overlay for visual effect"
@@ -16,7 +16,7 @@
       decoding="async"
       data-nimg="fill"
       class="background-1"
-      src="../assests/backgorund-1.svg"
+      src="../assests/background-1.svg"
     >
     <img
       alt="Stars overlay pattern in background"
@@ -25,7 +25,7 @@
       decoding="async"
       data-nimg="fill"
       class="background-2"
-      src="../assests/backgorund-2.svg"
+      src="../assests/background-2.svg"
     >
     <div class="relative mx-auto h-full w-full max-w-[1440px] px-6 sm:px-10 lg:px-16">
     <img
@@ -35,7 +35,7 @@
       decoding="async"
       data-nimg="fill"
       class="background-3"
-      src="../assests/backgorund-3.svg"
+      src="../assests/background-3.svg"
     >
     <img
       alt="Decorative cloud formations in the background"
@@ -46,7 +46,7 @@
       decoding="async"
       data-nimg="1"
       class="background-4"
-      src="../assests/backgorund-4.svg"
+      src="../assests/background-4.svg"
     >
     <img
       alt="Decorative vertical line element"
@@ -57,7 +57,7 @@
       decoding="async"
       data-nimg="1"
       class="background-5 animate-stretch-vertical-loop"
-      src="../assests/backgorund-5.svg"
+      src="../assests/background-5.svg"
     >
     <img
       alt="Decorative horizontal line element"
@@ -68,7 +68,7 @@
       decoding="async"
       data-nimg="1"
       class="background-6 animate-stretch-horizontal-loop"
-      src="../assests/backgorund-6.svg"
+      src="../assests/background-6.svg"
     >
     <img
       alt="Decorative dot connecting the lines"
@@ -79,7 +79,7 @@
       decoding="async"
       data-nimg="1"
       class="background-7"
-      src="../assests/backgorund-7.svg"
+      src="../assests/background-7.svg"
     >
     <img
       alt="Secondary decorative vertical line element"
@@ -90,7 +90,7 @@
       decoding="async"
       data-nimg="1"
       class="background-8 animate-stretch-vertical-loop"
-      src="../assests/backgorund-8.svg"
+      src="../assests/background-8.svg"
     >
     <img
       alt="Secondary decorative horizontal line element"
@@ -101,7 +101,7 @@
       decoding="async"
       data-nimg="1"
       class="background-9 animate-stretch-horizontal-loop"
-      src="../assests/backgorund-9.svg"
+      src="../assests/background-9.svg"
     >
     <img
       alt="Secondary decorative dot connecting the lines"
@@ -112,7 +112,7 @@
       decoding="async"
       data-nimg="1"
       class="background-10"
-      src="../assests/backgorund-10.svg"
+      src="../assests/background-10.svg"
     >
     </div>
     <div class="title">EXPLORE</div>
