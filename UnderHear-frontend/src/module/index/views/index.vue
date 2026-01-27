@@ -1,67 +1,17 @@
 <template>
   <div class="background-root">
-    <img
-      alt="Who We Are page background with space theme"
-      class="background-0"
-      src="../assests/background-0.svg"
-    >
-    <img
-      alt="Background gradient overlay for visual effect"
-      class="background-1"
-      src="../assests/background-1.svg"
-    >
-    <img
-      alt="Stars overlay pattern in background"
-      class="background-2"
-      src="../assests/background-2.svg"
-    >
+    <div class="background-0" aria-hidden="true"></div>
+    <div class="background-1" aria-hidden="true"></div>
+    <div class="background-2" aria-hidden="true"></div>
     <div class="relative mx-auto h-full w-full max-w-[1440px] px-6 sm:px-10 lg:px-16">
-    <img
-      alt="Clouds overlay pattern in background"
-      class="background-3"
-      src="../assests/background-3.svg"
-    >
-    <img
-      alt="Decorative cloud formations in the background"
-      aria-hidden="true"
-      loading="eager"
-      width="2427"
-      height="1503"
-      decoding="async"
-      data-nimg="1"
-      class="background-4"
-      src="../assests/background-4.svg"
-    >
-    <img
-      alt="Decorative vertical line element"
-      class="background-5 animate-stretch-vertical-loop"
-      src="../assests/background-5.svg"
-    >
-    <img
-      alt="Decorative horizontal line element"
-      class="background-6 animate-stretch-horizontal-loop"
-      src="../assests/background-6.svg"
-    >
-    <img
-      alt="Decorative dot connecting the lines"
-      class="background-7"
-      src="../assests/background-7.svg"
-    >
-    <img
-      alt="Secondary decorative vertical line element"
-      class="background-8 animate-stretch-vertical-loop"
-      src="../assests/background-8.svg"
-    >
-    <img
-      alt="Secondary decorative horizontal line element"
-      class="background-9 animate-stretch-horizontal-loop"
-      src="../assests/background-9.svg"
-    >
-    <img
-      alt="Secondary decorative dot connecting the lines"
-      class="background-10"
-      src="../assests/background-10.svg"
-    >
+    <div class="background-3" aria-hidden="true"></div>
+    <div class="background-4" aria-hidden="true"></div>
+    <div class="background-5 animate-stretch-vertical-loop" aria-hidden="true"></div>
+    <div class="background-6 animate-stretch-horizontal-loop" aria-hidden="true"></div>
+    <div class="background-7" aria-hidden="true"></div>
+    <div class="background-8 animate-stretch-vertical-loop" aria-hidden="true"></div>
+    <div class="background-9 animate-stretch-horizontal-loop" aria-hidden="true"></div>
+    <div class="background-10" aria-hidden="true"></div>
     </div>
     <div class="title">EXPLORE</div>
   </div>
@@ -91,28 +41,28 @@
   top: 0;
   right: 0;
   bottom: 0;
-  color: transparent;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
 }
 
 .background-0 {
   z-index: 0;
+  background-image: url("../assests/background-0.svg");
 }
 
 .background-1 {
   z-index: 1;
+  background-image: url("../assests/background-1.svg");
 }
 
 .background-2 {
   z-index: 3;
+  background-image: url("../assests/background-2.svg");
 }
 .background-3 {
   z-index: 2;
-}
-
-.background-0,
-.background-2, 
-.background-3 {
-  object-fit: cover;
+  background-image: url("../assests/background-3.svg");
 }
 
 .background-4 {
@@ -121,7 +71,11 @@
   top: calc(-1 * min(2.95vw, 2.655rem) + var(--bg-offset));
   width: min(125vw, 112.5rem);
   max-width: 125vw;
-  color: transparent;
+  aspect-ratio: 2427 / 1503;
+  background-image: url("../assests/background-4.svg");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
   z-index: 4;
 }
 
@@ -130,7 +84,11 @@
   right: min(30.05vw, 27.045rem);
   top: calc(min(1.5vw, 1.35rem) + var(--bg-offset));
   width: min(0.5vw, 0.45rem);
-  color: transparent;
+  aspect-ratio: 10 / 537;
+  background-image: url("../assests/background-5.svg");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
   z-index: 5;
 }
 
@@ -139,7 +97,11 @@
   right: min(20vw, 18rem);
   top: calc(min(13.7vw, 12.33rem) + var(--bg-offset));
   width: min(20vw, 18rem);
-  color: transparent;
+  aspect-ratio: 355 / 10;
+  background-image: url("../assests/background-6.svg");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
   z-index: 6;
 }
 
@@ -149,7 +111,10 @@
   top: calc(min(13.35vw, 12.015rem) + var(--bg-offset));
   height: min(1.1vw, 0.99rem);
   width: min(1.1vw, 0.99rem);
-  color: transparent;
+  background-image: url("../assests/background-7.svg");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
   z-index: 7;
 }
 
@@ -158,7 +123,11 @@
   right: min(34.85vw, 31.365rem);
   top: calc(min(7.05vw, 6.345rem) + var(--bg-offset));
   width: min(0.55vw, 0.495rem);
-  color: transparent;
+  aspect-ratio: 11 / 135;
+  background-image: url("../assests/background-8.svg");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
   animation-delay: 500ms;
   z-index: 8;
 }
@@ -168,7 +137,11 @@
   right: min(29.3vw, 26.37rem);
   top: calc(min(10.3vw, 9.27rem) + var(--bg-offset));
   width: min(11.5vw, 10.35rem);
-  color: transparent;
+  aspect-ratio: 246 / 11;
+  background-image: url("../assests/background-9.svg");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
   animation-delay: 500ms;
   z-index: 9;
 }
@@ -179,7 +152,10 @@
   top: calc(min(9.925vw, 8.9325rem) + var(--bg-offset));
   height: min(1.2vw, 1.08rem);
   width: min(1.2vw, 1.08rem);
-  color: transparent;
+  background-image: url("../assests/background-10.svg");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
   z-index: 10;
 }
 
