@@ -12,7 +12,21 @@
       </nav>
 
       <div class="user-menu">
-        <zUserMenu />
+        <zDropdown>
+          <template #trigger>
+            <zAvatar src="https://avatars.githubusercontent.com/u/131276691?v=4" size="md" />
+          </template>
+          <div class="user-header">
+            <div class="user-name">UnderHear Studio</div>
+            <div class="user-email">hello@underhear.audio</div>
+          </div>
+          <zMenu>
+            <zDivider />
+            <zMenuItem href="https://github.com/underhear">前往 GitHub</zMenuItem>
+            <zDivider />
+            <zMenuItem>退出登录</zMenuItem>
+          </zMenu>
+        </zDropdown>
       </div>
     </div>
   </header>
@@ -21,7 +35,10 @@
 <script setup lang="ts">
 import { onMounted, ref, watch } from 'vue'
 import { useRouter, useRoute } from 'vue-router'
-import { zUserMenu } from '@/components/z-ui/user-menu/zUserMenu'
+import { zDropdown } from '@/components/z-ui/dropdown/zDropdown'
+import { zAvatar } from '@/components/z-ui/avatar/zAvatar'
+import { zMenu, zMenuItem } from '@/components/z-ui/menu'
+import { zDivider } from '@/components/z-ui/divider/zDivider'
 
 interface NavigationItem {
   name: string
@@ -106,6 +123,21 @@ watch(() => route.path, () => {
 .user-menu {
   position: absolute;
   right: 2rem;
+}
+
+.user-header {
+  padding: 12px 12px 0;
+}
+
+.user-name {
+  font-size: 14px;
+  font-weight: 600;
+  color: #1f2328;
+}
+
+.user-email {
+  font-size: 12px;
+  color: #656d76;
 }
 
 @media (max-width: 767px) {
