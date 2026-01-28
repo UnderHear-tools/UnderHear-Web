@@ -53,6 +53,11 @@ export const componentRoutes: Array<RouteRecordRaw> = [
                 component: () => import('../views/components/dropdown.vue')
             },
             {
+                path: 'menu',
+                name: 'Menu',
+                component: () => import('../views/components/menu.vue')
+            },
+            {
                 path: 'tag',
                 name: 'Tag',
                 component: () => import('../views/components/tag.vue')
