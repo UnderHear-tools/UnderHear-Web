@@ -1,12 +1,13 @@
 <template>
-  <div class="z-divider" role="separator" aria-orientation="horizontal"></div>
+  <hr class="z-divider" />
 </template>
 
 <style scoped>
 .z-divider {
-  height: 1px;
-  background: #d1d9e0;
-  opacity: 0.6;
-  margin: 0.4rem 0;
+  background: #d1d9e0b3;
+  border: 0;
+  height: 0.0625rem;
+  margin-block-end: 0.5rem;
+  margin-block-start: calc(0.5rem - 0.0625rem);
 }
 </style>
