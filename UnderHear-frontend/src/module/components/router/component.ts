@@ -28,9 +28,9 @@ export const componentRoutes: Array<RouteRecordRaw> = [
             },
             // Blocks 组合式组件
             {
-                path: 'usermenu',
-                name: 'Usermenu',
-                component: () => import('../views/components/usermenu.vue')
+                path: 'user-menu',
+                name: 'UserMenu',
+                component: () => import('../views/components/user-menu.vue')
             },
             // Basic 基础组件
             {
