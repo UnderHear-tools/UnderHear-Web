@@ -26,6 +26,12 @@ export const componentRoutes: Array<RouteRecordRaw> = [
                 name: 'OcticonsVue',
                 component: () => import('../views/components/octicons-vue.vue')
             },
+            // Blocks 组合式组件
+            {
+                path: 'usermenu',
+                name: 'Usermenu',
+                component: () => import('../views/components/usermenu.vue')
+            },
             // Basic 基础组件
             {
                 path: 'container',
