@@ -14,7 +14,7 @@
       <div class="user-menu">
         <zDropdown>
           <template #trigger>
-            <zAvatar src="https://avatars.githubusercontent.com/u/131276691?v=4" size="md" />
+            <zAvatar src="https://avatars.githubusercontent.com/u/131276691?v=4" :size="40" />
           </template>
           <div class="user-header">
             <div class="user-name">UnderHear Studio</div>

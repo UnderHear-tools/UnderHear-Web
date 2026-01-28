@@ -1,17 +1,25 @@
 <template>
-  <div class="z-avatar" :class="[`z-avatar--${size}`]">
+  <div class="z-avatar" :style="avatarStyle">
     <img v-if="src" :src="src" :alt="alt" class="z-avatar-img" />
     <span v-else class="z-avatar-placeholder">{{ placeholder }}</span>
   </div>
 </template>
 
 <script setup lang="ts">
-defineProps<{
+import { computed } from 'vue'
+
+const props = defineProps<{
   src?: string
   alt?: string
   placeholder?: string
-  size?: 'sm' | 'md' | 'lg'
+  size?: number | string
 }>()
+
+const avatarStyle = computed(() => {
+  const s = props.size ?? 40
+  const px = typeof s === 'number' ? `${s}px` : s
+  return { width: px, height: px, fontSize: `${parseInt(String(s)) * 0.35}px` }
+})
 </script>
 
 <style scoped>
@@ -26,10 +34,6 @@ defineProps<{
   font-weight: 600;
   overflow: hidden;
 }
-
-.z-avatar--sm { width: 32px; height: 32px; font-size: 12px; }
-.z-avatar--md { width: 40px; height: 40px; font-size: 14px; }
-.z-avatar--lg { width: 48px; height: 48px; font-size: 16px; }
 
 .z-avatar:hover {
   background: #fff;
