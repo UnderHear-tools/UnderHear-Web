@@ -14,17 +14,26 @@
       <div class="user-menu">
         <zDropdown>
           <template #trigger>
-            <zAvatar src="https://avatars.githubusercontent.com/u/131276691?v=4" :size="40" />
+            <zAvatar src="https://avatars.githubusercontent.com/u/131276691?v=4" :size="32" />
           </template>
           <div class="user-header">
-            <div class="user-name">UnderHear Studio</div>
-            <div class="user-email">hello@underhear.audio</div>
+            <zAvatar src="https://avatars.githubusercontent.com/u/131276691?v=4" :size="36" />
+            <div class="user-info">
+              <div class="user-name">UnderHear Studio</div>
+              <div class="user-email">hello@underhear.audio</div>
+            </div>
           </div>
           <zMenu>
             <zDivider />
-            <zMenuItem href="https://github.com/underhear">前往 GitHub</zMenuItem>
+            <zMenuItem href="https://github.com/underhear">
+              <MarkGithub class="menu-icon" />
+              前往 GitHub
+            </zMenuItem>
             <zDivider />
-            <zMenuItem>退出登录</zMenuItem>
+            <zMenuItem>
+              <SignOut class="menu-icon" />
+              退出登录
+            </zMenuItem>
           </zMenu>
         </zDropdown>
       </div>
@@ -39,6 +48,7 @@ import { zDropdown } from '@/components/z-ui/dropdown'
 import { zAvatar } from '@/components/z-ui/avatar'
 import { zMenu, zMenuItem } from '@/components/z-ui/menu'
 import { zDivider } from '@/components/z-ui/divider'
+import { MarkGithub, SignOut } from '@/components/z-ui/icon/Octicons-vue'
 
 interface NavigationItem {
   name: string
@@ -126,7 +136,15 @@ watch(() => route.path, () => {
 }
 
 .user-header {
-  padding: 12px 12px 0;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 12px 0px 12px;
+}
+
+.user-info {
+  display: flex;
+  flex-direction: column;
 }
 
 .user-name {
@@ -138,6 +156,10 @@ watch(() => route.path, () => {
 .user-email {
   font-size: 12px;
   color: #656d76;
+}
+
+.menu-icon {
+  color: #59636e;
 }
 
 @media (max-width: 767px) {

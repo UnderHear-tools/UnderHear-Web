@@ -28,17 +28,17 @@
 
     <ComponentDocsSection title="尺寸与颜色">
       <template #description>
-        <code>size</code> 支持数字或字符串，颜色继承自 CSS 的 <code>color</code>。
+        <code>size</code> 支持数字或字符串，<code>color</code> 可直接设置颜色值。
       </template>
 
       <ComponentDocsDemoBlock :code="demo2Code" v-bind="demoLabels">
         <div class="icon-demo-row">
           <component
-            v-for="icon in sizeDemoEntries"
+            v-for="icon in colorDemoEntries"
             :key="icon.name"
             :is="icon.component"
             :size="icon.size"
-            :class="['demo-icon', icon.className]"
+            :color="icon.color"
           />
         </div>
       </ComponentDocsDemoBlock>
@@ -95,9 +95,9 @@ type IconEntry = {
   component: Component
 }
 
-type SizeDemoEntry = IconEntry & {
+type ColorDemoEntry = IconEntry & {
   size: number
-  className: string
+  color: string
 }
 
 const iconSize = 24
@@ -137,9 +137,9 @@ import { TelescopeFill, MarkGithub, HeartFill } from '@/components/z-ui/icon/Oct
 
 <template>
   <div class="icon-demo-row">
-    <TelescopeFill :size="16" class="icon-muted" />
-    <MarkGithub :size="24" class="icon-primary" />
-    <HeartFill :size="32" class="icon-danger" />
+    <TelescopeFill :size="16" color="#656d76" />
+    <MarkGithub :size="24" color="#0969da" />
+    <HeartFill :size="32" color="#d1242f" />
   </div>
 </template>
 
@@ -150,18 +150,6 @@ import { TelescopeFill, MarkGithub, HeartFill } from '@/components/z-ui/icon/Oct
   align-items: center;
   flex-wrap: wrap;
 }
-
-.icon-muted {
-  color: #656d76;
-}
-
-.icon-primary {
-  color: #0969da;
-}
-
-.icon-danger {
-  color: #d1242f;
-}
 </style>`
 
 const basicIconEntries: IconEntry[] = [
@@ -170,24 +158,24 @@ const basicIconEntries: IconEntry[] = [
   { name: 'HeartFill', component: octicons.HeartFill as Component }
 ]
 
-const sizeDemoEntries: SizeDemoEntry[] = [
+const colorDemoEntries: ColorDemoEntry[] = [
   {
     name: 'TelescopeFill',
     component: octicons.TelescopeFill as Component,
     size: 16,
-    className: 'icon-muted'
+    color: '#656d76'
   },
   {
     name: 'MarkGithub',
     component: octicons.MarkGithub as Component,
     size: 24,
-    className: 'icon-primary'
+    color: '#0969da'
   },
   {
     name: 'HeartFill',
     component: octicons.HeartFill as Component,
     size: 32,
-    className: 'icon-danger'
+    color: '#d1242f'
   }
 ]
 
@@ -224,6 +212,13 @@ const apiTableRows = [
     type: 'number | string',
     options: '—',
     default: '16'
+  },
+  {
+    name: 'color',
+    description: '图标颜色',
+    type: 'string',
+    options: '—',
+    default: 'currentColor'
   }
 ]
 </script>

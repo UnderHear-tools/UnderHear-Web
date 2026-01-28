@@ -5,7 +5,7 @@
     :width="size"
     :height="size"
     viewBox="0 0 16 16"
-    fill="currentColor"
+    :fill="color || 'currentColor'"
   >
     <path d="M10 8a1 1 0 1 0 0-2 1 1 0 0 0 0 2Z"></path>
     <path d="M4 9.25h-.75a.75.75 0 0 1 0-1.5H4v-1.5h-.75a.75.75 0 0 1 0-1.5H4V3.5a1 1 0 0 1 1-1h7.5a1 1 0 0 1 1 1v7a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1ZM5.5 4v.793a.75.75 0 0 1 0 1.414v1.586a.75.75 0 0 1 0 1.414V10H12V4Z"></path>
@@ -14,7 +14,7 @@
 </template>
 
 <script setup lang="ts">
-withDefaults(defineProps<{ size?: number | string }>(), {
+withDefaults(defineProps<{ size?: number | string; color?: string }>(), {
   size: 16,
 })
 </script>

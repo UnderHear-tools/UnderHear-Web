@@ -17,7 +17,9 @@ defineEmits<{ click: [] }>()
 
 <style scoped>
 .z-menu-item {
-  display: block;
+  display: flex;
+  align-items: center;
+  gap: 8px;
   width: 100%;
   padding: 6px 8px;
   border: none;

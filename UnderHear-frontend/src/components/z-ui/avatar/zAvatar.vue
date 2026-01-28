@@ -24,6 +24,7 @@ const avatarStyle = computed(() => {
 
 <style scoped>
 .z-avatar {
+  box-sizing: content-box;
   display: flex;
   align-items: center;
   justify-content: center;
