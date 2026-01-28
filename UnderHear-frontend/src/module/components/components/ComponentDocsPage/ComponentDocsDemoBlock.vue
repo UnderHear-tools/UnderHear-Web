@@ -85,6 +85,7 @@ const copyCode = () => {
 }
 
 .demo-content {
+  min-height: 160px;
   padding: 2rem;
 }
 

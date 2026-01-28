@@ -43,6 +43,16 @@ export const componentRoutes: Array<RouteRecordRaw> = [
                 component: () => import('../views/components/divider.vue')
             },
             {
+                path: 'avatar',
+                name: 'Avatar',
+                component: () => import('../views/components/avatar.vue')
+            },
+            {
+                path: 'dropdown',
+                name: 'Dropdown',
+                component: () => import('../views/components/dropdown.vue')
+            },
+            {
                 path: 'tag',
                 name: 'Tag',
                 component: () => import('../views/components/tag.vue')
