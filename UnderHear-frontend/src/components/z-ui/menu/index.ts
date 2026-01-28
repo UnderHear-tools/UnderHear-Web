@@ -1,4 +1,4 @@
-import zMenu from './zMenu/zMenu.vue'
-import zMenuItem from './zMenuItem/zMenuItem.vue'
+import zMenu from './zMenu.vue'
+import zMenuItem from './zMenuItem.vue'
 
 export { zMenu, zMenuItem }

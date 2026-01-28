@@ -39,8 +39,8 @@
 <script setup lang="ts">
 import { useRouter } from 'vue-router'
 
-import { zContainer } from '@/components/z-ui/container/zContainer'
-import { zLink } from '@/components/z-ui/link/zlink'
+import { zContainer } from '@/components/z-ui/container'
+import { zLink } from '@/components/z-ui/link'
 
 const router = useRouter()
 

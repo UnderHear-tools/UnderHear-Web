@@ -137,7 +137,7 @@
 
 <script setup lang="ts">
 import { ref } from 'vue'
-import { zTable, type RowData, type ZTableColumn } from '@/components/z-ui/table/zTable'
+import { zTable, type RowData, type ZTableColumn } from '@/components/z-ui/table'
 import ComponentDocsDemoBlock from '@/module/components/components/ComponentDocsPage/ComponentDocsDemoBlock.vue'
 import ComponentDocsHeader from '@/module/components/components/ComponentDocsPage/ComponentDocsHeader.vue'
 import ComponentDocsPage from '@/module/components/components/ComponentDocsPage/ComponentDocsPage.vue'

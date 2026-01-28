@@ -34,7 +34,7 @@
 import { computed, ref } from 'vue'
 import * as Prism from 'prismjs'
 import 'prismjs/themes/prism.css'
-import { zTooltip } from '@/components/z-ui/tooltip/zTooltip'
+import { zTooltip } from '@/components/z-ui/tooltip'
 import { Copy, Code } from '@/components/z-ui/icon/Octicons-vue/index.ts'
 
 const props = withDefaults(

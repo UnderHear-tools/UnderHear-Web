@@ -58,8 +58,8 @@
 </template>
 
 <script setup lang="ts">
-import { zLink } from '@/components/z-ui/link/zlink'
-import { zTable, type ZTableColumn } from '@/components/z-ui/table/zTable'
+import { zLink } from '@/components/z-ui/link'
+import { zTable, type ZTableColumn } from '@/components/z-ui/table'
 import ComponentDocsDemoBlock from '@/module/components/components/ComponentDocsPage/ComponentDocsDemoBlock.vue'
 import ComponentDocsHeader from '@/module/components/components/ComponentDocsPage/ComponentDocsHeader.vue'
 import ComponentDocsPage from '@/module/components/components/ComponentDocsPage/ComponentDocsPage.vue'

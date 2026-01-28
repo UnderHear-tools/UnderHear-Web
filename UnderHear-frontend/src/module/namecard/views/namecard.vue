@@ -33,8 +33,8 @@
 </template>
 
 <script setup lang="ts">
-import { zContainer } from '@/components/z-ui/container/zContainer'
-import { zLink } from '@/components/z-ui/link/zlink'
+import { zContainer } from '@/components/z-ui/container'
+import { zLink } from '@/components/z-ui/link'
 </script>
 
 <style scoped>

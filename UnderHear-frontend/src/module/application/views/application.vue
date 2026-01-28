@@ -42,8 +42,8 @@
 <script setup lang="ts">
 import { ref, onMounted } from 'vue'
 
-import { zContainer } from '@/components/z-ui/container/zContainer'
-import { zLink } from '@/components/z-ui/link/zlink'
+import { zContainer } from '@/components/z-ui/container'
+import { zLink } from '@/components/z-ui/link'
 
 // 引入数据
 import applicationData from '../views/application/Applicationcard.json'

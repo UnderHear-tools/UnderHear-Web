@@ -92,11 +92,11 @@
 import { onBeforeUnmount, onMounted, ref } from 'vue'
 import * as monaco from 'monaco-editor'
 
-import { zContainer } from '@/components/z-ui/container/zContainer'
-import { zInput } from '@/components/z-ui/input/zInput'
-import { zTextarea } from '@/components/z-ui/input/zTextarea'
-import { zDivider } from '@/components/z-ui/divider/zDivider'
-import { zLink } from '@/components/z-ui/link/zlink'
+import { zContainer } from '@/components/z-ui/container'
+import { zInput } from '@/components/z-ui/input'
+import { zTextarea } from '@/components/z-ui/input'
+import { zDivider } from '@/components/z-ui/divider'
+import { zLink } from '@/components/z-ui/link'
 
 const editorContainer = ref<HTMLElement | null>(null)
 let editor: monaco.editor.IStandaloneCodeEditor | undefined

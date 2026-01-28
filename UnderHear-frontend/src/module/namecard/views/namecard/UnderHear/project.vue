@@ -34,9 +34,9 @@
 <script setup lang="ts">
 import { ref, onMounted } from 'vue'
 
-import { zContainer } from '@/components/z-ui/container/zContainer'
+import { zContainer } from '@/components/z-ui/container'
 // 引入图标
-import {zTechTag} from '@/components/z-ui/tag/zTechTag/'
+import {zTechTag} from '@/components/z-ui/tag'
 
 // 引入数据
 import projectData from '../UnderHear/data/Projectcard.json'

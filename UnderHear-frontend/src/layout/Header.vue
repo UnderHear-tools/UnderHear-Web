@@ -35,10 +35,10 @@
 <script setup lang="ts">
 import { onMounted, ref, watch } from 'vue'
 import { useRouter, useRoute } from 'vue-router'
-import { zDropdown } from '@/components/z-ui/dropdown/zDropdown'
-import { zAvatar } from '@/components/z-ui/avatar/zAvatar'
+import { zDropdown } from '@/components/z-ui/dropdown'
+import { zAvatar } from '@/components/z-ui/avatar'
 import { zMenu, zMenuItem } from '@/components/z-ui/menu'
-import { zDivider } from '@/components/z-ui/divider/zDivider'
+import { zDivider } from '@/components/z-ui/divider'
 
 interface NavigationItem {
   name: string

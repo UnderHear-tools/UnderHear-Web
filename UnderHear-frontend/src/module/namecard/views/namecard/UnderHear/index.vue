@@ -114,9 +114,9 @@
 <script setup lang="ts">
 import { ref, onMounted } from 'vue'
 
-import { zContainer } from '@/components/z-ui/container/zContainer'
+import { zContainer } from '@/components/z-ui/container'
 // 引入图标
-import { zTechTag } from '@/components/z-ui/tag/zTechTag/'
+import { zTechTag } from '@/components/z-ui/tag'
 import { IconPark } from '@icon-park/vue-next/es/all';
 
 
