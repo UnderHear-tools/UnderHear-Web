@@ -1,4 +1,1 @@
-import zAvatar from './zAvatar.vue'
-
-export { zAvatar }
-export default zAvatar
+export { default as zAvatar } from './zAvatar.vue'
