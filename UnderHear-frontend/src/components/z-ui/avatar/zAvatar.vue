@@ -28,7 +28,7 @@ const avatarStyle = computed(() => {
   display: flex;
   align-items: center;
   justify-content: center;
-  border: 1px solid #d9d9d9;
+  outline: 2px solid #d9d9d9;
   border-radius: 50%;
   background: rgba(255, 255, 255, 0.8);
   backdrop-filter: blur(8px);
