@@ -265,19 +265,19 @@ const navSections = ref([
 }
 
 .nav-item:hover {
-  background-color: #f0f0f0;
+  background-color: #f2f3f4;
   color: var(--font-black);
 }
 
 .nav-item.active {
-  background-color: #e2e2e2;
+  background-color: #eceef0;
   color: #000000;
 }
 
 .nav-item.active::before {
   content: '';
   position: absolute;
-  left: -10px;
+  left: -8px;
   top: 50%;
   bottom: 0;
   width: 4px;

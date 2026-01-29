@@ -18,7 +18,7 @@
     <transition name="code-expand">
       <div v-if="codeVisible" class="demo-code">
         <pre :class="`language-${language}`">
-          <code :class="`language-${language}`" v-html="highlightedCode"></code>
+          <div :class="`language-${language}`" v-html="highlightedCode"></div>
         </pre>
         <div class="code-footer">
           <button class="hide-code-btn" @click="codeVisible = false">
@@ -41,21 +41,17 @@ const props = withDefaults(
   defineProps<{
     code: string
     language?: string
-    copyLabel?: string
-    copiedLabel?: string
-    showCodeLabel?: string
-    hideCodeLabel?: string
-    hideSourceLabel?: string
   }>(),
   {
-    language: 'markup',
-    copyLabel: 'Copy code',
-    copiedLabel: 'Copied',
-    showCodeLabel: 'Show code',
-    hideCodeLabel: 'Hide code',
-    hideSourceLabel: 'Hide source'
+    language: 'markup'
   }
 )
+
+const copyLabel = '复制代码'
+const copiedLabel = '已复制'
+const showCodeLabel = '查看代码'
+const hideCodeLabel = '隐藏代码'
+const hideSourceLabel = '隐藏源代码'
 
 const codeVisible = ref(false)
 const codeCopied = ref(false)
@@ -87,6 +83,9 @@ const copyCode = () => {
 .demo-content {
   min-height: 160px;
   padding: 2rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .demo-actions {

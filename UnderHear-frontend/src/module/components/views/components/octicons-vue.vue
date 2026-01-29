@@ -13,7 +13,7 @@
         通过具名导入图标组件并在模板中直接使用，可用 <code>size</code> 控制图标大小。
       </template>
 
-      <ComponentDocsDemoBlock :code="demo1Code" v-bind="demoLabels">
+      <ComponentDocsDemoBlock :code="demo1Code">
         <div class="icon-demo-row">
           <component
             v-for="icon in basicIconEntries"
@@ -31,7 +31,7 @@
         <code>size</code> 支持数字或字符串，<code>color</code> 可直接设置颜色值。
       </template>
 
-      <ComponentDocsDemoBlock :code="demo2Code" v-bind="demoLabels">
+      <ComponentDocsDemoBlock :code="demo2Code">
         <div class="icon-demo-row">
           <component
             v-for="icon in colorDemoEntries"
@@ -101,14 +101,6 @@ type ColorDemoEntry = IconEntry & {
 }
 
 const iconSize = 24
-
-const demoLabels = {
-  copyLabel: '复制代码',
-  copiedLabel: '已复制',
-  showCodeLabel: '查看代码',
-  hideCodeLabel: '隐藏代码',
-  hideSourceLabel: '隐藏源代码'
-}
 
 const demo1Code = `<script setup lang="ts">
 import { TelescopeFill, MarkGithub, HeartFill } from '@/components/z-ui/icon/Octicons-vue/index.ts'

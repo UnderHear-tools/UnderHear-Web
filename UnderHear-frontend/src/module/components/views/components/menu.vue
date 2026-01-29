@@ -5,7 +5,7 @@
     <ComponentDocsSection title="基础用法">
       <template #description>使用 <code>zMenu</code> 作为容器，<code>zMenuItem</code> 作为菜单项。</template>
 
-      <ComponentDocsDemoBlock :code="demo1Code" v-bind="demoLabels">
+      <ComponentDocsDemoBlock :code="demo1Code">
         <zMenu>
           <zMenuItem>新建文件</zMenuItem>
           <zMenuItem>打开文件</zMenuItem>
@@ -17,7 +17,7 @@
     <ComponentDocsSection title="带链接的菜单项">
       <template #description>通过 <code>href</code> 属性可以将菜单项渲染为链接。</template>
 
-      <ComponentDocsDemoBlock :code="demo2Code" v-bind="demoLabels">
+      <ComponentDocsDemoBlock :code="demo2Code">
         <zMenu>
           <zMenuItem href="https://github.com">GitHub</zMenuItem>
           <zMenuItem href="https://vuejs.org">Vue.js</zMenuItem>
@@ -29,7 +29,7 @@
     <ComponentDocsSection title="配合分割线">
       <template #description>使用 <code>zDivider</code> 分隔不同类别的菜单项。</template>
 
-      <ComponentDocsDemoBlock :code="demo3Code" v-bind="demoLabels">
+      <ComponentDocsDemoBlock :code="demo3Code">
         <zMenu>
           <zMenuItem>个人资料</zMenuItem>
           <zMenuItem>账户设置</zMenuItem>
@@ -78,14 +78,6 @@ import ComponentDocsDemoBlock from '@/module/components/components/ComponentDocs
 import ComponentDocsHeader from '@/module/components/components/ComponentDocsPage/ComponentDocsHeader.vue'
 import ComponentDocsPage from '@/module/components/components/ComponentDocsPage/ComponentDocsPage.vue'
 import ComponentDocsSection from '@/module/components/components/ComponentDocsPage/ComponentDocsSection.vue'
-
-const demoLabels = {
-  copyLabel: '复制代码',
-  copiedLabel: '已复制',
-  showCodeLabel: '查看代码',
-  hideCodeLabel: '隐藏代码',
-  hideSourceLabel: '隐藏源代码'
-}
 
 const demo1Code = `<template>
   <zMenu>
