@@ -5,7 +5,7 @@
     <ComponentDocsSection title="基础用法">
       <template #description>最简单的分割线。</template>
 
-      <ComponentDocsDemoBlock :code="demo1Code" v-bind="demoLabels">
+      <ComponentDocsDemoBlock :code="demo1Code">
         <div class="demo-container">
           <p>上方内容</p>
           <zDivider />
@@ -17,7 +17,7 @@
     <ComponentDocsSection title="多内容分隔">
       <template #description>分割线可以用于分隔多个段落或区块。</template>
 
-      <ComponentDocsDemoBlock :code="demo2Code" v-bind="demoLabels">
+      <ComponentDocsDemoBlock :code="demo2Code">
         <div class="demo-container">
           <p>第一段内容</p>
           <zDivider />
@@ -47,14 +47,6 @@ import ComponentDocsDemoBlock from '@/module/components/components/ComponentDocs
 import ComponentDocsHeader from '@/module/components/components/ComponentDocsPage/ComponentDocsHeader.vue'
 import ComponentDocsPage from '@/module/components/components/ComponentDocsPage/ComponentDocsPage.vue'
 import ComponentDocsSection from '@/module/components/components/ComponentDocsPage/ComponentDocsSection.vue'
-
-const demoLabels = {
-  copyLabel: '复制代码',
-  copiedLabel: '已复制',
-  showCodeLabel: '查看代码',
-  hideCodeLabel: '隐藏代码',
-  hideSourceLabel: '隐藏源代码'
-}
 
 const demo1Code = `<template>
   <p>上方内容</p>

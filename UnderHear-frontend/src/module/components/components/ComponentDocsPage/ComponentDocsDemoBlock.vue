@@ -41,21 +41,17 @@ const props = withDefaults(
   defineProps<{
     code: string
     language?: string
-    copyLabel?: string
-    copiedLabel?: string
-    showCodeLabel?: string
-    hideCodeLabel?: string
-    hideSourceLabel?: string
   }>(),
   {
-    language: 'markup',
-    copyLabel: 'Copy code',
-    copiedLabel: 'Copied',
-    showCodeLabel: 'Show code',
-    hideCodeLabel: 'Hide code',
-    hideSourceLabel: 'Hide source'
+    language: 'markup'
   }
 )
+
+const copyLabel = '复制代码'
+const copiedLabel = '已复制'
+const showCodeLabel = '查看代码'
+const hideCodeLabel = '隐藏代码'
+const hideSourceLabel = '隐藏源代码'
 
 const codeVisible = ref(false)
 const codeCopied = ref(false)

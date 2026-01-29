@@ -5,7 +5,7 @@
     <ComponentDocsSection title="基础用法">
       <template #description>通过 <code>trigger</code> 插槽定义触发元素，默认插槽放置下拉内容。</template>
 
-      <ComponentDocsDemoBlock :code="demo1Code" v-bind="demoLabels">
+      <ComponentDocsDemoBlock :code="demo1Code">
         <div class="dropdown-demo">
           <zDropdown>
             <template #trigger>
@@ -41,14 +41,6 @@ import ComponentDocsDemoBlock from '@/module/components/components/ComponentDocs
 import ComponentDocsHeader from '@/module/components/components/ComponentDocsPage/ComponentDocsHeader.vue'
 import ComponentDocsPage from '@/module/components/components/ComponentDocsPage/ComponentDocsPage.vue'
 import ComponentDocsSection from '@/module/components/components/ComponentDocsPage/ComponentDocsSection.vue'
-
-const demoLabels = {
-  copyLabel: '复制代码',
-  copiedLabel: '已复制',
-  showCodeLabel: '查看代码',
-  hideCodeLabel: '隐藏代码',
-  hideSourceLabel: '隐藏源代码'
-}
 
 const demo1Code = `<template>
   <div class="dropdown-demo">

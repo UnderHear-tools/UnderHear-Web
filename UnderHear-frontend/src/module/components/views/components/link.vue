@@ -5,7 +5,7 @@
     <ComponentDocsSection title="基础用法">
       <template #description>使用 <code>variant</code> 来定义链接的样式。</template>
 
-      <ComponentDocsDemoBlock :code="demo1Code" v-bind="demoLabels">
+      <ComponentDocsDemoBlock :code="demo1Code">
         <div class="link-row">
           <zLink href="#" link-text="Primary Link" variant="primary" />
           <zLink href="#" link-text="Secondary Link" variant="secondary" />
@@ -17,7 +17,7 @@
     <ComponentDocsSection title="外部链接">
       <template #description>设置 <code>external</code> 属性可以在链接后显示外部链接图标。</template>
 
-      <ComponentDocsDemoBlock :code="demo2Code" v-bind="demoLabels">
+      <ComponentDocsDemoBlock :code="demo2Code">
         <div class="link-row">
           <zLink href="https://github.com" link-text="GitHub" :external="true" target="_blank" />
           <zLink
@@ -36,7 +36,7 @@
         使用 <code>prefix-text</code> 和 <code>suffix-text</code> 在链接前后添加文本。
       </template>
 
-      <ComponentDocsDemoBlock :code="demo3Code" v-bind="demoLabels">
+      <ComponentDocsDemoBlock :code="demo3Code">
         <div class="link-column">
           <zLink href="/component" link-text="组件文档" prefix-text="查看" />
           <zLink href="/component" link-text="组件文档" suffix-text="了解更多" />
@@ -64,14 +64,6 @@ import ComponentDocsDemoBlock from '@/module/components/components/ComponentDocs
 import ComponentDocsHeader from '@/module/components/components/ComponentDocsPage/ComponentDocsHeader.vue'
 import ComponentDocsPage from '@/module/components/components/ComponentDocsPage/ComponentDocsPage.vue'
 import ComponentDocsSection from '@/module/components/components/ComponentDocsPage/ComponentDocsSection.vue'
-
-const demoLabels = {
-  copyLabel: '复制代码',
-  copiedLabel: '已复制',
-  showCodeLabel: '查看代码',
-  hideCodeLabel: '隐藏代码',
-  hideSourceLabel: '隐藏源代码'
-}
 
 const demo1Code = `<template>
   <div style="max-width: 600px">

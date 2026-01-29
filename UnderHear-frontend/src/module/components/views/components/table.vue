@@ -10,7 +10,7 @@
         通过 <code>columns</code> 定义列，通过 <code>data</code> 提供数据。单元格默认不换行，必要时可在列配置中设置 <code>wrap</code> 允许换行。
       </template>
 
-      <ComponentDocsDemoBlock :code="basicDemoCode" v-bind="demoLabels">
+      <ComponentDocsDemoBlock :code="basicDemoCode">
         <div class="table-demo">
           <zTable
             caption="Repository metadata"
@@ -27,7 +27,7 @@
         通过 <code>compact</code> 与 <code>bordered</code> 调整表格密度和边框，可同时关闭 <code>hoverable</code>。
       </template>
 
-      <ComponentDocsDemoBlock :code="compactDemoCode" v-bind="demoLabels">
+      <ComponentDocsDemoBlock :code="compactDemoCode">
         <div class="table-demo table-demo--split">
           <div class="table-demo__panel">
             <div class="table-demo__label">默认</div>
@@ -59,7 +59,7 @@
         开启 <code>row-clickable</code> 并监听 <code>row-click</code> 获取当前行。
       </template>
 
-      <ComponentDocsDemoBlock :code="clickableDemoCode" v-bind="demoLabels">
+      <ComponentDocsDemoBlock :code="clickableDemoCode">
         <div class="table-demo">
           <div class="status-bar" v-if="selectedName">
             最近点击：<strong>{{ selectedName }}</strong>
@@ -81,7 +81,7 @@
         通过 <code>empty-text</code> 设置空数据提示，通过 <code>placeholder-text</code> 指定空值占位符。
       </template>
 
-      <ComponentDocsDemoBlock :code="emptyDemoCode" v-bind="demoLabels">
+      <ComponentDocsDemoBlock :code="emptyDemoCode">
         <div class="table-demo table-demo--split">
           <div class="table-demo__panel">
             <div class="table-demo__label">空状态</div>
@@ -111,7 +111,7 @@
         列配置设置 <code>wrap</code> 后允许单元格内容换行，适合长文本。
       </template>
 
-      <ComponentDocsDemoBlock :code="wrapDemoCode" v-bind="demoLabels">
+      <ComponentDocsDemoBlock :code="wrapDemoCode">
         <div class="table-demo">
           <zTable
             caption="Wrapped content"
@@ -263,14 +263,6 @@ const selectedName = ref('')
 function handleRowClick(payload: { row: RowData; rowIndex: number }) {
   const row = payload.row as RepoRow
   selectedName.value = row.name
-}
-
-const demoLabels = {
-  copyLabel: '复制代码',
-  copiedLabel: '已复制',
-  showCodeLabel: '查看代码',
-  hideCodeLabel: '隐藏代码',
-  hideSourceLabel: '隐藏源代码'
 }
 
 const basicDemoCode = `<template>

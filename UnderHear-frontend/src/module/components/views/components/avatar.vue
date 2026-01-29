@@ -5,7 +5,7 @@
     <ComponentDocsSection title="基础用法">
       <template #description>通过 <code>src</code> 设置图片地址，或使用 <code>placeholder</code> 显示占位文字。</template>
 
-      <ComponentDocsDemoBlock :code="demo1Code" v-bind="demoLabels">
+      <ComponentDocsDemoBlock :code="demo1Code">
         <div class="avatar-row">
           <zAvatar src="https://avatars.githubusercontent.com/u/131276691?v=4" />
           <zAvatar placeholder="U" />
@@ -17,7 +17,7 @@
     <ComponentDocsSection title="不同尺寸">
       <template #description>通过 <code>size</code> 设置头像大小，支持数字（像素）或字符串（如 rem）。</template>
 
-      <ComponentDocsDemoBlock :code="demo2Code" v-bind="demoLabels">
+      <ComponentDocsDemoBlock :code="demo2Code">
         <div class="avatar-row">
           <zAvatar src="https://avatars.githubusercontent.com/u/131276691?v=4" :size="24" />
           <zAvatar src="https://avatars.githubusercontent.com/u/131276691?v=4" :size="32" />
@@ -31,7 +31,7 @@
     <ComponentDocsSection title="占位符尺寸">
       <template #description>占位符文字大小会根据头像尺寸自动计算。</template>
 
-      <ComponentDocsDemoBlock :code="demo3Code" v-bind="demoLabels">
+      <ComponentDocsDemoBlock :code="demo3Code">
         <div class="avatar-row">
           <zAvatar placeholder="S" :size="24" />
           <zAvatar placeholder="M" :size="32" />
@@ -61,14 +61,6 @@ import ComponentDocsDemoBlock from '@/module/components/components/ComponentDocs
 import ComponentDocsHeader from '@/module/components/components/ComponentDocsPage/ComponentDocsHeader.vue'
 import ComponentDocsPage from '@/module/components/components/ComponentDocsPage/ComponentDocsPage.vue'
 import ComponentDocsSection from '@/module/components/components/ComponentDocsPage/ComponentDocsSection.vue'
-
-const demoLabels = {
-  copyLabel: '复制代码',
-  copiedLabel: '已复制',
-  showCodeLabel: '查看代码',
-  hideCodeLabel: '隐藏代码',
-  hideSourceLabel: '隐藏源代码'
-}
 
 const demo1Code = `<template>
   <zAvatar src="https://avatars.githubusercontent.com/u/131276691?v=4" />
