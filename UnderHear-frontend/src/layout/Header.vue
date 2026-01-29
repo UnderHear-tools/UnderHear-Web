@@ -16,29 +16,31 @@
           <template #trigger>
             <zAvatar src="https://avatars.githubusercontent.com/u/131276691?v=4" :size="32" />
           </template>
-          <div class="user-header">
-            <zAvatar src="https://avatars.githubusercontent.com/u/131276691?v=4" :size="36" />
-            <div class="user-info">
-              <div class="user-name">UnderHear Studio</div>
-              <div class="user-email">hello@underhear.audio</div>
+          <template #content>
+            <div class="user-header">
+              <zAvatar src="https://avatars.githubusercontent.com/u/131276691?v=4" :size="36" />
+              <div class="user-info">
+                <div class="user-name">UnderHear Studio</div>
+                <div class="user-email">hello@underhear.audio</div>
+              </div>
             </div>
-          </div>
-          <zMenu>
-            <zDivider />
-            <zMenuItem>
-              <Person class="menu-icon" />
-              个人资料
-            </zMenuItem>
-            <zMenuItem href="https://github.com/underhear">
-              <MarkGithub class="menu-icon" />
-              前往 GitHub
-            </zMenuItem>
-            <zDivider />
-            <zMenuItem>
-              <SignOut class="menu-icon" />
-              退出登录
-            </zMenuItem>
-          </zMenu>
+            <zMenu>
+              <zDivider />
+              <zMenuItem>
+                <Person class="menu-icon" />
+                个人资料
+              </zMenuItem>
+              <zMenuItem href="https://github.com/underhear">
+                <MarkGithub class="menu-icon" />
+                前往 GitHub
+              </zMenuItem>
+              <zDivider />
+              <zMenuItem>
+                <SignOut class="menu-icon" />
+                退出登录
+              </zMenuItem>
+            </zMenu>
+          </template>
         </zDropdown>
       </div>
     </div>

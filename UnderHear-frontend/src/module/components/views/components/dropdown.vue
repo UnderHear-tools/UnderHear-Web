@@ -3,7 +3,7 @@
     <ComponentDocsHeader title="Dropdown 下拉菜单" description="向下弹出的菜单容器。" />
 
     <ComponentDocsSection title="基础用法">
-      <template #description>通过 <code>trigger</code> 插槽定义触发元素，默认插槽放置下拉内容。</template>
+      <template #description>通过 <code>trigger</code> 插槽定义触发元素，content 插槽放置下拉内容。</template>
 
       <ComponentDocsDemoBlock :code="demo1Code">
         <div class="dropdown-demo">
@@ -11,11 +11,13 @@
             <template #trigger>
               <button class="demo-trigger">点击展开</button>
             </template>
-            <div class="demo-content">
-              <div class="demo-item">选项一</div>
-              <div class="demo-item">选项二</div>
-              <div class="demo-item">选项三</div>
-            </div>
+            <template #content>
+              <div class="demo-content">
+                <div class="demo-item">选项一</div>
+                <div class="demo-item">选项二</div>
+                <div class="demo-item">选项三</div>
+              </div>
+            </template>
           </zDropdown>
         </div>
       </ComponentDocsDemoBlock>
@@ -48,11 +50,13 @@ const demo1Code = `<template>
       <template #trigger>
         <button class="demo-trigger">点击展开</button>
       </template>
-      <div class="demo-content">
-        <div class="demo-item">选项一</div>
-        <div class="demo-item">选项二</div>
-        <div class="demo-item">选项三</div>
-      </div>
+      <template #content>
+        <div class="demo-content">
+          <div class="demo-item">选项一</div>
+          <div class="demo-item">选项二</div>
+          <div class="demo-item">选项三</div>
+        </div>
+      </template>
     </zDropdown>
   </div>
 </template>
@@ -107,7 +111,7 @@ const slotsTableRows = [
     description: '触发下拉的元素，点击该元素会展开/收起下拉内容'
   },
   {
-    name: 'default',
+    name: 'content',
     description: '下拉菜单的内容'
   }
 ]

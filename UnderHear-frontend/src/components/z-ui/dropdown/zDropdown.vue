@@ -5,7 +5,7 @@
     </div>
     <Transition name="z-dropdown-fade">
       <div v-if="isOpen" class="z-dropdown-content">
-        <slot />
+        <slot name="content" />
       </div>
     </Transition>
   </div>
