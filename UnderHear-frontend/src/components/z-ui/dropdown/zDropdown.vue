@@ -4,7 +4,7 @@
       <slot name="trigger" />
     </div>
     <Transition name="z-dropdown-fade">
-      <div v-if="isOpen" class="z-dropdown-content">
+      <div v-if="isOpen" class="z-dropdown-content" :class="placementClass">
         <slot name="content" />
       </div>
     </Transition>
@@ -12,10 +12,21 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted } from 'vue'
+import { computed, ref, onMounted } from 'vue'
+
+const props = withDefaults(
+  defineProps<{
+    placement?: 'left-top' | 'right-top' | 'left-bottom' | 'right-bottom'
+  }>(),
+  {
+    placement: 'right-bottom'
+  }
+)
 
 const isOpen = ref(false)
 const dropdownRef = ref<HTMLElement>()
+
+const placementClass = computed(() => `z-dropdown-content--${props.placement}`)
 
 onMounted(() => {
   document.addEventListener('click', (e: MouseEvent) => {
@@ -35,13 +46,31 @@ onMounted(() => {
 
 .z-dropdown-content {
   position: absolute;
-  top: calc(100% + 8px);
-  right: 0;
   z-index: 1000;
   border: 1px solid #d0d7de;
   border-radius: 6px;
   background: #fff;
   box-shadow: 0 8px 24px rgba(140, 149, 159, 0.2);
+}
+
+.z-dropdown-content--left-bottom {
+  top: calc(100% + 8px);
+  right: 0;
+}
+
+.z-dropdown-content--right-bottom {
+  top: calc(100% + 8px);
+  left: 0;
+}
+
+.z-dropdown-content--left-top {
+  bottom: calc(100% + 8px);
+  right: 0;
+}
+
+.z-dropdown-content--right-top {
+  bottom: calc(100% + 8px);
+  left: 0;
 }
 
 .z-dropdown-fade-enter-active,
