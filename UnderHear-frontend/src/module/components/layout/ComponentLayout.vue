@@ -277,7 +277,7 @@ const navSections = ref([
 .nav-item.active::before {
   content: '';
   position: absolute;
-  left: -10px;
+  left: -8px;
   top: 50%;
   bottom: 0;
   width: 4px;
