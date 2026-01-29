@@ -18,7 +18,7 @@
     <transition name="code-expand">
       <div v-if="codeVisible" class="demo-code">
         <pre :class="`language-${language}`">
-          <code :class="`language-${language}`" v-html="highlightedCode"></code>
+          <div :class="`language-${language}`" v-html="highlightedCode"></div>
         </pre>
         <div class="code-footer">
           <button class="hide-code-btn" @click="codeVisible = false">

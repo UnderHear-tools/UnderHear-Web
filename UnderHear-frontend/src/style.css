@@ -47,4 +47,10 @@
     font-weight: bold;
     margin: 1.67em 0;
   }
+
+  code {
+    background-color: #eee;
+    border-radius: 3px;
+    padding: 0 3px;
+  }
 }
