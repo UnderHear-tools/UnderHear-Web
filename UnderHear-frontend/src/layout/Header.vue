@@ -25,6 +25,10 @@
           </div>
           <zMenu>
             <zDivider />
+            <zMenuItem>
+              <Person class="menu-icon" />
+              个人资料
+            </zMenuItem>
             <zMenuItem href="https://github.com/underhear">
               <MarkGithub class="menu-icon" />
               前往 GitHub
@@ -48,7 +52,7 @@ import { zDropdown } from '@/components/z-ui/dropdown'
 import { zAvatar } from '@/components/z-ui/avatar'
 import { zMenu, zMenuItem } from '@/components/z-ui/menu'
 import { zDivider } from '@/components/z-ui/divider'
-import { MarkGithub, SignOut } from '@/components/z-ui/icon/Octicons-vue'
+import { Person, MarkGithub, SignOut } from '@/components/z-ui/icon/Octicons-vue'
 
 interface NavigationItem {
   name: string
