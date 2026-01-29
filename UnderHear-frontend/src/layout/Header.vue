@@ -12,7 +12,7 @@
       </nav>
 
       <div class="user-menu">
-        <zDropdown>
+        <zDropdown placement="left-bottom">
           <template #trigger>
             <zAvatar src="https://avatars.githubusercontent.com/u/131276691?v=4" :size="32" />
           </template>
