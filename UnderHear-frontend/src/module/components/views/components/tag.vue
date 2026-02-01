@@ -56,6 +56,28 @@
       </ComponentDocsDemoBlock>
     </ComponentDocsSection>
 
+    <ComponentDocsSection title="操作图标">
+      <template #description>通过 <code>action</code> 插槽添加后置操作图标，通常用于关闭、删除等操作。</template>
+      <ComponentDocsDemoBlock :code="demo5Code">
+        <div class="tag-row">
+          <zTag>
+            Vue
+            <template #action><X /></template>
+          </zTag>
+          <zTag>
+            <template #visual><Star /></template>
+            收藏
+            <template #action><X /></template>
+          </zTag>
+          <zTag color="#1a7f37" bgColor="#dafbe1">
+            <template #visual><Check /></template>
+            已完成
+            <template #action><X /></template>
+          </zTag>
+        </div>
+      </ComponentDocsDemoBlock>
+    </ComponentDocsSection>
+
     <ComponentDocsSection title="API" variant="api">
       <h3>属性</h3>
       <zTable
@@ -80,7 +102,7 @@
 <script setup lang="ts">
 import { zTag } from '@/components/z-ui/tag'
 import { zTable, type ZTableColumn } from '@/components/z-ui/table'
-import { Star, Check, Alert } from '@/components/z-ui/icon/Octicons-vue'
+import { Star, Check, Alert, X } from '@/components/z-ui/icon/Octicons-vue'
 import ComponentDocsDemoBlock from '@/module/components/components/ComponentDocsPage/ComponentDocsDemoBlock.vue'
 import ComponentDocsHeader from '@/module/components/components/ComponentDocsPage/ComponentDocsHeader.vue'
 import ComponentDocsPage from '@/module/components/components/ComponentDocsPage/ComponentDocsPage.vue'
@@ -164,6 +186,38 @@ import { Star, Check, Alert } from '@/components/z-ui/icon/Octicons-vue'
 }
 </style>`
 
+const demo5Code = `<script setup lang="ts">
+import { zTag } from '@/components/z-ui/tag'
+import { Star, Check, X } from '@/components/z-ui/icon/Octicons-vue'
+<\/script>
+
+<template>
+  <div class="tag-row">
+    <zTag>
+      Vue
+      <template #action><X /></template>
+    </zTag>
+    <zTag>
+      <template #visual><Star /></template>
+      收藏
+      <template #action><X /></template>
+    </zTag>
+    <zTag color="#1a7f37" bgColor="#dafbe1">
+      <template #visual><Check /></template>
+      已完成
+      <template #action><X /></template>
+    </zTag>
+  </div>
+</template>
+
+<style scoped>
+.tag-row {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+</style>`
+
 const apiTableColumns: ZTableColumn[] = [
   { key: 'name', label: '属性名', rowHeader: true, minWidth: '140px' },
   { key: 'description', label: '说明', minWidth: '200px', wrap: true },
@@ -205,6 +259,10 @@ const slotTableRows = [
   {
     name: 'visual',
     description: '前置视觉引导，通常用于放置图标'
+  },
+  {
+    name: 'action',
+    description: '后置操作图标，通常用于关闭、删除等操作'
   }
 ]
 </script>

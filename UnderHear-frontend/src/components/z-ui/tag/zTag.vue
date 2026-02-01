@@ -2,6 +2,7 @@
 	<span class="z-tag" :class="`z-tag--${size}`" :style="customStyle">
 		<slot name="visual"></slot>
 		<slot></slot>
+		<slot name="action"></slot>
 	</span>
 </template>
 
