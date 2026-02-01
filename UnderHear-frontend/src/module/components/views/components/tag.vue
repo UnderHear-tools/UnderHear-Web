@@ -62,7 +62,7 @@
         <div class="tag-row">
           <zTag>
             Vue
-            <template #action><X /></template>
+            <template #action><Trash /></template>
           </zTag>
           <zTag>
             <template #visual><Star /></template>
@@ -102,7 +102,7 @@
 <script setup lang="ts">
 import { zTag } from '@/components/z-ui/tag'
 import { zTable, type ZTableColumn } from '@/components/z-ui/table'
-import { Star, Check, Alert, X } from '@/components/z-ui/icon/Octicons-vue'
+import { Star, Check, Alert, X, Trash } from '@/components/z-ui/icon/Octicons-vue'
 import ComponentDocsDemoBlock from '@/module/components/components/ComponentDocsPage/ComponentDocsDemoBlock.vue'
 import ComponentDocsHeader from '@/module/components/components/ComponentDocsPage/ComponentDocsHeader.vue'
 import ComponentDocsPage from '@/module/components/components/ComponentDocsPage/ComponentDocsPage.vue'
@@ -188,14 +188,14 @@ import { Star, Check, Alert } from '@/components/z-ui/icon/Octicons-vue'
 
 const demo5Code = `<script setup lang="ts">
 import { zTag } from '@/components/z-ui/tag'
-import { Star, Check, X } from '@/components/z-ui/icon/Octicons-vue'
+import { Star, Check, X, Trash } from '@/components/z-ui/icon/Octicons-vue'
 <\/script>
 
 <template>
   <div class="tag-row">
     <zTag>
       Vue
-      <template #action><X /></template>
+      <template #action><Trash /></template>
     </zTag>
     <zTag>
       <template #visual><Star /></template>
