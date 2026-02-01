@@ -38,6 +38,11 @@
                 </zMenuItem>
                 <zDivider />
                 <zMenuItem>
+                  <Gear class="menu-icon" />
+                  设置
+                </zMenuItem>
+                <zDivider />
+                <zMenuItem>
                   <SignOut class="menu-icon" />
                   退出登录
                 </zMenuItem>
@@ -60,7 +65,7 @@ import { zDropdown } from '@/components/z-ui/dropdown'
 import { zAvatar } from '@/components/z-ui/avatar'
 import { zMenu, zMenuItem } from '@/components/z-ui/menu'
 import { zDivider } from '@/components/z-ui/divider'
-import { Person, MarkGithub, SignOut } from '@/components/z-ui/icon/Octicons-vue'
+import { Person, MarkGithub, SignOut, Gear } from '@/components/z-ui/icon/Octicons-vue'
 
 const demo1Code = `<template>
   <div class="user-menu">
@@ -88,6 +93,11 @@ const demo1Code = `<template>
           </zMenuItem>
           <zDivider />
           <zMenuItem>
+            <Gear class="menu-icon" />
+            设置
+          </zMenuItem>
+          <zDivider />
+          <zMenuItem>
             <SignOut class="menu-icon" />
             退出登录
           </zMenuItem>
@@ -102,7 +112,7 @@ import { zDropdown } from '@/components/z-ui/dropdown'
 import { zAvatar } from '@/components/z-ui/avatar'
 import { zMenu, zMenuItem } from '@/components/z-ui/menu'
 import { zDivider } from '@/components/z-ui/divider'
-import { Person, MarkGithub, SignOut } from '@/components/z-ui/icon/Octicons-vue'
+import { Person, MarkGithub, SignOut, Gear } from '@/components/z-ui/icon/Octicons-vue'
 <\/script>
 
 <style scoped>
