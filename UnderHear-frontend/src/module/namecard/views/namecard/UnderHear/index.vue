@@ -101,7 +101,7 @@
                             <p>{{ project.description.en }}</p>
                         </div>
                         <div class="project-tech">
-                            <zTechTag v-for="tech in project.technologies" :key="tech">{{ tech }}</zTechTag>
+                            <zTag v-for="tech in project.technologies" :key="tech">{{ tech }}</zTag>
                         </div>
                     </div>
                     <RouterLink to="/namecard/UnderHear/project" class="view-more-simple">Read more...</RouterLink>
@@ -116,7 +116,7 @@ import { ref, onMounted } from 'vue'
 
 import { zContainer } from '@/components/z-ui/container'
 // 引入图标
-import { zTechTag } from '@/components/z-ui/tag'
+import { zTag } from '@/components/z-ui/tag'
 import { IconPark } from '@icon-park/vue-next/es/all';
 
 

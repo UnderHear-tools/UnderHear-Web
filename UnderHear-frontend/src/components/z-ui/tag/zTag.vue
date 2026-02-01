@@ -1,5 +1,5 @@
 <template>
-	<span class="tech-tag">
+	<span class="z-tag">
 		<slot></slot>
 	</span>
 </template>
@@ -9,7 +9,7 @@
 </script>
 
 <style scoped>
-.tech-tag {
+.z-tag {
     background-color: #ddf4ff;
     color: #0969da;
     padding: 0px 10px 0px 10px;
