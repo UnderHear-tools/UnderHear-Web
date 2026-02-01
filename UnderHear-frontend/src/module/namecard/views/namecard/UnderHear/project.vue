@@ -17,7 +17,7 @@
 					<p>{{ project.description.en }}</p>
 				</div>
 				<div class="project-tech">
-					<zTechTag v-for="tech in project.technologies" :key="tech">{{ tech }}</zTechTag>
+					<zTag v-for="tech in project.technologies" :key="tech">{{ tech }}</zTag>
 				</div>
 				<div class="project-items">
 					<div class="project-badges">
@@ -36,7 +36,7 @@ import { ref, onMounted } from 'vue'
 
 import { zContainer } from '@/components/z-ui/container'
 // 引入图标
-import {zTechTag} from '@/components/z-ui/tag'
+import {zTag} from '@/components/z-ui/tag'
 
 // 引入数据
 import projectData from '../UnderHear/data/Projectcard.json'
