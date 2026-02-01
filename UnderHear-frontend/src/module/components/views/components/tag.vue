@@ -3,10 +3,10 @@
     <ComponentDocsHeader title="Tag 标签" description="用于标记和选择。" />
 
     <ComponentDocsSection title="基础用法">
-      <template #description>直接使用 <code>zTechTag</code> 组件即可。</template>
+      <template #description>直接使用 <code>zTag</code> 组件即可。</template>
       <ComponentDocsDemoBlock :code="demo1Code">
         <div class="tag-row">
-          <zTechTag>Tag</zTechTag>
+          <zTag>Tag</zTag>
         </div>
       </ComponentDocsDemoBlock>
     </ComponentDocsSection>
@@ -24,7 +24,7 @@
 </template>
 
 <script setup lang="ts">
-import { zTechTag } from '@/components/z-ui/tag'
+import { zTag } from '@/components/z-ui/tag'
 import { zTable, type ZTableColumn } from '@/components/z-ui/table'
 import ComponentDocsDemoBlock from '@/module/components/components/ComponentDocsPage/ComponentDocsDemoBlock.vue'
 import ComponentDocsHeader from '@/module/components/components/ComponentDocsPage/ComponentDocsHeader.vue'
@@ -33,7 +33,7 @@ import ComponentDocsSection from '@/module/components/components/ComponentDocsPa
 
 const demo1Code = `<template>
   <div class="tag-row">
-    <zTechTag>Tag</zTechTag>
+    <zTag>Tag</zTag>
   </div>
 </template>
 
