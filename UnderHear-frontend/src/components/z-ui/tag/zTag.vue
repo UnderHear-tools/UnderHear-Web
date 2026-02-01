@@ -1,15 +1,24 @@
 <template>
-	<span class="z-tag" :class="`z-tag--${size}`">
+	<span class="z-tag" :class="`z-tag--${size}`" :style="customStyle">
 		<slot></slot>
 	</span>
 </template>
 
 <script setup lang="ts">
-withDefaults(defineProps<{
+import { computed } from 'vue'
+
+const props = withDefaults(defineProps<{
   size?: 'small' | 'medium' | 'large' | 'xlarge'
+  color?: string
+  bgColor?: string
 }>(), {
   size: 'medium'
 })
+
+const customStyle = computed(() => ({
+  color: props.color,
+  backgroundColor: props.bgColor
+}))
 </script>
 
 <style scoped>

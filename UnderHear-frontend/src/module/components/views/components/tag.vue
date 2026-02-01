@@ -23,6 +23,19 @@
       </ComponentDocsDemoBlock>
     </ComponentDocsSection>
 
+    <ComponentDocsSection title="自定义颜色">
+      <template #description>通过 <code>color</code> 和 <code>bgColor</code> 属性自定义字体颜色和背景色。</template>
+      <ComponentDocsDemoBlock :code="demo3Code">
+        <div class="tag-row">
+          <zTag>默认</zTag>
+          <zTag color="#1a7f37" bgColor="#dafbe1">成功</zTag>
+          <zTag color="#9a6700" bgColor="#fff8c5">警告</zTag>
+          <zTag color="#cf222e" bgColor="#ffebe9">危险</zTag>
+          <zTag color="#6639ba" bgColor="#fbefff">紫色</zTag>
+        </div>
+      </ComponentDocsDemoBlock>
+    </ComponentDocsSection>
+
     <ComponentDocsSection title="API" variant="api">
       <zTable
         :columns="apiTableColumns"
@@ -73,6 +86,24 @@ const demo2Code = `<template>
 }
 </style>`
 
+const demo3Code = `<template>
+  <div class="tag-row">
+    <zTag>默认</zTag>
+    <zTag color="#1a7f37" bgColor="#dafbe1">成功</zTag>
+    <zTag color="#9a6700" bgColor="#fff8c5">警告</zTag>
+    <zTag color="#cf222e" bgColor="#ffebe9">危险</zTag>
+    <zTag color="#6639ba" bgColor="#fbefff">紫色</zTag>
+  </div>
+</template>
+
+<style scoped>
+.tag-row {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+</style>`
+
 const apiTableColumns: ZTableColumn[] = [
   { key: 'name', label: '属性名', rowHeader: true, minWidth: '140px' },
   { key: 'description', label: '说明', minWidth: '200px', wrap: true },
@@ -86,6 +117,18 @@ const apiTableRows = [
     description: '标签尺寸',
     type: "'small' | 'medium' | 'large' | 'xlarge'",
     default: "'medium'"
+  },
+  {
+    name: 'color',
+    description: '字体颜色',
+    type: 'string',
+    default: "'#0969da'"
+  },
+  {
+    name: 'bgColor',
+    description: '背景颜色',
+    type: 'string',
+    default: "'#ddf4ff'"
   }
 ]
 </script>
