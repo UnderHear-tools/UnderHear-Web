@@ -1,5 +1,6 @@
 <template>
 	<span class="z-tag" :class="`z-tag--${size}`" :style="customStyle">
+		<slot name="visual"></slot>
 		<slot></slot>
 	</span>
 </template>
@@ -23,10 +24,13 @@ const customStyle = computed(() => ({
 
 <style scoped>
 .z-tag {
+    display: inline-flex;
+    align-items: center;
     background-color: #ddf4ff;
     color: #0969da;
     border-radius: 100px;
     font-weight: 500;
+    gap: 6px;
 }
 
 .z-tag--small {

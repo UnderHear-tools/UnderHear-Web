@@ -36,10 +36,39 @@
       </ComponentDocsDemoBlock>
     </ComponentDocsSection>
 
+    <ComponentDocsSection title="带图标">
+      <template #description>通过 <code>visual</code> 插槽添加前置图标。</template>
+      <ComponentDocsDemoBlock :code="demo4Code">
+        <div class="tag-row">
+          <zTag>
+            <template #visual><Star /></template>
+            Star
+          </zTag>
+          <zTag color="#1a7f37" bgColor="#dafbe1">
+            <template #visual><Check /></template>
+            已完成
+          </zTag>
+          <zTag color="#cf222e" bgColor="#ffebe9">
+            <template #visual><Alert /></template>
+            错误
+          </zTag>
+        </div>
+      </ComponentDocsDemoBlock>
+    </ComponentDocsSection>
+
     <ComponentDocsSection title="API" variant="api">
+      <h3>属性</h3>
       <zTable
         :columns="apiTableColumns"
         :data="apiTableRows"
+        row-key="name"
+        compact
+        :hoverable="false"
+      />
+      <h3>插槽</h3>
+      <zTable
+        :columns="slotTableColumns"
+        :data="slotTableRows"
         row-key="name"
         compact
         :hoverable="false"
@@ -51,6 +80,7 @@
 <script setup lang="ts">
 import { zTag } from '@/components/z-ui/tag'
 import { zTable, type ZTableColumn } from '@/components/z-ui/table'
+import { Star, Check, Alert } from '@/components/z-ui/icon/Octicons-vue'
 import ComponentDocsDemoBlock from '@/module/components/components/ComponentDocsPage/ComponentDocsDemoBlock.vue'
 import ComponentDocsHeader from '@/module/components/components/ComponentDocsPage/ComponentDocsHeader.vue'
 import ComponentDocsPage from '@/module/components/components/ComponentDocsPage/ComponentDocsPage.vue'
@@ -104,6 +134,36 @@ const demo3Code = `<template>
 }
 </style>`
 
+const demo4Code = `<script setup lang="ts">
+import { zTag } from '@/components/z-ui/tag'
+import { Star, Check, Alert } from '@/components/z-ui/icon/Octicons-vue'
+<\/script>
+
+<template>
+  <div class="tag-row">
+    <zTag>
+      <template #visual><Star /></template>
+      Star
+    </zTag>
+    <zTag color="#1a7f37" bgColor="#dafbe1">
+      <template #visual><Check /></template>
+      已完成
+    </zTag>
+    <zTag color="#cf222e" bgColor="#ffebe9">
+      <template #visual><Alert /></template>
+      错误
+    </zTag>
+  </div>
+</template>
+
+<style scoped>
+.tag-row {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+</style>`
+
 const apiTableColumns: ZTableColumn[] = [
   { key: 'name', label: '属性名', rowHeader: true, minWidth: '140px' },
   { key: 'description', label: '说明', minWidth: '200px', wrap: true },
@@ -129,6 +189,22 @@ const apiTableRows = [
     description: '背景颜色',
     type: 'string',
     default: "'#ddf4ff'"
+  }
+]
+
+const slotTableColumns: ZTableColumn[] = [
+  { key: 'name', label: '插槽名', rowHeader: true, minWidth: '140px' },
+  { key: 'description', label: '说明', minWidth: '300px', wrap: true }
+]
+
+const slotTableRows = [
+  {
+    name: 'default',
+    description: '标签的内容'
+  },
+  {
+    name: 'visual',
+    description: '前置视觉引导，通常用于放置图标'
   }
 ]
 </script>
