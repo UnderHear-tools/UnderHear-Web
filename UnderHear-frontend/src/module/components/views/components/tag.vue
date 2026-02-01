@@ -11,6 +11,18 @@
       </ComponentDocsDemoBlock>
     </ComponentDocsSection>
 
+    <ComponentDocsSection title="不同尺寸">
+      <template #description>通过 <code>size</code> 属性设置标签尺寸。</template>
+      <ComponentDocsDemoBlock :code="demo2Code">
+        <div class="tag-row">
+          <zTag size="small">Small</zTag>
+          <zTag size="medium">Medium</zTag>
+          <zTag size="large">Large</zTag>
+          <zTag size="xlarge">X-Large</zTag>
+        </div>
+      </ComponentDocsDemoBlock>
+    </ComponentDocsSection>
+
     <ComponentDocsSection title="API" variant="api">
       <zTable
         :columns="apiTableColumns"
@@ -44,15 +56,36 @@ const demo1Code = `<template>
 }
 </style>`
 
+const demo2Code = `<template>
+  <div class="tag-row">
+    <zTag size="small">Small</zTag>
+    <zTag size="medium">Medium</zTag>
+    <zTag size="large">Large</zTag>
+    <zTag size="xlarge">X-Large</zTag>
+  </div>
+</template>
+
+<style scoped>
+.tag-row {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+</style>`
+
 const apiTableColumns: ZTableColumn[] = [
-  { key: 'name', label: '插槽名', rowHeader: true, minWidth: '140px' },
-  { key: 'description', label: '说明', minWidth: '300px', wrap: true },
+  { key: 'name', label: '属性名', rowHeader: true, minWidth: '140px' },
+  { key: 'description', label: '说明', minWidth: '200px', wrap: true },
+  { key: 'type', label: '类型', minWidth: '200px', wrap: true },
+  { key: 'default', label: '默认值', minWidth: '100px' }
 ]
 
 const apiTableRows = [
   {
-    name: 'default',
-    description: '标签的内容',
+    name: 'size',
+    description: '标签尺寸',
+    type: "'small' | 'medium' | 'large' | 'xlarge'",
+    default: "'medium'"
   }
 ]
 </script>
@@ -60,6 +93,7 @@ const apiTableRows = [
 <style scoped>
 .tag-row {
   display: flex;
+  align-items: center;
   gap: 20px;
 }
 </style>
