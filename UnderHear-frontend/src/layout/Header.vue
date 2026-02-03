@@ -12,7 +12,8 @@
       </nav>
 
       <div class="user-menu">
-        <zDropdown placement="left-bottom">
+        <a v-if="true" class="nav-link" href="/auth/login">登录</a>
+        <zDropdown v-if="false" placement="left-bottom">
           <template #trigger>
             <zAvatar src="https://avatars.githubusercontent.com/u/131276691?v=4" :size="32" />
           </template>
@@ -95,7 +96,7 @@ watch(() => route.path, () => {
 .header {
   position: sticky;
   top: 0;
-  z-index: 50;
+  z-index: 9999;
   width: 100%;
   background: #f8f8f8;
   backdrop-filter: blur(40px);

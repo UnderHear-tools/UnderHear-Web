@@ -215,6 +215,12 @@ const navSections = ref([
     items: [
       { path: '/component/table', label: 'Table 表格' }
     ]
+  },
+  {
+    title: 'Navigation 导航',
+    items: [
+      { path: '/component/steps', label: 'Steps 步骤条' }
+    ]
   }
 ])
 </script>

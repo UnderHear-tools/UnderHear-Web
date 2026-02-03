@@ -11,55 +11,75 @@
       </ComponentDocsDemoBlock>
     </ComponentDocsSection>
 
-    <ComponentDocsSection title="标签大小">
-      <template #description>通过 <code>size</code> 属性设置标签大小。</template>
+    <ComponentDocsSection title="不同尺寸">
+      <template #description>通过 <code>size</code> 属性设置标签尺寸。</template>
       <ComponentDocsDemoBlock :code="demo2Code">
         <div class="tag-row">
           <zTag size="small">Small</zTag>
           <zTag size="medium">Medium</zTag>
           <zTag size="large">Large</zTag>
-          <zTag size="x-large">X-Large</zTag>
+          <zTag size="xlarge">X-Large</zTag>
         </div>
       </ComponentDocsDemoBlock>
     </ComponentDocsSection>
 
-    <ComponentDocsSection title="可删除标签">
-      <template #description>通过 <code>action</code> 属性设置删除图标，通过监听 <code>actionClick</code> 事件来删除标签。</template>
+    <ComponentDocsSection title="自定义颜色">
+      <template #description>通过 <code>color</code> 和 <code>bgColor</code> 属性自定义字体颜色和背景色。</template>
       <ComponentDocsDemoBlock :code="demo3Code">
         <div class="tag-row">
-          <zTag :action="X" @actionClick="handleActionClick">Tag</zTag>
+          <zTag>默认</zTag>
+          <zTag color="#1a7f37" bgColor="#dafbe1">成功</zTag>
+          <zTag color="#9a6700" bgColor="#fff8c5">警告</zTag>
+          <zTag color="#cf222e" bgColor="#ffebe9">危险</zTag>
+          <zTag color="#6639ba" bgColor="#fbefff">紫色</zTag>
         </div>
       </ComponentDocsDemoBlock>
     </ComponentDocsSection>
 
-    <ComponentDocsSection title="视觉图标">
-      <template #description>通过 <code>visual</code> 属性设置视觉图标。</template>
+    <ComponentDocsSection title="带图标">
+      <template #description>通过 <code>visual</code> 插槽添加前置图标。</template>
       <ComponentDocsDemoBlock :code="demo4Code">
         <div class="tag-row">
-          <zTag :visual="MarkGithub">Tag</zTag>
+          <zTag>
+            <template #visual><Star /></template>
+            Star
+          </zTag>
+          <zTag color="#1a7f37" bgColor="#dafbe1">
+            <template #visual><Check /></template>
+            已完成
+          </zTag>
+          <zTag color="#cf222e" bgColor="#ffebe9">
+            <template #visual><Alert /></template>
+            错误
+          </zTag>
         </div>
       </ComponentDocsDemoBlock>
     </ComponentDocsSection>
 
-    <ComponentDocsSection title="自定义内容">
-      <template #description>通过插槽自定义标签内容。</template>
+    <ComponentDocsSection title="操作图标">
+      <template #description>通过 <code>action</code> 插槽添加后置操作图标，通常用于关闭、删除等操作。</template>
       <ComponentDocsDemoBlock :code="demo5Code">
         <div class="tag-row">
           <zTag>
-            Tag
-            <template #visual>
-              <svg aria-label="Google logo" width="12" height="12" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><g><path fill="#34a853" d="M153 292c30 82 118 95 171 60h62v48A192 192 0 0190 341"></path><path fill="#4285f4" d="m386 400a140 175 0 0053-179H260v74h102q-7 37-38 57"></path><path fill="#fbbc02" d="m90 341a208 200 0 010-171l63 49q-12 37 0 73"></path><path fill="#ea4335" d="m153 219c22-69 116-109 179-50l55-54c-78-75-230-72-297 55"></path></g></svg>
-            </template>
-            <template #action>
-              <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24"><path fill="currentColor" d="m12 13.4l-4.9 4.9q-.275.275-.7.275t-.7-.275t-.275-.7t.275-.7l4.9-4.9l-4.9-4.9q-.275-.275-.275-.7t.275-.7t.7-.275t.7.275l4.9 4.9l4.9-4.9q.275-.275.7-.275t.7.275t.275.7t-.275.7L13.4 12l4.9 4.9q.275.275.275.7t-.275.7t-.7.275t-.7-.275z"/></svg>
-            </template>
+            Vue
+            <template #action><Trash /></template>
+          </zTag>
+          <zTag>
+            <template #visual><Star /></template>
+            收藏
+            <template #action><X /></template>
+          </zTag>
+          <zTag color="#1a7f37" bgColor="#dafbe1">
+            <template #visual><Check /></template>
+            已完成
+            <template #action><X /></template>
           </zTag>
         </div>
       </ComponentDocsDemoBlock>
     </ComponentDocsSection>
 
     <ComponentDocsSection title="API" variant="api">
-      <h4>Slots 插槽</h4>
+      <h3>属性</h3>
       <zTable
         :columns="apiTableColumns"
         :data="apiTableRows"
@@ -67,18 +87,10 @@
         compact
         :hoverable="false"
       />
-      <h4 style="margin-top: 24px;">Props 属性</h4>
+      <h3>插槽</h3>
       <zTable
-        :columns="propsTableColumns"
-        :data="propsTableRows"
-        row-key="name"
-        compact
-        :hoverable="false"
-      />
-      <h4 style="margin-top: 24px;">Events 事件</h4>
-      <zTable
-        :columns="eventsTableColumns"
-        :data="eventsTableRows"
+        :columns="slotTableColumns"
+        :data="slotTableRows"
         row-key="name"
         compact
         :hoverable="false"
@@ -90,6 +102,7 @@
 <script setup lang="ts">
 import { zTag } from '@/components/z-ui/tag'
 import { zTable, type ZTableColumn } from '@/components/z-ui/table'
+import { Star, Check, Alert, X, Trash } from '@/components/z-ui/icon/Octicons-vue'
 import ComponentDocsDemoBlock from '@/module/components/components/ComponentDocsPage/ComponentDocsDemoBlock.vue'
 import ComponentDocsHeader from '@/module/components/components/ComponentDocsPage/ComponentDocsHeader.vue'
 import ComponentDocsPage from '@/module/components/components/ComponentDocsPage/ComponentDocsPage.vue'
@@ -105,7 +118,6 @@ const demo1Code = `<template>
 <style scoped>
 .tag-row {
   display: flex;
-  align-items: center;
   gap: 20px;
 }
 </style>`
@@ -115,7 +127,7 @@ const demo2Code = `<template>
     <zTag size="small">Small</zTag>
     <zTag size="medium">Medium</zTag>
     <zTag size="large">Large</zTag>
-    <zTag size="x-large">X-Large</zTag>
+    <zTag size="xlarge">X-Large</zTag>
   </div>
 </template>
 
@@ -129,7 +141,11 @@ const demo2Code = `<template>
 
 const demo3Code = `<template>
   <div class="tag-row">
-    <zTag :action="X" @actionClick="handleActionClick">Tag</zTag>
+    <zTag>默认</zTag>
+    <zTag color="#1a7f37" bgColor="#dafbe1">成功</zTag>
+    <zTag color="#9a6700" bgColor="#fff8c5">警告</zTag>
+    <zTag color="#cf222e" bgColor="#ffebe9">危险</zTag>
+    <zTag color="#6639ba" bgColor="#fbefff">紫色</zTag>
   </div>
 </template>
 
@@ -141,30 +157,56 @@ const demo3Code = `<template>
 }
 </style>`
 
-const demo4Code = `<template>
-  <div class="tag-row">
-    <zTag :visual="MarkGithub">Tag</zTag>
-  </div>
-</template>
+const demo4Code = `<script setup lang="ts">
+import { zTag } from '@/components/z-ui/tag'
+import { Star, Check, Alert } from '@/components/z-ui/icon/Octicons-vue'
+<\/script>
 
-<style scoped>
-.tag-row {
-  display: flex;
-  align-items: center;
-  gap: 20px;
-}
-</style>`
-
-const demo5Code = `<template>
+<template>
   <div class="tag-row">
     <zTag>
-      Tag
-      <template #visual>
-        <svg aria-label="Google logo" width="12" height="12" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><g><path fill="#34a853" d="M153 292c30 82 118 95 171 60h62v48A192 192 0 0190 341"></path><path fill="#4285f4" d="m386 400a140 175 0 0053-179H260v74h102q-7 37-38 57"></path><path fill="#fbbc02" d="m90 341a208 200 0 010-171l63 49q-12 37 0 73"></path><path fill="#ea4335" d="m153 219c22-69 116-109 179-50l55-54c-78-75-230-72-297 55"></path></g></svg>
-      </template>
-      <template #action>
-        <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24"><path fill="currentColor" d="m12 13.4l-4.9 4.9q-.275.275-.7.275t-.7-.275t-.275-.7t.275-.7l4.9-4.9l-4.9-4.9q-.275-.275-.275-.7t.275-.7t.7-.275t.7.275l4.9 4.9l4.9-4.9q.275-.275.7-.275t.7.275t.275.7t-.275.7L13.4 12l4.9 4.9q.275.275.275.7t-.275.7t-.7.275t-.7-.275z"/></svg>
-      </template>
+      <template #visual><Star /></template>
+      Star
+    </zTag>
+    <zTag color="#1a7f37" bgColor="#dafbe1">
+      <template #visual><Check /></template>
+      已完成
+    </zTag>
+    <zTag color="#cf222e" bgColor="#ffebe9">
+      <template #visual><Alert /></template>
+      错误
+    </zTag>
+  </div>
+</template>
+
+<style scoped>
+.tag-row {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+</style>`
+
+const demo5Code = `<script setup lang="ts">
+import { zTag } from '@/components/z-ui/tag'
+import { Star, Check, X, Trash } from '@/components/z-ui/icon/Octicons-vue'
+<\/script>
+
+<template>
+  <div class="tag-row">
+    <zTag>
+      Vue
+      <template #action><Trash /></template>
+    </zTag>
+    <zTag>
+      <template #visual><Star /></template>
+      收藏
+      <template #action><X /></template>
+    </zTag>
+    <zTag color="#1a7f37" bgColor="#dafbe1">
+      <template #visual><Check /></template>
+      已完成
+      <template #action><X /></template>
     </zTag>
   </div>
 </template>
@@ -178,22 +220,50 @@ const demo5Code = `<template>
 </style>`
 
 const apiTableColumns: ZTableColumn[] = [
-  { key: 'name', label: '插槽名', rowHeader: true, minWidth: '140px' },
-  { key: 'description', label: '说明', minWidth: '300px', wrap: true },
+  { key: 'name', label: '属性名', rowHeader: true, minWidth: '140px' },
+  { key: 'description', label: '说明', minWidth: '200px', wrap: true },
+  { key: 'type', label: '类型', minWidth: '200px', wrap: true },
+  { key: 'default', label: '默认值', minWidth: '100px' }
 ]
 
 const apiTableRows = [
   {
+    name: 'size',
+    description: '标签尺寸',
+    type: "'small' | 'medium' | 'large' | 'xlarge'",
+    default: "'medium'"
+  },
+  {
+    name: 'color',
+    description: '字体颜色',
+    type: 'string',
+    default: "'#0969da'"
+  },
+  {
+    name: 'bgColor',
+    description: '背景颜色',
+    type: 'string',
+    default: "'#ddf4ff'"
+  }
+]
+
+const slotTableColumns: ZTableColumn[] = [
+  { key: 'name', label: '插槽名', rowHeader: true, minWidth: '140px' },
+  { key: 'description', label: '说明', minWidth: '300px', wrap: true }
+]
+
+const slotTableRows = [
+  {
     name: 'default',
-    description: '标签的内容',
+    description: '标签的内容'
   },
   {
     name: 'visual',
-    description: '视觉图标',
+    description: '前置视觉引导，通常用于放置图标'
   },
   {
     name: 'action',
-    description: '操作图标',
+    description: '后置操作图标，通常用于关闭、删除等操作'
   }
 ]
 

@@ -84,6 +84,12 @@ export const componentRoutes: Array<RouteRecordRaw> = [
                 path: 'table',
                 name: 'Table',
                 component: () => import('../views/components/table.vue')
+            },
+            // Navigation 导航
+            {
+                path: 'steps',
+                name: 'Steps',
+                component: () => import('../views/components/steps.vue')
             }
         ]
     }
