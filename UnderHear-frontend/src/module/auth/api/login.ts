@@ -1,7 +1,5 @@
 import { API_BASE_URL, get } from '@/api'
 
-export type OAuthProvider = 'github' | 'gitee'
-
 export type OAuthLoginResponse = {
   token: string
   loginSource: string
@@ -14,16 +12,13 @@ export type OAuthLoginResponse = {
 
 export type OAuthCallbackParams = {
   code: string
-  state?: string
+  state: string
 }
 
-export const getOAuthRenderUrl = (provider: OAuthProvider) =>
+export const getOAuthRenderUrl = (provider: string) =>
   new URL(`/oauth/${provider}/render`, API_BASE_URL).toString()
 
-export const loginWithOAuthCallback = (provider: OAuthProvider, params: OAuthCallbackParams) => {
-  const query: Record<string, string> = { code: params.code }
-  if (params.state) {
-    query.state = params.state
-  }
+export const loginWithOAuthCallback = (provider: string, params: OAuthCallbackParams) => {
+  const query = { code: params.code, state: params.state }
   return get<OAuthLoginResponse>(`/oauth/${provider}/callback`, { params: query })
 }
