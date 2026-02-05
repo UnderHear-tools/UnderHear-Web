@@ -17,5 +17,15 @@ export default defineConfig({
   },
   build: {
     sourcemap: false,
+    reportCompressedSize: false,
+    minify: 'esbuild',
+    target: 'es2018',
+    rollupOptions: {
+      output: {
+        manualChunks: {
+          monaco: ['monaco-editor'],
+        },
+      },
+    },
   },
 })
