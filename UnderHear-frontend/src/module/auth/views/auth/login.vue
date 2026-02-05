@@ -49,6 +49,7 @@ import { setAuthToken } from '@/api/request'
 import { getOAuthRenderUrl, loginWithOAuthCallback } from '../../api/login'
 
 const loading = ref(false)
+const loadingStage = ref<'redirecting' | 'loggingIn' | null>(null)
 const currentProvider = ref<string | null>(null)
 const statusMessage = ref('')
 const statusType = ref<'success' | 'error'>('success')
@@ -61,13 +62,18 @@ const setStatus = (message: string, type: 'success' | 'error') => {
 
 const startLogin = (provider: string) => {
   loading.value = true
+  loadingStage.value = 'redirecting'
   currentProvider.value = provider
   sessionStorage.setItem(oauthProviderKey, provider)
   window.location.href = getOAuthRenderUrl(provider)
 }
 
-const getButtonLabel = (provider: string) =>
-  loading.value && currentProvider.value === provider ? '跳转中...' : `使用 ${provider} 登录`
+const getButtonLabel = (provider: string) => {
+  if (!loading.value || currentProvider.value !== provider) {
+    return `使用 ${provider} 登录`
+  }
+  return loadingStage.value === 'redirecting' ? '跳转中...' : '登录中...'
+}
 
 const login = async () => {
   const url = new URL(window.location.href)
@@ -75,13 +81,22 @@ const login = async () => {
   const state = url.searchParams.get('state')
   if (!code || !state) return
 
-  const provider = sessionStorage.getItem(oauthProviderKey) as string
-  const response = await loginWithOAuthCallback(provider, { code, state })
-  setAuthToken(response.token)
-  console.log('登录成功，Token:', response.token)
-  setStatus('登录成功！正在跳转...', 'success')
-  sessionStorage.removeItem(oauthProviderKey)
-  window.history.replaceState({}, document.title, url.pathname)
+  const provider = sessionStorage.getItem(oauthProviderKey)
+  if (!provider) return
+  loading.value = true
+  loadingStage.value = 'loggingIn'
+  currentProvider.value = provider
+  try {
+    const response = await loginWithOAuthCallback(provider, { code, state })
+    setAuthToken(response.token)
+    console.log('登录成功，Token:', response.token)
+    setStatus('登录成功！正在跳转...', 'success')
+  } finally {
+    loading.value = false
+    loadingStage.value = null
+    sessionStorage.removeItem(oauthProviderKey)
+    window.history.replaceState({}, document.title, url.pathname)
+  }
 }
 
 onMounted(() => {
