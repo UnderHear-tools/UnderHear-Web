@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.underhear.pojo.dto.response.UserLoginDore;
 import com.underhear.pojo.dto.response.common.ApiResponse;
+import com.underhear.security.AuthCookieService;
 import com.underhear.service.oauth.AuthGithubService;
 
 import jakarta.servlet.http.HttpServletResponse;
@@ -27,6 +28,9 @@ public class AuthGithubController {
 
     @Autowired
     private AuthGithubService authGithubService;
+
+    @Autowired
+    private AuthCookieService authCookieService;
 
     @Value("${github.oauth.client-id}")
     private String clientId;
@@ -44,10 +48,11 @@ public class AuthGithubController {
     }
 
     @RequestMapping("/callback")
-    public ApiResponse<UserLoginDore> login(AuthCallback callback) {
+    public ApiResponse<UserLoginDore> login(AuthCallback callback, HttpServletResponse response) {
         AuthRequest authRequest = getAuthRequest();
         AuthResponse<AuthUser> authResponse = authRequest.login(callback);
         UserLoginDore userLoginDore = authGithubService.login(authResponse);
+        authCookieService.writeToken(response, userLoginDore.getToken());
         return ApiResponse.success(userLoginDore);
     }
 
