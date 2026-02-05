@@ -9,7 +9,7 @@ import jakarta.servlet.http.HttpServletResponse;
 @Component
 public class AuthCookieService {
 
-    private static final boolean HTTP_ONLY = false;
+    private static final boolean HTTP_ONLY = true;
     private static final String COOKIE_NAME = "auth_token";
     private static final String SAME_SITE = "Lax";
     private static final boolean SECURE = false;
