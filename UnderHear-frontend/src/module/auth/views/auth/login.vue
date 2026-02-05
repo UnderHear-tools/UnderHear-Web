@@ -54,6 +54,11 @@ const statusMessage = ref('')
 const statusType = ref<'success' | 'error'>('success')
 const oauthProviderKey = 'oauth_provider'
 
+const setStatus = (message: string, type: 'success' | 'error') => {
+  statusMessage.value = message
+  statusType.value = type
+}
+
 const startLogin = (provider: string) => {
   loading.value = true
   currentProvider.value = provider
@@ -64,7 +69,7 @@ const startLogin = (provider: string) => {
 const getButtonLabel = (provider: string) =>
   loading.value && currentProvider.value === provider ? '跳转中...' : `使用 ${provider} 登录`
 
-onMounted(async () => {
+const login = async () => {
   const url = new URL(window.location.href)
   const code = url.searchParams.get('code')
   const state = url.searchParams.get('state')
@@ -74,10 +79,13 @@ onMounted(async () => {
   const response = await loginWithOAuthCallback(provider, { code, state })
   setAuthToken(response.token)
   console.log('登录成功，Token:', response.token)
-  statusMessage.value = '登录成功！正在跳转...'
-  statusType.value = 'success'
+  setStatus('登录成功！正在跳转...', 'success')
   sessionStorage.removeItem(oauthProviderKey)
   window.history.replaceState({}, document.title, url.pathname)
+}
+
+onMounted(() => {
+  login()
 })
 </script>
 
