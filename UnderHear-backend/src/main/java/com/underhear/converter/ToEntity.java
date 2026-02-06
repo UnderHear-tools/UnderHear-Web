@@ -31,6 +31,7 @@ public final class ToEntity {
     //github非第一次登录时用到
     public static UserGithub toUpdateUserGithub(UserGithubDort userGithubDort) {
         UserGithub userGithub = new UserGithub();
+        userGithub.setGithubId(userGithubDort.getGithubId());
         userGithub.setName(userGithubDort.getName());
         userGithub.setAvatarUrl(userGithubDort.getAvatarUrl());
         userGithub.setEmail(userGithubDort.getEmail());
@@ -67,6 +68,7 @@ public final class ToEntity {
     //gitee非第一次登录时用到
     public static UserGitee toUpdateUserGitee(UserGiteeDort userGiteeDort) {
         UserGitee userGitee = new UserGitee();
+        userGitee.setGiteeId(userGiteeDort.getGiteeId());
         userGitee.setName(userGiteeDort.getName());
         userGitee.setAvatarUrl(userGiteeDort.getAvatarUrl());
         userGitee.setEmail(userGiteeDort.getEmail());

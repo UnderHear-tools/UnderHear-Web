@@ -66,7 +66,6 @@ public class AuthGithubServiceImpl implements AuthGithubService {
 
         //登录+更新用户信息
         UserGithub updateUserGithub = ToEntity.toUpdateUserGithub(userGithubDort);
-        updateUserGithub.setGithubId(userGithubDort.getGithubId());
         authGithubMapper.updateUserGithubByGithubId(updateUserGithub);
         user = userService.getUserByGithubId(userGithubDort.getGithubId());
         userService.updateUserLastLoginByUuid(user.getUuid(),LocalDateTime.now(),"GITHUB_OAUTH");

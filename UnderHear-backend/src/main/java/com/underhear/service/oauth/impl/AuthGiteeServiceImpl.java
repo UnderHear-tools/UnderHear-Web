@@ -66,7 +66,6 @@ public class AuthGiteeServiceImpl implements AuthGiteeService {
 
         //登录+更新用户信息
         UserGitee updateUserGitee = ToEntity.toUpdateUserGitee(userGiteeDort);
-        updateUserGitee.setGiteeId(userGiteeDort.getGiteeId());
         authGiteeMapper.updateUserGiteeByGiteeId(updateUserGitee);
         user = userService.getUserByGiteeId(userGiteeDort.getGiteeId());
         userService.updateUserLastLoginByUuid(user.getUuid(),LocalDateTime.now(),"GITEE_OAUTH");
