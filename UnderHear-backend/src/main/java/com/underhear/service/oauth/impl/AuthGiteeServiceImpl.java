@@ -30,7 +30,7 @@ public class AuthGiteeServiceImpl implements AuthGiteeService {
 
     @Autowired
     private AuthGiteeMapper authGiteeMapper;
-    
+
     @Autowired
     private UserService userService;
 
@@ -42,47 +42,58 @@ public class AuthGiteeServiceImpl implements AuthGiteeService {
 
     @Override
     @Transactional
-    //gitee oauth登录/注册
+    // gitee oauth登录/注册
     public UserLoginDore login(AuthResponse<AuthUser> authResponse) {
+        // 校验授权结果是否成功
         if (authResponse == null || !authResponse.ok() || authResponse.getData() == null) {
             throw new BizException(ErrorCode.BAD_AUTHORIZED);
         }
         AuthUser authUser = authResponse.getData();
         AuthToken giteeToken = authUser.getToken();
-        String accessToken = giteeToken == null ? null : giteeToken.getAccessToken();
-        if (accessToken == null || accessToken.isBlank()) {
-            throw new BizException(ErrorCode.BAD_AUTHORIZED);
-        }
-        
+        // 转成UserGiteeDort对象
         UserGiteeDort userGiteeDort = ToDort.toUserGiteeDort(authUser.getRawUserInfo(), giteeToken);
-        
+
         User user = null;
 
-        //如果第一次登录：注册+登录
+        // 如果第一次登录：注册+登录
         if (!exists(userGiteeDort)) {
+            // 转成UserGitee对象
             UserGitee userGitee = ToEntity.toUserGitee(userGiteeDort);
+            // 转成User对象
             user = ToEntity.toUser(userGitee);
+            // 分别保存到user_gitee表和user表，并建立关联
             authGiteeMapper.saveUserGiteeAndUser(userGitee, user);
+            // 生成token
             String token = jwtTokenService.generateToken(user.getUuid());
+            // 将token加入白名单
             sessionAuthService.whitelistToken(token);
+            // 记录登录日志
             userService.insertUserLoginRecord(user.getUuid(), "GITEE_OAUTH");
             return ToDore.toUserLoginDore(user, token);
         }
 
-        //登录+更新用户信息
+        // 登录+更新用户信息
+        // 转成UserGitee对象
         UserGitee updateUserGitee = ToEntity.toUpdateUserGitee(userGiteeDort);
+        // 更新user_gitee表中的用户信息
         authGiteeMapper.updateUserGiteeByGiteeId(updateUserGitee);
+        // 根据giteeId查询用户信息
         user = userService.getUserByGiteeId(userGiteeDort.getGiteeId());
-        userService.updateUserLastLoginByUuid(user.getUuid(),LocalDateTime.now(),"GITEE_OAUTH");
-        user = ToEntity.toUpdateUser(user,LocalDateTime.now(),"GITEE_OAUTH");
+        // 更新user表中的最后登录时间和最后登录方式
+        userService.updateUserLastLoginByUuid(user.getUuid(), LocalDateTime.now(), "GITEE_OAUTH");
+        // 转成更新后的User对象
+        user = ToEntity.toUpdateUser(user, LocalDateTime.now(), "GITEE_OAUTH");
+        // 生成token
         String token = jwtTokenService.generateToken(user.getUuid());
+        // 将token加入白名单
         sessionAuthService.whitelistToken(token);
+        // 记录登录日志
         userService.insertUserLoginRecord(user.getUuid(), "GITEE_OAUTH");
         return ToDore.toUserLoginDore(user, token);
     }
 
     @Override
-    //在user_gitee表中检测该用户是否存在
+    // 在user_gitee表中检测该用户是否存在
     public boolean exists(UserGiteeDort userGiteeDort) {
         if (userGiteeDort == null) {
             return false;
@@ -92,5 +103,5 @@ public class AuthGiteeServiceImpl implements AuthGiteeService {
         }
         return false;
     }
-    
+
 }

@@ -44,39 +44,50 @@ public class AuthGithubServiceImpl implements AuthGithubService {
     @Transactional
     //github oauth登录/注册
     public UserLoginDore login(AuthResponse<AuthUser> authResponse) {
+        //校验授权结果是否成功
         if (authResponse == null || !authResponse.ok() || authResponse.getData() == null) {
             throw new BizException(ErrorCode.BAD_AUTHORIZED);
         }
         AuthUser authUser = authResponse.getData();
         AuthToken githubToken = authUser.getToken();
-        String accessToken = githubToken == null ? null : githubToken.getAccessToken();
-        if (accessToken == null || accessToken.isBlank()) {
-            throw new BizException(ErrorCode.BAD_AUTHORIZED);
-        }
-        
+        //转成UserGithubDort对象
         UserGithubDort userGithubDort = ToDort.toUserGithubDort(authUser.getRawUserInfo(), githubToken);
         
         User user = null;
 
         //如果第一次登录：注册+登录
         if (!exists(userGithubDort)) {
+            //转成UserGithub对象
             UserGithub userGithub = ToEntity.toUserGithub(userGithubDort);
+            //转成User对象
             user = ToEntity.toUser(userGithub);
+            //分别保存到user_github表和user表，并建立关联
             authGithubMapper.saveUserGithubAndUser(userGithub, user);
+            //生成token
             String token = jwtTokenService.generateToken(user.getUuid());
+            //将token加入白名单
             sessionAuthService.whitelistToken(token);
+            //记录登录日志
             userService.insertUserLoginRecord(user.getUuid(), "GITHUB_OAUTH");
             return ToDore.toUserLoginDore(user, token);
         }
 
         //登录+更新用户信息
+        //转成UserGithub对象
         UserGithub updateUserGithub = ToEntity.toUpdateUserGithub(userGithubDort);
+        //更新user_github表中的用户信息
         authGithubMapper.updateUserGithubByGithubId(updateUserGithub);
+        //根据githubId查询用户信息
         user = userService.getUserByGithubId(userGithubDort.getGithubId());
+        //更新user表中的最后登录时间和最后登录方式
         userService.updateUserLastLoginByUuid(user.getUuid(),LocalDateTime.now(),"GITHUB_OAUTH");
+        //转成更新后的User对象
         user = ToEntity.toUpdateUser(user,LocalDateTime.now(),"GITHUB_OAUTH");
+        //生成token
         String token = jwtTokenService.generateToken(user.getUuid());
+        //将token加入白名单
         sessionAuthService.whitelistToken(token);
+        //记录登录日志
         userService.insertUserLoginRecord(user.getUuid(), "GITHUB_OAUTH");
         return ToDore.toUserLoginDore(user, token);
     }
