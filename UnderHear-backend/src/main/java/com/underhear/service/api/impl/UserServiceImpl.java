@@ -1,5 +1,6 @@
 package com.underhear.service.api.impl;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.underhear.mapper.api.UserMapper;
@@ -9,11 +10,8 @@ import com.underhear.service.api.UserService;
 @Service
 public class UserServiceImpl implements UserService {
 
-    private final UserMapper userMapper;
-
-    public UserServiceImpl(UserMapper userMapper) {
-        this.userMapper = userMapper;
-    }
+    @Autowired
+    private UserMapper userMapper;
 
     @Override
     // 通过 UUID 查用户

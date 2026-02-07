@@ -17,6 +17,7 @@ import com.underhear.pojo.dto.response.UserLoginDore;
 import com.underhear.pojo.entity.UserGithub;
 import com.underhear.pojo.entity.User;
 import com.underhear.security.JwtTokenService;
+import com.underhear.security.SessionAuthService;
 import com.underhear.service.api.UserService;
 import com.underhear.service.oauth.AuthGithubService;
 
@@ -35,6 +36,9 @@ public class AuthGithubServiceImpl implements AuthGithubService {
 
     @Autowired
     private JwtTokenService jwtTokenService;
+
+    @Autowired
+    private SessionAuthService sessionAuthService;
 
     @Override
     @Transactional
@@ -60,6 +64,7 @@ public class AuthGithubServiceImpl implements AuthGithubService {
             user = ToEntity.toUser(userGithub);
             authGithubMapper.saveUserGithubAndUser(userGithub, user);
             String token = jwtTokenService.generateToken(user.getUuid());
+            sessionAuthService.whitelistToken(token);
             userService.insertUserLoginRecord(user.getUuid(), "GITHUB_OAUTH");
             return ToDore.toUserLoginDore(user, token);
         }
@@ -71,6 +76,7 @@ public class AuthGithubServiceImpl implements AuthGithubService {
         userService.updateUserLastLoginByUuid(user.getUuid(),LocalDateTime.now(),"GITHUB_OAUTH");
         user = ToEntity.toUpdateUser(user,LocalDateTime.now(),"GITHUB_OAUTH");
         String token = jwtTokenService.generateToken(user.getUuid());
+        sessionAuthService.whitelistToken(token);
         userService.insertUserLoginRecord(user.getUuid(), "GITHUB_OAUTH");
         return ToDore.toUserLoginDore(user, token);
     }

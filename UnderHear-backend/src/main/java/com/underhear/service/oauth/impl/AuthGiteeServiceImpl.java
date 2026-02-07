@@ -17,6 +17,7 @@ import com.underhear.pojo.dto.response.UserLoginDore;
 import com.underhear.pojo.entity.User;
 import com.underhear.pojo.entity.UserGitee;
 import com.underhear.security.JwtTokenService;
+import com.underhear.security.SessionAuthService;
 import com.underhear.service.api.UserService;
 import com.underhear.service.oauth.AuthGiteeService;
 
@@ -35,6 +36,9 @@ public class AuthGiteeServiceImpl implements AuthGiteeService {
 
     @Autowired
     private JwtTokenService jwtTokenService;
+
+    @Autowired
+    private SessionAuthService sessionAuthService;
 
     @Override
     @Transactional
@@ -60,6 +64,7 @@ public class AuthGiteeServiceImpl implements AuthGiteeService {
             user = ToEntity.toUser(userGitee);
             authGiteeMapper.saveUserGiteeAndUser(userGitee, user);
             String token = jwtTokenService.generateToken(user.getUuid());
+            sessionAuthService.whitelistToken(token);
             userService.insertUserLoginRecord(user.getUuid(), "GITEE_OAUTH");
             return ToDore.toUserLoginDore(user, token);
         }
@@ -71,6 +76,7 @@ public class AuthGiteeServiceImpl implements AuthGiteeService {
         userService.updateUserLastLoginByUuid(user.getUuid(),LocalDateTime.now(),"GITEE_OAUTH");
         user = ToEntity.toUpdateUser(user,LocalDateTime.now(),"GITEE_OAUTH");
         String token = jwtTokenService.generateToken(user.getUuid());
+        sessionAuthService.whitelistToken(token);
         userService.insertUserLoginRecord(user.getUuid(), "GITEE_OAUTH");
         return ToDore.toUserLoginDore(user, token);
     }
