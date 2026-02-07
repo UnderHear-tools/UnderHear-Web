@@ -4,6 +4,9 @@ import com.underhear.pojo.entity.User;
 
 public interface UserService {
 
+    // 根据 UUID 查用户，查不到就返回空
+    User getUserByUuid(String uuid);
+
     // 根据 GitHub ID 查用户，查不到就返回空
     User getUserByGithubId(Long githubId);
 

@@ -16,7 +16,13 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    // 传 GitHub ID 进来，空的就直接返回
+    // 通过 UUID 查用户
+    public User getUserByUuid(String uuid) {
+        return userMapper.getUserByUuid(uuid);
+    }
+
+    @Override
+    // 通过 GitHub ID 查用户
     public User getUserByGithubId(Long githubId) {
         if (githubId == null) {
             return null;
@@ -25,7 +31,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    // 传 Gitee ID 进来，空的就直接返回
+    // 通过 Gitee ID 查用户
     public User getUserByGiteeId(Long giteeId) {
         if (giteeId == null) {
             return null;
@@ -34,7 +40,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    // 更新最后登录时间和来源，uuid 为空就不动
+    // 更新最后登录信息
     public int updateUserLastLoginByUuid(String uuid, java.time.LocalDateTime lastLoginAt, String lastLoginSource) {
         if (uuid == null || uuid.isBlank()) {
             return 0;
@@ -43,7 +49,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    // 插入一条登录记录，参数不全就不写
+    // 记录一次登录来源
     public int insertUserLoginRecord(String uuid, String loginSource) {
         if (uuid == null || uuid.isBlank() || loginSource == null || loginSource.isBlank()) {
             return 0;
