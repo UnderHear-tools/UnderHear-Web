@@ -107,7 +107,6 @@ import ComponentDocsDemoBlock from '@/module/components/components/ComponentDocs
 import ComponentDocsHeader from '@/module/components/components/ComponentDocsPage/ComponentDocsHeader.vue'
 import ComponentDocsPage from '@/module/components/components/ComponentDocsPage/ComponentDocsPage.vue'
 import ComponentDocsSection from '@/module/components/components/ComponentDocsPage/ComponentDocsSection.vue'
-import { X, MarkGithub } from '@/components/z-ui/icon/Octicons-vue/index.ts'
 
 const demo1Code = `<template>
   <div class="tag-row">
@@ -266,55 +265,6 @@ const slotTableRows = [
     description: '后置操作图标，通常用于关闭、删除等操作'
   }
 ]
-
-const propsTableColumns: ZTableColumn[] = [
-  { key: 'name', label: '属性名', rowHeader: true, minWidth: '140px' },
-  { key: 'description', label: '说明', minWidth: '300px', wrap: true },
-  { key: 'type', label: '类型', minWidth: '200px', wrap: true },
-  { key: 'options', label: '可选值', minWidth: '200px', wrap: true },
-  { key: 'default', label: '默认值', minWidth: '140px' },
-]
-
-const propsTableRows = [
-  {
-    name: 'size',
-    description: '标签大小',
-    type: 'string',
-    options: 'small / medium / large / x-large',
-    default: 'medium',
-  },
-  {
-    name: 'action',
-    description: '操作图标',
-    type: 'Component',
-    options: '—',
-    default: '—',
-  },
-  {
-    name: 'visual',
-    description: '视觉图标',
-    type: 'Component',
-    options: '—',
-    default: '—',
-  },
-]
-
-const eventsTableColumns: ZTableColumn[] = [
-  { key: 'name', label: '事件名', rowHeader: true, minWidth: '140px' },
-  { key: 'description', label: '说明', minWidth: '300px', wrap: true },
-]
-
-const eventsTableRows = [
-  {
-    name: 'actionClick',
-    description: '操作图标点击事件，可使用 event.stopPropagation() 阻止冒泡。',
-  },
-]
-
-function handleActionClick(event: MouseEvent) {
-  event.stopPropagation()
-  console.log('操作图标被点击')
-}
 </script>
 
 <style scoped>
