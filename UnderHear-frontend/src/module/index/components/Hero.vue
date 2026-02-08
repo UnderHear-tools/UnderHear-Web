@@ -3,7 +3,7 @@
     <div class="background-0" aria-hidden="true"></div>
     <div class="background-1" aria-hidden="true"></div>
     <div class="background-2" aria-hidden="true"></div>
-    <div class="relative mx-auto h-full w-full max-w-[1440px] px-6 sm:px-10 lg:px-16">
+    <div class="hero-stage">
     <div class="background-3" aria-hidden="true"></div>
     <div class="background-4" aria-hidden="true"></div>
     <div class="background-5 animate-stretch-vertical-loop" aria-hidden="true"></div>
@@ -22,8 +22,11 @@
 
 <style scoped>
 .background-root {
-  height: calc(100vh - 64px);
+  position: absolute;
+  inset: 0;
   overflow: hidden;
+  transform: translateZ(0);
+  transform-origin: 0% 0%;
   --bg-offset: 80px;
 }
 
@@ -41,6 +44,16 @@
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
+}
+
+.hero-stage {
+  position: relative;
+  margin: 0 auto;
+  height: 100%;
+  width: 100%;
+  max-width: 1440px;
+  padding-left: 1.5rem;
+  padding-right: 1.5rem;
 }
 
 .background-0 {
@@ -230,6 +243,20 @@
 @media (max-width: 768px) {
   .title {
     font-size: 3.5rem;
+  }
+}
+
+@media (min-width: 640px) {
+  .hero-stage {
+    padding-left: 2.5rem;
+    padding-right: 2.5rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .hero-stage {
+    padding-left: 4rem;
+    padding-right: 4rem;
   }
 }
 </style>

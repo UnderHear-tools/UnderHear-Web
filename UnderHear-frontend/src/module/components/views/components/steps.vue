@@ -1,4 +1,4 @@
-﻿<script setup lang="ts">
+<script setup lang="ts">
 import { zSteps } from '@/components/z-ui/steps'
 import { zStep } from '@/components/z-ui/step'
 import { zTable, type ZTableColumn } from '@/components/z-ui/table'

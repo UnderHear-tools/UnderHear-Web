@@ -44,98 +44,63 @@
 
 <script setup lang="ts">
 import { onMounted, ref } from 'vue'
-import { useRoute, useRouter, type LocationQueryValue } from 'vue-router'
-import { MarkGithub } from '@/components/z-ui/icon/Octicons-vue/index.ts'
-import { setAuthToken } from '@/api'
-import { getOAuthRenderUrl, loginWithOAuthCallback, type OAuthProvider } from '@/module/auth/api/login'
-
-const route = useRoute()
-const router = useRouter()
+import { MarkGithub } from '@/components/z-ui/icon/Octicons-vue'
+import { setAuthToken } from '@/api/request'
+import { getOAuthRenderUrl, loginWithOAuthCallback } from '../../api/login'
 
 const loading = ref(false)
-const pendingProvider = ref<OAuthProvider | null>(null)
+const loadingStage = ref<'redirecting' | 'loggingIn' | null>(null)
+const currentProvider = ref<string | null>(null)
 const statusMessage = ref('')
 const statusType = ref<'success' | 'error'>('success')
-
-const PROVIDER_KEY = 'underhear_oauth_provider'
-
-const getButtonLabel = (provider: OAuthProvider) => {
-  if (loading.value && pendingProvider.value === provider) {
-    return 'Loading...'
-  }
-  return provider === 'github' ? 'Login with GitHub' : 'Login with Gitee'
-}
-
-const resetStatus = () => {
-  statusMessage.value = ''
-}
+const oauthProviderKey = 'oauth_provider'
 
 const setStatus = (message: string, type: 'success' | 'error') => {
   statusMessage.value = message
   statusType.value = type
 }
 
-const readQueryValue = (
-  value: LocationQueryValue | LocationQueryValue[] | null | undefined
-) => {
-  if (typeof value === 'string' && value.length > 0) {
-    return value
-  }
-  if (Array.isArray(value) && value.length > 0 && typeof value[0] === 'string') {
-    return value[0]
-  }
-  return undefined
-}
-
-const getStoredProvider = (): OAuthProvider | null => {
-  const provider = sessionStorage.getItem(PROVIDER_KEY)
-  if (provider === 'github' || provider === 'gitee') {
-    return provider
-  }
-  return null
-}
-
-const startLogin = (provider: OAuthProvider) => {
-  if (loading.value) return
-  resetStatus()
+const startLogin = (provider: string) => {
   loading.value = true
-  pendingProvider.value = provider
-  sessionStorage.setItem(PROVIDER_KEY, provider)
+  loadingStage.value = 'redirecting'
+  currentProvider.value = provider
+  sessionStorage.setItem(oauthProviderKey, provider)
   window.location.href = getOAuthRenderUrl(provider)
 }
 
-const finalizeLogin = async (provider: OAuthProvider, code: string, state?: string) => {
-  resetStatus()
-  loading.value = true
-  pendingProvider.value = provider
+const getButtonLabel = (provider: string) => {
+  if (!loading.value || currentProvider.value !== provider) {
+    return `使用 ${provider} 登录`
+  }
+  return loadingStage.value === 'redirecting' ? '跳转中...' : '登录中...'
+}
 
+const login = async () => {
+  const url = new URL(window.location.href)
+  const code = url.searchParams.get('code')
+  const state = url.searchParams.get('state')
+  if (!code || !state) return
+
+  const provider = sessionStorage.getItem(oauthProviderKey)
+  if (!provider) return
+  loading.value = true
+  loadingStage.value = 'loggingIn'
+  currentProvider.value = provider
   try {
-    const auth = await loginWithOAuthCallback(provider, { code, state })
-    setAuthToken(auth.token)
-    localStorage.setItem('underhear_auth', JSON.stringify(auth))
-    setStatus('Login succeeded.', 'success')
-    sessionStorage.removeItem(PROVIDER_KEY)
-    await router.replace({ path: route.path, query: {} })
-  } catch (error) {
-    setStatus(error instanceof Error ? error.message : 'Login failed. Please try again.', 'error')
-    sessionStorage.removeItem(PROVIDER_KEY)
-    await router.replace({ path: route.path, query: {} })
+    const response = await loginWithOAuthCallback(provider, { code, state })
+    setAuthToken(response.token)
+    console.log('登录成功，Token:', response.token)
+    setStatus('登录成功！正在跳转...', 'success')
   } finally {
     loading.value = false
-    pendingProvider.value = null
+    loadingStage.value = null
+    sessionStorage.removeItem(oauthProviderKey)
+    window.history.replaceState({}, document.title, url.pathname)
   }
 }
 
-onMounted(async () => {
-  const code = readQueryValue(route.query.code)
-  const state = readQueryValue(route.query.state)
-
-  if (!code) {
-    return
-  }
-
-  const provider = getStoredProvider() ?? 'github'
-  await finalizeLogin(provider, code, state)
+onMounted(() => {
+  login()
 })
 </script>
 

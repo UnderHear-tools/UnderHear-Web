@@ -15,4 +15,17 @@ export default defineConfig({
     host: '0.0.0.0',
     port: 5173,
   },
+  build: {
+    sourcemap: false,
+    reportCompressedSize: false,
+    minify: 'esbuild',
+    target: 'es2018',
+    rollupOptions: {
+      output: {
+        manualChunks: {
+          monaco: ['monaco-editor'],
+        },
+      },
+    },
+  },
 })

@@ -3,6 +3,7 @@ package com.underhear.security;
 import java.nio.charset.StandardCharsets;
 import java.time.Instant;
 import java.util.Date;
+import java.util.UUID;
 
 import javax.crypto.SecretKey;
 
@@ -39,6 +40,7 @@ public class JwtTokenService {
         Instant now = Instant.now();
         Instant expiresAt = now.plusSeconds(expireSeconds);
         return Jwts.builder()
+                .id(UUID.randomUUID().toString())
                 .subject(uuid)
                 .issuedAt(Date.from(now))
                 .expiration(Date.from(expiresAt))
@@ -57,19 +59,25 @@ public class JwtTokenService {
                 .getPayload();
         Instant issuedAt = claims.getIssuedAt() == null ? null : claims.getIssuedAt().toInstant();
         Instant expiresAt = claims.getExpiration() == null ? null : claims.getExpiration().toInstant();
-        return new JwtTokenPayload(claims.getSubject(), issuedAt, expiresAt);
+        return new JwtTokenPayload(claims.getId(), claims.getSubject(), issuedAt, expiresAt);
     }
 
     public static final class JwtTokenPayload {
 
+        private final String tokenId;
         private final String uuid;
         private final Instant issuedAt;
         private final Instant expiresAt;
 
-        public JwtTokenPayload(String uuid, Instant issuedAt, Instant expiresAt) {
+        public JwtTokenPayload(String tokenId, String uuid, Instant issuedAt, Instant expiresAt) {
+            this.tokenId = tokenId;
             this.uuid = uuid;
             this.issuedAt = issuedAt;
             this.expiresAt = expiresAt;
+        }
+
+        public String getTokenId() {
+            return tokenId;
         }
 
         public String getUuid() {

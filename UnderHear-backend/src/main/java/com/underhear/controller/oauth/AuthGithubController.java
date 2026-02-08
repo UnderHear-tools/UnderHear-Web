@@ -10,11 +10,14 @@ import me.zhyd.oauth.utils.AuthStateUtils;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.underhear.pojo.dto.response.UserLoginDore;
 import com.underhear.pojo.dto.response.common.ApiResponse;
+import com.underhear.security.AuthCookieService;
+import com.underhear.security.SessionAuthService;
 import com.underhear.service.oauth.AuthGithubService;
 
 import jakarta.servlet.http.HttpServletResponse;
@@ -27,6 +30,11 @@ public class AuthGithubController {
 
     @Autowired
     private AuthGithubService authGithubService;
+
+    @Autowired
+    private AuthCookieService authCookieService;
+    @Autowired
+    private SessionAuthService sessionAuthService;
 
     @Value("${github.oauth.client-id}")
     private String clientId;
@@ -44,10 +52,17 @@ public class AuthGithubController {
     }
 
     @RequestMapping("/callback")
-    public ApiResponse<UserLoginDore> login(AuthCallback callback) {
+    public ApiResponse<UserLoginDore> login(
+            AuthCallback callback,
+            @CookieValue(value = "auth_token", required = false) String oldToken,
+            HttpServletResponse response) {
+        // 如果已经有 token 还请求登录接口 就先把之前的 token 失效掉 避免同一用户多个 token 共存
+        sessionAuthService.logoutIfPresent(oldToken);
+        
         AuthRequest authRequest = getAuthRequest();
         AuthResponse<AuthUser> authResponse = authRequest.login(callback);
         UserLoginDore userLoginDore = authGithubService.login(authResponse);
+        authCookieService.writeToken(response, userLoginDore.getToken());
         return ApiResponse.success(userLoginDore);
     }
 

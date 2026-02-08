@@ -14,6 +14,13 @@ import com.underhear.pojo.entity.User;
 public interface UserMapper {
 
     @Select("""
+            select *
+            from user
+            where uuid = #{uuid}
+            """)
+    User getUserByUuid(@Param("uuid") String uuid);
+
+    @Select("""
             select u.*
             from user u
             join user_github ug on u.uuid = ug.uuid
