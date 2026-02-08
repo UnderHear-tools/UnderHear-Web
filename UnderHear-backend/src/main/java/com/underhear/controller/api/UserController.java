@@ -1,5 +1,6 @@
 package com.underhear.controller.api;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -19,13 +20,10 @@ import jakarta.servlet.http.HttpServletResponse;
 @RequestMapping("/auth")
 public class UserController {
 
-    private final SessionAuthService sessionAuthService;
-    private final AuthCookieService authCookieService;
-
-    public UserController(SessionAuthService sessionAuthService, AuthCookieService authCookieService) {
-        this.sessionAuthService = sessionAuthService;
-        this.authCookieService = authCookieService;
-    }
+    @Autowired
+    private SessionAuthService sessionAuthService;
+    @Autowired
+    private AuthCookieService authCookieService;
 
     @GetMapping("/me")
     public ApiResponse<UserInfoDore> me(@CookieValue(value = "auth_token", required = false) String token) {
