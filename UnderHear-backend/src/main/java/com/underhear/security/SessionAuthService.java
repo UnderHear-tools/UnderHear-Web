@@ -69,6 +69,13 @@ public class SessionAuthService {
         stringRedisTemplate.delete(redisKey(tokenId));
     }
 
+    // 如果已经有 token 还请求登录接口 就先把之前的 token 失效掉 避免同一用户多个 token 共存
+    public void logoutIfPresent(String token) {
+        if (token != null) {
+            logout(token);
+        }
+    }
+
     // 统一做 JWT 解析 解析失败按未登录处理
     private JwtTokenService.JwtTokenPayload parseToken(String token) {
         try {

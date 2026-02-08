@@ -10,12 +10,14 @@ import me.zhyd.oauth.utils.AuthStateUtils;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.underhear.pojo.dto.response.UserLoginDore;
 import com.underhear.pojo.dto.response.common.ApiResponse;
 import com.underhear.security.AuthCookieService;
+import com.underhear.security.SessionAuthService;
 import com.underhear.service.oauth.AuthGiteeService;
 
 import jakarta.servlet.http.HttpServletResponse;
@@ -31,6 +33,8 @@ public class AuthGiteeController {
 
     @Autowired
     private AuthCookieService authCookieService;
+    @Autowired
+    private SessionAuthService sessionAuthService;
 
     @Value("${gitee.oauth.client-id}")
     private String clientId;
@@ -48,7 +52,13 @@ public class AuthGiteeController {
     }
 
     @RequestMapping("/callback")
-    public ApiResponse<UserLoginDore> login(AuthCallback callback, HttpServletResponse response) {
+    public ApiResponse<UserLoginDore> login(
+            AuthCallback callback,
+            @CookieValue(value = "auth_token", required = false) String oldToken,
+            HttpServletResponse response) {
+        // 如果已经有 token 还请求登录接口 就先把之前的 token 失效掉 避免同一用户多个 token 共存
+        sessionAuthService.logoutIfPresent(oldToken);
+        
         AuthRequest authRequest = getAuthRequest();
         AuthResponse<AuthUser> authResponse = authRequest.login(callback);
         UserLoginDore userLoginDore = authGiteeService.login(authResponse);
