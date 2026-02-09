@@ -1,4 +1,4 @@
-﻿<template>
+<template>
   <ComponentDocsPage>
     <ComponentDocsHeader title="Link 链接" description="常用的文本超链接。" />
 

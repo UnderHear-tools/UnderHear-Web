@@ -1,4 +1,4 @@
-﻿<template>
+<template>
   <ComponentDocsPage>
     <ComponentDocsHeader title="Divider 分割线" description="用于分隔内容的水平分割线。" />
 

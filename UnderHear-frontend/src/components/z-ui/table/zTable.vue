@@ -1,4 +1,4 @@
-﻿<template>
+<template>
   <div class="z-table" :class="tableClasses">
     <div class="z-table__container">
       <table class="z-table__table" :aria-label="ariaLabel">

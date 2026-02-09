@@ -1,4 +1,4 @@
-﻿<template>
+<template>
   <ComponentDocsPage>
     <ComponentDocsHeader title="Tag 标签" description="用于标记和选择。" />
 

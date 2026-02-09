@@ -1,4 +1,4 @@
-﻿<template>
+<template>
   <ComponentDocsPage>
     <ComponentDocsHeader
       title="Table 表格"
