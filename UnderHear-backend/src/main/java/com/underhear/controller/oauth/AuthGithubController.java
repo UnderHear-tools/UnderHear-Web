@@ -14,7 +14,9 @@ import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.underhear.converter.ToDore;
 import com.underhear.pojo.dto.response.UserLoginDore;
+import com.underhear.pojo.dto.response.UserLoginWithTokenDore;
 import com.underhear.pojo.dto.response.common.ApiResponse;
 import com.underhear.security.AuthCookieService;
 import com.underhear.security.SessionAuthService;
@@ -61,9 +63,9 @@ public class AuthGithubController {
         
         AuthRequest authRequest = getAuthRequest();
         AuthResponse<AuthUser> authResponse = authRequest.login(callback);
-        UserLoginDore userLoginDore = authGithubService.login(authResponse);
-        authCookieService.writeToken(response, userLoginDore.getToken());
-        return ApiResponse.success(userLoginDore);
+        UserLoginWithTokenDore userLoginWithTokenDore = authGithubService.login(authResponse);
+        authCookieService.writeToken(response, userLoginWithTokenDore.getToken());
+        return ApiResponse.success(ToDore.toUserLoginDore(userLoginWithTokenDore));
     }
 
     private AuthRequest getAuthRequest() {

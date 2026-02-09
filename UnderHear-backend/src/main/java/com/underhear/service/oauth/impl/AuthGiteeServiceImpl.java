@@ -13,7 +13,7 @@ import com.underhear.exception.BizException;
 import com.underhear.exception.ErrorCode;
 import com.underhear.mapper.oauth.AuthGiteeMapper;
 import com.underhear.pojo.dto.request.UserGiteeDort;
-import com.underhear.pojo.dto.response.UserLoginDore;
+import com.underhear.pojo.dto.response.UserLoginWithTokenDore;
 import com.underhear.pojo.entity.User;
 import com.underhear.pojo.entity.UserGitee;
 import com.underhear.security.JwtTokenService;
@@ -43,7 +43,7 @@ public class AuthGiteeServiceImpl implements AuthGiteeService {
     @Override
     @Transactional
     // gitee oauth登录/注册
-    public UserLoginDore login(AuthResponse<AuthUser> authResponse) {
+    public UserLoginWithTokenDore login(AuthResponse<AuthUser> authResponse) {
         // 校验授权结果是否成功
         if (authResponse == null || !authResponse.ok() || authResponse.getData() == null) {
             throw new BizException(ErrorCode.BAD_AUTHORIZED);
@@ -69,7 +69,7 @@ public class AuthGiteeServiceImpl implements AuthGiteeService {
             sessionAuthService.whitelistToken(token);
             // 记录登录日志
             userService.insertUserLoginRecord(user.getUuid(), "GITEE_OAUTH");
-            return ToDore.toUserLoginDore(user, token);
+            return ToDore.toUserLoginWithTokenDore(user, token);
         }
 
         // 登录+更新用户信息
@@ -89,7 +89,7 @@ public class AuthGiteeServiceImpl implements AuthGiteeService {
         sessionAuthService.whitelistToken(token);
         // 记录登录日志
         userService.insertUserLoginRecord(user.getUuid(), "GITEE_OAUTH");
-        return ToDore.toUserLoginDore(user, token);
+        return ToDore.toUserLoginWithTokenDore(user, token);
     }
 
     @Override

@@ -2,6 +2,7 @@ package com.underhear.converter;
 
 import com.underhear.pojo.dto.response.UserInfoDore;
 import com.underhear.pojo.dto.response.UserLoginDore;
+import com.underhear.pojo.dto.response.UserLoginWithTokenDore;
 import com.underhear.pojo.entity.User;
 
 public final class ToDore {
@@ -17,12 +18,19 @@ public final class ToDore {
         return userInfoDore;
     }
 
-    public static UserLoginDore toUserLoginDore(User user, String token) {
-        UserLoginDore userLoginDore = new UserLoginDore();
-        userLoginDore.setToken(token);
+    public static UserLoginWithTokenDore toUserLoginWithTokenDore(User user, String token) {
+        UserLoginWithTokenDore userLoginWithTokenDore = new UserLoginWithTokenDore();
+        userLoginWithTokenDore.setToken(token);
         String loginSource = user.getLastLoginSource();
-        userLoginDore.setLoginSource(loginSource);
-        userLoginDore.setUserInfo(toUserInfoDore(user));
+        userLoginWithTokenDore.setLoginSource(loginSource);
+        userLoginWithTokenDore.setUserInfo(toUserInfoDore(user));
+        return userLoginWithTokenDore;
+    }
+
+    public static UserLoginDore toUserLoginDore(UserLoginWithTokenDore userLoginWithTokenDore) {
+        UserLoginDore userLoginDore = new UserLoginDore();
+        userLoginDore.setLoginSource(userLoginWithTokenDore.getLoginSource());
+        userLoginDore.setUserInfo(userLoginWithTokenDore.getUserInfo());
         return userLoginDore;
     }
     
