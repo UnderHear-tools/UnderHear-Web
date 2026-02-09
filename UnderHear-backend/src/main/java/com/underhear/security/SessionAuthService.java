@@ -1,4 +1,4 @@
-﻿package com.underhear.security;
+package com.underhear.security;
 
 import java.util.concurrent.TimeUnit;
 
