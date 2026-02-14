@@ -14,14 +14,6 @@ request.interceptors.response.use((response) => {
   return response
 })
 
-export const setAuthToken = (token?: string) => {
-  if (token) {
-    request.defaults.headers.common.Authorization = `Bearer ${token}`
-    return
-  }
-  delete request.defaults.headers.common.Authorization
-}
-
 export const get = async <T>(url: string, config?: AxiosRequestConfig) => {
   const response = await request.get<T>(url, config)
   return response.data
