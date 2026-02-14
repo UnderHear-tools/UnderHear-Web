@@ -3,9 +3,9 @@ import { ref } from 'vue'
 import type { Component } from 'vue'
 import { Alert, CheckCircle, Info, Stop, X } from '@/components/z-ui/icon/Octicons-vue'
 
-export type ZBannerType = 'critical' | 'info' | 'success' | 'upsell' | 'warning'
-export type ZBannerActionsLayout = 'default' | 'inline' | 'stacked'
-export type ZBannerResult = { close: () => void }
+export type zBannerType = 'critical' | 'info' | 'success' | 'upsell' | 'warning'
+export type zBannerActionsLayout = 'default' | 'inline' | 'stacked'
+export type zBannerResult = { close: () => void }
 
 export interface zBannerAction {
   label: string
@@ -21,17 +21,17 @@ export interface zBannerOptions {
   dismissible?: boolean
   primaryAction?: zBannerAction
   secondaryAction?: zBannerAction
-  actionsLayout?: ZBannerActionsLayout
+  actionsLayout?: zBannerActionsLayout
   flush?: boolean
 }
 
 export interface zBannerExposed {
-  show: (message: string, type?: ZBannerType, options?: zBannerOptions) => ZBannerResult
+  show: (message: string, type?: zBannerType, options?: zBannerOptions) => zBannerResult
   close: () => void
 }
 
 interface BannerState {
-  type: ZBannerType
+  type: zBannerType
   title: string
   description: string
   ariaLabel?: string
@@ -39,11 +39,11 @@ interface BannerState {
   dismissible: boolean
   primaryAction?: zBannerAction
   secondaryAction?: zBannerAction
-  actionsLayout: ZBannerActionsLayout
+  actionsLayout: zBannerActionsLayout
   flush: boolean
 }
 
-const LABEL_BY_TYPE: Record<ZBannerType, string> = {
+const LABEL_BY_TYPE: Record<zBannerType, string> = {
   critical: 'Critical',
   info: 'Information',
   success: 'Success',
@@ -51,7 +51,7 @@ const LABEL_BY_TYPE: Record<ZBannerType, string> = {
   warning: 'Warning'
 }
 
-const ICON_BY_TYPE: Record<ZBannerType, Component> = {
+const ICON_BY_TYPE: Record<zBannerType, Component> = {
   critical: Stop,
   info: Info,
   success: CheckCircle,
@@ -69,7 +69,7 @@ function runAction(action: zBannerAction) {
   action.onClick?.()
 }
 
-function show(message: string, type: ZBannerType = 'info', options: zBannerOptions = {}): ZBannerResult {
+function show(message: string, type: zBannerType = 'info', options: zBannerOptions = {}): zBannerResult {
   banner.value = {
     type,
     title: options.title ?? LABEL_BY_TYPE[type],
@@ -307,7 +307,7 @@ defineExpose<zBannerExposed>({
 .z-banner__title {
   margin: 0;
   font-size: inherit;
-  font-weight: 600;
+  font-weight: 500;
 }
 
 .z-banner__description {
@@ -316,7 +316,7 @@ defineExpose<zBannerExposed>({
 }
 
 .z-banner__actions {
-  margin-block: 2px;
+  display: flex;
 }
 
 .z-banner__actions-row {
@@ -345,7 +345,7 @@ defineExpose<zBannerExposed>({
 
 .z-banner__action--primary {
   color: #24292f;
-  font-weight: 600;
+  font-weight: 500;
   border: 1px solid #d0d7de;
   background: #f6f8fa;
   border-radius: 6px;

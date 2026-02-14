@@ -321,17 +321,17 @@ const methodTableRows = [
   {
     name: 'zBanner(message, type?, options?)',
     description: '按类型展示横幅提示，并返回 close 句柄。',
-    signature: '(message: string, type?: ZBannerType, options?: zBannerOptions) => ZBannerResult'
+    signature: '(message: string, type?: zBannerType, options?: zBannerOptions) => zBannerResult'
   },
   {
     name: 'zBanner.info/success/warning/critical/upsell',
     description: '语义化快捷方法。',
-    signature: '(message: string, options?: zBannerOptions) => ZBannerResult'
+    signature: '(message: string, options?: zBannerOptions) => zBannerResult'
   },
   {
     name: 'zBanner.error',
     description: 'critical 的别名，等同 zBanner.critical。',
-    signature: '(message: string, options?: zBannerOptions) => ZBannerResult'
+    signature: '(message: string, options?: zBannerOptions) => zBannerResult'
   },
   {
     name: 'zBanner.close',
@@ -386,7 +386,7 @@ const exposedTableRows = [
   {
     name: 'show',
     description: '显示 Banner。',
-    signature: '(message: string, type?: ZBannerType, options?: zBannerOptions) => ZBannerResult'
+    signature: '(message: string, type?: zBannerType, options?: zBannerOptions) => zBannerResult'
   },
   {
     name: 'close',
