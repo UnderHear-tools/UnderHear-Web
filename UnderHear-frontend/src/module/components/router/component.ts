@@ -20,19 +20,19 @@ export const componentRoutes: Array<RouteRecordRaw> = [
                 name: 'Overview',
                 component: () => import('../views/components/overview.vue')
             },
-            // Icon 图标组件
+            // Icon
             {
                 path: 'octicons-vue',
                 name: 'OcticonsVue',
                 component: () => import('../views/components/octicons-vue.vue')
             },
-            // Blocks 组合式组件
+            // Blocks
             {
                 path: 'user-menu',
                 name: 'UserMenu',
                 component: () => import('../views/components/user-menu.vue')
             },
-            // Basic 基础组件
+            // Basic
             {
                 path: 'container',
                 name: 'Container',
@@ -68,7 +68,7 @@ export const componentRoutes: Array<RouteRecordRaw> = [
                 name: 'Tag',
                 component: () => import('../views/components/tag.vue')
             },
-            // Form 表单组件
+            // Form
             {
                 path: 'input',
                 name: 'Input',
@@ -79,17 +79,23 @@ export const componentRoutes: Array<RouteRecordRaw> = [
                 name: 'Select',
                 component: () => import('../views/components/select.vue')
             },
-            // Data 数据展示
+            // Data
             {
                 path: 'table',
                 name: 'Table',
                 component: () => import('../views/components/table.vue')
             },
-            // Navigation 导航
+            // Navigation
             {
                 path: 'steps',
                 name: 'Steps',
                 component: () => import('../views/components/steps.vue')
+            },
+            // Feedback 反馈组件
+            {
+                path: 'banner',
+                name: 'Banner',
+                component: () => import('../views/components/banner.vue')
             }
         ]
     }

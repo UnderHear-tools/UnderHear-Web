@@ -1,23 +1,23 @@
 import { createVNode, render } from 'vue'
 import ZBannerView, {
-  type ZBannerExposed,
-  type ZBannerOptions,
+  type zBannerExposed,
+  type zBannerOptions,
   type ZBannerResult,
   type ZBannerType
 } from './zBanner.vue'
 
-type ZBanner = ((message: string, type?: ZBannerType, options?: ZBannerOptions) => ZBannerResult) & {
-  info: (message: string, options?: ZBannerOptions) => ZBannerResult
-  success: (message: string, options?: ZBannerOptions) => ZBannerResult
-  warning: (message: string, options?: ZBannerOptions) => ZBannerResult
-  critical: (message: string, options?: ZBannerOptions) => ZBannerResult
-  upsell: (message: string, options?: ZBannerOptions) => ZBannerResult
-  error: (message: string, options?: ZBannerOptions) => ZBannerResult
+type ZBanner = ((message: string, type?: ZBannerType, options?: zBannerOptions) => ZBannerResult) & {
+  info: (message: string, options?: zBannerOptions) => ZBannerResult
+  success: (message: string, options?: zBannerOptions) => ZBannerResult
+  warning: (message: string, options?: zBannerOptions) => ZBannerResult
+  critical: (message: string, options?: zBannerOptions) => ZBannerResult
+  upsell: (message: string, options?: zBannerOptions) => ZBannerResult
+  error: (message: string, options?: zBannerOptions) => ZBannerResult
   close: () => void
 }
 
 const HOST_ID = 'z-banner-host'
-let service: ZBannerExposed | null = null
+let service: zBannerExposed | null = null
 
 function getService() {
   if (service) return service
@@ -31,11 +31,11 @@ function getService() {
 
   const vnode = createVNode(ZBannerView)
   render(vnode, host)
-  service = vnode.component!.exposed as ZBannerExposed
+  service = vnode.component!.exposed as zBannerExposed
   return service
 }
 
-const zBanner = ((message: string, type: ZBannerType = 'info', options: ZBannerOptions = {}) => {
+const zBanner = ((message: string, type: ZBannerType = 'info', options: zBannerOptions = {}) => {
   return getService().show(message, type, options)
 }) as ZBanner
 
@@ -47,5 +47,5 @@ zBanner.upsell = (message, options) => zBanner(message, 'upsell', options)
 zBanner.error = (message, options) => zBanner(message, 'critical', options)
 zBanner.close = () => getService().close()
 
-export type { ZBannerOptions, ZBannerResult, ZBannerType } from './zBanner.vue'
+export type { zBannerOptions, ZBannerResult, ZBannerType } from './zBanner.vue'
 export default zBanner

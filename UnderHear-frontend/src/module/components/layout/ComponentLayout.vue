@@ -16,8 +16,14 @@
       <div class="sidebar-content">
         <div v-for="section in navSections" :key="section.title" class="nav-section">
           <div class="section-title">{{ section.title }}</div>
-          <RouterLink v-for="item in section.items" :key="item.path" :to="item.path" class="nav-item"
-            :class="{ active: $route.path === item.path }" @click="closeSidebar">
+          <RouterLink
+            v-for="item in section.items"
+            :key="item.path"
+            :to="item.path"
+            class="nav-item"
+            :class="{ active: $route.path === item.path }"
+            @click="closeSidebar"
+          >
             {{ item.label }}
           </RouterLink>
         </div>
@@ -181,15 +187,11 @@ const navSections = ref([
   },
   {
     title: 'Icon 图标',
-    items: [
-      { path: '/component/octicons-vue', label: 'Octicons-vue 图标' }
-    ]
+    items: [{ path: '/component/octicons-vue', label: 'Octicons-vue 图标' }]
   },
   {
     title: 'Blocks 组合式组件',
-    items: [
-      { path: '/component/user-menu', label: 'UserMenu 用户菜单' }
-    ]
+    items: [{ path: '/component/user-menu', label: 'UserMenu 用户菜单' }]
   },
   {
     title: 'Basic 基础组件',
@@ -212,15 +214,15 @@ const navSections = ref([
   },
   {
     title: 'Data 数据展示',
-    items: [
-      { path: '/component/table', label: 'Table 表格' }
-    ]
+    items: [{ path: '/component/table', label: 'Table 表格' }]
   },
   {
     title: 'Navigation 导航',
-    items: [
-      { path: '/component/steps', label: 'Steps 步骤条' }
-    ]
+    items: [{ path: '/component/steps', label: 'Steps 步骤条' }]
+  },
+  {
+    title: 'Feedback 反馈组件',
+    items: [{ path: '/component/banner', label: 'Banner 横幅提示' }]
   }
 ])
 </script>
@@ -288,7 +290,7 @@ const navSections = ref([
   bottom: 0;
   width: 4px;
   height: 30px;
-  transform: translate(0,-50%);
+  transform: translate(0, -50%);
   background-color: var(--font-blue);
   border-radius: 2px;
 }
@@ -392,6 +394,7 @@ const navSections = ref([
   .main-content {
     padding: 1.5rem;
   }
+
   .sidebar {
     top: 0;
     transform: translateX(-100%);
@@ -400,7 +403,7 @@ const navSections = ref([
     height: 100vh;
   }
 
-  .sidebar-content{
+  .sidebar-content {
     scrollbar-width: none;
     background-color: #fff;
   }
@@ -413,7 +416,7 @@ const navSections = ref([
     height: 3rem;
     width: 3rem;
     border-radius: 50%;
-    transform: translate(-50%,-50%);
+    transform: translate(-50%, -50%);
     cursor: pointer;
     align-items: center;
     justify-content: center;

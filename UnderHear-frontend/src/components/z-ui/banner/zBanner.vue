@@ -7,26 +7,26 @@ export type ZBannerType = 'critical' | 'info' | 'success' | 'upsell' | 'warning'
 export type ZBannerActionsLayout = 'default' | 'inline' | 'stacked'
 export type ZBannerResult = { close: () => void }
 
-export interface ZBannerAction {
+export interface zBannerAction {
   label: string
   href?: string
   onClick?: () => void
 }
 
-export interface ZBannerOptions {
+export interface zBannerOptions {
   title?: string
   description?: string
   ariaLabel?: string
   hideTitle?: boolean
   dismissible?: boolean
-  primaryAction?: ZBannerAction
-  secondaryAction?: ZBannerAction
+  primaryAction?: zBannerAction
+  secondaryAction?: zBannerAction
   actionsLayout?: ZBannerActionsLayout
   flush?: boolean
 }
 
-export interface ZBannerExposed {
-  show: (message: string, type?: ZBannerType, options?: ZBannerOptions) => ZBannerResult
+export interface zBannerExposed {
+  show: (message: string, type?: ZBannerType, options?: zBannerOptions) => ZBannerResult
   close: () => void
 }
 
@@ -37,8 +37,8 @@ interface BannerState {
   ariaLabel?: string
   hideTitle: boolean
   dismissible: boolean
-  primaryAction?: ZBannerAction
-  secondaryAction?: ZBannerAction
+  primaryAction?: zBannerAction
+  secondaryAction?: zBannerAction
   actionsLayout: ZBannerActionsLayout
   flush: boolean
 }
@@ -65,11 +65,11 @@ function close() {
   banner.value = null
 }
 
-function runAction(action: ZBannerAction) {
+function runAction(action: zBannerAction) {
   action.onClick?.()
 }
 
-function show(message: string, type: ZBannerType = 'info', options: ZBannerOptions = {}): ZBannerResult {
+function show(message: string, type: ZBannerType = 'info', options: zBannerOptions = {}): ZBannerResult {
   banner.value = {
     type,
     title: options.title ?? LABEL_BY_TYPE[type],
@@ -86,7 +86,7 @@ function show(message: string, type: ZBannerType = 'info', options: ZBannerOptio
   return { close }
 }
 
-defineExpose<ZBannerExposed>({
+defineExpose<zBannerExposed>({
   show,
   close
 })
@@ -367,11 +367,11 @@ defineExpose<ZBannerExposed>({
 }
 
 .z-banner__dismiss:hover {
-  background: #818b9826;
+  background: #818b981a;
 }
 
 .z-banner__dismiss:active {
-  background: #818b981a;
+  background: #818b9826;
 }
 
 .z-banner__dismiss:focus-visible,
