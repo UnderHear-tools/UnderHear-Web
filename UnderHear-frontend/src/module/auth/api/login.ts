@@ -1,7 +1,6 @@
 import { API_BASE_URL, get } from '@/api'
 
 export type OAuthLoginResponse = {
-  token: string
   loginSource: string
   userInfo: {
     uuid: string

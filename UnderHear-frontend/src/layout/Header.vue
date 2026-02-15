@@ -12,17 +12,17 @@
       </nav>
 
       <div class="user-menu">
-        <a v-if="true" class="nav-link" href="/auth/login">登录</a>
-        <zDropdown v-if="false" placement="left-bottom">
+        <a v-if="!userStore.userInfo" class="nav-link" href="/auth/login">登录</a>
+        <zDropdown v-else placement="left-bottom">
           <template #trigger>
-            <zAvatar src="https://avatars.githubusercontent.com/u/131276691?v=4" :size="32" />
+            <zAvatar :src="userStore.userInfo?.avatarUrl" :size="32" />
           </template>
           <template #content>
             <div class="user-header">
-              <zAvatar src="https://avatars.githubusercontent.com/u/131276691?v=4" :size="36" />
+              <zAvatar :src="userStore.userInfo?.avatarUrl" :size="36" />
               <div class="user-info">
-                <div class="user-name">UnderHear Studio</div>
-                <div class="user-email">hello@underhear.audio</div>
+                <div class="user-name">{{ userStore.userInfo?.nickname }}</div>
+                <div class="user-email">{{ userStore.userInfo?.uuid }}</div>
               </div>
             </div>
             <zMenu>
@@ -51,6 +51,7 @@
 <script setup lang="ts">
 import { onMounted, ref, watch } from 'vue'
 import { useRouter, useRoute } from 'vue-router'
+import { useUserStore } from '@/stores/user'
 import { zDropdown } from '@/components/z-ui/dropdown'
 import { zAvatar } from '@/components/z-ui/avatar'
 import { zMenu, zMenuItem } from '@/components/z-ui/menu'
@@ -65,6 +66,7 @@ interface NavigationItem {
 
 const router = useRouter()
 const route = useRoute()
+const userStore = useUserStore()
 
 const navigationItems = ref<NavigationItem[]>([
   { name: '首页', href: '/', active: false },

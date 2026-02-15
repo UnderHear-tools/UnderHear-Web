@@ -3,7 +3,7 @@
     <div class="login-card">
       <div class="login-header">
         <h1 class="login-title">登录</h1>
-        <p class="login-subtitle">使用 GitHub 账号登录</p>
+        <p class="login-subtitle">使用 第三方 账号登录</p>
       </div>
 
       <div class="login-actions">
@@ -35,9 +35,12 @@
 
 <script setup lang="ts">
 import { onMounted, ref } from 'vue'
+import { useUserStore } from '@/stores/user'
 import { zBanner } from '@/components/z-ui/banner'
 import { LogoGitee, MarkGithub } from '@/components/z-ui/icon/Octicons-vue'
 import { getOAuthRenderUrl, loginWithOAuthCallback } from '../../api/login'
+
+const userStore = useUserStore()
 
 const loading = ref(false)
 const currentProvider = ref<string | null>(null)
@@ -77,8 +80,8 @@ const login = async () => {
   currentProvider.value = provider
   try {
     const response = await loginWithOAuthCallback(provider, { code, state })
-    console.log('登录成功，Token:', response.token)
-    zBanner.success('登录成功！正在跳转...')
+    userStore.setUserInfo(response.userInfo)
+    zBanner.success('登录成功！在3s后进行跳转...')
   } catch (error) {
     zBanner.error(error instanceof Error ? error.message : '登录失败，请稍后重试。')
   } finally {
