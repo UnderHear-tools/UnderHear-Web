@@ -5,6 +5,7 @@ import { get } from '@/api'
 export type UserInfo = {
   uuid: string
   nickname: string
+  email: string
   avatarUrl: string
 }
 

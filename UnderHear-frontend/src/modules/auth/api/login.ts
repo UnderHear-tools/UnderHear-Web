@@ -5,6 +5,7 @@ export type OAuthLoginResponse = {
   userInfo: {
     uuid: string
     nickname: string
+    email: string
     avatarUrl: string
   }
 }
