@@ -138,10 +138,10 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 import { zTable, type RowData, type ZTableColumn } from '@/components/z-ui/table'
-import ComponentDocsDemoBlock from '@/module/components/components/ComponentDocsPage/ComponentDocsDemoBlock.vue'
-import ComponentDocsHeader from '@/module/components/components/ComponentDocsPage/ComponentDocsHeader.vue'
-import ComponentDocsPage from '@/module/components/components/ComponentDocsPage/ComponentDocsPage.vue'
-import ComponentDocsSection from '@/module/components/components/ComponentDocsPage/ComponentDocsSection.vue'
+import ComponentDocsDemoBlock from '@/modules/components/components/ComponentDocsPage/ComponentDocsDemoBlock.vue'
+import ComponentDocsHeader from '@/modules/components/components/ComponentDocsPage/ComponentDocsHeader.vue'
+import ComponentDocsPage from '@/modules/components/components/ComponentDocsPage/ComponentDocsPage.vue'
+import ComponentDocsSection from '@/modules/components/components/ComponentDocsPage/ComponentDocsSection.vue'
 
 interface RepoRow {
   id: number

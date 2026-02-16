@@ -57,10 +57,10 @@
 <script setup lang="ts">
 import { zAvatar } from '@/components/z-ui/avatar'
 import { zTable, type ZTableColumn } from '@/components/z-ui/table'
-import ComponentDocsDemoBlock from '@/module/components/components/ComponentDocsPage/ComponentDocsDemoBlock.vue'
-import ComponentDocsHeader from '@/module/components/components/ComponentDocsPage/ComponentDocsHeader.vue'
-import ComponentDocsPage from '@/module/components/components/ComponentDocsPage/ComponentDocsPage.vue'
-import ComponentDocsSection from '@/module/components/components/ComponentDocsPage/ComponentDocsSection.vue'
+import ComponentDocsDemoBlock from '@/modules/components/components/ComponentDocsPage/ComponentDocsDemoBlock.vue'
+import ComponentDocsHeader from '@/modules/components/components/ComponentDocsPage/ComponentDocsHeader.vue'
+import ComponentDocsPage from '@/modules/components/components/ComponentDocsPage/ComponentDocsPage.vue'
+import ComponentDocsSection from '@/modules/components/components/ComponentDocsPage/ComponentDocsSection.vue'
 
 const demo1Code = `<template>
   <zAvatar src="https://avatars.githubusercontent.com/u/131276691?v=4" />

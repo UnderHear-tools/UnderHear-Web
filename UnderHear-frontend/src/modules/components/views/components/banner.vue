@@ -70,10 +70,10 @@ import { ref } from 'vue'
 import { zBanner } from '@/components/z-ui/banner'
 import ZBannerView, { type zBannerExposed } from '@/components/z-ui/banner/zBanner.vue'
 import { zTable, type ZTableColumn } from '@/components/z-ui/table'
-import ComponentDocsDemoBlock from '@/module/components/components/ComponentDocsPage/ComponentDocsDemoBlock.vue'
-import ComponentDocsHeader from '@/module/components/components/ComponentDocsPage/ComponentDocsHeader.vue'
-import ComponentDocsPage from '@/module/components/components/ComponentDocsPage/ComponentDocsPage.vue'
-import ComponentDocsSection from '@/module/components/components/ComponentDocsPage/ComponentDocsSection.vue'
+import ComponentDocsDemoBlock from '@/modules/components/components/ComponentDocsPage/ComponentDocsDemoBlock.vue'
+import ComponentDocsHeader from '@/modules/components/components/ComponentDocsPage/ComponentDocsHeader.vue'
+import ComponentDocsPage from '@/modules/components/components/ComponentDocsPage/ComponentDocsPage.vue'
+import ComponentDocsSection from '@/modules/components/components/ComponentDocsPage/ComponentDocsSection.vue'
 
 const bannerRef = ref<zBannerExposed | null>(null)
 
