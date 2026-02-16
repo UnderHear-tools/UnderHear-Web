@@ -33,6 +33,6 @@ defineEmits<{ click: [] }>()
 }
 
 .z-menu-item:hover {
-  background: #f6f8fa;
+  background: #f2f3f4;
 }
 </style>

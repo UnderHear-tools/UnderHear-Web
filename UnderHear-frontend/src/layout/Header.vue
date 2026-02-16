@@ -36,7 +36,7 @@
                 前往 GitHub
               </zMenuItem>
               <zDivider />
-              <zMenuItem>
+              <zMenuItem @click="navigateToLogout">
                 <SignOut class="menu-icon" />
                 退出登录
               </zMenuItem>
@@ -83,6 +83,10 @@ const updateActiveState = () => {
 
 const navigateToPage = (item: NavigationItem) => {
   router.push(item.href)
+}
+
+const navigateToLogout = () => {
+  router.push('/auth/logout')
 }
 
 onMounted(() => {

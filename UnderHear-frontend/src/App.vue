@@ -7,7 +7,7 @@ const route = useRoute();
 
 // 判断是否需要隐藏 Header（ComponentLayout 页面和登录页面）
 const shouldHideHeader = computed(() => {
-  return route.path === '/auth/login';
+  return route.path === '/auth/login' || route.path === '/auth/logout';
 });
 </script>
 
