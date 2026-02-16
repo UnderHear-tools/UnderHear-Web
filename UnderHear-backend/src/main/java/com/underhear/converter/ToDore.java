@@ -14,6 +14,7 @@ public final class ToDore {
         UserInfoDore userInfoDore = new UserInfoDore();
         userInfoDore.setUuid(user.getUuid());
         userInfoDore.setNickname(user.getNickName());
+        userInfoDore.setEmail(user.getEmail());
         userInfoDore.setAvatarUrl(user.getAvatarUrl());
         return userInfoDore;
     }

@@ -6,5 +6,6 @@ import lombok.Data;
 public class UserInfoDore {
     private String uuid;
     private String nickname;
+    private String email;
     private String avatarUrl;
 }

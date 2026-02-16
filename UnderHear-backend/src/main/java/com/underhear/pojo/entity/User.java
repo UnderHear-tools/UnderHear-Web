@@ -9,6 +9,7 @@ public class User {
     private Long id;
     private String uuid;
     private String nickName;
+    private String email;
     private String avatarUrl;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
