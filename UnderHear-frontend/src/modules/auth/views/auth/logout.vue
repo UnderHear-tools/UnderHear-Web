@@ -8,26 +8,53 @@
           <zAvatar :src="userStore.userInfo?.avatarUrl" :size="32" />
 
           <div>
-            <p class="account-label">Signed in as</p>
+            <p class="account-label">当前登录</p>
             <p class="account-name">{{ userStore.userInfo?.nickname }}</p>
           </div>
         </div>
 
-        <button type="button" class="action-button">Sign out</button>
+        <button
+          type="button"
+          class="action-button"
+          :disabled="isSubmitting"
+          @click="handleLogout">
+          {{ isSubmitting ? '退出中...' : '退出登录' }}
+        </button>
       </div>
 
       <button type="button" class="action-button action-button--danger action-button--full">
-        Sign out from all accounts
+        从所有设备上登出
       </button>
     </section>
   </div>
 </template>
 
 <script setup lang="ts">
-import { zAvatar } from '@/components/z-ui/avatar';
+import { ref } from 'vue'
+import { useRouter } from 'vue-router'
+import { zAvatar } from '@/components/z-ui/avatar'
+import { zBanner } from '@/components/z-ui/banner'
 import { useUserStore } from '@/stores/user'
+import { logout } from '../../api/login'
 
+const router = useRouter()
 const userStore = useUserStore()
+const isSubmitting = ref(false)
+
+const handleLogout = async () => {
+  if (isSubmitting.value) return
+
+  isSubmitting.value = true
+  try {
+    await logout()
+    userStore.clearUserInfo()
+    router.replace('/')
+  } catch (error) {
+    zBanner.error(error instanceof Error ? error.message : '退出失败，请稍后重试。')
+  } finally {
+    isSubmitting.value = false
+  }
+}
 </script>
 
 <style scoped>
@@ -101,6 +128,11 @@ const userStore = useUserStore()
 
 .action-button:hover {
   background: #eff2f5;
+}
+
+.action-button:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
 }
 
 .action-button--danger {

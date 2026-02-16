@@ -1,4 +1,4 @@
-import { API_BASE_URL, get } from '@/api'
+import { API_BASE_URL, get, post } from '@/api'
 
 export type OAuthLoginResponse = {
   loginSource: string
@@ -22,3 +22,5 @@ export const loginWithOAuthCallback = (provider: string, params: OAuthCallbackPa
   const query = { code: params.code, state: params.state }
   return get<OAuthLoginResponse>(`/oauth/${provider}/callback`, { params: query, withCredentials: true })
 }
+
+export const logout = () => post<void>('/auth/logout', undefined, { withCredentials: true })
