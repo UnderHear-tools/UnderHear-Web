@@ -53,7 +53,7 @@ public class SessionAuthService {
         String uuid = stringRedisTemplate.opsForValue().get(redisKey(tokenId));
         if (uuid == null) {
             // 白名单中没有该 token 视为未登录
-            throw new BizException(ErrorCode.UNAUTHORIZED);
+            throw new BizException(ErrorCode.NOT_LOGIN);
         }
         User user = userService.getUserByUuid(uuid);
         if (user == null) {
@@ -81,7 +81,7 @@ public class SessionAuthService {
         try {
             return jwtTokenService.parseToken(token);
         } catch (Exception ex) {
-            throw new BizException(ErrorCode.UNAUTHORIZED);
+            throw new BizException(ErrorCode.NOT_LOGIN);
         }
     }
 
@@ -95,7 +95,7 @@ public class SessionAuthService {
     @NonNull
     private String requireValue(String value) {
         if (value == null) {
-            throw new BizException(ErrorCode.UNAUTHORIZED);
+            throw new BizException(ErrorCode.NOT_LOGIN);
         }
         return value;
     }

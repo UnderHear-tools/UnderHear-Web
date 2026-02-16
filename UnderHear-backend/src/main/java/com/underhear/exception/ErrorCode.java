@@ -15,6 +15,7 @@ public enum ErrorCode {
     //自定义错误
     USER_NOT_FOUND("USER_NOT_FOUND", "未找到该用户", HttpStatus.NOT_FOUND),
     BAD_AUTHORIZED("BAD_AUTHORIZED", "授权失败", HttpStatus.UNAUTHORIZED),
+    NOT_LOGIN("NOT_LOGIN", "未登录或登录已过期", HttpStatus.OK),
 
     //万能错误
     UNKNOWN_ERROR("UNKNOWN_ERROR", "未知错误", HttpStatus.INTERNAL_SERVER_ERROR);
