@@ -39,12 +39,43 @@ import { useUserStore } from '@/stores/user'
 import { zBanner } from '@/components/z-ui/banner'
 import { LogoGitee, MarkGithub } from '@/components/z-ui/icon/Octicons-vue'
 import { getOAuthRenderUrl, loginWithOAuthCallback } from '../../api/login'
+import router from '@/router'
 
 const userStore = useUserStore()
 
 const loading = ref(false)
 const currentProvider = ref<string | null>(null)
 const oauthProviderKey = 'oauth_provider'
+const oauthRedirectPathKey = 'oauth_redirect_path'
+
+const saveRedirectPath = () => {
+  const url = new URL(window.location.href)
+  if (url.searchParams.get('code') || url.searchParams.get('error')) {
+    return
+  }
+  if (sessionStorage.getItem(oauthRedirectPathKey)) {
+    return
+  }
+  if (!document.referrer) {
+    return
+  }
+
+  const referrer = new URL(document.referrer)
+  if (referrer.origin !== window.location.origin || referrer.pathname === '/auth/login') {
+    return
+  }
+
+  const redirectPath = `${referrer.pathname}${referrer.search}${referrer.hash}`
+  sessionStorage.setItem(oauthRedirectPathKey, redirectPath)
+}
+
+const getRedirectPath = () => {
+  const redirectPath = sessionStorage.getItem(oauthRedirectPathKey)
+  if (!redirectPath || redirectPath === '/auth/login') {
+    return '/'
+  }
+  return redirectPath
+}
 
 const startLogin = (provider: string) => {
   loading.value = true
@@ -66,12 +97,12 @@ const login = async () => {
   if (url.searchParams.get('error')) {
     zBanner.warning('第三方授权失败')
     sessionStorage.removeItem(oauthProviderKey)
-    window.history.replaceState({}, document.title, url.pathname)
     return
   }
 
   const code = url.searchParams.get('code')
   const state = url.searchParams.get('state')
+  window.history.replaceState({}, document.title, url.pathname)
   if (!code || !state) return
 
   const provider = sessionStorage.getItem(oauthProviderKey)
@@ -81,17 +112,20 @@ const login = async () => {
   try {
     const response = await loginWithOAuthCallback(provider, { code, state })
     userStore.setUserInfo(response.userInfo)
-    zBanner.success('登录成功！在3s后进行跳转...')
+    const redirectPath = getRedirectPath()
+    sessionStorage.removeItem(oauthRedirectPathKey)
+    await router.replace(redirectPath)
   } catch (error) {
     zBanner.error(error instanceof Error ? error.message : '登录失败，请稍后重试。')
   } finally {
-    loading.value = false
     sessionStorage.removeItem(oauthProviderKey)
-    window.history.replaceState({}, document.title, url.pathname)
+    loading.value = false
+    currentProvider.value = null
   }
 }
 
 onMounted(() => {
+  saveRedirectPath()
   login()
 })
 </script>
