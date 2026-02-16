@@ -27,7 +27,7 @@ export const useUserStore = defineStore('user', () => {
 
   const hydrateUser = async () => {
     try {
-      const currentUser = await get<UserInfo>('/auth/user', { withCredentials: true })
+      const currentUser = await get<UserInfo>('/auth/me', { withCredentials: true })
       setUserInfo(currentUser)
     } catch {
       clearUserInfo()

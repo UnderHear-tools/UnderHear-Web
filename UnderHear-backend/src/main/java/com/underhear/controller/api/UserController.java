@@ -25,7 +25,7 @@ public class UserController {
     @Autowired
     private AuthCookieService authCookieService;
 
-    @GetMapping("/user")
+    @GetMapping("/me")
     public ApiResponse<UserInfoDore> me(@CookieValue(value = "auth_token", required = false) String token) {
         User user = sessionAuthService.getCurrentUser(token);
         return ApiResponse.success(ToDore.toUserInfoDore(user));
