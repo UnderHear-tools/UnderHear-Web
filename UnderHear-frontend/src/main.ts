@@ -13,6 +13,6 @@ app.use(pinia)
 app.use(router)
 const userStore = useUserStore(pinia)
 
-Promise.all([router.isReady(), userStore.hydrateUser()]).then(() => {
+Promise.all([userStore.hydrateUser(), router.isReady()]).then(() => {
   app.mount('#app')
 })
