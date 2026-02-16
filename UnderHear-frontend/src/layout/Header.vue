@@ -22,7 +22,7 @@
               <zAvatar :src="userStore.userInfo?.avatarUrl" :size="36" />
               <div class="user-info">
                 <div class="user-name">{{ userStore.userInfo?.nickname }}</div>
-                <div class="user-email">{{ userStore.userInfo?.uuid }}</div>
+                <div class="user-email">{{ userStore.userInfo?.email ?? '暂未设置邮箱' }}</div>
               </div>
             </div>
             <zMenu>
@@ -154,6 +154,7 @@ watch(() => route.path, () => {
 .user-info {
   display: flex;
   flex-direction: column;
+  min-width: 128px;
 }
 
 .user-name {
@@ -165,6 +166,7 @@ watch(() => route.path, () => {
 .user-email {
   font-size: 12px;
   color: #656d76;
+  white-space: nowrap;
 }
 
 .menu-icon {
