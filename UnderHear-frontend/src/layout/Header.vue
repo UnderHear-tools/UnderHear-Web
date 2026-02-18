@@ -137,10 +137,23 @@ watch(() => route.path, () => {
   transition: background-color 0.2s ease, color 0.2s ease;
 }
 
-.nav-link:hover,
-.nav-link.active {
-  background-color: #e6e6e6;
-  color: #000000;
+@media (hover: hover) and (pointer: fine) {
+  .nav-link:hover {
+    background-color: #e6e6e6;
+    color: #000000;
+  }
+  .nav-link.active {
+    background-color: #e6e6e6;
+    color: #000000;
+  }
+}
+
+@media (hover: none) and (pointer: coarse) {
+  /* 手机触摸设备的替代效果 */
+  .nav-link.active {
+    background-color: #e6e6e6;
+    color: #000000;
+  }
 }
 
 .user-menu {
