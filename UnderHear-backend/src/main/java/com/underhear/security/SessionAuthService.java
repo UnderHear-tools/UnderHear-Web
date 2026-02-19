@@ -4,7 +4,6 @@ import java.util.concurrent.TimeUnit;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.redis.core.StringRedisTemplate;
-import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Service;
 
 import com.underhear.exception.BizException;
@@ -37,8 +36,8 @@ public class SessionAuthService {
     // 登录成功后写入白名单 表示该 token 可以使用
     public void whitelistToken(String token) {
         JwtTokenService.JwtTokenPayload payload = parseToken(token);
-        String tokenId = requireValue(payload.getTokenId());
-        String uuid = requireValue(payload.getUuid());
+        String tokenId = payload.getTokenId();
+        String uuid = payload.getUuid();
         stringRedisTemplate.opsForValue().set(
                 redisKey(tokenId),
                 uuid,
@@ -49,7 +48,7 @@ public class SessionAuthService {
     // 根据 token 获取当前用户 要求 token 合法且仍在白名单里
     public User getCurrentUser(String token) {
         JwtTokenService.JwtTokenPayload payload = parseToken(token);
-        String tokenId = requireValue(payload.getTokenId());
+        String tokenId = payload.getTokenId();
         String uuid = stringRedisTemplate.opsForValue().get(redisKey(tokenId));
         if (uuid == null) {
             // 白名单中没有该 token 视为未登录
@@ -65,7 +64,7 @@ public class SessionAuthService {
     // 退出登录 删除白名单记录 让当前 token 立即失效
     public void logout(String token) {
         JwtTokenService.JwtTokenPayload payload = parseToken(token);
-        String tokenId = requireValue(payload.getTokenId());
+        String tokenId = payload.getTokenId();
         stringRedisTemplate.delete(redisKey(tokenId));
     }
 
@@ -86,17 +85,7 @@ public class SessionAuthService {
     }
 
     // 拼接 Redis key
-    @NonNull
     private String redisKey(String tokenId) {
         return REDIS_KEY_PREFIX + tokenId;
-    }
-
-    // 把可能为 null 的值收窄为非空
-    @NonNull
-    private String requireValue(String value) {
-        if (value == null) {
-            throw new BizException(ErrorCode.NOT_LOGIN);
-        }
-        return value;
     }
 }

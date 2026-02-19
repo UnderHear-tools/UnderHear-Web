@@ -2,7 +2,6 @@ package com.underhear.exception;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
-import org.springframework.lang.NonNull; 
 
 public enum ErrorCode {
 
@@ -22,10 +21,9 @@ public enum ErrorCode {
 
     private final String code;
     private final String message;
-    @NonNull
     private final HttpStatusCode status;
 
-    ErrorCode(String code, String message,@NonNull HttpStatus status) {
+    ErrorCode(String code, String message, HttpStatus status) {
         this.code = code;
         this.message = message;
         this.status = status;
@@ -39,7 +37,6 @@ public enum ErrorCode {
         return message;
     }
 
-    @NonNull
     public HttpStatusCode getStatus() {
         return status;
     }

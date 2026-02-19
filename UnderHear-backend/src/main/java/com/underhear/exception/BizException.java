@@ -1,11 +1,9 @@
 package com.underhear.exception;
 
 import org.springframework.http.HttpStatusCode;
-import org.springframework.lang.NonNull;
 
 public class BizException extends RuntimeException {
     private String code;
-    @NonNull
     private HttpStatusCode status;
 
     public BizException(ErrorCode errorCode) {
@@ -20,7 +18,7 @@ public class BizException extends RuntimeException {
         this.status = errorCode.getStatus();
     }
 
-    public BizException(String code, String message, @NonNull HttpStatusCode status) {
+    public BizException(String code, String message, HttpStatusCode status) {
         super(message);
         this.code = code;
         this.status = status;
@@ -30,7 +28,6 @@ public class BizException extends RuntimeException {
         return code;
     }
 
-    @NonNull
     public HttpStatusCode getStatus() {
         return status;
     }
