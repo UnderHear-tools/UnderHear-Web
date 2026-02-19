@@ -34,7 +34,7 @@ import { ref } from 'vue'
 import { zAvatar } from '@/components/z-ui/avatar'
 import { zBanner } from '@/components/z-ui/banner'
 import { useUserStore } from '@/stores/user'
-import { logout } from '../../api/login'
+import { logout } from '../../api/logout'
 
 const userStore = useUserStore()
 const isSubmitting = ref(false)
