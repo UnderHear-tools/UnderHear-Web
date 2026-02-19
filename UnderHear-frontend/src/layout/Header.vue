@@ -12,7 +12,7 @@
       </nav>
 
       <div class="user-menu">
-        <a v-if="!userStore.userInfo" class="nav-link" href="/auth/login">登录</a>
+        <div v-if="!userStore.userInfo" class="nav-link" @click="goToLogin">登录</div>
         <zDropdown v-else placement="left-bottom">
           <template #trigger>
             <zAvatar :src="userStore.userInfo?.avatarUrl" :size="32" />
@@ -31,12 +31,12 @@
                 <Person class="menu-icon" />
                 个人资料
               </zMenuItem>
-              <zMenuItem href="https://github.com/underhear">
+              <zMenuItem href="https://github.com/underhear" new-tab>
                 <MarkGithub class="menu-icon" />
                 前往 GitHub
               </zMenuItem>
               <zDivider />
-              <zMenuItem @click="navigateToLogout">
+              <zMenuItem href="/auth/logout">
                 <SignOut class="menu-icon" />
                 退出登录
               </zMenuItem>
@@ -68,6 +68,29 @@ const router = useRouter()
 const route = useRoute()
 const userStore = useUserStore()
 
+// 导航队列，确保导航操作按顺序执行，避免重复点击导致的竞态问题
+// 如跳转到登录页后快速返回并切换导航项再次跳转登录会丢失?return_to=...参数
+let navigationQueue: Promise<void> = Promise.resolve()
+
+// 队列函数
+const enqueueNavigation = (task: () => Promise<void> | void) => {
+  navigationQueue = navigationQueue
+    .catch(() => undefined)
+    .then(async () => {
+      await task()
+    })
+
+  return navigationQueue
+}
+
+const goToLogin = () => {
+  //加入队列
+  void enqueueNavigation(async () => {
+    const returnTo = encodeURIComponent(window.location.href)
+    window.location.href = `/auth/login?return_to=${returnTo}`
+  })
+}
+
 const navigationItems = ref<NavigationItem[]>([
   { name: '首页', href: '/', active: false },
   { name: '应用', href: '/application', active: false },
@@ -82,11 +105,11 @@ const updateActiveState = () => {
 }
 
 const navigateToPage = (item: NavigationItem) => {
-  router.push(item.href)
-}
-
-const navigateToLogout = () => {
-  router.push('/auth/logout')
+  //加入队列
+  void enqueueNavigation(async () => {
+    if (route.path === item.href) return
+    await router.push(item.href)
+  })
 }
 
 onMounted(() => {

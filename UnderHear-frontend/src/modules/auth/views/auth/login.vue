@@ -35,48 +35,29 @@
 
 <script setup lang="ts">
 import { onMounted, ref } from 'vue'
+import { useRoute } from 'vue-router'
 import { useUserStore } from '@/stores/user'
 import { zBanner } from '@/components/z-ui/banner'
 import { LogoGitee, MarkGithub } from '@/components/z-ui/icon/Octicons-vue'
 import { getOAuthRenderUrl, loginWithOAuthCallback } from '../../api/login'
-import router from '@/router'
 
 const userStore = useUserStore()
+const route = useRoute()
 
 const loading = ref(false)
 const currentProvider = ref<string | null>(null)
 const oauthProviderKey = 'oauth_provider'
-const oauthRedirectPathKey = 'oauth_redirect_path'
-
-const saveRedirectPath = () => {
-  const url = new URL(window.location.href)
-  if (url.searchParams.get('code') || url.searchParams.get('error')) {
-    return
+const LoginReturnToKey = 'login_return_to'
+// 从登录页 query 中读取登录成功后的回跳地址
+const getReturnTo = () => {
+  const returnTo = (route.query.return_to as string)
+  if (route.query.return_to) {
+    sessionStorage.setItem(LoginReturnToKey, returnTo)
   }
-  if (sessionStorage.getItem(oauthRedirectPathKey)) {
-    return
-  }
-  if (!document.referrer) {
-    return
-  }
-
-  const referrer = new URL(document.referrer)
-  if (referrer.origin !== window.location.origin || referrer.pathname === '/auth/login') {
-    return
-  }
-
-  const redirectPath = `${referrer.pathname}${referrer.search}${referrer.hash}`
-  sessionStorage.setItem(oauthRedirectPathKey, redirectPath)
+  return returnTo
 }
 
-const getRedirectPath = () => {
-  const redirectPath = sessionStorage.getItem(oauthRedirectPathKey)
-  if (!redirectPath || redirectPath === '/auth/login') {
-    return '/'
-  }
-  return redirectPath
-}
-
+// 点击第三方登录时，先缓存 provider 和回跳地址，再跳转授权页
 const startLogin = (provider: string) => {
   loading.value = true
   currentProvider.value = provider
@@ -94,6 +75,7 @@ const getButtonLabel = (provider: string) => {
 const login = async () => {
   const url = new URL(window.location.href)
 
+  // 第三方授权失败，提示后结束
   if (url.searchParams.get('error')) {
     zBanner.warning('第三方授权失败')
     sessionStorage.removeItem(oauthProviderKey)
@@ -102,19 +84,23 @@ const login = async () => {
 
   const code = url.searchParams.get('code')
   const state = url.searchParams.get('state')
-  window.history.replaceState({}, document.title, url.pathname)
+  // 没有 code/state 说明当前不是 OAuth 回调
   if (!code || !state) return
+  // 清理回调参数，避免刷新时重复处理
+  window.history.replaceState({}, document.title, url.pathname)
 
   const provider = sessionStorage.getItem(oauthProviderKey)
   if (!provider) return
   loading.value = true
   currentProvider.value = provider
   try {
+    // 用回调参数换取登录态
     const response = await loginWithOAuthCallback(provider, { code, state })
     userStore.setUserInfo(response.userInfo)
-    const redirectPath = getRedirectPath()
-    sessionStorage.removeItem(oauthRedirectPathKey)
-    await router.replace(redirectPath)
+    // 登录成功后跳回登录前页面
+    const returnTo = sessionStorage.getItem(LoginReturnToKey) || '/'
+    window.location.href = returnTo
+    sessionStorage.removeItem(LoginReturnToKey)
   } catch (error) {
     zBanner.error(error instanceof Error ? error.message : '登录失败，请稍后重试。')
   } finally {
@@ -125,7 +111,7 @@ const login = async () => {
 }
 
 onMounted(() => {
-  saveRedirectPath()
+  getReturnTo()
   login()
 })
 </script>

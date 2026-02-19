@@ -1,8 +1,13 @@
 import type { RouteRecordRaw } from 'vue-router'
 import { useUserStore } from '@/stores/user'
 
-const AuthStateGuard = (needUser = false): RouteRecordRaw['beforeEnter'] => (_to, from) => {
+const AuthStateGuard = (needUser = false): RouteRecordRaw['beforeEnter'] => async (_to, from) => {
   const userStore = useUserStore()
+
+  if (!userStore.isHydrated) {
+    await userStore.hydrateUser()
+  }
+
   const hasUser = Boolean(userStore.userInfo)
   return hasUser === needUser ? true : from.fullPath
 }

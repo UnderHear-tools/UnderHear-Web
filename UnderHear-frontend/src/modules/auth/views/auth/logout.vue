@@ -18,7 +18,7 @@
           class="action-button"
           :disabled="isSubmitting"
           @click="handleLogout">
-          {{ isSubmitting ? '退出中...' : '退出登录' }}
+          退出登录
         </button>
       </div>
 
@@ -31,13 +31,11 @@
 
 <script setup lang="ts">
 import { ref } from 'vue'
-import { useRouter } from 'vue-router'
 import { zAvatar } from '@/components/z-ui/avatar'
 import { zBanner } from '@/components/z-ui/banner'
 import { useUserStore } from '@/stores/user'
 import { logout } from '../../api/login'
 
-const router = useRouter()
 const userStore = useUserStore()
 const isSubmitting = ref(false)
 
@@ -47,8 +45,7 @@ const handleLogout = async () => {
   isSubmitting.value = true
   try {
     await logout()
-    userStore.clearUserInfo()
-    router.replace('/')
+    window.location.href = '/'
   } catch (error) {
     zBanner.error(error instanceof Error ? error.message : '退出失败，请稍后重试。')
   } finally {

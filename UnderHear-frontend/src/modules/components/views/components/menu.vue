@@ -19,9 +19,9 @@
 
       <ComponentDocsDemoBlock :code="demo2Code">
         <zMenu>
-          <zMenuItem href="https://github.com">GitHub</zMenuItem>
+          <zMenuItem href="https://github.com" new-tab>GitHub (新标签页)</zMenuItem>
           <zMenuItem href="https://vuejs.org">Vue.js</zMenuItem>
-          <zMenuItem href="https://vitejs.dev">Vite</zMenuItem>
+          <zMenuItem href="https://vitejs.dev" new-tab>Vite (新标签页)</zMenuItem>
         </zMenu>
       </ComponentDocsDemoBlock>
     </ComponentDocsSection>
@@ -93,9 +93,9 @@ import { zMenu, zMenuItem } from '@/components/z-ui/menu'
 
 const demo2Code = `<template>
   <zMenu>
-    <zMenuItem href="https://github.com">GitHub</zMenuItem>
+    <zMenuItem href="https://github.com" new-tab>GitHub (新标签页)</zMenuItem>
     <zMenuItem href="https://vuejs.org">Vue.js</zMenuItem>
-    <zMenuItem href="https://vitejs.dev">Vite</zMenuItem>
+    <zMenuItem href="https://vitejs.dev" new-tab>Vite (新标签页)</zMenuItem>
   </zMenu>
 </template>
 
@@ -142,6 +142,12 @@ const menuItemPropsRows = [
     description: '链接地址，设置后菜单项会渲染为 <a> 标签',
     type: 'string',
     default: '—'
+  },
+  {
+    name: 'newTab',
+    description: '是否在新标签页打开链接（仅在设置 href 时生效）',
+    type: 'boolean',
+    default: 'false'
   }
 ]
 
