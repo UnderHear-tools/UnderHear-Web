@@ -1,6 +1,8 @@
 package com.underhear.security;
 
+import java.util.Set;
 import java.util.concurrent.TimeUnit;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.redis.core.StringRedisTemplate;
@@ -16,6 +18,7 @@ public class SessionAuthService {
 
     // Redis 白名单 key 前缀 完整格式 auth:token:{jti}
     private static final String REDIS_KEY_PREFIX = "auth:token:";
+    private static final String USER_TOKENS_KEY_PREFIX = "auth:user:tokens:";
 
     private final JwtTokenService jwtTokenService;
     private final StringRedisTemplate stringRedisTemplate;
@@ -39,17 +42,20 @@ public class SessionAuthService {
         String tokenId = payload.getTokenId();
         String uuid = payload.getUuid();
         stringRedisTemplate.opsForValue().set(
-                redisKey(tokenId),
+                tokensKey(tokenId),
                 uuid,
                 tokenExpireSeconds,
                 TimeUnit.SECONDS);
+        String userTokensKey = userTokensKey(uuid);
+        stringRedisTemplate.opsForSet().add(userTokensKey, tokenId);
+        stringRedisTemplate.expire(userTokensKey, tokenExpireSeconds, TimeUnit.SECONDS);
     }
 
     // 根据 token 获取当前用户 要求 token 合法且仍在白名单里
     public User getCurrentUser(String token) {
         JwtTokenService.JwtTokenPayload payload = parseToken(token);
         String tokenId = payload.getTokenId();
-        String uuid = stringRedisTemplate.opsForValue().get(redisKey(tokenId));
+        String uuid = stringRedisTemplate.opsForValue().get(tokensKey(tokenId));
         if (uuid == null) {
             // 白名单中没有该 token 视为未登录
             throw new BizException(ErrorCode.NOT_LOGIN);
@@ -65,7 +71,21 @@ public class SessionAuthService {
     public void logout(String token) {
         JwtTokenService.JwtTokenPayload payload = parseToken(token);
         String tokenId = payload.getTokenId();
-        stringRedisTemplate.delete(redisKey(tokenId));
+        String uuid = payload.getUuid();
+        stringRedisTemplate.delete(tokensKey(tokenId));
+        stringRedisTemplate.opsForSet().remove(userTokensKey(uuid), tokenId);
+    }
+
+    // 使同一用户的所有 token 失效 适用于修改密码等安全敏感操作后强制下线
+    public void logoutAll(String token) {
+        JwtTokenService.JwtTokenPayload payload = parseToken(token);
+        String uuid = payload.getUuid();
+        String userTokensKey = userTokensKey(uuid);
+        Set<String> tokenIds = stringRedisTemplate.opsForSet().members(userTokensKey);
+        if (tokenIds != null && !tokenIds.isEmpty()) {
+            stringRedisTemplate.delete(tokenIds.stream().map(this::tokensKey).collect(Collectors.toSet()));
+        }
+        stringRedisTemplate.delete(userTokensKey);
     }
 
     // 如果已经有 token 还请求登录接口 就先把之前的 token 失效掉 避免同一用户多个 token 共存
@@ -85,7 +105,11 @@ public class SessionAuthService {
     }
 
     // 拼接 Redis key
-    private String redisKey(String tokenId) {
+    private String tokensKey(String tokenId) {
         return REDIS_KEY_PREFIX + tokenId;
+    }
+
+    private String userTokensKey(String uuid) {
+        return USER_TOKENS_KEY_PREFIX + uuid;
     }
 }

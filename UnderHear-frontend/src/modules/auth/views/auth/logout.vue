@@ -22,7 +22,11 @@
         </button>
       </div>
 
-      <button type="button" class="action-button action-button--danger action-button--full">
+      <button
+        type="button"
+        class="action-button action-button--danger action-button--full"
+        :disabled="isSubmitting"
+        @click="handleLogoutAll">
         从所有设备上登出
       </button>
     </section>
@@ -34,7 +38,7 @@ import { ref } from 'vue'
 import { zAvatar } from '@/components/z-ui/avatar'
 import { zBanner } from '@/components/z-ui/banner'
 import { useUserStore } from '@/stores/user'
-import { logout } from '../../api/logout'
+import { logout, logoutAll } from '../../api/logout'
 
 const userStore = useUserStore()
 const isSubmitting = ref(false)
@@ -45,6 +49,20 @@ const handleLogout = async () => {
   isSubmitting.value = true
   try {
     await logout()
+    window.location.href = '/'
+  } catch (error) {
+    zBanner.error(error instanceof Error ? error.message : '退出失败，请稍后重试。')
+  } finally {
+    isSubmitting.value = false
+  }
+}
+
+const handleLogoutAll = async () => {
+  if (isSubmitting.value) return
+
+  isSubmitting.value = true
+  try {
+    await logoutAll()
     window.location.href = '/'
   } catch (error) {
     zBanner.error(error instanceof Error ? error.message : '退出失败，请稍后重试。')

@@ -39,4 +39,13 @@ public class UserController {
         authCookieService.clearToken(response);
         return ApiResponse.success(null);
     }
+
+    @PostMapping("/logout-all")
+    public ApiResponse<Void> logoutAll(
+            @CookieValue(value = "auth_token", required = false) String token,
+            HttpServletResponse response) {
+        sessionAuthService.logoutAll(token);
+        authCookieService.clearToken(response);
+        return ApiResponse.success(null);
+    }
 }
