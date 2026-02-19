@@ -1,6 +1,7 @@
 package com.underhear.service.api.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import com.underhear.mapper.api.UserMapper;
@@ -14,7 +15,8 @@ public class UserServiceImpl implements UserService {
     private UserMapper userMapper;
 
     @Override
-    // 通过 UUID 查用户
+    @Cacheable(cacheNames = "user:info", key = "#uuid")
+    // 通过 UUID 查用户（先读 Redis，未命中再查数据库）
     public User getUserByUuid(String uuid) {
         return userMapper.getUserByUuid(uuid);
     }
