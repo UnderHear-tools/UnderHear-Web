@@ -170,14 +170,14 @@ onBeforeUnmount(() => {
 .title {
   font-size: 2.5rem;
   font-weight: 700;
-  color: var(--font-black);
+  color: var(--fgColor-default);
   margin-bottom: 1rem;
   line-height: 1.2;
 }
 
 .subtitle {
   font-size: 1.05rem;
-  color: var(--font-gray);
+  color: var(--fgColor-muted);
   line-height: 1.6;
   max-width: 620px;
   margin: 0 auto;
@@ -192,7 +192,7 @@ onBeforeUnmount(() => {
 
 .panel {
   background: #fff;
-  border: 1px solid var(--border-gray);
+  border: 1px solid var(--borderColor-default);
   border-radius: 6px;
   padding: 1.5rem;
 }
@@ -208,7 +208,7 @@ onBeforeUnmount(() => {
 .panel-title {
   margin: 0 0 1rem 0;
   font-weight: 700;
-  color: var(--font-black);
+  color: var(--fgColor-default);
 }
 
 .panel-actions {
@@ -218,7 +218,7 @@ onBeforeUnmount(() => {
 
 .preview-button {
   font-size: 0.9rem;
-  color: var(--font-blue);
+  color: var(--fgColor-link);
   font-weight: 600;
   cursor: pointer;
 }
@@ -240,14 +240,14 @@ onBeforeUnmount(() => {
 .label {
   font-size: 0.9rem;
   font-weight: 600;
-  color: var(--font-black);
+  color: var(--fgColor-default);
 }
 
 .sub-title {
   margin: 0.2rem 0 0.1rem;
   font-size: 0.95rem;
   font-weight: 700;
-  color: var(--font-black);
+  color: var(--fgColor-default);
 }
 
 .submit {
@@ -255,7 +255,7 @@ onBeforeUnmount(() => {
   justify-content: center;
   align-items: center;
   padding: 0.55rem 1rem;
-  background-color: var(--font-blue);
+  background-color: var(--bgColor-accent-emphasis);
   color: #fff;
   border: none;
   border-radius: 6px;
@@ -272,13 +272,13 @@ onBeforeUnmount(() => {
 .editor {
   width: 100%;
   height: 520px;
-  border: 1px solid var(--border-gray);
+  border: 1px solid var(--borderColor-default);
   overflow: hidden;
 }
 
 .hint {
   margin: 0.75rem 0 0;
-  color: var(--font-gray);
+  color: var(--fgColor-muted);
   font-size: 0.9rem;
   line-height: 1.6;
 }
@@ -299,7 +299,7 @@ onBeforeUnmount(() => {
   height: min(900px, 92vh);
   background: #fff;
   border-radius: 6px;
-  outline: 1px solid var(--border-gray);
+  outline: 1px solid var(--borderColor-default);
   display: flex;
   flex-direction: column;
   overflow: hidden;
@@ -316,7 +316,7 @@ onBeforeUnmount(() => {
 
 .preview-title {
   font-weight: 700;
-  color: var(--font-black);
+  color: var(--fgColor-default);
 }
 
 .preview-actions {

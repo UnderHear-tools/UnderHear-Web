@@ -184,10 +184,10 @@ function columnStyle(column: ZTableColumn) {
 
 <style scoped>
 .z-table {
-  outline: 1px solid var(--border-gray);
+  outline: 1px solid var(--borderColor-default);
   border-radius: 6px;
   background: #ffffff;
-  color: var(--font-black);
+  color: var(--fgColor-default);
   overflow: hidden;
 }
 
@@ -229,7 +229,7 @@ function columnStyle(column: ZTableColumn) {
 
 .z-table__cell {
   padding: 0.6rem 0.9rem;
-  border-bottom: 1px solid var(--border-gray);
+  border-bottom: 1px solid var(--borderColor-default);
   vertical-align: middle;
   background-clip: padding-box;
   white-space: nowrap;
@@ -242,7 +242,7 @@ function columnStyle(column: ZTableColumn) {
 
 .z-table__cell--head {
   font-weight: 600;
-  color: var(--font-black);
+  color: var(--fgColor-default);
   background: #f6f8fa;
   position: relative;
 }
@@ -266,7 +266,7 @@ function columnStyle(column: ZTableColumn) {
 .z-table__cell--empty {
   text-align: center;
   padding: 2rem 1rem;
-  color: var(--font-gray);
+  color: var(--fgColor-muted);
   font-weight: 500;
 }
 
@@ -285,7 +285,7 @@ function columnStyle(column: ZTableColumn) {
 
 .is-row-header {
   font-weight: 600;
-  color: var(--font-black);
+  color: var(--fgColor-default);
 }
 
 .is-align-left {

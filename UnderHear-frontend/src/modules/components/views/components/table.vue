@@ -561,15 +561,15 @@ const apiTableRows = [
 
 .table-demo__label {
   font-size: 0.8125rem;
-  color: var(--font-gray);
+  color: var(--fgColor-muted);
 }
 
 .status-bar {
   font-size: 0.9rem;
-  color: var(--font-gray);
+  color: var(--fgColor-muted);
 }
 
 .status-bar strong {
-  color: var(--font-black);
+  color: var(--fgColor-default);
 }
 </style>

@@ -229,17 +229,17 @@ const apiTableRows = [
   border: 1px solid #d1d9e0;
   border-radius: 6px;
   font-size: 0.875rem;
-  color: var(--font-black);
+  color: var(--fgColor-default);
   background: #ffffff;
   box-shadow: inset 0px 1px 0px 0px #1f23280a;
 }
 
 .icon-search-input::placeholder {
-  color: var(--font-gray);
+  color: var(--fgColor-muted);
 }
 
 .icon-search-input:focus {
-  outline: 2px solid var(--font-blue);
+  outline: 2px solid var(--focus-outlineColor);
   outline-offset: -1px;
 }
 
@@ -251,15 +251,15 @@ const apiTableRows = [
 }
 
 .demo-icon {
-  color: var(--font-black);
+  color: var(--fgColor-default);
 }
 
 .icon-muted {
-  color: var(--font-gray);
+  color: var(--fgColor-muted);
 }
 
 .icon-primary {
-  color: var(--font-blue);
+  color: var(--fgColor-accent);
 }
 
 .icon-danger {
@@ -284,12 +284,12 @@ const apiTableRows = [
 }
 
 .icon-svg {
-  color: var(--font-black);
+  color: var(--fgColor-default);
 }
 
 .icon-name {
   font-size: 0.75rem;
-  color: var(--font-gray);
+  color: var(--fgColor-muted);
   text-align: center;
   word-break: break-word;
   line-height: 1.4;

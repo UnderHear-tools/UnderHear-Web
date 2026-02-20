@@ -168,7 +168,7 @@ onMounted(() => {
 
 .right-column {
     padding: 24px;
-    border: 1px solid var(--border-gray);
+    border: 1px solid var(--borderColor-default);
     border-radius: 6px;
     width: 78%;
 }
@@ -364,7 +364,7 @@ onMounted(() => {
 }
 
 .repo {
-    border: 1px solid var(--border-gray);
+    border: 1px solid var(--borderColor-default);
     border-radius: 6px;
     padding: 16px;
 }
@@ -373,11 +373,11 @@ onMounted(() => {
     margin-top: 20px;
     display: flex;
     flex-direction: column;
-    border: 1px solid var(--border-gray);
+    border: 1px solid var(--borderColor-default);
 }
 
 .project-card {
-    border-bottom: 1px solid var(--border-gray);
+    border-bottom: 1px solid var(--borderColor-default);
     padding: 20px;
     background-color: #fff;
     transition: box-shadow 0.2s ease;
@@ -394,14 +394,14 @@ onMounted(() => {
     margin: 0;
     font-size: 16px;
     font-weight: 600;
-    color: var(--font-blue);
+    color: var(--fgColor-link);
     line-height: 1.25;
     text-decoration: underline;
 }
 
 .project-date {
     font-size: 12px;
-    color: var(--font-gray);
+    color: var(--fgColor-muted);
     background-color: #f3f5f7;
     padding: 4px 8px;
     border-radius: 12px;
@@ -417,11 +417,11 @@ onMounted(() => {
     margin: 0 0 8px 0;
     font-size: 14px;
     line-height: 1.5;
-    color: var(--font-gray);
+    color: var(--fgColor-muted);
 }
 
 .project-description p:first-child {
-    color: var(--font-black);
+    color: var(--fgColor-default);
     font-weight: 500;
 }
 
@@ -436,7 +436,7 @@ onMounted(() => {
 .view-more-simple {
     text-align: center;
     padding: 10px;
-    color: var(--font-blue);
+    color: var(--fgColor-link);
     font-size: 14px;
 }
 
@@ -472,7 +472,7 @@ onMounted(() => {
         height: 66.4px;
         margin-right: 16px;
         box-shadow: 0 0 0 1px #1f232826;
-        border: 1px solid var(--border-gray);
+        border: 1px solid var(--borderColor-default);
     }
 
     .profile-info {

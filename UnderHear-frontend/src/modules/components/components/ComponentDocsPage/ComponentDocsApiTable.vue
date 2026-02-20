@@ -33,7 +33,7 @@ defineProps<{
 .api-subtitle {
   font-size: 1.25rem;
   font-weight: 600;
-  color: var(--font-black);
+  color: var(--fgColor-default);
   margin-bottom: 1rem;
 }
 
@@ -59,14 +59,14 @@ defineProps<{
   text-align: left;
   font-weight: 600;
   font-size: 0.875rem;
-  color: var(--font-black);
+  color: var(--fgColor-default);
   border-bottom: 1px solid #d1d9e0;
 }
 
 .api-table td {
   padding: 0.75rem 1rem;
   font-size: 0.875rem;
-  color: var(--font-gray);
+  color: var(--fgColor-muted);
   border-bottom: 1px solid #d1d9e0;
 }
 

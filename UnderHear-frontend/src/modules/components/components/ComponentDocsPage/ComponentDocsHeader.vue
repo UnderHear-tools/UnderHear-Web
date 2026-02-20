@@ -18,13 +18,13 @@ defineProps<{
 .page-title {
   font-size: 2rem;
   font-weight: 600;
-  color: var(--font-black);
+  color: var(--fgColor-default);
   margin-bottom: 0.5rem;
 }
 
 .page-description {
   font-size: 1rem;
-  color: var(--font-gray);
+  color: var(--fgColor-muted);
   margin-bottom: 2rem;
 }
 

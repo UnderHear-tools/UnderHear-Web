@@ -128,7 +128,7 @@ onMounted(() => {
 .login-card {
   width: 100%;
   max-width: 28rem;
-  border: 1px solid var(--border-gray);
+  border: 1px solid var(--borderColor-default);
   background: #ffffff;
   border-radius: 8px;
   padding: 32px;
@@ -165,7 +165,7 @@ onMounted(() => {
   justify-content: center;
   gap: 8px;
   border-radius: 6px;
-  border: 1px solid var(--border-gray);
+  border: 1px solid var(--borderColor-default);
   background: #f6f8fa;
   color: #111111;
   padding: 10px 12px;

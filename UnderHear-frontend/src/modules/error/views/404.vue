@@ -21,7 +21,7 @@
 
 .not-found-text {
   margin: 0;
-  color: var(--font-gray);
+  color: var(--fgColor-muted);
   text-align: center;
 }
 </style>

@@ -28,12 +28,12 @@ withDefaults(
 .section-title {
   font-size: 1.5rem;
   font-weight: 600;
-  color: var(--font-black);
+  color: var(--fgColor-default);
   margin-bottom: 0.75rem;
 }
 
 .section-description {
-  color: var(--font-gray);
+  color: var(--fgColor-muted);
   margin-bottom: 1rem;
   line-height: 1.6;
 }
@@ -45,7 +45,7 @@ withDefaults(
   border-radius: 3px;
   font-family: 'Consolas', 'Monaco', 'Courier New', monospace;
   font-size: 0.875em;
-  color: var(--font-black);
+  color: var(--fgColor-default);
 }
 
 .api-section {

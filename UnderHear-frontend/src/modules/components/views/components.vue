@@ -23,14 +23,14 @@ import { zContainer } from '@/components/z-ui/container'
 .title {
   font-size: 2.5rem;
   font-weight: 700;
-  color: var(--font-black);
+  color: var(--fgColor-default);
   margin-bottom: 1rem;
   line-height: 1.2;
 }
 
 .subtitle {
   font-size: 1.05rem;
-  color: var(--font-gray);
+  color: var(--fgColor-muted);
   line-height: 1.6;
   max-width: 620px;
   margin: 0 auto;
@@ -40,7 +40,7 @@ import { zContainer } from '@/components/z-ui/container'
   display: inline-block;
   margin-top: 2rem;
   padding: 0.75rem 2rem;
-  background-color: var(--font-blue);
+  background-color: var(--bgColor-accent-emphasis);
   color: #ffffff;
   border-radius: 6px;
 }

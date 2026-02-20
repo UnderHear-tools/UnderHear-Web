@@ -256,7 +256,7 @@ const navSections = ref([
 .section-title {
   font-size: 1rem;
   font-weight: 600;
-  color: var(--font-black);
+  color: var(--fgColor-default);
   margin-top: 1.5rem;
   margin-bottom: 0.5rem;
 }
@@ -264,7 +264,7 @@ const navSections = ref([
 .nav-item {
   display: block;
   padding: 0.5rem 1rem;
-  color: var(--font-gray);
+  color: var(--fgColor-muted);
   text-decoration: none;
   font-size: 0.875rem;
   transition: all 0.2s ease;
@@ -274,7 +274,7 @@ const navSections = ref([
 
 .nav-item:hover {
   background-color: #f2f3f4;
-  color: var(--font-black);
+  color: var(--fgColor-default);
 }
 
 .nav-item.active {
@@ -291,7 +291,7 @@ const navSections = ref([
   width: 4px;
   height: 30px;
   transform: translate(0, -50%);
-  background-color: var(--font-blue);
+  background-color: var(--bgColor-accent-emphasis);
   border-radius: 2px;
 }
 
@@ -327,7 +327,7 @@ const navSections = ref([
 
 .toc-title {
   font-weight: bold;
-  color: var(--font-black);
+  color: var(--fgColor-default);
   margin-bottom: 1rem;
   text-transform: uppercase;
   letter-spacing: 0.05em;
@@ -340,7 +340,7 @@ const navSections = ref([
 }
 
 .toc-link {
-  color: var(--font-gray);
+  color: var(--fgColor-muted);
   text-decoration: none;
   font-size: 0.875rem;
   line-height: 1.5;
@@ -350,13 +350,13 @@ const navSections = ref([
 }
 
 .toc-link:hover {
-  color: var(--font-black);
+  color: var(--fgColor-default);
   border-left-color: #d1d9e0;
 }
 
 .toc-link.active {
-  color: var(--font-blue);
-  border-left-color: var(--font-blue);
+  color: var(--fgColor-link);
+  border-left-color: var(--borderColor-accent-emphasis);
 }
 
 .toc-h3 {
@@ -421,7 +421,7 @@ const navSections = ref([
     align-items: center;
     justify-content: center;
     transition: all 0.2s ease;
-    border: 1px solid var(--border-gray);
+    border: 1px solid var(--borderColor-default);
   }
 
   /* 遮罩层 */

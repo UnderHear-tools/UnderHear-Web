@@ -66,14 +66,14 @@ function goCollect() {
 .title {
   font-size: 2.5rem;
   font-weight: 700;
-  color: var(--font-black);
+  color: var(--fgColor-default);
   margin-bottom: 1rem;
   line-height: 1.2;
 }
 
 .subtitle {
   font-size: 1.05rem;
-  color: var(--font-gray);
+  color: var(--fgColor-muted);
   line-height: 1.6;
   max-width: 620px;
   margin: 0 auto;
@@ -90,7 +90,7 @@ function goCollect() {
   appearance: none;
   width: 100%;
   text-align: left;
-  border: 1px solid var(--border-gray);
+  border: 1px solid var(--borderColor-default);
   border-radius: 6px;
   background: #fafafa;
   padding: 1.5rem;
@@ -98,7 +98,7 @@ function goCollect() {
 }
 
 .option-card:hover {
-  border-color: var(--font-blue);
+  border-color: var(--borderColor-accent-emphasis);
   box-shadow: 0 4px 14px -4px rgba(0, 0, 0, 0.08);
 }
 
@@ -106,14 +106,14 @@ function goCollect() {
   margin: 0 0 0.6rem 0;
   font-size: 1.15rem;
   font-weight: 700;
-  color: var(--font-black);
+  color: var(--fgColor-default);
 }
 
 .option-desc {
   margin: 0;
   font-size: 0.95rem;
   line-height: 1.6;
-  color: var(--font-gray);
+  color: var(--fgColor-muted);
 }
 
 .create-image {

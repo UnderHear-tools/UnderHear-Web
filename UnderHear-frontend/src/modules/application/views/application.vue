@@ -81,14 +81,14 @@ onMounted(() => {
 .application-title {
   font-size: 2.5rem;
   font-weight: 700;
-  color: var(--font-black);
+  color: var(--fgColor-default);
   margin-bottom: 1rem;
   line-height: 1.2;
 }
 
 .application-subtitle {
   font-size: 1.1rem;
-  color: var(--font-gray);
+  color: var(--fgColor-muted);
   line-height: 1.6;
   max-width: 600px;
   margin: 0 auto;
@@ -102,7 +102,7 @@ onMounted(() => {
 
 .application-card {
   background: white;
-  border: 1px solid var(--border-gray);
+  border: 1px solid var(--borderColor-default);
   border-radius: 6px;
   padding: 2rem;
   display: flex;
@@ -111,7 +111,7 @@ onMounted(() => {
 }
 
 .application-card:hover {
-  border-color: var(--font-blue);
+  border-color: var(--borderColor-accent-emphasis);
   box-shadow: 0 4px 14px -4px rgba(0, 0, 0, 0.08);
 }
 
@@ -133,14 +133,14 @@ onMounted(() => {
   margin: 0;
   font-size: 1.25rem;
   font-weight: 600;
-  color: var(--font-black);
+  color: var(--fgColor-default);
   line-height: 1.3;
   flex: 1;
 }
 
 .application-category {
   font-size: 0.75rem;
-  color: var(--font-gray);
+  color: var(--fgColor-muted);
   background-color: #f6f8fa;
   padding: 0.25rem 0.5rem;
   border-radius: 12px;
@@ -156,11 +156,11 @@ onMounted(() => {
   margin: 0 0 0.75rem 0;
   font-size: 0.95rem;
   line-height: 1.6;
-  color: var(--font-black);
+  color: var(--fgColor-default);
 }
 
 .description-en {
-  color: var(--font-gray) !important;
+  color: var(--fgColor-muted) !important;
   font-style: italic;
   font-size: 0.9rem !important;
 }
@@ -189,7 +189,7 @@ onMounted(() => {
 .author-link {
   font-size: 1rem;
   font-weight: 600;
-  color: var(--font-blue);
+  color: var(--fgColor-link);
   text-decoration: underline;
 }
 
@@ -201,7 +201,7 @@ onMounted(() => {
   display: inline-flex;
   align-items: center;
   font-size: 0.875rem;
-  color: var(--font-gray);
+  color: var(--fgColor-muted);
   background-color: #f6f8fa;
   padding: 0.25rem 0.75rem;
   border-radius: 12px;
@@ -214,7 +214,7 @@ onMounted(() => {
   display: inline-flex;
   align-items: center;
   padding: 0.5rem 1rem;
-  background-color: var(--font-blue);
+  background-color: var(--bgColor-accent-emphasis);
   color: white;
   text-decoration: none;
   border-radius: 6px;

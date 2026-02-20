@@ -102,13 +102,13 @@ const copyCode = () => {
   width: 32px;
   height: 32px;
   border: none;
-  color: var(--font-gray);
+  color: var(--fgColor-muted);
   cursor: pointer;
   border-radius: 4px;
 }
 
 .action-btn:hover {
-  color: var(--font-black);
+  color: var(--fgColor-default);
 }
 
 .demo-code {
@@ -144,7 +144,7 @@ const copyCode = () => {
   gap: 0.375rem;
   background: transparent;
   border: none;
-  color: var(--font-gray);
+  color: var(--fgColor-muted);
   font-size: 0.875rem;
   cursor: pointer;
   border-radius: 4px;
@@ -152,7 +152,7 @@ const copyCode = () => {
 }
 
 .hide-code-btn:hover {
-  color: var(--font-blue);
+  color: var(--fgColor-link);
 }
 
 .demo-code pre[class*='language-'] {
@@ -167,7 +167,7 @@ const copyCode = () => {
   font-family: 'Consolas', 'Monaco', 'Courier New', monospace;
   font-size: 0.875rem;
   line-height: 1.6;
-  color: var(--font-black);
+  color: var(--fgColor-default);
   white-space: pre;
   background: transparent;
 }

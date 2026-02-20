@@ -46,14 +46,14 @@ import { zLink } from '@/components/z-ui/link'
 .title {
 	font-size: 2.5rem;
 	font-weight: 700;
-	color: var(--font-black);
+	color: var(--fgColor-default);
 	margin-bottom: 1rem;
 	line-height: 1.2;
 }
 
 .subtitle {
 	font-size: 1.05rem;
-	color: var(--font-gray);
+	color: var(--fgColor-muted);
 	line-height: 1.6;
 	max-width: 620px;
 	margin: 0 auto;
@@ -68,7 +68,7 @@ import { zLink } from '@/components/z-ui/link'
 .creator-card {
 	display: flex;
 	flex-direction: column;
-	border: 1px solid var(--border-gray);
+	border: 1px solid var(--borderColor-default);
 	border-radius: 6px;
 	padding: 1.5rem 1.6rem 1.1rem;
 	text-decoration: none;
@@ -78,7 +78,7 @@ import { zLink } from '@/components/z-ui/link'
 }
 
 .creator-card:hover {
-	border-color: var(--font-blue);
+	border-color: var(--borderColor-accent-emphasis);
 	box-shadow: 0 4px 14px -4px rgba(0, 0, 0, 0.08);
 }
 
@@ -93,7 +93,7 @@ import { zLink } from '@/components/z-ui/link'
 	border-radius: 50%;
 	object-fit: cover;
 	box-shadow: 0 0 0 1px #1f232826;
-	border: 1px solid var(--border-gray);
+	border: 1px solid var(--borderColor-default);
 }
 
 .info {
@@ -112,7 +112,7 @@ import { zLink } from '@/components/z-ui/link'
 	margin: 0;
 	font-size: 1.25rem;
 	font-weight: 600;
-	color: var(--font-blue);
+	color: var(--fgColor-accent);
 }
 
 .role {
@@ -122,7 +122,7 @@ import { zLink } from '@/components/z-ui/link'
 	background: #f6f8fa;
 	padding: .25rem .55rem;
 	border-radius: 12px;
-	color: var(--font-gray);
+	color: var(--fgColor-muted);
 	font-weight: 600;
 	line-height: 1;
 }
@@ -132,11 +132,11 @@ import { zLink } from '@/components/z-ui/link'
 	margin: 0 0 .5rem;
 	font-size: .85rem;
 	line-height: 1.5;
-	color: var(--font-black);
+	color: var(--fgColor-default);
 }
 
 .bio-zh {
-	color: var(--font-gray);
+	color: var(--fgColor-muted);
 	font-style: italic;
 }
 
@@ -149,7 +149,7 @@ import { zLink } from '@/components/z-ui/link'
 .enter {
 	font-size: 1rem;
 	font-weight: 600;
-	color: var(--font-blue);
+	color: var(--fgColor-link);
 	padding: .35rem .7rem;
 	border-radius: 6px;
 	transition: background .18s ease;
