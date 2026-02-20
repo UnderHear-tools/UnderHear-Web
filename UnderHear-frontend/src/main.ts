@@ -1,6 +1,12 @@
 import { createApp } from 'vue'
 import { createPinia } from 'pinia'
-import './style.css'
+
+//引入全局样式
+import './css/style.css'
+import './css/primer/primer.css'
+import './css/primer/themes/light.css'
+import './css/primer/themes/dark.css'
+
 import App from './App.vue'
 import router from './router'
 import { useUserStore } from '@/stores/user'
