@@ -1,12 +1,5 @@
 @import "tailwindcss";
 
-:root {
-  --font-blue: #0969da;
-  --font-gray: #656d76;
-  --font-black: #24292f;
-  --border-gray: #d1d9e0;
-}
-
 @layer base {
   html, body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
