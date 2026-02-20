@@ -4,14 +4,14 @@
     <div class="background-1" aria-hidden="true"></div>
     <div class="background-2" aria-hidden="true"></div>
     <div class="hero-stage">
-    <div class="background-3" aria-hidden="true"></div>
-    <div class="background-4" aria-hidden="true"></div>
-    <div class="background-5 animate-stretch-vertical-loop" aria-hidden="true"></div>
-    <div class="background-6 animate-stretch-horizontal-loop" aria-hidden="true"></div>
-    <div class="background-7" aria-hidden="true"></div>
-    <div class="background-8 animate-stretch-vertical-loop" aria-hidden="true"></div>
-    <div class="background-9 animate-stretch-horizontal-loop" aria-hidden="true"></div>
-    <div class="background-10" aria-hidden="true"></div>
+      <div class="background-3" aria-hidden="true"></div>
+      <div class="background-4" aria-hidden="true"></div>
+      <div class="background-5 animate-stretch-vertical-loop" aria-hidden="true"></div>
+      <div class="background-6 animate-stretch-horizontal-loop" aria-hidden="true"></div>
+      <div class="background-7" aria-hidden="true"></div>
+      <div class="background-8 animate-stretch-vertical-loop" aria-hidden="true"></div>
+      <div class="background-9 animate-stretch-horizontal-loop" aria-hidden="true"></div>
+      <div class="background-10" aria-hidden="true"></div>
     </div>
     <div class="title">EXPLORE</div>
   </div>
@@ -130,8 +130,8 @@
 
 .background-8 {
   position: absolute;
-  right: min(34.85vw, 31.365rem);
-  top: calc(min(7.05vw, 6.345rem) + var(--bg-offset));
+  right: min(34.82vw, 31.338rem);
+  top: calc(min(7.2vw, 6.48rem) + var(--bg-offset));
   width: min(0.55vw, 0.495rem);
   aspect-ratio: 11 / 135;
   background-image: url("../assests/background-8.svg");
@@ -203,7 +203,7 @@
 @keyframes pulse-vertical {
   0%,
   100% {
-    transform: scaleY(0.6);
+    transform: scaleY(0.8);
   }
   50% {
     transform: scaleY(1);
@@ -213,7 +213,7 @@
 @keyframes pulse-horizontal {
   0%,
   100% {
-    transform: scaleX(0.6);
+    transform: scaleX(0.8);
   }
   50% {
     transform: scaleX(1);
