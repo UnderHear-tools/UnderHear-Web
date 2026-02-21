@@ -192,13 +192,13 @@ const closeBanner = () => zBanner.close()
 .demo-btn {
   padding: 8px 14px;
   border-radius: 6px;
-  border: 1px solid #d0d7de;
-  background: #f6f8fa;
+  border: 1px solid var(--borderColor-default);
+  background: var(--bgColor-muted);
   cursor: pointer;
 }
 
 .demo-btn--ghost {
-  background: #ffffff;
+  background: var(--bgColor-default);
 }
 <\/style>`
 
@@ -251,8 +251,8 @@ const showStackedActionsBanner = () => {
 .demo-btn {
   padding: 8px 14px;
   border-radius: 6px;
-  border: 1px solid #d0d7de;
-  background: #f6f8fa;
+  border: 1px solid var(--borderColor-default);
+  background: var(--bgColor-muted);
   cursor: pointer;
 }
 <\/style>`
@@ -301,13 +301,13 @@ const closeBannerWithRef = () => bannerRef.value?.close()
 .demo-btn {
   padding: 8px 14px;
   border-radius: 6px;
-  border: 1px solid #d0d7de;
-  background: #f6f8fa;
+  border: 1px solid var(--borderColor-default);
+  background: var(--bgColor-muted);
   cursor: pointer;
 }
 
 .demo-btn--ghost {
-  background: #ffffff;
+  background: var(--bgColor-default);
 }
 <\/style>`
 
@@ -411,25 +411,25 @@ const exposedTableRows = [
 .demo-btn {
   padding: 8px 14px;
   border-radius: 6px;
-  border: 1px solid #d0d7de;
-  background: #f6f8fa;
-  color: #24292f;
+  border: 1px solid var(--borderColor-default);
+  background: var(--bgColor-muted);
+  color: var(--fgColor-default);
   font-size: 14px;
   cursor: pointer;
 }
 
 .demo-btn:hover {
-  background: #eef1f4;
+  background: var(--bgColor-muted);
 }
 
 .demo-btn--ghost {
-  background: #ffffff;
+  background: var(--bgColor-default);
 }
 
 h4 {
   margin: 0 0 12px;
   font-size: 14px;
   font-weight: 600;
-  color: #1f2328;
+  color: var(--fgColor-default);
 }
 </style>

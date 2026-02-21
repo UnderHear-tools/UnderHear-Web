@@ -55,7 +55,7 @@ withDefaults(defineProps<Props>(), {
 }
 
 .z-link {
-  color: #0969da;
+  color: var(--fgColor-link);
   text-decoration: none;
   font-weight: 500;
   transition: all 0.2s ease;
@@ -64,37 +64,37 @@ withDefaults(defineProps<Props>(), {
 }
 
 .z-link:hover {
-  color: #0550ae;
+  color: var(--fgColor-link);
   text-decoration: underline;
 }
 
 .z-link:active {
-  color: #0a3069;
+  color: var(--fgColor-link);
 }
 
 /* 变体样式 */
 .z-link-primary {
-  color: #0969da;
+  color: var(--fgColor-link);
 }
 
 .z-link-primary:hover {
-  color: #0550ae;
+  color: var(--fgColor-link);
 }
 
 .z-link-secondary {
-  color: #656d76;
+  color: var(--fgColor-muted);
 }
 
 .z-link-secondary:hover {
-  color: #24292f;
+  color: var(--fgColor-default);
 }
 
 .z-link-danger {
-  color: #d1242f;
+  color: var(--fgColor-danger);
 }
 
 .z-link-danger:hover {
-  color: #a40e26;
+  color: var(--fgColor-danger);
 }
 
 /* 外部链接样式 */
@@ -106,7 +106,7 @@ withDefaults(defineProps<Props>(), {
 
 /* 焦点样式 */
 .z-link:focus {
-  outline: 2px solid #0969da;
+  outline: 2px solid var(--focus-outlineColor);
   outline-offset: 2px;
 }
 

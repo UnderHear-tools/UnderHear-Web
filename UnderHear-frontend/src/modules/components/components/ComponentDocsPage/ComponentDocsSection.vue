@@ -40,8 +40,8 @@ withDefaults(
 
 .section-description code {
   padding: 0.125rem 0.375rem;
-  background: #f6f8fa;
-  border: 1px solid #d1d9e0;
+  background: var(--bgColor-muted);
+  border: 1px solid var(--borderColor-default);
   border-radius: 3px;
   font-family: 'Consolas', 'Monaco', 'Courier New', monospace;
   font-size: 0.875em;

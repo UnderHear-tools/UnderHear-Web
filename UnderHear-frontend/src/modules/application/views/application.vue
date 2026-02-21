@@ -101,7 +101,7 @@ onMounted(() => {
 }
 
 .application-card {
-  background: white;
+  background: var(--bgColor-default);
   border: 1px solid var(--borderColor-default);
   border-radius: 6px;
   padding: 2rem;
@@ -112,7 +112,7 @@ onMounted(() => {
 
 .application-card:hover {
   border-color: var(--borderColor-accent-emphasis);
-  box-shadow: 0 4px 14px -4px rgba(0, 0, 0, 0.08);
+  box-shadow: 0 4px 14px -4px color-mix(in srgb, var(--fgColor-default) 8%, var(--bgColor-transparent));
 }
 
 .application-content {
@@ -141,7 +141,7 @@ onMounted(() => {
 .application-category {
   font-size: 0.75rem;
   color: var(--fgColor-muted);
-  background-color: #f6f8fa;
+  background-color: var(--bgColor-muted);
   padding: 0.25rem 0.5rem;
   border-radius: 12px;
   font-weight: 500;
@@ -182,7 +182,7 @@ onMounted(() => {
   width: 30px;
   height: 30px;
   border-radius: 30px;
-  border: 1px solid #ccc;
+  border: 1px solid var(--borderColor-default);
   object-fit: cover;
 }
 
@@ -202,7 +202,7 @@ onMounted(() => {
   align-items: center;
   font-size: 0.875rem;
   color: var(--fgColor-muted);
-  background-color: #f6f8fa;
+  background-color: var(--bgColor-muted);
   padding: 0.25rem 0.75rem;
   border-radius: 12px;
   font-weight: 500;
@@ -215,7 +215,7 @@ onMounted(() => {
   align-items: center;
   padding: 0.5rem 1rem;
   background-color: var(--bgColor-accent-emphasis);
-  color: white;
+  color: var(--fgColor-onEmphasis);
   text-decoration: none;
   border-radius: 6px;
   font-weight: 500;
@@ -225,7 +225,7 @@ onMounted(() => {
 }
 
 .try-button:hover {
-  background-color: #0860ca;
+  background-color: var(--bgColor-accent-emphasis);
 }
 
 @media (max-width: 768px) {

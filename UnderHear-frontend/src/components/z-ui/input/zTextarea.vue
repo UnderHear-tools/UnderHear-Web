@@ -43,7 +43,7 @@ function onInput(event: Event) {
 <style scoped>
 .z-textarea {
   width: 100%;
-  border: 1px solid #d1d9e0;
+  border: 1px solid var(--borderColor-default);
   border-radius: 6px;
   padding: 0.6rem 0.7rem;
   font-size: 0.95rem;
@@ -54,13 +54,13 @@ function onInput(event: Event) {
 }
 
 .z-textarea:focus {
-  outline: 2px solid #0969da;
+  outline: 2px solid var(--focus-outlineColor);
   outline-offset: -1px;
 }
 
 .z-textarea:disabled {
   cursor: not-allowed;
   opacity: 0.7;
-  background: #f6f8fa;
+  background: var(--bgColor-muted);
 }
 </style>

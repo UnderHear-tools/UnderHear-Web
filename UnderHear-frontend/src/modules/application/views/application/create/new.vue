@@ -191,7 +191,7 @@ onBeforeUnmount(() => {
 }
 
 .panel {
-  background: #fff;
+  background: var(--bgColor-default);
   border: 1px solid var(--borderColor-default);
   border-radius: 6px;
   padding: 1.5rem;
@@ -256,7 +256,7 @@ onBeforeUnmount(() => {
   align-items: center;
   padding: 0.55rem 1rem;
   background-color: var(--bgColor-accent-emphasis);
-  color: #fff;
+  color: var(--fgColor-onEmphasis);
   border: none;
   border-radius: 6px;
   font-weight: 600;
@@ -266,7 +266,7 @@ onBeforeUnmount(() => {
 }
 
 .submit:hover {
-  background-color: #0860ca;
+  background-color: var(--bgColor-accent-emphasis);
 }
 
 .editor {
@@ -286,7 +286,7 @@ onBeforeUnmount(() => {
 .preview-overlay {
   position: fixed;
   inset: 0;
-  background: rgba(0, 0, 0, 0.1);
+  background: color-mix(in srgb, var(--fgColor-default) 10%, var(--bgColor-transparent));
   display: flex;
   align-items: center;
   justify-content: center;
@@ -297,7 +297,7 @@ onBeforeUnmount(() => {
 .preview-panel {
   width: min(1500px, 96vw);
   height: min(900px, 92vh);
-  background: #fff;
+  background: var(--bgColor-default);
   border-radius: 6px;
   outline: 1px solid var(--borderColor-default);
   display: flex;
@@ -311,7 +311,7 @@ onBeforeUnmount(() => {
   justify-content: space-between;
   gap: 1rem;
   padding: 0.75rem 1rem;
-  border-bottom: 1px solid #e2e8f0;
+  border-bottom: 1px solid var(--borderColor-default);
 }
 
 .preview-title {
@@ -325,14 +325,14 @@ onBeforeUnmount(() => {
 }
 
 .preview-close {
-  color: #d12b2b;
+  color: var(--fgColor-danger);
 }
 
 .preview-iframe {
   border: none;
   width: 100%;
   flex: 1;
-  background: #fff;
+  background: var(--bgColor-default);
 }
 
 @media (max-width: 920px) {

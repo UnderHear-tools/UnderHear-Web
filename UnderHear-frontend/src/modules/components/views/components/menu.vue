@@ -169,6 +169,6 @@ h4 {
   margin: 0 0 12px;
   font-size: 14px;
   font-weight: 600;
-  color: #1f2328;
+  color: var(--fgColor-default);
 }
 </style>

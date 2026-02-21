@@ -34,8 +34,8 @@ defineEmits<{ click: [] }>()
   padding: 6px 8px;
   border: none;
   border-radius: 6px;
-  background: transparent;
-  color: #1f2328;
+  background: var(--bgColor-transparent);
+  color: var(--fgColor-default);
   font-size: 14px;
   text-align: left;
   text-decoration: none;
@@ -43,6 +43,6 @@ defineEmits<{ click: [] }>()
 }
 
 .z-menu-item:hover {
-  background: #f2f3f4;
+  background: var(--control-bgColor-hover);
 }
 </style>

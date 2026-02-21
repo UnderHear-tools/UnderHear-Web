@@ -129,7 +129,7 @@ onMounted(() => {
   width: 100%;
   max-width: 28rem;
   border: 1px solid var(--borderColor-default);
-  background: #ffffff;
+  background: var(--bgColor-default);
   border-radius: 8px;
   padding: 32px;
 }
@@ -144,11 +144,11 @@ onMounted(() => {
 .login-title {
   font-size: 24px;
   font-weight: 500;
-  color: #111111;
+  color: var(--fgColor-default);
 }
 
 .login-subtitle {
-  color: #6b7280;
+  color: var(--fgColor-muted);
   font-size: 14px;
 }
 
@@ -166,8 +166,8 @@ onMounted(() => {
   gap: 8px;
   border-radius: 6px;
   border: 1px solid var(--borderColor-default);
-  background: #f6f8fa;
-  color: #111111;
+  background: var(--bgColor-muted);
+  color: var(--fgColor-default);
   padding: 10px 12px;
   font-size: 14px;
   font-weight: 500;
@@ -176,7 +176,7 @@ onMounted(() => {
 }
 
 .github-button:hover {
-  background: #eff2f5;
+  background: var(--control-bgColor-hover);
 }
 
 .github-button:disabled {
@@ -192,17 +192,17 @@ onMounted(() => {
 .login-terms {
   text-align: center;
   font-size: 12px;
-  color: #9ca3af;
+  color: var(--fgColor-muted);
   line-height: 1.6;
 }
 
 .login-link {
-  color: #4b5563;
+  color: var(--fgColor-muted);
   text-decoration: none;
   transition: color 0.2s ease;
 }
 
 .login-link:hover {
-  color: #111111;
+  color: var(--fgColor-default);
 }
 </style>

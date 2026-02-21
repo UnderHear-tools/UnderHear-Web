@@ -41,12 +41,12 @@ import { zContainer } from '@/components/z-ui/container'
   margin-top: 2rem;
   padding: 0.75rem 2rem;
   background-color: var(--bgColor-accent-emphasis);
-  color: #ffffff;
+  color: var(--fgColor-onEmphasis);
   border-radius: 6px;
 }
 
 .link:hover {
-  background-color: #0860ca;
+  background-color: var(--bgColor-accent-emphasis);
 }
 
 .components-preview {

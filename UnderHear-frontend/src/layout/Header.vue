@@ -127,10 +127,10 @@ watch(() => route.path, () => {
   top: 0;
   z-index: 999;
   width: 100%;
-  background: #f8f8f8;
+  background: var(--bgColor-muted);
   backdrop-filter: blur(40px);
   -webkit-backdrop-filter: blur(40px);
-  box-shadow: 0 1px 1px rgba(220, 220, 220, 1);
+  box-shadow: 0 1px 1px var(--borderColor-default);
 }
 
 .header-inner {
@@ -155,25 +155,25 @@ watch(() => route.path, () => {
   font-size: 16px;
   font-weight: 500;
   line-height: 1;
-  color: #727272;
+  color: var(--fgColor-muted);
   cursor: pointer;
   transition: background-color 0.2s ease, color 0.2s ease;
 }
 
 .nav-link.active {
-  background-color: #e6e6e6;
-  color: #000000;
+  background-color: var(--bgColor-neutral-muted);
+  color: var(--fgColor-default);
 }
 
 .nav-link:active{
-  background-color: #e6e6e6;
-  color: #000000;
+  background-color: var(--bgColor-neutral-muted);
+  color: var(--fgColor-default);
 }
 
 @media (hover: hover) and (pointer: fine) {
   .nav-link:hover {
-    background-color: #e6e6e6;
-    color: #000000;
+    background-color: var(--bgColor-neutral-muted);
+    color: var(--fgColor-default);
   }
 }
 
@@ -198,17 +198,17 @@ watch(() => route.path, () => {
 .user-name {
   font-size: 14px;
   font-weight: 600;
-  color: #1f2328;
+  color: var(--fgColor-default);
 }
 
 .user-email {
   font-size: 12px;
-  color: #656d76;
+  color: var(--fgColor-muted);
   white-space: nowrap;
 }
 
 .menu-icon {
-  color: #59636e;
+  color: var(--fgColor-muted);
 }
 
 @media (max-width: 767px) {

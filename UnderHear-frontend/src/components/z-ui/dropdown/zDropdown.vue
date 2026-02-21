@@ -47,10 +47,10 @@ onMounted(() => {
 .z-dropdown-content {
   position: absolute;
   z-index: 1000;
-  border: 1px solid #d0d7de;
+  border: 1px solid var(--borderColor-default);
   border-radius: 6px;
-  background: #fff;
-  box-shadow: 0 8px 24px rgba(140, 149, 159, 0.2);
+  background: var(--bgColor-default);
+  box-shadow: 0 8px 24px color-mix(in srgb, var(--fgColor-muted) 20%, var(--bgColor-transparent));
 }
 
 .z-dropdown-content--left-bottom {

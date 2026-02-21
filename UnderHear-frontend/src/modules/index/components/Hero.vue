@@ -176,8 +176,8 @@
   left: 50%;
   transform: translate(-50%, -50%);
   font-size: 6rem;
-  color: white;
-  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
+  color: var(--fgColor-onEmphasis);
+  text-shadow: 2px 2px 4px color-mix(in srgb, var(--fgColor-default) 70%, var(--bgColor-transparent));
   pointer-events: none;
   z-index: 2;
   font-weight: bold;

@@ -94,7 +94,7 @@ const apiTableRows = [
 
 .demo-container p {
   margin: 0;
-  color: #1f2328;
+  color: var(--fgColor-default);
   font-size: 14px;
 }
 </style>

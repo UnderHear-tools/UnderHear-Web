@@ -12,7 +12,7 @@ const shouldHideHeader = computed(() => {
 </script>
 
 <template>
-  <div id="app" data-color-mode="light" data-light-theme="light">
+  <div id="app">
     <MainHeader v-if="!shouldHideHeader" />
     <router-view />
   </div>

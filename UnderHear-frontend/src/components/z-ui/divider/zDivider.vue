@@ -4,7 +4,7 @@
 
 <style scoped>
 .z-divider {
-  color: #d1d9e0b3;
+  color: var(--borderColor-muted);
   margin-block-end: 0.5rem;
   margin-block-start: calc(0.5rem - 0.0625rem);
 }

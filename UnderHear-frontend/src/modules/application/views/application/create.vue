@@ -92,14 +92,14 @@ function goCollect() {
   text-align: left;
   border: 1px solid var(--borderColor-default);
   border-radius: 6px;
-  background: #fafafa;
+  background: var(--bgColor-muted);
   padding: 1.5rem;
   cursor: pointer;
 }
 
 .option-card:hover {
   border-color: var(--borderColor-accent-emphasis);
-  box-shadow: 0 4px 14px -4px rgba(0, 0, 0, 0.08);
+  box-shadow: 0 4px 14px -4px color-mix(in srgb, var(--fgColor-default) 8%, var(--bgColor-transparent));
 }
 
 .option-title {

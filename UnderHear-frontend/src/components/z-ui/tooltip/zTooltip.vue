@@ -93,15 +93,15 @@ function hide() {
 
 /* 深色主题 */
 .z-tooltip--dark {
-  background: #24292f;
-  color: #ffffff;
+  background: var(--bgColor-emphasis);
+  color: var(--fgColor-onEmphasis);
 }
 
 /* 浅色主题 */
 .z-tooltip--light {
-  background: #ffffff;
-  color: #24292f;
-  border: 1px solid #d1d9e0;
+  background: var(--bgColor-default);
+  color: var(--fgColor-default);
+  border: 1px solid var(--borderColor-default);
 }
 
 /* 顶部位置 */

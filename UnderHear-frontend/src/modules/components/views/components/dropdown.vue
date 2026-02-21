@@ -121,15 +121,15 @@ import { zDropdown } from '@/components/z-ui/dropdown'
 
 .demo-trigger {
   padding: 8px 16px;
-  border: 1px solid #d0d7de;
+  border: 1px solid var(--borderColor-default);
   border-radius: 6px;
-  background: #fff;
+  background: var(--bgColor-default);
   font-size: 14px;
   cursor: pointer;
 }
 
 .demo-trigger:hover {
-  background: #f6f8fa;
+  background: var(--bgColor-muted);
 }
 
 .demo-content {
@@ -145,7 +145,7 @@ import { zDropdown } from '@/components/z-ui/dropdown'
 }
 
 .demo-item:hover {
-  background: #f6f8fa;
+  background: var(--bgColor-muted);
 }
 <\/style>`
 
@@ -198,15 +198,15 @@ import { zDropdown } from '@/components/z-ui/dropdown'
 
 .demo-trigger {
   padding: 8px 16px;
-  border: 1px solid #d0d7de;
+  border: 1px solid var(--borderColor-default);
   border-radius: 6px;
-  background: #fff;
+  background: var(--bgColor-default);
   font-size: 14px;
   cursor: pointer;
 }
 
 .demo-trigger:hover {
-  background: #f6f8fa;
+  background: var(--bgColor-muted);
 }
 
 .demo-content {
@@ -260,15 +260,15 @@ const slotsTableRows = [
 
 .demo-trigger {
   padding: 8px 16px;
-  border: 1px solid #d0d7de;
+  border: 1px solid var(--borderColor-default);
   border-radius: 6px;
-  background: #fff;
+  background: var(--bgColor-default);
   font-size: 14px;
   cursor: pointer;
 }
 
 .demo-trigger:hover {
-  background: #f6f8fa;
+  background: var(--bgColor-muted);
 }
 
 .demo-content {
@@ -284,13 +284,13 @@ const slotsTableRows = [
 }
 
 .demo-item:hover {
-  background: #f6f8fa;
+  background: var(--bgColor-muted);
 }
 
 h4 {
   margin: 0 0 12px;
   font-size: 14px;
   font-weight: 600;
-  color: #1f2328;
+  color: var(--fgColor-default);
 }
 </style>

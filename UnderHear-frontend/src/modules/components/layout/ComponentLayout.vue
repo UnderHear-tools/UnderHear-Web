@@ -244,7 +244,7 @@ const navSections = ref([
 .sidebar-content {
   flex: 1;
   overflow-y: auto;
-  scrollbar-color: rgb(192, 192, 192) #ffffff;
+  scrollbar-color: var(--borderColor-emphasis) var(--bgColor-default);
   padding: 2rem;
 }
 
@@ -273,13 +273,13 @@ const navSections = ref([
 }
 
 .nav-item:hover {
-  background-color: #f2f3f4;
+  background-color: var(--control-bgColor-hover);
   color: var(--fgColor-default);
 }
 
 .nav-item.active {
-  background-color: #eceef0;
-  color: #000000;
+  background-color: var(--control-bgColor-active);
+  color: var(--fgColor-default);
 }
 
 .nav-item.active::before {
@@ -313,8 +313,8 @@ const navSections = ref([
   height: calc(100vh - 64px);
   display: flex;
   flex-direction: column;
-  border-left: 1px solid #e1e4e8;
-  background-color: #ffffff;
+  border-left: 1px solid var(--borderColor-default);
+  background-color: var(--bgColor-default);
 }
 
 .toc-content {
@@ -322,7 +322,7 @@ const navSections = ref([
   overflow-y: auto;
   padding: 2rem 1.5rem;
   scrollbar-width: thin;
-  scrollbar-color: rgb(192, 192, 192) #ffffff;
+  scrollbar-color: var(--borderColor-emphasis) var(--bgColor-default);
 }
 
 .toc-title {
@@ -345,13 +345,13 @@ const navSections = ref([
   font-size: 0.875rem;
   line-height: 1.5;
   padding: 0.25rem 0 0.25rem 0.75rem;
-  border-left: 2px solid transparent;
+  border-left: 2px solid var(--borderColor-transparent);
   transition: all 0.2s ease;
 }
 
 .toc-link:hover {
   color: var(--fgColor-default);
-  border-left-color: #d1d9e0;
+  border-left-color: var(--borderColor-default);
 }
 
 .toc-link.active {
@@ -405,7 +405,7 @@ const navSections = ref([
 
   .sidebar-content {
     scrollbar-width: none;
-    background-color: #fff;
+    background-color: var(--bgColor-default);
   }
 
   /* 移动端菜单按钮样式 */
@@ -434,7 +434,7 @@ const navSections = ref([
     bottom: 0;
     height: 100vh;
     width: 100vw;
-    background: rgba(0, 0, 0, 0.5);
+    background: color-mix(in srgb, var(--fgColor-default) 50%, var(--bgColor-transparent));
     z-index: 999;
     animation: fadeIn 0.3s ease;
   }

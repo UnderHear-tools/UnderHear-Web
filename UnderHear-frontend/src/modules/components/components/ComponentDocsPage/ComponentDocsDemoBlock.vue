@@ -76,7 +76,7 @@ const copyCode = () => {
 
 <style scoped>
 .demo-block {
-  border: 1px solid #d1d9e0;
+  border: 1px solid var(--borderColor-default);
   border-radius: 6px;
 }
 
@@ -91,7 +91,7 @@ const copyCode = () => {
 .demo-actions {
   display: flex;
   gap: 0;
-  border-top: 1px solid #d1d9e0;
+  border-top: 1px solid var(--borderColor-default);
   justify-content: flex-end;
 }
 
@@ -112,7 +112,7 @@ const copyCode = () => {
 }
 
 .demo-code {
-  background: #f6f8fa;
+  background: var(--bgColor-muted);
   border-radius: 0 0 6px 6px;
   overflow: hidden;
 }
@@ -133,8 +133,8 @@ const copyCode = () => {
   display: flex;
   justify-content: center;
   padding: 0.5rem;
-  border-top: 1px solid #d1d9e0;
-  background: #ffffff;
+  border-top: 1px solid var(--borderColor-default);
+  background: var(--bgColor-default);
   border-radius: 0 0 6px 6px;
 }
 
@@ -142,7 +142,7 @@ const copyCode = () => {
   display: flex;
   align-items: center;
   gap: 0.375rem;
-  background: transparent;
+  background: var(--bgColor-transparent);
   border: none;
   color: var(--fgColor-muted);
   font-size: 0.875rem;
@@ -159,7 +159,7 @@ const copyCode = () => {
   margin: 0;
   padding: 1.5rem;
   overflow-x: auto;
-  background: transparent;
+  background: var(--bgColor-transparent);
 }
 
 .demo-code code[class*='language-'] {
@@ -169,7 +169,7 @@ const copyCode = () => {
   line-height: 1.6;
   color: var(--fgColor-default);
   white-space: pre;
-  background: transparent;
+  background: var(--bgColor-transparent);
 }
 
 @media (max-width: 768px) {

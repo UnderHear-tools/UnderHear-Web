@@ -27,8 +27,8 @@ const customStyle = computed(() => ({
 .z-tag {
     display: inline-flex;
     align-items: center;
-    background-color: #ddf4ff;
-    color: #0969da;
+    background-color: var(--bgColor-accent-muted);
+    color: var(--fgColor-link);
     border-radius: 100px;
     font-weight: 500;
     gap: 6px;

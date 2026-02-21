@@ -109,7 +109,7 @@ const getStatusClass = (status: string) => {
 }
 
 .project-card {
-	background: white;
+	background: var(--bgColor-default);
 	border: 1px solid var(--borderColor-default);
 	border-radius: 4px;
 	padding: 1.5rem;
@@ -135,7 +135,7 @@ const getStatusClass = (status: string) => {
 .project-date {
 	font-size: 0.875rem;
 	color: var(--fgColor-muted);
-	background-color: #f6f8fa;
+	background-color: var(--bgColor-muted);
 	padding: 0.3rem 0.8rem;
 	border-radius: 100px;
 	font-weight: 500;
@@ -184,7 +184,7 @@ const getStatusClass = (status: string) => {
 
 .project-type-badge {
 	font-size: 0.75rem;
-	color: #7c7c7c;
+	color: var(--fgColor-muted);
 	font-weight: 500;
 	white-space: nowrap;
 }
@@ -200,11 +200,11 @@ const getStatusClass = (status: string) => {
 }
 
 .status-updating {
-	color: #3bc24f;
+	color: var(--fgColor-success);
 }
 
 .status-stopped {
-	color: #e63838;
+	color: var(--fgColor-danger);
 }
 
 .project-link,.project-detail {
@@ -263,10 +263,10 @@ const getStatusClass = (status: string) => {
 	}
 
 	.project-detail {
-		color: #3082e0;
+		color: var(--fgColor-link);
 		justify-content: center;
 		text-align: center;
-		background-color: #f3f3f3;
+		background-color: var(--bgColor-muted);
 		padding: 0.2rem 0.5rem;
 		border-radius: 0.2rem;
 		order: 2;

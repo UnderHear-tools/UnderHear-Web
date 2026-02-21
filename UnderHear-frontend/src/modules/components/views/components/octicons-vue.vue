@@ -226,12 +226,12 @@ const apiTableRows = [
   width: 100%;
   padding: 0.5rem 0.75rem;
   height: 40px;
-  border: 1px solid #d1d9e0;
+  border: 1px solid var(--borderColor-default);
   border-radius: 6px;
   font-size: 0.875rem;
   color: var(--fgColor-default);
-  background: #ffffff;
-  box-shadow: inset 0px 1px 0px 0px #1f23280a;
+  background: var(--bgColor-default);
+  box-shadow: var(--shadow-inset);
 }
 
 .icon-search-input::placeholder {
@@ -263,7 +263,7 @@ const apiTableRows = [
 }
 
 .icon-danger {
-  color: #d1242f;
+  color: var(--fgColor-danger);
 }
 
 .icon-grid {
@@ -278,9 +278,9 @@ const apiTableRows = [
   align-items: center;
   gap: 0.5rem;
   padding: 0.9rem 0.75rem;
-  border: 1px solid #d1d9e0;
+  border: 1px solid var(--borderColor-default);
   border-radius: 6px;
-  background: #ffffff;
+  background: var(--bgColor-default);
 }
 
 .icon-svg {

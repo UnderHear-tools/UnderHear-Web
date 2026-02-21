@@ -87,7 +87,7 @@ const handleLogoutAll = async () => {
 
 .logout-title {
   margin: 0 0 24px;
-  color: #1f2328;
+  color: var(--fgColor-default);
   font-weight: 300;
   text-align: center;
 }
@@ -99,7 +99,7 @@ const handleLogoutAll = async () => {
   width: 100%;
   gap: 64px;
   padding: 16px;
-  border: 1px solid #c9d1da;
+  border: 1px solid var(--borderColor-default);
   border-radius: 6px;
 }
 
@@ -118,22 +118,22 @@ const handleLogoutAll = async () => {
 
 .account-label {
   font-size: 14px;
-  color: #3f4b58;
+  color: var(--fgColor-muted);
 }
 
 .account-name {
   font-size: 14px;
   font-weight: 500;
-  color: #1f2328;
+  color: var(--fgColor-default);
   white-space: nowrap;
 }
 
 .action-button {
   padding: 8px 16px;
-  border: 1px solid #c9d1da;
+  border: 1px solid var(--borderColor-default);
   border-radius: 6px;
-  background: #f6f8fa;
-  color: #1f2937;
+  background: var(--bgColor-muted);
+  color: var(--fgColor-default);
   font-size: 12px;
   font-weight: 500;
   line-height: 1;
@@ -142,7 +142,7 @@ const handleLogoutAll = async () => {
 }
 
 .action-button:hover {
-  background: #eff2f5;
+  background: var(--control-bgColor-hover);
 }
 
 .action-button:disabled {
@@ -151,7 +151,7 @@ const handleLogoutAll = async () => {
 }
 
 .action-button--danger {
-  color: #d1242f;
+  color: var(--fgColor-danger);
 }
 
 .action-button--full {

@@ -72,14 +72,14 @@ import { zLink } from '@/components/z-ui/link'
 	border-radius: 6px;
 	padding: 1.5rem 1.6rem 1.1rem;
 	text-decoration: none;
-	background: #fff;
+	background: var(--bgColor-default);
 	transition: border-color .18s ease, box-shadow .18s ease;
 	position: relative;
 }
 
 .creator-card:hover {
 	border-color: var(--borderColor-accent-emphasis);
-	box-shadow: 0 4px 14px -4px rgba(0, 0, 0, 0.08);
+	box-shadow: 0 4px 14px -4px color-mix(in srgb, var(--fgColor-default) 8%, var(--bgColor-transparent));
 }
 
 .creator-main {
@@ -92,7 +92,7 @@ import { zLink } from '@/components/z-ui/link'
 	height: 92px;
 	border-radius: 50%;
 	object-fit: cover;
-	box-shadow: 0 0 0 1px #1f232826;
+	box-shadow: 0 0 0 1px var(--borderColor-translucent);
 	border: 1px solid var(--borderColor-default);
 }
 
@@ -119,7 +119,7 @@ import { zLink } from '@/components/z-ui/link'
 	font-size: .65rem;
 	text-transform: uppercase;
 	letter-spacing: .5px;
-	background: #f6f8fa;
+	background: var(--bgColor-muted);
 	padding: .25rem .55rem;
 	border-radius: 12px;
 	color: var(--fgColor-muted);

@@ -14,7 +14,7 @@
   max-width: 1150px;
   margin: 0 auto;
   padding: 2rem;
-  background-color: #fff;
+  background-color: var(--bgColor-default);
 }
 
 @media (max-width: 768px) {

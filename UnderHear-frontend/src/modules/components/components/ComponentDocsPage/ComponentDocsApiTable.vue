@@ -44,14 +44,14 @@ defineProps<{
 .api-table {
   width: 100%;
   border-collapse: collapse;
-  border: 1px solid #d1d9e0;
+  border: 1px solid var(--borderColor-default);
   border-radius: 6px;
   overflow: hidden;
-  background: #ffffff;
+  background: var(--bgColor-default);
 }
 
 .api-table thead {
-  background: #f6f8fa;
+  background: var(--bgColor-muted);
 }
 
 .api-table th {
@@ -60,14 +60,14 @@ defineProps<{
   font-weight: 600;
   font-size: 0.875rem;
   color: var(--fgColor-default);
-  border-bottom: 1px solid #d1d9e0;
+  border-bottom: 1px solid var(--borderColor-default);
 }
 
 .api-table td {
   padding: 0.75rem 1rem;
   font-size: 0.875rem;
   color: var(--fgColor-muted);
-  border-bottom: 1px solid #d1d9e0;
+  border-bottom: 1px solid var(--borderColor-default);
 }
 
 .api-table tbody tr:last-child td {
@@ -76,12 +76,12 @@ defineProps<{
 
 .api-table code {
   padding: 0.125rem 0.375rem;
-  background: #f6f8fa;
-  border: 1px solid #d1d9e0;
+  background: var(--bgColor-muted);
+  border: 1px solid var(--borderColor-default);
   border-radius: 3px;
   font-family: 'Consolas', 'Monaco', 'Courier New', monospace;
   font-size: 0.875em;
-  color: #d1242f;
+  color: var(--fgColor-danger);
   white-space: nowrap;
 }
 

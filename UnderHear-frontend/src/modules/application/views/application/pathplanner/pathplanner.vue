@@ -620,7 +620,7 @@ watch(isCoverage, (v) => {
   max-width: 1200px;
   margin: 0 auto;
   padding: 2rem;
-  background-color: #fff;
+  background-color: var(--bgColor-default);
 }
 
 .pathplanner-header {
@@ -645,7 +645,7 @@ watch(isCoverage, (v) => {
 }
 
 .pathplanner-card {
-  background: white;
+  background: var(--bgColor-default);
   border: 1px solid var(--borderColor-default);
   padding: 1rem 1.25rem;
   transition: all 0.2s ease;
@@ -657,7 +657,7 @@ watch(isCoverage, (v) => {
 
 .pathplanner-card:hover {
   border-color: var(--borderColor-accent-emphasis);
-  box-shadow: 0 4px 12px rgba(9, 105, 218, 0.06);
+  box-shadow: 0 4px 12px color-mix(in srgb, var(--fgColor-accent) 6%, var(--bgColor-transparent));
 }
 
 /* 布局 */
@@ -741,15 +741,15 @@ watch(isCoverage, (v) => {
 input[type='number'] {
   width: 80px;
   padding: 0.35rem 0.5rem;
-  border: 1px solid #c9d1d9;
+  border: 1px solid var(--borderColor-default);
   border-radius: 6px;
 }
 
 select {
   padding: 0.4rem 0.5rem;
-  border: 1px solid #c9d1d9;
+  border: 1px solid var(--borderColor-default);
   border-radius: 6px;
-  background: #fff;
+  background: var(--bgColor-default);
 }
 
 input[type='range'] {
@@ -770,8 +770,8 @@ input[type='range'] {
 /* 原生按钮样式 */
 .btn {
   padding: 0.45rem 0.75rem;
-  border: 1px solid #c9d1d9;
-  background: #f6f8fa;
+  border: 1px solid var(--borderColor-default);
+  background: var(--bgColor-muted);
   color: var(--fgColor-default);
   border-radius: 6px;
   cursor: pointer;
@@ -779,13 +779,13 @@ input[type='range'] {
 }
 
 .btn:hover {
-  background: #eef2f6;
+  background: var(--bgColor-muted);
 }
 
 .btn.primary {
   border-color: var(--borderColor-accent-emphasis);
   background: var(--bgColor-accent-emphasis);
-  color: #fff;
+  color: var(--fgColor-onEmphasis);
 }
 
 .btn.primary:hover {
@@ -793,9 +793,9 @@ input[type='range'] {
 }
 
 .btn.danger {
-  border-color: #dc2626;
-  background: #dc2626;
-  color: #fff;
+  border-color: var(--borderColor-danger-emphasis);
+  background: var(--bgColor-danger-emphasis);
+  color: var(--fgColor-onEmphasis);
 }
 
 .btn.danger:hover {
@@ -803,7 +803,7 @@ input[type='range'] {
 }
 
 .btn.ghost {
-  background: transparent;
+  background: var(--bgColor-transparent);
 }
 
 .btn:disabled {
@@ -834,8 +834,8 @@ input[type='range'] {
   width: var(--cell-size);
   height: var(--cell-size);
   border-radius: 4px;
-  border: 1px solid #e6ebf1;
-  background: #f8fafc;
+  border: 1px solid var(--borderColor-default);
+  background: var(--bgColor-muted);
   position: relative;
   box-sizing: border-box;
   transition: background-color 0.1s ease, transform 0.1s ease, border-color 0.1s ease;
@@ -846,26 +846,26 @@ input[type='range'] {
 }
 
 .cell.wall {
-  background: #0f172a;
-  border-color: #0f172a;
+  background: var(--bgColor-emphasis);
+  border-color: var(--borderColor-emphasis);
 }
 
 .cell.start {
-  background: #22c55e22;
-  border-color: #16a34a;
+  background: var(--bgColor-success-muted);
+  border-color: var(--borderColor-success-emphasis);
 }
 
 .cell.end {
-  background: #ef444422;
-  border-color: #ef4444;
+  background: var(--bgColor-danger-muted);
+  border-color: var(--borderColor-danger-emphasis);
 }
 
 .cell.visited {
-  background: #93c5fd55;
+  background: var(--bgColor-accent-muted);
 }
 
 .cell.path {
-  background: #22c55e88;
+  background: var(--bgColor-success-emphasis);
 }
 
 .badge {
@@ -874,7 +874,7 @@ input[type='range'] {
   top: 2px;
   font-size: 0.75rem;
   font-weight: 700;
-  color: #0f172a;
+  color: var(--fgColor-default);
 }
 
 /* 说明样式 */

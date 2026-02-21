@@ -135,16 +135,16 @@ import { Person, MarkGithub, SignOut, Gear } from '@/components/z-ui/icon/Octico
 .user-name {
   font-size: 14px;
   font-weight: 600;
-  color: #1f2328;
+  color: var(--fgColor-default);
 }
 
 .user-email {
   font-size: 12px;
-  color: #656d76;
+  color: var(--fgColor-muted);
 }
 
 .menu-icon {
-  color: #59636e;
+  color: var(--fgColor-muted);
 }
 
 @media (max-width: 767px) {
@@ -179,16 +179,16 @@ import { Person, MarkGithub, SignOut, Gear } from '@/components/z-ui/icon/Octico
 .user-name {
   font-size: 14px;
   font-weight: 600;
-  color: #1f2328;
+  color: var(--fgColor-default);
 }
 
 .user-email {
   font-size: 12px;
-  color: #656d76;
+  color: var(--fgColor-muted);
 }
 
 .menu-icon {
-  color: #59636e;
+  color: var(--fgColor-muted);
 }
 
 @media (max-width: 767px) {

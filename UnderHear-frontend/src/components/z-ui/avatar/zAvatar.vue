@@ -28,17 +28,17 @@ const avatarStyle = computed(() => {
   display: flex;
   align-items: center;
   justify-content: center;
-  outline: 2px solid #d9d9d9;
+  outline: 2px solid var(--borderColor-default);
   border-radius: 50%;
-  background: rgba(255, 255, 255, 0.8);
+  background: color-mix(in srgb, var(--bgColor-default) 80%, var(--bgColor-transparent));
   backdrop-filter: blur(8px);
   font-weight: 600;
   overflow: hidden;
 }
 
 .z-avatar:hover {
-  background: #fff;
-  box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.08);
+  background: var(--bgColor-default);
+  box-shadow: 0 0 0 2px color-mix(in srgb, var(--fgColor-default) 8%, var(--bgColor-transparent));
 }
 
 .z-avatar-img {
@@ -48,6 +48,6 @@ const avatarStyle = computed(() => {
 }
 
 .z-avatar-placeholder {
-  color: #111;
+  color: var(--fgColor-default);
 }
 </style>

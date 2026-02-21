@@ -186,7 +186,7 @@ function columnStyle(column: ZTableColumn) {
 .z-table {
   outline: 1px solid var(--borderColor-default);
   border-radius: 6px;
-  background: #ffffff;
+  background: var(--bgColor-default);
   color: var(--fgColor-default);
   overflow: hidden;
 }
@@ -200,7 +200,7 @@ function columnStyle(column: ZTableColumn) {
 .z-table__container {
   width: 100%;
   overflow-x: auto;
-  background: #ffffff;
+  background: var(--bgColor-default);
 }
 
 .z-table__table {
@@ -224,7 +224,7 @@ function columnStyle(column: ZTableColumn) {
 }
 
 .z-table__head {
-  background: #f6f8fa;
+  background: var(--bgColor-muted);
 }
 
 .z-table__cell {
@@ -243,7 +243,7 @@ function columnStyle(column: ZTableColumn) {
 .z-table__cell--head {
   font-weight: 600;
   color: var(--fgColor-default);
-  background: #f6f8fa;
+  background: var(--bgColor-muted);
   position: relative;
 }
 
@@ -252,7 +252,7 @@ function columnStyle(column: ZTableColumn) {
 }
 
 .z-table.is-hoverable .z-table__row--body:hover {
-  background: #f6f8fa;
+  background: var(--bgColor-muted);
 }
 
 .z-table__row.is-clickable {
@@ -260,7 +260,7 @@ function columnStyle(column: ZTableColumn) {
 }
 
 .z-table__row.is-clickable:active {
-  background: #eef3f8;
+  background: var(--bgColor-muted);
 }
 
 .z-table__cell--empty {
