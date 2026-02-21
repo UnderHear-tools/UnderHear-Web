@@ -144,10 +144,6 @@ const copyCode = () => {
   color: var(--fgColor-link);
 }
 
-.demo-code{
-  
-}
-
 .code-content :deep(pre.shiki) {
   margin: 0;
   overflow-x: auto;
