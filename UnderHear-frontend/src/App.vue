@@ -12,10 +12,15 @@ const shouldHideHeader = computed(() => {
 </script>
 
 <template>
-  <div id="app">
+  <div id="app" class="page">
     <MainHeader v-if="!shouldHideHeader" />
     <router-view />
   </div>
 </template>
 
-<style scoped></style>
+<style scoped>
+.page {
+  background-color: var(--bgColor-default);
+  min-height: 100vh;
+}
+</style>
