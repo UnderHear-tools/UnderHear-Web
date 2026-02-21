@@ -124,6 +124,10 @@ function goCollect() {
 }
 
 @media (max-width: 768px) {
+  .title{
+    font-size: 2rem;
+  }
+
   .options-grid {
     grid-template-columns: 1fr;
   }
