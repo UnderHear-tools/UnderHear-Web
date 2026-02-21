@@ -17,9 +17,7 @@
     </div>
     <transition name="code-expand">
       <div v-if="codeVisible" class="demo-code">
-        <pre :class="`language-${language}`">
-          <div :class="`language-${language}`" v-html="highlightedCode"></div>
-        </pre>
+        <div class="code-content" v-html="highlightedCode"></div>
         <div class="code-footer">
           <button class="hide-code-btn" @click="codeVisible = false">
             {{ hideSourceLabel }}
@@ -31,21 +29,11 @@
 </template>
 
 <script setup lang="ts">
-import { computed, ref } from 'vue'
-import * as Prism from 'prismjs'
-import 'prismjs/themes/prism.css'
+import { ref, onMounted } from 'vue'
 import { zTooltip } from '@/components/z-ui/tooltip'
 import { Copy, Code } from '@/components/z-ui/icon/Octicons-vue/index.ts'
 
-const props = withDefaults(
-  defineProps<{
-    code: string
-    language?: string
-  }>(),
-  {
-    language: 'markup'
-  }
-)
+const props = defineProps<{ code: string }>()
 
 const copyLabel = '复制代码'
 const copiedLabel = '已复制'
@@ -55,14 +43,15 @@ const hideSourceLabel = '隐藏源代码'
 
 const codeVisible = ref(false)
 const codeCopied = ref(false)
-const language = computed(() => props.language)
-const highlightedCode = computed(() =>
-  Prism.highlight(
-    props.code,
-    Prism.languages[props.language] || Prism.languages.markup,
-    props.language
-  )
-)
+
+import { codeToHtml } from 'shiki'
+const highlightedCode = ref('')
+onMounted(async () => {
+  highlightedCode.value = await codeToHtml(props.code, {
+    lang: 'vue',
+    theme: 'github-light',
+  })
+})
 
 const copyCode = () => {
   navigator.clipboard.writeText(props.code).then(() => {
@@ -155,15 +144,21 @@ const copyCode = () => {
   color: var(--fgColor-link);
 }
 
-.demo-code pre[class*='language-'] {
-  margin: 0;
-  padding: 1.5rem;
-  overflow-x: auto;
-  background: var(--bgColor-transparent);
+.demo-code{
+  
 }
 
-.demo-code code[class*='language-'] {
-  display: block;
+.code-content :deep(pre.shiki) {
+  margin: 0;
+  overflow-x: auto;
+  background: var(--bgColor-transparent) !important;
+}
+
+.code-content :deep(pre.shiki code) {
+  display: inline-block;
+  min-width: 100%;
+  box-sizing: border-box;
+  padding: 1.5rem;
   font-family: 'Consolas', 'Monaco', 'Courier New', monospace;
   font-size: 0.875rem;
   line-height: 1.6;
@@ -182,12 +177,12 @@ const copyCode = () => {
     height: 36px;
   }
 
-  .demo-code pre[class*='language-'] {
-    padding: 1rem;
-    font-size: 0.75rem;
+  .code-content :deep(pre.shiki) {
+    padding: 0;
   }
 
-  .demo-code code[class*='language-'] {
+  .code-content :deep(pre.shiki code) {
+    padding: 1rem;
     font-size: 0.75rem;
     line-height: 1.5;
   }

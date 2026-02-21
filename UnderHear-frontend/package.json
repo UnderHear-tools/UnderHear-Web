@@ -15,14 +15,13 @@
     "gsap": "^3.14.2",
     "monaco-editor": "^0.55.1",
     "pinia": "^3.0.4",
-    "prismjs": "^1.30.0",
+    "shiki": "^3.22.0",
     "tailwindcss": "^4.1.12",
     "vue": "^3.5.18",
     "vue-router": "^4.5.1"
   },
   "devDependencies": {
     "@types/node": "^24.3.0",
-    "@types/prismjs": "^1.26.5",
     "@vitejs/plugin-vue": "^6.0.1",
     "@vue/tsconfig": "^0.7.0",
     "typescript": "^5.9.2",
