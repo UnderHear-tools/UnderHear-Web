@@ -13,14 +13,10 @@
       </ComponentDocsDemoBlock>
     </ComponentDocsSection>
 
-    <ComponentDocsSection title="线性模式">
-      <template #description>设置 <code>linear</code> 后，未完成的步骤将不可点击。</template>
+    <ComponentDocsSection title="可点击跳转">
+      <template #description>设置 <code>clickable</code> 后，可点击跳转至临近步骤（当前步骤 ± 1）。</template>
       <ComponentDocsDemoBlock :code="demo2Code">
-        <zSteps v-model="active2" :steps="basicSteps" linear />
-        <div class="demo-actions">
-          <button class="demo-btn" :disabled="active2 <= 0" @click="active2--">上一步</button>
-          <button class="demo-btn" :disabled="active2 >= 2" @click="active2++">下一步</button>
-        </div>
+        <zSteps v-model="active2" :steps="basicSteps" clickable />
       </ComponentDocsDemoBlock>
     </ComponentDocsSection>
 
@@ -65,7 +61,7 @@ import ComponentDocsPage from '@/modules/components/components/ComponentDocsPage
 import ComponentDocsSection from '@/modules/components/components/ComponentDocsPage/ComponentDocsSection.vue'
 
 const active1 = ref(0)
-const active2 = ref(0)
+const active2 = ref(1)
 const active3 = ref(1)
 const active4 = ref(1)
 
@@ -90,6 +86,10 @@ const descSteps: StepItem[] = [
 
 const demo1Code = `<template>
   <zSteps v-model="active" :steps="steps" />
+  <div class="demo-actions">
+    <button :disabled="active <= 0" @click="active--">上一步</button>
+    <button :disabled="active >= 2" @click="active++">下一步</button>
+  </div>
 </template>
 
 <script setup lang="ts">
@@ -105,14 +105,14 @@ const steps: StepItem[] = [
 <\/script>`
 
 const demo2Code = `<template>
-  <zSteps v-model="active" :steps="steps" linear />
+  <zSteps v-model="active" :steps="steps" clickable />
 </template>
 
 <script setup lang="ts">
 import { ref } from 'vue'
 import { zSteps, type StepItem } from '@/components/z-ui/steps'
 
-const active = ref(0)
+const active = ref(1)
 const steps: StepItem[] = [
   { title: '账号信息' },
   { title: '个人资料' },
@@ -169,7 +169,7 @@ const apiCols: ZTableColumn[] = [
 const apiRows = [
   { name: 'modelValue', description: '当前激活步骤索引（v-model）', type: 'number', default: '0' },
   { name: 'steps', description: '步骤配置数组', type: 'StepItem[]', default: '—' },
-  { name: 'linear', description: '是否为线性模式（未完成步骤不可点击）', type: 'boolean', default: 'false' },
+  { name: 'clickable', description: '是否可点击跳转至临近步骤（当前 ± 1）', type: 'boolean', default: 'false' },
   { name: 'orientation', description: '方向', type: "'horizontal' | 'vertical'", default: "'horizontal'" }
 ]
 
