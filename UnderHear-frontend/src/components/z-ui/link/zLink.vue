@@ -55,7 +55,7 @@ withDefaults(defineProps<Props>(), {
 }
 
 .z-link {
-  color: var(--fgColor-link);
+  color: var(--fgColor-link, #0969da);
   text-decoration: none;
   font-weight: 500;
   transition: all 0.2s ease;
@@ -64,37 +64,37 @@ withDefaults(defineProps<Props>(), {
 }
 
 .z-link:hover {
-  color: var(--fgColor-link);
+  color: var(--fgColor-link, #0969da);
   text-decoration: underline;
 }
 
 .z-link:active {
-  color: var(--fgColor-link);
+  color: var(--fgColor-link, #0969da);
 }
 
 /* 变体样式 */
 .z-link-primary {
-  color: var(--fgColor-link);
+  color: var(--fgColor-link, #0969da);
 }
 
 .z-link-primary:hover {
-  color: var(--fgColor-link);
+  color: var(--fgColor-link, #0969da);
 }
 
 .z-link-secondary {
-  color: var(--fgColor-muted);
+  color: var(--fgColor-muted, #59636e);
 }
 
 .z-link-secondary:hover {
-  color: var(--fgColor-default);
+  color: var(--fgColor-default, #1f2328);
 }
 
 .z-link-danger {
-  color: var(--fgColor-danger);
+  color: var(--fgColor-danger, #d1242f);
 }
 
 .z-link-danger:hover {
-  color: var(--fgColor-danger);
+  color: var(--fgColor-danger, #d1242f);
 }
 
 /* 外部链接样式 */
@@ -106,7 +106,7 @@ withDefaults(defineProps<Props>(), {
 
 /* 焦点样式 */
 .z-link:focus {
-  outline: 2px solid var(--focus-outlineColor);
+  outline: 2px solid var(--focus-outlineColor, #0969da);
   outline-offset: 2px;
 }
 

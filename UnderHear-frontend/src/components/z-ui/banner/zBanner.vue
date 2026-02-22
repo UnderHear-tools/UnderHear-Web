@@ -223,9 +223,9 @@ defineExpose<zBannerExposed>({
 }
 
 .z-banner {
-  --banner-bg: var(--bgColor-accent-muted);
-  --banner-border: var(--borderColor-accent-muted);
-  --banner-icon: var(--fgColor-link);
+  --banner-bg: var(--bgColor-accent-muted, #ddf4ff);
+  --banner-border: var(--borderColor-accent-muted, #54aeff66);
+  --banner-icon: var(--fgColor-link, #0969da);
   pointer-events: auto;
   display: grid;
   grid-template-columns: auto minmax(0, 1fr) auto;
@@ -234,7 +234,7 @@ defineExpose<zBannerExposed>({
   border: 1px solid var(--banner-border);
   border-radius: 6px;
   background: var(--banner-bg);
-  color: var(--fgColor-default);
+  color: var(--fgColor-default, #1f2328);
 }
 
 .z-banner--flush {
@@ -244,33 +244,33 @@ defineExpose<zBannerExposed>({
 }
 
 .z-banner--critical {
-  --banner-bg: var(--bgColor-danger-muted);
-  --banner-border: var(--borderColor-danger-muted);
-  --banner-icon: var(--fgColor-danger);
+  --banner-bg: var(--bgColor-danger-muted, #ffebe9);
+  --banner-border: var(--borderColor-danger-muted, #ff818266);
+  --banner-icon: var(--fgColor-danger, #d1242f);
 }
 
 .z-banner--info {
-  --banner-bg: var(--bgColor-accent-muted);
-  --banner-border: var(--borderColor-accent-muted);
-  --banner-icon: var(--fgColor-link);
+  --banner-bg: var(--bgColor-accent-muted, #ddf4ff);
+  --banner-border: var(--borderColor-accent-muted, #54aeff66);
+  --banner-icon: var(--fgColor-link, #0969da);
 }
 
 .z-banner--success {
-  --banner-bg: var(--bgColor-success-muted);
-  --banner-border: var(--borderColor-success-muted);
-  --banner-icon: var(--fgColor-success);
+  --banner-bg: var(--bgColor-success-muted, #dafbe1);
+  --banner-border: var(--borderColor-success-muted, #4ac26b66);
+  --banner-icon: var(--fgColor-success, #1a7f37);
 }
 
 .z-banner--upsell {
-  --banner-bg: var(--bgColor-done-muted);
-  --banner-border: var(--borderColor-done-muted);
-  --banner-icon: var(--fgColor-done);
+  --banner-bg: var(--bgColor-done-muted, #fbefff);
+  --banner-border: var(--borderColor-done-muted, #c297ff66);
+  --banner-icon: var(--fgColor-done, #8250df);
 }
 
 .z-banner--warning {
-  --banner-bg: var(--bgColor-attention-muted);
-  --banner-border: var(--borderColor-attention-muted);
-  --banner-icon: var(--fgColor-attention);
+  --banner-bg: var(--bgColor-attention-muted, #fff8c5);
+  --banner-border: var(--borderColor-attention-muted, #d4a72c66);
+  --banner-icon: var(--fgColor-attention, #9a6700);
 }
 
 .z-banner__icon {
@@ -332,8 +332,8 @@ defineExpose<zBannerExposed>({
 .z-banner__action {
   font: inherit;
   border: 0;
-  background: var(--bgColor-transparent);
-  color: var(--fgColor-link);
+  background: var(--bgColor-transparent, #ffffff00);
+  color: var(--fgColor-link, #0969da);
   text-decoration: none;
   cursor: pointer;
   padding: 0;
@@ -344,10 +344,10 @@ defineExpose<zBannerExposed>({
 }
 
 .z-banner__action--primary {
-  color: var(--fgColor-default);
+  color: var(--fgColor-default, #1f2328);
   font-weight: 500;
-  border: 1px solid var(--borderColor-default);
-  background: var(--bgColor-muted);
+  border: 1px solid var(--borderColor-default, #d1d9e0);
+  background: var(--bgColor-muted, #f6f8fa);
   border-radius: 6px;
   line-height: 20px;
   padding: 5px 12px;
@@ -361,22 +361,22 @@ defineExpose<zBannerExposed>({
   margin-left: 4px;
   border: 0;
   border-radius: 6px;
-  background: var(--bgColor-transparent);
+  background: var(--bgColor-transparent, #ffffff00);
   color: var(--banner-icon);
   cursor: pointer;
 }
 
 .z-banner__dismiss:hover {
-  background: var(--control-transparent-bgColor-hover);
+  background: var(--control-transparent-bgColor-hover, #818b981a);
 }
 
 .z-banner__dismiss:active {
-  background: var(--control-transparent-bgColor-active);
+  background: var(--control-transparent-bgColor-active, #818b9826);
 }
 
 .z-banner__dismiss:focus-visible,
 .z-banner__action:focus-visible {
-  outline: 2px solid var(--focus-outlineColor);
+  outline: 2px solid var(--focus-outlineColor, #0969da);
   outline-offset: 2px;
 }
 

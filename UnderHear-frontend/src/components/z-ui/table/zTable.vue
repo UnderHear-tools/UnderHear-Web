@@ -184,10 +184,10 @@ function columnStyle(column: ZTableColumn) {
 
 <style scoped>
 .z-table {
-  outline: 1px solid var(--borderColor-default);
+  outline: 1px solid var(--borderColor-default, #d1d9e0);
   border-radius: 6px;
-  background: var(--bgColor-default);
-  color: var(--fgColor-default);
+  background: var(--bgColor-default, #ffffff);
+  color: var(--fgColor-default, #1f2328);
   overflow: hidden;
 }
 
@@ -200,7 +200,7 @@ function columnStyle(column: ZTableColumn) {
 .z-table__container {
   width: 100%;
   overflow-x: auto;
-  background: var(--bgColor-default);
+  background: var(--bgColor-default, #ffffff);
 }
 
 .z-table__table {
@@ -224,12 +224,12 @@ function columnStyle(column: ZTableColumn) {
 }
 
 .z-table__head {
-  background: var(--bgColor-muted);
+  background: var(--bgColor-muted, #f6f8fa);
 }
 
 .z-table__cell {
   padding: 0.6rem 0.9rem;
-  border-bottom: 1px solid var(--borderColor-default);
+  border-bottom: 1px solid var(--borderColor-default, #d1d9e0);
   vertical-align: middle;
   background-clip: padding-box;
   white-space: nowrap;
@@ -242,8 +242,8 @@ function columnStyle(column: ZTableColumn) {
 
 .z-table__cell--head {
   font-weight: 600;
-  color: var(--fgColor-default);
-  background: var(--bgColor-muted);
+  color: var(--fgColor-default, #1f2328);
+  background: var(--bgColor-muted, #f6f8fa);
   position: relative;
 }
 
@@ -252,7 +252,7 @@ function columnStyle(column: ZTableColumn) {
 }
 
 .z-table.is-hoverable .z-table__row--body:hover {
-  background: var(--bgColor-muted);
+  background: var(--bgColor-muted, #f6f8fa);
 }
 
 .z-table__row.is-clickable {
@@ -260,13 +260,13 @@ function columnStyle(column: ZTableColumn) {
 }
 
 .z-table__row.is-clickable:active {
-  background: var(--bgColor-muted);
+  background: var(--bgColor-muted, #f6f8fa);
 }
 
 .z-table__cell--empty {
   text-align: center;
   padding: 2rem 1rem;
-  color: var(--fgColor-muted);
+  color: var(--fgColor-muted, #59636e);
   font-weight: 500;
 }
 
@@ -285,7 +285,7 @@ function columnStyle(column: ZTableColumn) {
 
 .is-row-header {
   font-weight: 600;
-  color: var(--fgColor-default);
+  color: var(--fgColor-default, #1f2328);
 }
 
 .is-align-left {

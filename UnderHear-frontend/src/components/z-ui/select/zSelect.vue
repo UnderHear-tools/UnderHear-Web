@@ -163,10 +163,10 @@ function handleOtherOpen(e: Event) {
     width: auto;
     /* 由内容撑开 */
     padding: 0.42rem 0.75rem;
-    border: 1px solid var(--borderColor-default);
+    border: 1px solid var(--borderColor-default, #d1d9e0);
     border-radius: 6px;
-    background: var(--bgColor-default);
-    color: var(--fgColor-default);
+    background: var(--bgColor-default, #ffffff);
+    color: var(--fgColor-default, #1f2328);
     font-size: 0.95rem;
     text-align: left;
     cursor: pointer;
@@ -182,7 +182,7 @@ function handleOtherOpen(e: Event) {
 
 .z-select.open .z-select-trigger,
 .z-select-trigger:hover {
-    border-color: var(--borderColor-accent-emphasis);
+    border-color: var(--borderColor-accent-emphasis, #0969da);
 }
 
 
@@ -200,7 +200,7 @@ function handleOtherOpen(e: Event) {
 .z-select-arrow {
     margin-left: auto;
     font-size: 0.9em;
-    color: var(--fgColor-muted);
+    color: var(--fgColor-muted, #59636e);
     display: inline-flex;
 }
 
@@ -216,10 +216,10 @@ function handleOtherOpen(e: Event) {
     /* 与触发器一致 */
     width: max-content;
     /* 允许宽度跟随最长选项，但不小于触发器 */
-    background: var(--bgColor-default);
-    border: 1px solid var(--borderColor-default);
+    background: var(--bgColor-default, #ffffff);
+    border: 1px solid var(--borderColor-default, #d1d9e0);
     border-radius: 8px;
-    box-shadow: 0 6px 18px color-mix(in srgb, var(--fgColor-default) 8%, var(--bgColor-transparent));
+    box-shadow: 0 6px 18px color-mix(in srgb, var(--fgColor-default, #1f2328) 8%, var(--bgColor-transparent, #ffffff00));
     z-index: 20;
     overflow: hidden;
 }
@@ -239,7 +239,7 @@ function handleOtherOpen(e: Event) {
     padding: 0.5em 1em;
     cursor: pointer;
     font-size: 0.9rem;
-    color: var(--fgColor-default);
+    color: var(--fgColor-default, #1f2328);
     display: flex;
     align-items: center;
     gap: .5rem;
@@ -249,12 +249,12 @@ function handleOtherOpen(e: Event) {
 }
 
 .z-select-option.active:not(.selected) {
-    background: var(--control-bgColor-hover);
+    background: var(--control-bgColor-hover, #eff2f5);
 }
 
 .z-select-option.selected {
-    background: var(--control-bgColor-hover);
-    color: var(--fgColor-default);
+    background: var(--control-bgColor-hover, #eff2f5);
+    color: var(--fgColor-default, #1f2328);
 }
 
 .z-select-option.selected .check {
@@ -268,7 +268,7 @@ function handleOtherOpen(e: Event) {
 }
 
 .z-select-option:hover {
-    background: var(--control-bgColor-hover);
+    background: var(--control-bgColor-hover, #eff2f5);
 }
 
 .z-select.disabled .z-select-trigger {
