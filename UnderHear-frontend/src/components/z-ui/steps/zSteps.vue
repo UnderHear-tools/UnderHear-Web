@@ -43,6 +43,7 @@ const getState = (i: number) =>
 
 <style scoped>
 .z-steps {
+	--step-indicator-size: 32px;
 	display: flex;
 	align-items: flex-start;
 	gap: 8px;
@@ -62,8 +63,8 @@ const getState = (i: number) =>
 	display: inline-flex;
 	align-items: center;
 	justify-content: center;
-	width: 32px;
-	height: 32px;
+	width: var(--step-indicator-size);
+	height: var(--step-indicator-size);
 	border-radius: 50%;
 	font-size: 14px;
 	font-weight: 600;
@@ -84,9 +85,9 @@ const getState = (i: number) =>
 
 .z-steps__separator {
 	position: absolute;
-	left: calc(50% + 24px);
-	right: calc(-50% + 16px);
-	top: 20px;
+	left: calc(50% + var(--step-indicator-size) / 2 + 8px);
+	right: calc(-50% + var(--step-indicator-size) / 2);
+	top: calc(var(--step-indicator-size) / 2 - 1px);
 	height: 2px;
 	border-radius: 2px;
 	background-color: var(--borderColor-muted, #d1d9e0);
@@ -130,8 +131,8 @@ const getState = (i: number) =>
 
 .z-steps--vertical .z-steps__separator {
 	position: absolute;
-	left: 20px;
-	top: 40px;
+	left: calc(var(--step-indicator-size) / 2 - 1px);
+	top: calc(var(--step-indicator-size) + 4px);
 	bottom: -8px;
 	right: auto;
 	width: 2px;
@@ -147,19 +148,12 @@ const getState = (i: number) =>
 /* responsive < 768px */
 @media (max-width: 767px) {
 	.z-steps--horizontal {
+		--step-indicator-size: 24px;
 		gap: 4px;
 	}
 
 	.z-steps--horizontal .z-steps__indicator {
-		width: 24px;
-		height: 24px;
 		font-size: 12px;
-	}
-
-	.z-steps--horizontal .z-steps__separator {
-		left: calc(50% + 18px);
-		right: calc(-50% + 12px);
-		top: 16px;
 	}
 
 	.z-steps--horizontal .z-steps__title {
