@@ -13,13 +13,6 @@
       </ComponentDocsDemoBlock>
     </ComponentDocsSection>
 
-    <ComponentDocsSection title="可点击跳转">
-      <template #description>设置 <code>clickable</code> 后，可点击跳转至临近步骤（当前步骤 ± 1）。</template>
-      <ComponentDocsDemoBlock :code="demo2Code">
-        <zSteps v-model="active2" :steps="basicSteps" clickable />
-      </ComponentDocsDemoBlock>
-    </ComponentDocsSection>
-
     <ComponentDocsSection title="自定义图标">
       <template #description>通过 <code>#icon-{index}</code> 插槽自定义每步的图标内容。</template>
       <ComponentDocsDemoBlock :code="demo3Code">
@@ -61,7 +54,6 @@ import ComponentDocsPage from '@/modules/components/components/ComponentDocsPage
 import ComponentDocsSection from '@/modules/components/components/ComponentDocsPage/ComponentDocsSection.vue'
 
 const active1 = ref(0)
-const active2 = ref(1)
 const active3 = ref(1)
 const active4 = ref(1)
 
@@ -97,22 +89,6 @@ import { ref } from 'vue'
 import { zSteps, type StepItem } from '@/components/z-ui/steps'
 
 const active = ref(0)
-const steps: StepItem[] = [
-  { title: '账号信息' },
-  { title: '个人资料' },
-  { title: '完成' }
-]
-<\/script>`
-
-const demo2Code = `<template>
-  <zSteps v-model="active" :steps="steps" clickable />
-</template>
-
-<script setup lang="ts">
-import { ref } from 'vue'
-import { zSteps, type StepItem } from '@/components/z-ui/steps'
-
-const active = ref(1)
 const steps: StepItem[] = [
   { title: '账号信息' },
   { title: '个人资料' },
@@ -169,7 +145,6 @@ const apiCols: ZTableColumn[] = [
 const apiRows = [
   { name: 'modelValue', description: '当前激活步骤索引（v-model）', type: 'number', default: '0' },
   { name: 'steps', description: '步骤配置数组', type: 'StepItem[]', default: '—' },
-  { name: 'clickable', description: '是否可点击跳转至临近步骤（当前 ± 1）', type: 'boolean', default: 'false' },
   { name: 'orientation', description: '方向', type: "'horizontal' | 'vertical'", default: "'horizontal'" }
 ]
 

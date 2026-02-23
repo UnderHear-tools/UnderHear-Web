@@ -6,17 +6,11 @@
 			class="z-steps__item"
 			:data-state="getState(i)"
 		>
-			<button
-				class="z-steps__trigger"
-				:disabled="!clickable || Math.abs(i - modelValue) !== 1"
-				@click="clickable && Math.abs(i - modelValue) === 1 && $emit('update:modelValue', i)"
-			>
-				<span class="z-steps__indicator">
-					<slot :name="`icon-${i}`" :state="getState(i)" :index="i">
-						{{ i + 1 }}
-					</slot>
-				</span>
-			</button>
+			<span class="z-steps__indicator">
+				<slot :name="`icon-${i}`" :state="getState(i)" :index="i">
+					{{ i + 1 }}
+				</slot>
+			</span>
 			<div v-if="i < steps.length - 1" class="z-steps__separator" />
 			<div class="z-steps__content">
 				<span class="z-steps__title">{{ step.title }}</span>
@@ -35,11 +29,9 @@ export interface StepItem {
 const props = withDefaults(defineProps<{
 	steps: StepItem[]
 	modelValue?: number
-	clickable?: boolean
 	orientation?: 'horizontal' | 'vertical'
 }>(), {
 	modelValue: 0,
-	clickable: false,
 	orientation: 'horizontal'
 })
 
@@ -64,21 +56,6 @@ const getState = (i: number) =>
 	align-items: center;
 	flex: 1;
 	gap: 8px;
-}
-
-.z-steps__trigger {
-	display: flex;
-	align-items: center;
-	justify-content: center;
-	padding: 4px;
-	border: none;
-	background: none;
-	cursor: pointer;
-	border-radius: 6px;
-}
-
-.z-steps__trigger:disabled {
-	pointer-events: none;
 }
 
 .z-steps__indicator {
