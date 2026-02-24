@@ -438,7 +438,11 @@ defineExpose<zBannerExposed>({
   .z-banner-layer {
     width: 100vw;
     left: 0;
+    top: 0;
     transform: none;
+  }
+  .z-banner {
+    border-radius: 0;
   }
 }
 </style>
