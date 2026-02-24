@@ -31,7 +31,7 @@
 					<button type="button" class="option-card">
 						<div class="option-header">
 							<h2 class="option-title">HTML</h2>
-							<p class="option-desc">从一个HTML文件开始！非常快速！</p>
+							<p class="option-desc">从一段HTML代码开始！非常快速！</p>
 						</div>
 						<img class="create-image" src="@/modules/application/assets/new-html.svg" alt="Create Collect" />
 					</button>
@@ -40,7 +40,7 @@
 
 			<!-- 步骤2：上传应用 -->
 			<div v-if="current === 1" class="step-content">
-
+				<zUpload v-model="file" accept=".zip" hint="支持 .zip 格式的 dist 构建包" />
 			</div>
 
 			<!-- 步骤3：基本资料 -->
@@ -69,6 +69,7 @@ import { ref } from 'vue'
 import { zSteps, type StepItem } from '@/components/z-ui/steps'
 import { zContainer } from '@/components/z-ui/container'
 import { Stack, Package, IdBadge, Rocket } from '@/components/z-ui/icon/Octicons-vue'
+import { zUpload } from '@/components/z-ui/upload'
 
 const steps: StepItem[] = [
 	{ title: '选择框架', description: '使用的前端框架' },
@@ -78,9 +79,10 @@ const steps: StepItem[] = [
 ] 
 
 const current = ref(0)
+const file = ref<File | null>(null)
 
 const submit = () => {
-	console.log('提交')
+	console.log('提交', file.value)
 }
 </script>
 
