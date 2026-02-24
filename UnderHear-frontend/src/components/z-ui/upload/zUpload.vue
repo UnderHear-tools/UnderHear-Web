@@ -22,7 +22,9 @@
 		<div v-if="modelValue" class="z-upload-file">
 			<span class="z-upload-file-name">{{ modelValue.name }}</span>
 			<span class="z-upload-file-size">{{ (modelValue.size / 1024).toFixed(1) }} KB</span>
-			<button class="z-upload-file-remove" @click="emit('update:modelValue', null)">&times;</button>
+			<button class="z-upload-file-remove" @click="emit('update:modelValue', null)">
+				<svg aria-hidden="true" width="16" height="16" viewBox="0 0 16 16" fill="currentColor"><path d="M3.72 3.72a.75.75 0 0 1 1.06 0L8 6.94l3.22-3.22a.749.749 0 0 1 1.275.326.749.749 0 0 1-.215.734L9.06 8l3.22 3.22a.749.749 0 0 1-.326 1.275.749.749 0 0 1-.734-.215L8 9.06l-3.22 3.22a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042L6.94 8 3.72 4.78a.75.75 0 0 1 0-1.06Z" /></svg>
+			</button>
 		</div>
 	</div>
 </template>
@@ -36,7 +38,7 @@ interface Props {
 	hint?: string
 }
 
-withDefaults(defineProps<Props>(), {
+const props = withDefaults(defineProps<Props>(), {
 	modelValue: null,
 	accept: '',
 	hint: ''
@@ -49,13 +51,25 @@ const emit = defineEmits<{
 const inputRef = ref<HTMLInputElement>()
 const dragging = ref(false)
 
+const isAccepted = (file: File) => {
+	if (!props.accept) return true
+	const types = props.accept.split(',').map(t => t.trim())
+	return types.some(t =>
+		t.startsWith('.') ? file.name.endsWith(t) : file.type === t
+	)
+}
+
+const selectFile = (file: File) => {
+	if (isAccepted(file)) emit('update:modelValue', file)
+}
+
 const onDrop = (e: DragEvent) => {
 	dragging.value = false
-	emit('update:modelValue', e.dataTransfer!.files[0])
+	selectFile(e.dataTransfer!.files[0])
 }
 
 const onFileChange = (e: Event) => {
-	emit('update:modelValue', (e.target as HTMLInputElement).files![0])
+	selectFile((e.target as HTMLInputElement).files![0])
 }
 </script>
 
@@ -110,26 +124,49 @@ const onFileChange = (e: Event) => {
 }
 
 .z-upload-file-name {
-	font-size: 0.95rem;
+	font-size: 0.8rem;
 	color: var(--fgColor-default);
 }
 
 .z-upload-file-size {
-	font-size: 0.85rem;
+	font-size: 0.8rem;
 	color: var(--fgColor-muted);
 }
 
 .z-upload-file-remove {
 	margin-left: auto;
+	display: grid;
+	place-items: center;
+	width: 32px;
+	height: 32px;
 	appearance: none;
 	border: none;
+	border-radius: 6px;
 	background: none;
-	font-size: 1.2rem;
 	cursor: pointer;
 	color: var(--fgColor-muted);
 }
 
 .z-upload-file-remove:hover {
+	background: var(--control-transparent-bgColor-hover, #818b981a);
 	color: var(--fgColor-danger);
+}
+
+.z-upload-file-remove:active {
+	background: var(--control-transparent-bgColor-active, #818b9826);
+}
+
+@media (max-width: 768px) {
+	.z-upload-drop {
+		padding: 2rem 1.25rem;
+	}
+
+	.z-upload-file-name {
+		flex: 1 1 0%;
+		min-width: 0;
+		overflow: hidden;
+		text-overflow: ellipsis;
+		white-space: nowrap;
+	}
 }
 </style>

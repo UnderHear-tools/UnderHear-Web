@@ -40,7 +40,7 @@
 
 			<!-- 步骤2：上传应用 -->
 			<div v-if="current === 1" class="step-content">
-				<zUpload v-model="file" accept=".zip" hint="支持 .zip 格式的 dist 构建包" />
+				<zUpload v-model="file" accept=".zip,.html" hint="支持 .zip 格式的 dist 构建包或 .html 文件" />
 			</div>
 
 			<!-- 步骤3：基本资料 -->
