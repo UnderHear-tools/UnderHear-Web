@@ -66,7 +66,7 @@ const copyCode = () => {
 <style scoped>
 .demo-block {
   border: 1px solid var(--borderColor-default);
-  border-radius: 6px;
+  border-radius: 4px;
 }
 
 .demo-content {
@@ -82,6 +82,7 @@ const copyCode = () => {
   gap: 0;
   border-top: 1px solid var(--borderColor-default);
   justify-content: flex-end;
+  padding: 4px;
 }
 
 .action-btn {

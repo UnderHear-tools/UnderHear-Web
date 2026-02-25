@@ -77,7 +77,7 @@ const demo1Code = `<template>
 import { zTooltip } from '@/components/z-ui/tooltip'
 import { zDivider } from '@/components/z-ui/divider'
 import { Bold, Italic, Code, Link, FileAdded, Search } from '@/components/z-ui/icon/Octicons-vue'
-<\\/script>
+<\/script>
 
 <style scoped>
 .demo-actions {
@@ -102,7 +102,7 @@ import { Bold, Italic, Code, Link, FileAdded, Search } from '@/components/z-ui/i
 .action-btn:hover {
   background-color: var(--button-invisible-bgColor-hover);
 }
-<\\/style>`
+</style>`
 </script>
 
 <style scoped>
