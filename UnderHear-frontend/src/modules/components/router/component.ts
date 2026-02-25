@@ -32,6 +32,11 @@ export const componentRoutes: Array<RouteRecordRaw> = [
                 name: 'UserMenu',
                 component: () => import('../views/components/user-menu.vue')
             },
+            {
+                path: 'action-bar',
+                name: 'ActionBar',
+                component: () => import('../views/components/ActionBar.vue')
+            },
             // Basic
             {
                 path: 'container',

@@ -191,7 +191,10 @@ const navSections = ref([
   },
   {
     title: 'Blocks 组合式组件',
-    items: [{ path: '/component/user-menu', label: 'UserMenu 用户菜单' }]
+    items: [
+      { path: '/component/user-menu', label: 'UserMenu 用户菜单' },
+      { path: '/component/action-bar', label: 'ActionBar 操作栏' }
+    ]
   },
   {
     title: 'Basic 基础组件',
