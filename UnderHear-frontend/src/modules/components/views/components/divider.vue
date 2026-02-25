@@ -1,6 +1,6 @@
 <template>
   <ComponentDocsPage>
-    <ComponentDocsHeader title="Divider 分割线" description="用于分隔内容的水平分割线。" />
+    <ComponentDocsHeader title="Divider 分割线" description="用于分隔内容的水平或纵向分割线。" />
 
     <ComponentDocsSection title="基础用法">
       <template #description>最简单的分割线。</template>
@@ -24,6 +24,37 @@
           <p>第二段内容</p>
           <zDivider />
           <p>第三段内容</p>
+        </div>
+      </ComponentDocsDemoBlock>
+    </ComponentDocsSection>
+
+    <ComponentDocsSection title="纵向分割线">
+      <template #description>设置 <code>direction="vertical"</code> 渲染纵向分割线，可通过 <code>height</code> 自定义高度。</template>
+
+      <ComponentDocsDemoBlock :code="demo3Code">
+        <div class="demo-inline">
+          <span>首页</span>
+          <zDivider direction="vertical" />
+          <span>文档</span>
+          <zDivider direction="vertical" />
+          <span>关于</span>
+        </div>
+      </ComponentDocsDemoBlock>
+    </ComponentDocsSection>
+
+    <ComponentDocsSection title="自定义尺寸">
+      <template #description>水平模式下通过 <code>width</code> 自定义宽度，纵向模式下通过 <code>height</code> 自定义高度。</template>
+
+      <ComponentDocsDemoBlock :code="demo4Code">
+        <div class="demo-container">
+          <p>短分割线（50%）</p>
+          <zDivider width="50%" />
+          <p>下方内容</p>
+        </div>
+        <div class="demo-inline" style="margin-top: 16px;">
+          <span>左</span>
+          <zDivider direction="vertical" height="2rem" />
+          <span>右</span>
         </div>
       </ComponentDocsDemoBlock>
     </ComponentDocsSection>
@@ -70,6 +101,34 @@ const demo2Code = `<template>
 import { zDivider } from '@/components/z-ui/divider'
 <\/script>`
 
+const demo3Code = `<template>
+  <div style="display: flex; align-items: center; gap: 0;">
+    <span>首页</span>
+    <zDivider direction="vertical" />
+    <span>文档</span>
+    <zDivider direction="vertical" />
+    <span>关于</span>
+  </div>
+</template>
+
+<script setup lang="ts">
+import { zDivider } from '@/components/z-ui/divider'
+<\/script>`
+
+const demo4Code = `<template>
+  <!-- 水平模式自定义宽度 -->
+  <zDivider width="50%" />
+
+  <!-- 纵向模式自定义高度 -->
+  <span>左</span>
+  <zDivider direction="vertical" height="2rem" />
+  <span>右</span>
+</template>
+
+<script setup lang="ts">
+import { zDivider } from '@/components/z-ui/divider'
+<\/script>`
+
 const apiTableColumns: ZTableColumn[] = [
   { key: 'name', label: '属性名', rowHeader: true, minWidth: '140px' },
   { key: 'description', label: '说明', minWidth: '200px', wrap: true },
@@ -78,12 +137,9 @@ const apiTableColumns: ZTableColumn[] = [
 ]
 
 const apiTableRows = [
-  {
-    name: '—',
-    description: '该组件暂无属性',
-    type: '—',
-    default: '—'
-  }
+  { name: 'direction', description: '分割线方向', type: "'horizontal' | 'vertical'", default: "'horizontal'" },
+  { name: 'width', description: '水平模式下自定义宽度', type: 'string', default: '—' },
+  { name: 'height', description: '纵向模式下自定义高度', type: 'string', default: "'1em'" }
 ]
 </script>
 
@@ -96,5 +152,13 @@ const apiTableRows = [
   margin: 0;
   color: var(--fgColor-default);
   font-size: 14px;
+}
+
+.demo-inline {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+  color: var(--fgColor-default);
 }
 </style>
