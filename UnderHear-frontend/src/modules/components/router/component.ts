@@ -79,6 +79,11 @@ export const componentRoutes: Array<RouteRecordRaw> = [
                 name: 'Select',
                 component: () => import('../views/components/select.vue')
             },
+            {
+                path: 'upload',
+                name: 'Upload',
+                component: () => import('../views/components/upload.vue')
+            },
             // Data
             {
                 path: 'table',
