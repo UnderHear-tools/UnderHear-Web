@@ -101,6 +101,11 @@ export const componentRoutes: Array<RouteRecordRaw> = [
                 path: 'banner',
                 name: 'Banner',
                 component: () => import('../views/components/banner.vue')
+            },
+            {
+                path: 'tooltip',
+                name: 'Tooltip',
+                component: () => import('../views/components/tooltip.vue')
             }
         ]
     }
