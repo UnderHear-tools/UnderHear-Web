@@ -243,12 +243,12 @@ const navSections = ref([
   height: calc(100vh - 64px);
   display: flex;
   flex-direction: column;
+  border-right: 1px solid var(--borderColor-default);
 }
 
 .sidebar-content {
   flex: 1;
   overflow-y: auto;
-  scrollbar-color: var(--borderColor-emphasis) var(--bgColor-default);
   padding: 2rem;
 }
 

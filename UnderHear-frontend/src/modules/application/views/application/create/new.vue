@@ -45,13 +45,13 @@
 
 			<!-- 步骤3：基本资料 -->
 			<div v-if="current === 2" class="step-content">
-
+				
 			</div>
 
-      <!-- 步骤4：完成 -->
-      <div v-if="current === 3" class="step-content">
-      
-      </div>
+			<!-- 步骤4：完成 -->
+			<div v-if="current === 3" class="step-content">
+			
+			</div>
 
 		</div>
 
