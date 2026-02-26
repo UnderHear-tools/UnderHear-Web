@@ -20,6 +20,7 @@
 @media (max-width: 768px) {
   .z-container {
     padding: 1rem;
+    padding-top: 4rem;
   }
 }
 </style>

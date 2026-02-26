@@ -243,7 +243,7 @@ const navSections = ref([
   width: 300px;
   position: fixed;
   left: 0;
-  height: calc(100vh - 64px);
+  height: calc(100vh - var(--header-height));
   display: flex;
   flex-direction: column;
   border-right: 1px solid var(--borderColor-default);
@@ -307,7 +307,7 @@ const navSections = ref([
   margin-left: 300px;
   margin-right: 300px;
   padding: 2rem;
-  min-height: calc(100vh - 64px);
+  min-height: calc(100vh - var(--header-height));
   min-width: 0;
 }
 
@@ -316,8 +316,7 @@ const navSections = ref([
   width: 300px;
   position: fixed;
   right: 0;
-  top: 64px;
-  height: calc(100vh - 64px);
+  height: calc(100vh - var(--header-height));
   display: flex;
   flex-direction: column;
   border-left: 1px solid var(--borderColor-default);
@@ -400,6 +399,7 @@ const navSections = ref([
 @media (max-width: 768px) {
   .main-content {
     padding: 1.5rem;
+    padding-top: 4rem;
   }
 
   .sidebar {

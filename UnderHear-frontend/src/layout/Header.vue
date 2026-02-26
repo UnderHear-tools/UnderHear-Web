@@ -213,9 +213,13 @@ watch(() => route.path, () => {
 
 @media (max-width: 767px) {
   .header {
+    position: fixed;
     top: 1rem;
-    width: fit-content;
-    margin: 0 auto;
+    left: 0;
+    right: 0;
+    width: max-content;
+    margin-inline: auto;
+    transform: none;
     border-radius: 24px;
     box-shadow: none;
   }

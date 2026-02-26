@@ -90,12 +90,11 @@ const submit = () => {
 .create-app {
 	display: flex;
 	flex-direction: column;
-	gap: 32px;
+	gap: 64px;
 }
 
 .steps{
 	margin-top: 32px;
-	margin-bottom: 32px;
 }
 
 .step-body {

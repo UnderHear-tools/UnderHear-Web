@@ -1,26 +1,68 @@
 <template>
-  <div class="background-root">
-    <div class="background-0" aria-hidden="true"></div>
-    <div class="background-1" aria-hidden="true"></div>
-    <div class="background-2" aria-hidden="true"></div>
-    <div class="hero-stage">
-      <div class="background-3" aria-hidden="true"></div>
-      <div class="background-4" aria-hidden="true"></div>
-      <div class="background-5 animate-stretch-vertical-loop" aria-hidden="true"></div>
-      <div class="background-6 animate-stretch-horizontal-loop" aria-hidden="true"></div>
-      <div class="background-7" aria-hidden="true"></div>
-      <div class="background-8 animate-stretch-vertical-loop" aria-hidden="true"></div>
-      <div class="background-9 animate-stretch-horizontal-loop" aria-hidden="true"></div>
-      <div class="background-10" aria-hidden="true"></div>
+  <div class="hero-wrapper" ref="wrapperRef">
+    <div class="background-root" ref="contentRef">
+      <div class="background-0" aria-hidden="true"></div>
+      <div class="background-1" aria-hidden="true"></div>
+      <div class="background-2" aria-hidden="true"></div>
+      <div class="hero-stage">
+        <div class="background-3" aria-hidden="true"></div>
+        <div class="background-4" aria-hidden="true"></div>
+        <div class="background-5 animate-stretch-vertical-loop" aria-hidden="true"></div>
+        <div class="background-6 animate-stretch-horizontal-loop" aria-hidden="true"></div>
+        <div class="background-7" aria-hidden="true"></div>
+        <div class="background-8 animate-stretch-vertical-loop" aria-hidden="true"></div>
+        <div class="background-9 animate-stretch-horizontal-loop" aria-hidden="true"></div>
+        <div class="background-10" aria-hidden="true"></div>
+      </div>
     </div>
     <div class="title">EXPLORE</div>
   </div>
 </template>
 
 <script setup lang="ts">
+import { ref, onMounted, onUnmounted } from 'vue'
+import { gsap } from 'gsap'
+import { ScrollTrigger } from 'gsap/ScrollTrigger'
+
+gsap.registerPlugin(ScrollTrigger)
+
+const wrapperRef = ref<HTMLElement>()
+const contentRef = ref<HTMLElement>()
+
+let ctx: gsap.Context | undefined
+const getHeaderHeight = () => getComputedStyle(document.documentElement).getPropertyValue('--header-height').trim()
+
+onMounted(() => {
+  if (!wrapperRef.value || !contentRef.value) return
+
+  ctx = gsap.context(() => {
+    gsap.to(contentRef.value!, {
+      y: () => wrapperRef.value!.offsetHeight * 0.5,
+      ease: 'none',
+      scrollTrigger: {
+        trigger: wrapperRef.value,
+        start: () => (window.innerWidth < 768 ? 'top top' : `top ${getHeaderHeight()}`),
+        end: 'bottom top',
+        scrub: true,
+        invalidateOnRefresh: true,
+      },
+    })
+  })
+})
+
+onUnmounted(() => {
+  ctx?.revert()
+})
 </script>
 
 <style scoped>
+.hero-wrapper {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
 .background-root {
   position: absolute;
   inset: 0;
@@ -28,6 +70,7 @@
   transform: translateZ(0);
   transform-origin: 0% 0%;
   --bg-offset: 80px;
+  will-change: transform;
 }
 
 .background-0,
