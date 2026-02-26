@@ -1,12 +1,12 @@
 <template>
 	<zContainer>
 	<div class="create-app">
-		<zSteps v-model="current" :steps="steps">
-      <template #icon-0><Stack /></template>
-      <template #icon-1><Package /></template>
-      <template #icon-2><IdBadge /></template>
-      <template #icon-3><Rocket /></template>
-    </zSteps>
+		<zSteps v-model="current" :steps="steps" class="steps">
+			<template #icon-0><Stack /></template>
+			<template #icon-1><Package /></template>
+			<template #icon-2><IdBadge /></template>
+			<template #icon-3><Rocket /></template>
+    	</zSteps>
 
 		<div class="step-body">
 			<!-- 步骤1：选择框架 -->
@@ -72,10 +72,10 @@ import { Stack, Package, IdBadge, Rocket } from '@/components/z-ui/icon/Octicons
 import { zUpload } from '@/components/z-ui/upload'
 
 const steps: StepItem[] = [
-	{ title: '选择框架', description: '使用的前端框架' },
-	{ title: '上传应用', description: 'dist构建包/html' },
-	{ title: '应用信息', description: '填写名称、描述等' },
-  { title: '完成!', description: '创建完成' }
+  { title: '选择框架' },
+  { title: '上传应用' },
+  { title: '应用信息' },
+  { title: '完成!' }
 ] 
 
 const current = ref(0)
@@ -91,6 +91,11 @@ const submit = () => {
 	display: flex;
 	flex-direction: column;
 	gap: 32px;
+}
+
+.steps{
+	margin-top: 32px;
+	margin-bottom: 32px;
 }
 
 .step-body {
@@ -163,6 +168,9 @@ const submit = () => {
 }
 
 @media (max-width: 768px) {
+	.steps {
+		margin-bottom: 12px;
+	}
 	.options-grid {
 		grid-template-columns: 1fr;
 	}

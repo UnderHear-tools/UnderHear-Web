@@ -44,9 +44,12 @@ const getState = (i: number) =>
 <style scoped>
 .z-steps {
 	--step-indicator-size: 32px;
+	--step-separator-size: 2px;
+	--step-separator-offset: 8px;
+	--step-gap: 8px;
 	display: flex;
 	align-items: flex-start;
-	gap: 8px;
+	gap: var(--step-gap);
 	width: 100%;
 }
 
@@ -85,10 +88,10 @@ const getState = (i: number) =>
 
 .z-steps__separator {
 	position: absolute;
-	left: calc(50% + var(--step-indicator-size) / 2 + 8px);
-	right: calc(-50% + var(--step-indicator-size) / 2);
-	top: calc(var(--step-indicator-size) / 2 - 1px);
-	height: 2px;
+	left: calc(50% + var(--step-indicator-size) / 2 + var(--step-separator-offset));
+	right: calc(-50% - var(--step-gap) + var(--step-indicator-size) / 2 + var(--step-separator-offset));
+	top: calc(var(--step-indicator-size) / 2 - var(--step-separator-size) / 2);
+	height: var(--step-separator-size);
 	border-radius: 2px;
 	background-color: var(--borderColor-muted, #d1d9e0);
 	transition: background-color 0.2s;
@@ -131,11 +134,11 @@ const getState = (i: number) =>
 
 .z-steps--vertical .z-steps__separator {
 	position: absolute;
-	left: calc(var(--step-indicator-size) / 2 - 1px);
+	left: calc(var(--step-indicator-size) / 2 - var(--step-separator-size) / 2);
 	top: calc(var(--step-indicator-size) + 4px);
 	bottom: -8px;
 	right: auto;
-	width: 2px;
+	width: var(--step-separator-size);
 	height: auto;
 }
 
@@ -149,7 +152,8 @@ const getState = (i: number) =>
 @media (max-width: 767px) {
 	.z-steps--horizontal {
 		--step-indicator-size: 24px;
-		gap: 4px;
+		--step-separator-offset: 4px;
+		--step-gap: 4px;
 	}
 
 	.z-steps--horizontal .z-steps__indicator {

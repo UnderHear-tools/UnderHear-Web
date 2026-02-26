@@ -18,7 +18,7 @@
       <ComponentDocsDemoBlock :code="demo2Code">
         <div class="demo-wrapper">
           <zContainer>
-            <h3 class="demo-title">页面标题</h3>
+            <div class="demo-title">页面标题</div>
             <p class="demo-text">这是一段页面描述文字，容器会自动处理内边距和居中对齐。</p>
             <div class="demo-cards">
               <div class="demo-card">卡片 A</div>
@@ -70,12 +70,12 @@ import { zContainer } from '@/components/z-ui/container'
 
 const demo2Code = `<template>
   <zContainer>
-    <h3>页面标题</h3>
-    <p>这是一段页面描述文字，容器会自动处理内边距和居中对齐。</p>
-    <div class="cards">
-      <div class="card">卡片 A</div>
-      <div class="card">卡片 B</div>
-      <div class="card">卡片 C</div>
+    <div class="demo-title">页面标题</div>
+    <p class="demo-text">这是一段页面描述文字，容器会自动处理内边距和居中对齐。</p>
+    <div class="demo-cards">
+      <div class="demo-card">卡片 A</div>
+      <div class="demo-card">卡片 B</div>
+      <div class="demo-card">卡片 C</div>
     </div>
   </zContainer>
 </template>
