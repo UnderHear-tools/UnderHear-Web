@@ -1,21 +1,23 @@
 <template>
-  <div class="hero-wrapper" ref="wrapperRef">
-    <div class="background-root" ref="contentRef">
-      <div class="background-0" aria-hidden="true"></div>
-      <div class="background-1" aria-hidden="true"></div>
-      <div class="background-2" aria-hidden="true"></div>
-      <div class="hero-stage">
-        <div class="background-3" aria-hidden="true"></div>
-        <div class="background-4" aria-hidden="true"></div>
-        <div class="background-5 animate-stretch-vertical-loop" aria-hidden="true"></div>
-        <div class="background-6 animate-stretch-horizontal-loop" aria-hidden="true"></div>
-        <div class="background-7" aria-hidden="true"></div>
-        <div class="background-8 animate-stretch-vertical-loop" aria-hidden="true"></div>
-        <div class="background-9 animate-stretch-horizontal-loop" aria-hidden="true"></div>
-        <div class="background-10" aria-hidden="true"></div>
+  <div class="index-page">
+    <div class="hero-wrapper" ref="wrapperRef">
+      <div class="background-root" ref="contentRef">
+        <div class="background-0" aria-hidden="true"></div>
+        <div class="background-1" aria-hidden="true"></div>
+        <div class="background-2" aria-hidden="true"></div>
+        <div class="hero-stage">
+          <div class="background-3" aria-hidden="true"></div>
+          <div class="background-4" aria-hidden="true"></div>
+          <div class="background-5 animate-stretch-vertical-loop" aria-hidden="true"></div>
+          <div class="background-6 animate-stretch-horizontal-loop" aria-hidden="true"></div>
+          <div class="background-7" aria-hidden="true"></div>
+          <div class="background-8 animate-stretch-vertical-loop" aria-hidden="true"></div>
+          <div class="background-9 animate-stretch-horizontal-loop" aria-hidden="true"></div>
+          <div class="background-10" aria-hidden="true"></div>
+        </div>
       </div>
+      <div class="title">EXPLORE</div>
     </div>
-    <div class="title">EXPLORE</div>
   </div>
 </template>
 
@@ -56,6 +58,10 @@ onUnmounted(() => {
 </script>
 
 <style scoped>
+.index-page {
+  height: calc(100vh - var(--header-height));
+}
+
 .hero-wrapper {
   position: relative;
   width: 100%;
@@ -284,6 +290,10 @@ onUnmounted(() => {
 }
 
 @media (max-width: 768px) {
+  .index-page {
+    height: 100vh;
+  }
+  
   .title {
     font-size: 3.5rem;
   }
