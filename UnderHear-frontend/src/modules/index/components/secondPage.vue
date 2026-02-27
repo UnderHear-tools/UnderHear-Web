@@ -4,7 +4,7 @@
         <div class="panel-text panel-vision">
           <h2 class="panel-title">Vision</h2>
           <p class="panel-description">
-            Our vision is to spark curiosity and encourage a science-based, humanist and optimistic worldview.
+            不同于行业巨头Vecel，我希望提供门槛更低的页面托管服务，简单的就是最棒的。
           </p>
         </div>
         <div class="panel-image panel-city">
@@ -13,8 +13,7 @@
         <div class="panel-text panel-mission">
           <h2 class="panel-title">Mission</h2>
           <p class="panel-description">
-            We exist to make science and humanism appealing to as many people as possible, regardless of their age or
-            academic background.
+            我希望每个刚踏入编程领域的新手们，都能在最短时间内，把自己的代码变成真正被世界访问的作品，以便获得10倍的成就感。
           </p>
         </div>
         <div class="panel-image panel-space">
