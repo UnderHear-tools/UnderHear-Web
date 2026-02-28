@@ -6,6 +6,7 @@
           <p class="panel-description">
             不同于行业巨头Vecel，我希望提供门槛更低的页面托管服务，简单的就是最棒的。
           </p>
+          <p class="italic text-gray-600">绝不是因为只能做成这样！:(</p>
         </div>
         <div class="panel-image panel-city">
           <img src="../assests/image-0.svg" alt="Futuristic city illustration" />

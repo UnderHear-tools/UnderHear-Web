@@ -14,6 +14,14 @@
 				<div class="options-grid">
 					<button type="button" class="option-card">
 						<div class="option-header">
+							<h2 class="option-title">HTML<zTag>推荐</zTag></h2>
+							<p class="option-desc">从一段HTML代码开始！非常快速！</p>
+						</div>
+						<img class="create-image" src="@/modules/application/assets/new-html.svg" alt="Create Collect" />
+					</button>
+
+					<button type="button" class="option-card">
+						<div class="option-header">
 							<h2 class="option-title">Vue</h2>
 							<p class="option-desc">从一个Vue项目开始！</p>
 						</div>
@@ -26,14 +34,6 @@
 							<p class="option-desc">从一个React项目开始！</p>
 						</div>
 						<img class="create-image" src="@/modules/application/assets/new-react.svg" alt="Create Website" />
-					</button>
-
-					<button type="button" class="option-card">
-						<div class="option-header">
-							<h2 class="option-title">HTML</h2>
-							<p class="option-desc">从一段HTML代码开始！非常快速！</p>
-						</div>
-						<img class="create-image" src="@/modules/application/assets/new-html.svg" alt="Create Collect" />
 					</button>
 				</div>
 			</div>
@@ -68,8 +68,10 @@
 import { ref } from 'vue'
 import { zSteps, type StepItem } from '@/components/z-ui/steps'
 import { zContainer } from '@/components/z-ui/container'
+import { zTag } from '@/components/z-ui/tag'
 import { Stack, Package, IdBadge, Rocket } from '@/components/z-ui/icon/Octicons-vue'
 import { zUpload } from '@/components/z-ui/upload'
+import ZTag from '@/components/z-ui/tag/zTag.vue'
 
 const steps: StepItem[] = [
   { title: '选择框架' },
@@ -150,6 +152,9 @@ const submit = () => {
 	font-size: 1.15rem;
 	font-weight: 700;
 	color: var(--fgColor-default);
+	display: flex;
+	align-items: center;
+	gap: 0.5rem;
 }
 
 .option-desc {
