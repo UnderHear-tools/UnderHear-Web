@@ -42,13 +42,17 @@ function onInput(event: Event) {
 
 <style scoped>
 .z-input {
-  width: 100%;
-  border: 1px solid var(--borderColor-default, #d1d9e0);
+  color: var(--fgColor-default, #1f2328);
+  vertical-align: middle;
+  background-color: var(--bgColor-default, #fff);
+  border: 1px solid var(--control-borderColor-rest, #d0d7de);
+  box-shadow: var(--shadow-inset, inset 0px 1px 0px 0px #1f23280a);
+  background-position: right 8px center;
+  background-repeat: no-repeat;
   border-radius: 6px;
-  padding: 0.6rem 0.7rem;
-  font-size: 0.95rem;
-  outline: none;
-  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  padding: 5px 12px;
+  font-size: 14px;
+  line-height: 20px;
 }
 
 .z-input:focus {
@@ -58,7 +62,6 @@ function onInput(event: Event) {
 
 .z-input:disabled {
   cursor: not-allowed;
-  opacity: 0.7;
   background: var(--bgColor-muted, #f6f8fa);
 }
 </style>
