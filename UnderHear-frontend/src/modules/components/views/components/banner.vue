@@ -11,11 +11,23 @@
         <div class="banner-demo-actions">
           <button class="demo-btn" type="button" @click="showInfoBanner">Info</button>
           <button class="demo-btn" type="button" @click="showSuccessBanner">Success</button>
-          <button class="demo-btn" type="button" @click="showTimedBanner">Timed</button>
+          <button class="demo-btn" type="button" @click="showTimedBanner">自动关闭</button>
           <button class="demo-btn" type="button" @click="showWarningBanner">Warning</button>
           <button class="demo-btn" type="button" @click="showCriticalBanner">Critical</button>
           <button class="demo-btn" type="button" @click="showUpsellBanner">Upsell</button>
           <button class="demo-btn demo-btn--ghost" type="button" @click="closeBanner">Close</button>
+        </div>
+      </ComponentDocsDemoBlock>
+    </ComponentDocsSection>
+
+    <ComponentDocsSection title="自动关闭时长">
+      <template #description>
+        通过在 options 中设置 <code>duration</code>，让 Banner 在指定时间后自动关闭。
+      </template>
+
+      <ComponentDocsDemoBlock :code="durationDemoCode">
+        <div class="banner-demo-actions">
+          <button class="demo-btn" type="button" @click="showTimedBanner">展示自动关闭 Banner</button>
         </div>
       </ComponentDocsDemoBlock>
     </ComponentDocsSection>
@@ -87,7 +99,7 @@ const showSuccessBanner = () => {
 }
 
 const showTimedBanner = () => {
-  zBanner.success('Will close in 3 seconds.', { duration: 3000 })
+  zBanner.success('3 秒后自动关闭。', { duration: 3000 })
 }
 
 const showWarningBanner = () => {
@@ -169,7 +181,7 @@ const serviceDemoCode = `<template>
   <div class="banner-demo-actions">
     <button class="demo-btn" type="button" @click="showInfoBanner">Info</button>
     <button class="demo-btn" type="button" @click="showSuccessBanner">Success</button>
-    <button class="demo-btn" type="button" @click="showTimedBanner">Timed</button>
+    <button class="demo-btn" type="button" @click="showTimedBanner">自动关闭</button>
     <button class="demo-btn" type="button" @click="showWarningBanner">Warning</button>
     <button class="demo-btn" type="button" @click="showCriticalBanner">Critical</button>
     <button class="demo-btn" type="button" @click="showUpsellBanner">Upsell</button>
@@ -185,7 +197,7 @@ const showSuccessBanner = () => zBanner.success('保存成功，配置已经生�
 const showWarningBanner = () => zBanner.warning('存在潜在风险，请检查关键配置后再继续。')
 const showCriticalBanner = () => zBanner.critical('操作失败，请修复问题后重试。')
 const showUpsellBanner = () => zBanner.upsell('你可以升级到专业版解锁更多能力。')
-const showTimedBanner = () => zBanner.success('Will close in 3 seconds.', { duration: 3000 })
+const showTimedBanner = () => zBanner.success('3 秒后自动关闭。', { duration: 3000 })
 const closeBanner = () => zBanner.close()
 <\/script>
 
@@ -208,6 +220,20 @@ const closeBanner = () => zBanner.close()
   background: var(--bgColor-default);
 }
 <\/style>`
+
+const durationDemoCode = `<template>
+  <div class="banner-demo-actions">
+    <button class="demo-btn" type="button" @click="showDurationBanner">展示自动关闭 Banner</button>
+  </div>
+</template>
+
+<script setup lang="ts">
+import { zBanner } from '@/components/z-ui/banner'
+
+const showDurationBanner = () => {
+  zBanner.success('3 秒后自动关闭。', { duration: 3000 })
+}
+<\/script>`
 
 const actionsDemoCode = `<template>
   <div class="banner-demo-actions">
@@ -369,7 +395,7 @@ const optionsTableRows = [
     default: "'default'"
   },
   { name: 'flush', description: '是否使用通栏样式', type: 'boolean', default: 'false' },
-  { name: 'duration', description: 'Auto close duration (ms)', type: 'number', default: "'undefined'" }
+  { name: 'duration', description: '自动关闭时长（毫秒）', type: 'number', default: "'undefined'" }
 ]
 
 const actionTableColumns: ZTableColumn[] = [
