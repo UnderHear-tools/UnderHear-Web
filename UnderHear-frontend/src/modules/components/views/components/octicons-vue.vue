@@ -46,7 +46,7 @@
 
     <ComponentDocsSection title="图标展示">
       <template #description>
-        当前共 {{ iconEntries.length }} 个图标，展示预览尺寸为 {{ iconSize }}px。
+        当前共 {{ iconEntries.length }} 个图标，展示预览尺寸为 {{ iconSize }}px。点击可直接复制SVG代码。
       </template>
 
       <div class="icon-search">
@@ -60,7 +60,7 @@
       </div>
 
       <div class="icon-grid">
-        <div v-for="icon in filteredIconEntries" :key="icon.name" class="icon-card">
+        <div v-for="icon in filteredIconEntries" :key="icon.name" class="icon-card" @click="copySVG(icon.name, $event)">
           <component :is="icon.component" :size="iconSize" class="icon-svg" />
           <span class="icon-name">{{ icon.name }}</span>
         </div>
@@ -89,6 +89,7 @@ import ComponentDocsDemoBlock from '@/modules/components/components/ComponentDoc
 import ComponentDocsHeader from '@/modules/components/components/ComponentDocsPage/ComponentDocsHeader.vue'
 import ComponentDocsPage from '@/modules/components/components/ComponentDocsPage/ComponentDocsPage.vue'
 import ComponentDocsSection from '@/modules/components/components/ComponentDocsPage/ComponentDocsSection.vue'
+import { zBanner } from '@/components/z-ui/banner'
 
 type IconEntry = {
   name: string
@@ -189,6 +190,17 @@ const filteredIconEntries = computed(() => {
   return iconEntries.filter((icon) => icon.name.toLowerCase().includes(query))
 })
 
+const copySVG = (iconName: string, event: MouseEvent) => {
+  const iconCard = event.currentTarget as HTMLDivElement
+  const svgElement = iconCard.querySelector('svg') as SVGElement
+
+  // 从已渲染 DOM 中提取当前图标的 SVG 字符串。
+  const svgMarkup = svgElement.outerHTML
+  // 将 SVG 文本写入剪贴板，便于直接粘贴到设计稿或代码中。
+  navigator.clipboard.writeText(svgMarkup)
+  zBanner.success(`${iconName} SVG 已复制到剪贴板！`, { duration: 3000 })
+}
+
 const apiTableColumns: ZTableColumn[] = [
   { key: 'name', label: '属性名', rowHeader: true, minWidth: '140px' },
   { key: 'description', label: '说明', minWidth: '200px', wrap: true },
@@ -281,6 +293,10 @@ const apiTableRows = [
   border: 1px solid var(--borderColor-default);
   border-radius: 6px;
   background: var(--bgColor-default);
+}
+
+.icon-card:hover {
+  cursor: pointer;
 }
 
 .icon-svg {
