@@ -9,18 +9,8 @@
       <slot />
     </div>
 
-    <p v-if="hasValidation" class="z-form-control__validation" role="alert">
-      <svg
-        v-if="showValidationIcon"
-        class="z-form-control__validation-icon"
-        aria-hidden="true"
-        viewBox="0 0 16 16"
-      >
-        <path
-          d="M8.865.513a.75.75 0 0 0-1.73 0l-6.5 14.25A.75.75 0 0 0 1.365 16h13.27a.75.75 0 0 0 .73-1.237ZM8 5a.75.75 0 0 1 .75.75v3.5a.75.75 0 0 1-1.5 0v-3.5A.75.75 0 0 1 8 5Zm0 8a1 1 0 1 1 0-2 1 1 0 0 1 0 2Z"
-          fill="currentColor"
-        />
-      </svg>
+    <p v-if="invalid && hasValidation" class="z-form-control__validation" role="alert">
+      <svg aria-hidden="true" focusable="false" width="12" height="12" viewBox="0 0 16 16" fill="currentColor" class="icon-svg"><path d="M6.457 1.047c.659-1.234 2.427-1.234 3.086 0l6.082 11.378A1.75 1.75 0 0 1 14.082 15H1.918a1.75 1.75 0 0 1-1.543-2.575ZM8 5a.75.75 0 0 0-.75.75v2.5a.75.75 0 0 0 1.5 0v-2.5A.75.75 0 0 0 8 5Zm1 6a1 1 0 1 0-2 0 1 1 0 0 0 2 0Z"></path></svg>
       <slot name="validation">{{ validation }}</slot>
     </p>
 
@@ -41,7 +31,6 @@ interface Props {
   invalid?: boolean
   validation?: string
   caption?: string
-  showValidationIcon?: boolean
 }
 
 const props = withDefaults(defineProps<Props>(), {
@@ -51,8 +40,7 @@ const props = withDefaults(defineProps<Props>(), {
   requiredIndicator: '*',
   invalid: false,
   validation: '',
-  caption: '',
-  showValidationIcon: true
+  caption: ''
 })
 
 const slots = useSlots()
@@ -64,7 +52,7 @@ const hasCaption = computed(() => Boolean(slots.caption || props.caption))
 <style scoped>
 .z-form-control {
   display: grid;
-  gap: 8px;
+  gap: 4px;
 }
 
 .z-form-control__label {
@@ -78,7 +66,7 @@ const hasCaption = computed(() => Boolean(slots.caption || props.caption))
 }
 
 .z-form-control__required {
-  color: var(--fgColor-danger, #d1242f);
+  color: var(--fgColor-default, #1f2328);
 }
 
 .z-form-control__input {
@@ -88,30 +76,26 @@ const hasCaption = computed(() => Boolean(slots.caption || props.caption))
 .z-form-control__validation {
   display: inline-flex;
   align-items: center;
-  gap: 6px;
+  gap: 3px;
   margin: 0;
-  font-size: 14px;
+  font-size: 12px;
   line-height: 1.4;
+  font-weight: 600;
   color: var(--fgColor-danger, #d1242f);
-}
-
-.z-form-control__validation-icon {
-  width: 16px;
-  height: 16px;
-  flex: 0 0 16px;
 }
 
 .z-form-control__caption {
   margin: 0;
-  font-size: 14px;
+  font-size: 12px;
   line-height: 1.4;
   color: var(--fgColor-muted, #656d76);
 }
 
-.z-form-control.is-invalid :deep(input),
-.z-form-control.is-invalid :deep(textarea),
-.z-form-control.is-invalid :deep(select),
 .z-form-control.is-invalid :deep(.z-input) {
   border-color: var(--borderColor-danger-emphasis, #cf222e);
+}
+
+.z-form-control.is-invalid :deep(.z-input:focus) {
+  outline: 2px solid var(--borderColor-danger-emphasis, #cf222e);
 }
 </style>
