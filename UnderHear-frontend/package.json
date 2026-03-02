@@ -6,7 +6,9 @@
   "scripts": {
     "dev": "vite",
     "build": "vue-tsc -b && vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix"
   },
   "dependencies": {
     "@icon-park/vue-next": "^1.4.2",
@@ -22,8 +24,12 @@
   },
   "devDependencies": {
     "@types/node": "^24.3.0",
+    "@typescript-eslint/eslint-plugin": "^8.56.1",
+    "@typescript-eslint/parser": "^8.56.1",
     "@vitejs/plugin-vue": "^6.0.1",
     "@vue/tsconfig": "^0.7.0",
+    "eslint": "^10.0.2",
+    "eslint-plugin-vue": "^10.8.0",
     "typescript": "^5.9.2",
     "vite": "^7.1.2",
     "vue-tsc": "^3.0.5"
