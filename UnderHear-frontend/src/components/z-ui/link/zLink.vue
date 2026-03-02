@@ -45,6 +45,8 @@ interface Props {
 
 withDefaults(defineProps<Props>(), {
   external: false,
+  prefixText: '',
+  suffixText: '',
   target: '_self',
   variant: 'primary'
 })

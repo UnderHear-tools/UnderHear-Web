@@ -1,7 +1,7 @@
 <template>
   <component
     :is="props.href ? 'a' : 'button'"
-    :href="props.href"
+    :href="props.href || undefined"
     :target="props.href ? (props.newTab ? '_blank' : '_self') : undefined"
     :rel="props.href && props.newTab ? 'noopener noreferrer' : undefined"
     :type="props.href ? undefined : 'button'"
@@ -19,6 +19,7 @@ const props = withDefaults(
     newTab?: boolean
   }>(),
   {
+    href: '',
     newTab: false
   }
 )

@@ -18,7 +18,9 @@ const props = withDefaults(defineProps<{
   color?: string
   bgColor?: string
 }>(), {
-  size: 'medium'
+  size: 'medium',
+  color: '',
+  bgColor: '',
 })
 
 const customStyle = computed(() => ({

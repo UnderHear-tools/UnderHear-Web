@@ -32,10 +32,12 @@
         v-if="codeVisible"
         class="demo-code"
       >
+        <!-- eslint-disable vue/no-v-html -->
         <div
           class="code-content"
           v-html="highlightedCode"
         />
+        <!-- eslint-enable vue/no-v-html -->
         <div class="code-footer">
           <button
             class="hide-code-btn"

@@ -109,7 +109,7 @@ interface Application {
 const applications = ref<Application[]>([])
 
 onMounted(() => {
-  applications.value = applicationData as any
+  applications.value = applicationData as Application[]
 })
 </script>
 

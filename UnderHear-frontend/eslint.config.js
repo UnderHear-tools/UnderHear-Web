@@ -73,6 +73,13 @@ export default [
   },
 
   {
+    files: ["src/components/z-ui/icon/Octicons-vue/icons/**/*.vue"],
+    rules: {
+      "vue/require-default-prop": "off",
+    },
+  },
+
+  {
     files: ["**/*.d.ts"],
     rules: {
       "@typescript-eslint/no-explicit-any": "off",

@@ -12,7 +12,9 @@ withDefaults(defineProps<{
   height?: string
   width?: string
 }>(), {
-  direction: 'horizontal'
+  direction: 'horizontal',
+  height: '',
+  width: '',
 })
 </script>
 

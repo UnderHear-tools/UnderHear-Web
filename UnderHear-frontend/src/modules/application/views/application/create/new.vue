@@ -142,7 +142,6 @@ import { zContainer } from '@/components/z-ui/container'
 import { zTag } from '@/components/z-ui/tag'
 import { Stack, Package, IdBadge, Rocket } from '@/components/z-ui/icon/Octicons-vue'
 import { zUpload } from '@/components/z-ui/upload'
-import ZTag from '@/components/z-ui/tag/zTag.vue'
 
 const steps: StepItem[] = [
   { title: '选择框架' },
