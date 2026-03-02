@@ -1,16 +1,29 @@
 <template>
   <div class="api-block">
-    <h3 class="api-subtitle">{{ title }}</h3>
+    <h3 class="api-subtitle">
+      {{ title }}
+    </h3>
     <div class="api-table-wrapper">
       <table class="api-table">
         <thead>
           <tr>
-            <th v-for="column in columns" :key="column">{{ column }}</th>
+            <th
+              v-for="column in columns"
+              :key="column"
+            >
+              {{ column }}
+            </th>
           </tr>
         </thead>
         <tbody>
-          <tr v-for="(row, rowIndex) in rows" :key="rowIndex">
-            <td v-for="(cell, cellIndex) in row" :key="cellIndex">
+          <tr
+            v-for="(row, rowIndex) in rows"
+            :key="rowIndex"
+          >
+            <td
+              v-for="(cell, cellIndex) in row"
+              :key="cellIndex"
+            >
               <code v-if="cell.code">{{ cell.text }}</code>
               <span v-else>{{ cell.text }}</span>
             </td>

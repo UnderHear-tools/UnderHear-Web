@@ -1,34 +1,57 @@
 <template>
-	<zContainer>
-			<div class="project-header">
-			<h1 class="project-title">我的项目</h1>
-			<p class="project-subtitle">以下是我独立开发的一些项目，涵盖了全栈开发、机器人技术、小程序开发、AI等多个领域。其中一些还在持续维护。</p>
-			</div>
+  <zContainer>
+    <div class="project-header">
+      <h1 class="project-title">
+        我的项目
+      </h1>
+      <p class="project-subtitle">
+        以下是我独立开发的一些项目，涵盖了全栈开发、机器人技术、小程序开发、AI等多个领域。其中一些还在持续维护。
+      </p>
+    </div>
 
-		<div class="project-grid">
-			<div v-for="project in projects" :key="project.id" class="project-card">
-				<div class="card-header">
-					<a :href="project.projectLink">{{ project.title }}</a>
-					<span class="project-date">{{ project.date }}</span>
-				</div>
-				<a :href="project.weblink" v-if="project.weblink" class="project-link">{{ project.weblink }}</a>
-				<div class="project-description">
-					<p>{{ project.description.zh }}</p>
-					<p>{{ project.description.en }}</p>
-				</div>
-				<div class="project-tech">
-					<zTag v-for="tech in project.technologies" :key="tech">{{ tech }}</zTag>
-				</div>
-				<div class="project-items">
-					<div class="project-badges">
-						<span class="project-type-badge">{{ project.projectType }}</span>
-						<span class="project-status-badge" :class="getStatusClass(project.status)">◉ {{ project.status }}</span>
-					</div>
-					<a :href="project.projectLink" class="project-detail">MORE</a>
-				</div>
-			</div>
-		</div>
-	</zContainer>
+    <div class="project-grid">
+      <div
+        v-for="project in projects"
+        :key="project.id"
+        class="project-card"
+      >
+        <div class="card-header">
+          <a :href="project.projectLink">{{ project.title }}</a>
+          <span class="project-date">{{ project.date }}</span>
+        </div>
+        <a
+          v-if="project.weblink"
+          :href="project.weblink"
+          class="project-link"
+        >{{ project.weblink }}</a>
+        <div class="project-description">
+          <p>{{ project.description.zh }}</p>
+          <p>{{ project.description.en }}</p>
+        </div>
+        <div class="project-tech">
+          <zTag
+            v-for="tech in project.technologies"
+            :key="tech"
+          >
+            {{ tech }}
+          </zTag>
+        </div>
+        <div class="project-items">
+          <div class="project-badges">
+            <span class="project-type-badge">{{ project.projectType }}</span>
+            <span
+              class="project-status-badge"
+              :class="getStatusClass(project.status)"
+            >◉ {{ project.status }}</span>
+          </div>
+          <a
+            :href="project.projectLink"
+            class="project-detail"
+          >MORE</a>
+        </div>
+      </div>
+    </div>
+  </zContainer>
 </template>
 
 <script setup lang="ts">

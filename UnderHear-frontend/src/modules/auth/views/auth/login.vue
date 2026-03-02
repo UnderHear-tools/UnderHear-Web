@@ -2,31 +2,46 @@
   <div class="login-page">
     <div class="login-card">
       <div class="login-header">
-        <h1 class="login-title">登录</h1>
-        <p class="login-subtitle">使用 第三方 账号登录</p>
+        <h1 class="login-title">
+          登录
+        </h1>
+        <p class="login-subtitle">
+          使用 第三方 账号登录
+        </p>
       </div>
 
       <div class="login-actions">
         <button
           class="github-button"
+          :disabled="loading"
           @click="startLogin('github')"
-          :disabled="loading">
+        >
           <MarkGithub size="20" />
           <span>{{ getButtonLabel('github') }}</span>
         </button>
         <button
           class="github-button"
+          :disabled="loading"
           @click="startLogin('gitee')"
-          :disabled="loading">
-          <LogoGitee size="20" color="#c71d23" />
+        >
+          <LogoGitee
+            size="20"
+            color="#c71d23"
+          />
           <span>{{ getButtonLabel('gitee') }}</span>
         </button>
 
         <p class="login-terms">
           登录即表示同意
-          <a href="#" class="login-link">服务条款</a>
+          <a
+            href="#"
+            class="login-link"
+          >服务条款</a>
           和
-          <a href="#" class="login-link">隐私政策</a>
+          <a
+            href="#"
+            class="login-link"
+          >隐私政策</a>
         </p>
       </div>
     </div>

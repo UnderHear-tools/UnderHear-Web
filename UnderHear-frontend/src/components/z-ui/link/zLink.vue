@@ -1,6 +1,9 @@
 <template>
   <span class="z-link-wrapper">
-    <span v-if="prefixText" class="z-link-prefix">{{ prefixText }}</span>
+    <span
+      v-if="prefixText"
+      class="z-link-prefix"
+    >{{ prefixText }}</span>
     <a 
       :href="href" 
       :target="target" 
@@ -15,7 +18,10 @@
     >
       {{ linkText }}
     </a>
-    <span v-if="suffixText" class="z-link-suffix">{{ suffixText }}</span>
+    <span
+      v-if="suffixText"
+      class="z-link-suffix"
+    >{{ suffixText }}</span>
   </span>
 </template>
 

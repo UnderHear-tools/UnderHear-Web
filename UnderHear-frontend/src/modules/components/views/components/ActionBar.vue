@@ -1,6 +1,9 @@
 <template>
   <ComponentDocsPage>
-    <ComponentDocsHeader title="ActionBar 操作栏" description="由多个组件组合而成的工具栏，常用于编辑器顶部。" />
+    <ComponentDocsHeader
+      title="ActionBar 操作栏"
+      description="由多个组件组合而成的工具栏，常用于编辑器顶部。"
+    />
 
     <ComponentDocsSection title="基础用法">
       <template #description>
@@ -12,29 +15,61 @@
       </template>
       <ComponentDocsDemoBlock :code="demo1Code">
         <div class="demo-actions">
-          <zTooltip content="Bold" placement="bottom">
-            <button class="action-btn"><Bold /></button>
+          <zTooltip
+            content="Bold"
+            placement="bottom"
+          >
+            <button class="action-btn">
+              <Bold />
+            </button>
           </zTooltip>
-          <zTooltip content="Italic" placement="bottom">
-            <button class="action-btn"><Italic /></button>
+          <zTooltip
+            content="Italic"
+            placement="bottom"
+          >
+            <button class="action-btn">
+              <Italic />
+            </button>
           </zTooltip>
-          <zTooltip content="Code" placement="bottom">
-            <button class="action-btn"><Code /></button>
+          <zTooltip
+            content="Code"
+            placement="bottom"
+          >
+            <button class="action-btn">
+              <Code />
+            </button>
           </zTooltip>
-          <zTooltip content="Link" placement="bottom">
-            <button class="action-btn"><Link /></button>
+          <zTooltip
+            content="Link"
+            placement="bottom"
+          >
+            <button class="action-btn">
+              <Link />
+            </button>
           </zTooltip>
-          <zDivider direction="vertical" height="20px" />
-          <zTooltip content="File Added" placement="bottom">
-            <button class="action-btn"><FileAdded /></button>
+          <zDivider
+            direction="vertical"
+            height="20px"
+          />
+          <zTooltip
+            content="File Added"
+            placement="bottom"
+          >
+            <button class="action-btn">
+              <FileAdded />
+            </button>
           </zTooltip>
-          <zTooltip content="Search" placement="bottom">
-            <button class="action-btn"><Search /></button>
+          <zTooltip
+            content="Search"
+            placement="bottom"
+          >
+            <button class="action-btn">
+              <Search />
+            </button>
           </zTooltip>
         </div>
       </ComponentDocsDemoBlock>
     </ComponentDocsSection>
-
   </ComponentDocsPage>
 </template>
 

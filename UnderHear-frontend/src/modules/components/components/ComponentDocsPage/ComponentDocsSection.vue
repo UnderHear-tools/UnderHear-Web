@@ -1,7 +1,12 @@
 <template>
   <section :class="variant === 'api' ? 'api-section' : 'demo-section'">
-    <h2 class="section-title">{{ title }}</h2>
-    <p v-if="$slots.description" class="section-description">
+    <h2 class="section-title">
+      {{ title }}
+    </h2>
+    <p
+      v-if="$slots.description"
+      class="section-description"
+    >
       <slot name="description" />
     </p>
     <slot />

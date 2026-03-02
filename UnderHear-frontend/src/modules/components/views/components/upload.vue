@@ -1,49 +1,97 @@
 <template>
   <ComponentDocsPage>
-    <ComponentDocsHeader title="Upload 上传" description="通过拖拽或点击选择文件进行上传。" />
+    <ComponentDocsHeader
+      title="Upload 上传"
+      description="通过拖拽或点击选择文件进行上传。"
+    />
 
     <ComponentDocsSection title="基础用法">
-      <template #description>通过 <code>v-model</code> 绑定选中的文件对象，支持点击与拖拽两种方式。</template>
+      <template #description>
+        通过 <code>v-model</code> 绑定选中的文件对象，支持点击与拖拽两种方式。
+      </template>
       <ComponentDocsDemoBlock :code="demo1Code">
         <zUpload v-model="file1" />
-        <p v-if="file1" class="demo-info">已选择：{{ file1.name }}（{{ (file1.size / 1024).toFixed(1) }} KB）</p>
+        <p
+          v-if="file1"
+          class="demo-info"
+        >
+          已选择：{{ file1.name }}（{{ (file1.size / 1024).toFixed(1) }} KB）
+        </p>
       </ComponentDocsDemoBlock>
     </ComponentDocsSection>
 
     <ComponentDocsSection title="限制文件类型">
-      <template #description>通过 <code>accept</code> 属性限制可选文件类型，格式与原生 <code>&lt;input accept&gt;</code> 一致。</template>
+      <template #description>
+        通过 <code>accept</code> 属性限制可选文件类型，格式与原生 <code>&lt;input accept&gt;</code> 一致。
+      </template>
       <ComponentDocsDemoBlock :code="demo2Code">
-        <zUpload v-model="file2" accept=".zip,.html" hint="仅支持 .zip 和 .html 文件" />
+        <zUpload
+          v-model="file2"
+          accept=".zip,.html"
+          hint="仅支持 .zip 和 .html 文件"
+        />
       </ComponentDocsDemoBlock>
     </ComponentDocsSection>
 
     <ComponentDocsSection title="提示文案">
-      <template #description>通过 <code>hint</code> 属性在上传区域底部展示辅助说明。</template>
+      <template #description>
+        通过 <code>hint</code> 属性在上传区域底部展示辅助说明。
+      </template>
       <ComponentDocsDemoBlock :code="demo3Code">
-        <zUpload v-model="file3" hint="支持 .zip 格式的 dist 构建包或 .html 文件" />
+        <zUpload
+          v-model="file3"
+          hint="支持 .zip 格式的 dist 构建包或 .html 文件"
+        />
       </ComponentDocsDemoBlock>
     </ComponentDocsSection>
 
     <ComponentDocsSection title="自定义插槽">
-      <template #description>使用默认插槽替换上传区域的内部内容。</template>
+      <template #description>
+        使用默认插槽替换上传区域的内部内容。
+      </template>
       <ComponentDocsDemoBlock :code="demo4Code">
         <zUpload v-model="file4">
           <div class="custom-upload-content">
             <Upload />
-            <p class="custom-upload-text">点击或拖拽文件到这里</p>
-            <p class="custom-upload-hint">最大支持 10 MB</p>
+            <p class="custom-upload-text">
+              点击或拖拽文件到这里
+            </p>
+            <p class="custom-upload-hint">
+              最大支持 10 MB
+            </p>
           </div>
         </zUpload>
       </ComponentDocsDemoBlock>
     </ComponentDocsSection>
 
-    <ComponentDocsSection title="API" variant="api">
+    <ComponentDocsSection
+      title="API"
+      variant="api"
+    >
       <h3>属性</h3>
-      <zTable :columns="apiCols" :data="apiRows" row-key="name" compact :hoverable="false" />
+      <zTable
+        :columns="apiCols"
+        :data="apiRows"
+        row-key="name"
+        compact
+        :hoverable="false"
+      />
       <h3>事件</h3>
-      <zTable :columns="eventCols" :data="eventRows" row-key="name" compact :hoverable="false" />
+      <zTable
+        :columns="eventCols"
+        :data="eventRows"
+        row-key="name"
+        compact
+        :hoverable="false"
+      />
       <h3>插槽</h3>
-      <zTable :columns="slotCols" :data="slotRows" row-key="name" compact :hoverable="false" />
+      <zTable
+        :columns="slotCols"
+        :data="slotRows"
+        row-key="name"
+        compact
+        :hoverable="false"
+      />
     </ComponentDocsSection>
   </ComponentDocsPage>
 </template>

@@ -3,8 +3,14 @@
     <div class="header-inner">
       <nav>
         <ul class="nav-list">
-          <li v-for="item in navigationItems" :key="item.name">
-            <div :class="['nav-link', { active: item.active }]" @click="navigateToPage(item)">
+          <li
+            v-for="item in navigationItems"
+            :key="item.name"
+          >
+            <div
+              :class="['nav-link', { active: item.active }]"
+              @click="navigateToPage(item)"
+            >
               {{ item.name }}
             </div>
           </li>
@@ -12,17 +18,36 @@
       </nav>
 
       <div class="user-menu">
-        <div v-if="!userStore.userInfo" class="nav-link" @click="goToLogin">登录</div>
-        <zDropdown v-else placement="left-bottom">
+        <div
+          v-if="!userStore.userInfo"
+          class="nav-link"
+          @click="goToLogin"
+        >
+          登录
+        </div>
+        <zDropdown
+          v-else
+          placement="left-bottom"
+        >
           <template #trigger>
-            <zAvatar :src="userStore.userInfo?.avatarUrl" :size="32" />
+            <zAvatar
+              :src="userStore.userInfo?.avatarUrl"
+              :size="32"
+            />
           </template>
           <template #content>
             <div class="user-header">
-              <zAvatar :src="userStore.userInfo?.avatarUrl" :size="36" />
+              <zAvatar
+                :src="userStore.userInfo?.avatarUrl"
+                :size="36"
+              />
               <div class="user-info">
-                <div class="user-name">{{ userStore.userInfo?.nickname }}</div>
-                <div class="user-email">{{ userStore.userInfo?.email ?? '暂未设置邮箱' }}</div>
+                <div class="user-name">
+                  {{ userStore.userInfo?.nickname }}
+                </div>
+                <div class="user-email">
+                  {{ userStore.userInfo?.email ?? '暂未设置邮箱' }}
+                </div>
               </div>
             </div>
             <zMenu>
@@ -31,7 +56,10 @@
                 <Person class="menu-icon" />
                 个人资料
               </zMenuItem>
-              <zMenuItem href="https://github.com/underhear" new-tab>
+              <zMenuItem
+                href="https://github.com/underhear"
+                new-tab
+              >
                 <MarkGithub class="menu-icon" />
                 前往 GitHub
               </zMenuItem>

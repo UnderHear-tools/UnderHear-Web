@@ -107,7 +107,10 @@ defineExpose<zBannerExposed>({
 </script>
 
 <template>
-  <div v-if="banner" class="z-banner-layer">
+  <div
+    v-if="banner"
+    class="z-banner-layer"
+  >
     <section
       class="z-banner"
       :class="[
@@ -122,18 +125,39 @@ defineExpose<zBannerExposed>({
       :aria-label="banner.ariaLabel ?? LABEL_BY_TYPE[banner.type]"
       tabindex="-1"
     >
-      <div class="z-banner__icon" aria-hidden="true">
-        <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor"><path :d="ICON_PATH[banner.type]" /></svg>
+      <div
+        class="z-banner__icon"
+        aria-hidden="true"
+      >
+        <svg
+          width="16"
+          height="16"
+          viewBox="0 0 16 16"
+          fill="currentColor"
+        ><path :d="ICON_PATH[banner.type]" /></svg>
       </div>
 
       <div class="z-banner__container">
         <div class="z-banner__content">
-          <h2 v-if="!banner.hideTitle" class="z-banner__title">{{ banner.title }}</h2>
-          <span v-else class="z-banner__sr-only">{{ banner.title }}</span>
-          <p class="z-banner__description">{{ banner.description }}</p>
+          <h2
+            v-if="!banner.hideTitle"
+            class="z-banner__title"
+          >
+            {{ banner.title }}
+          </h2>
+          <span
+            v-else
+            class="z-banner__sr-only"
+          >{{ banner.title }}</span>
+          <p class="z-banner__description">
+            {{ banner.description }}
+          </p>
         </div>
 
-        <div v-if="banner.primaryAction || banner.secondaryAction" class="z-banner__actions">
+        <div
+          v-if="banner.primaryAction || banner.secondaryAction"
+          class="z-banner__actions"
+        >
           <div class="z-banner__actions-row z-banner__actions-row--trailing">
             <template v-if="banner.secondaryAction">
               <a
@@ -219,7 +243,12 @@ defineExpose<zBannerExposed>({
         aria-label="Dismiss banner"
         @click="close"
       >
-        <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor"><path d="M3.72 3.72a.75.75 0 0 1 1.06 0L8 6.94l3.22-3.22a.749.749 0 0 1 1.275.326.749.749 0 0 1-.215.734L9.06 8l3.22 3.22a.749.749 0 0 1-.326 1.275.749.749 0 0 1-.734-.215L8 9.06l-3.22 3.22a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042L6.94 8 3.72 4.78a.75.75 0 0 1 0-1.06Z" /></svg>
+        <svg
+          width="16"
+          height="16"
+          viewBox="0 0 16 16"
+          fill="currentColor"
+        ><path d="M3.72 3.72a.75.75 0 0 1 1.06 0L8 6.94l3.22-3.22a.749.749 0 0 1 1.275.326.749.749 0 0 1-.215.734L9.06 8l3.22 3.22a.749.749 0 0 1-.326 1.275.749.749 0 0 1-.734-.215L8 9.06l-3.22 3.22a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042L6.94 8 3.72 4.78a.75.75 0 0 1 0-1.06Z" /></svg>
       </button>
     </section>
   </div>

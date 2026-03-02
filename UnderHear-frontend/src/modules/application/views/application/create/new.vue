@@ -1,67 +1,138 @@
 <template>
-	<zContainer>
-	<div class="create-app">
-		<zSteps v-model="current" :steps="steps" class="steps">
-			<template #icon-0><Stack /></template>
-			<template #icon-1><Package /></template>
-			<template #icon-2><IdBadge /></template>
-			<template #icon-3><Rocket /></template>
-    	</zSteps>
+  <zContainer>
+    <div class="create-app">
+      <zSteps
+        v-model="current"
+        :steps="steps"
+        class="steps"
+      >
+        <template #icon-0>
+          <Stack />
+        </template>
+        <template #icon-1>
+          <Package />
+        </template>
+        <template #icon-2>
+          <IdBadge />
+        </template>
+        <template #icon-3>
+          <Rocket />
+        </template>
+      </zSteps>
 
-		<div class="step-body">
-			<!-- 步骤1：选择框架 -->
-			<div v-if="current === 0" class="step-content">
-				<div class="options-grid">
-					<button type="button" class="option-card">
-						<div class="option-header">
-							<h2 class="option-title">HTML<zTag>推荐</zTag></h2>
-							<p class="option-desc">从一段HTML代码开始！非常快速！</p>
-						</div>
-						<img class="create-image" src="@/modules/application/assets/new-html.svg" alt="Create Collect" />
-					</button>
+      <div class="step-body">
+        <!-- 步骤1：选择框架 -->
+        <div
+          v-if="current === 0"
+          class="step-content"
+        >
+          <div class="options-grid">
+            <button
+              type="button"
+              class="option-card"
+            >
+              <div class="option-header">
+                <h2 class="option-title">
+                  HTML<zTag>推荐</zTag>
+                </h2>
+                <p class="option-desc">
+                  从一段HTML代码开始！非常快速！
+                </p>
+              </div>
+              <img
+                class="create-image"
+                src="@/modules/application/assets/new-html.svg"
+                alt="Create Collect"
+              >
+            </button>
 
-					<button type="button" class="option-card">
-						<div class="option-header">
-							<h2 class="option-title">Vue</h2>
-							<p class="option-desc">从一个Vue项目开始！</p>
-						</div>
-						<img class="create-image" src="@/modules/application/assets/new-vue.svg" alt="Create New" />
-					</button>
+            <button
+              type="button"
+              class="option-card"
+            >
+              <div class="option-header">
+                <h2 class="option-title">
+                  Vue
+                </h2>
+                <p class="option-desc">
+                  从一个Vue项目开始！
+                </p>
+              </div>
+              <img
+                class="create-image"
+                src="@/modules/application/assets/new-vue.svg"
+                alt="Create New"
+              >
+            </button>
 
-					<button type="button" class="option-card">
-						<div class="option-header">
-							<h2 class="option-title">React</h2>
-							<p class="option-desc">从一个React项目开始！</p>
-						</div>
-						<img class="create-image" src="@/modules/application/assets/new-react.svg" alt="Create Website" />
-					</button>
-				</div>
-			</div>
+            <button
+              type="button"
+              class="option-card"
+            >
+              <div class="option-header">
+                <h2 class="option-title">
+                  React
+                </h2>
+                <p class="option-desc">
+                  从一个React项目开始！
+                </p>
+              </div>
+              <img
+                class="create-image"
+                src="@/modules/application/assets/new-react.svg"
+                alt="Create Website"
+              >
+            </button>
+          </div>
+        </div>
 
-			<!-- 步骤2：上传应用 -->
-			<div v-if="current === 1" class="step-content">
-				<zUpload v-model="file" accept=".zip,.html" hint="支持 .zip 格式的 dist 构建包或 .html 文件" />
-			</div>
+        <!-- 步骤2：上传应用 -->
+        <div
+          v-if="current === 1"
+          class="step-content"
+        >
+          <zUpload
+            v-model="file"
+            accept=".zip,.html"
+            hint="支持 .zip 格式的 dist 构建包或 .html 文件"
+          />
+        </div>
 
-			<!-- 步骤3：基本资料 -->
-			<div v-if="current === 2" class="step-content">
-				
-			</div>
+        <!-- 步骤3：基本资料 -->
+        <div
+          v-if="current === 2"
+          class="step-content"
+        />
 
-			<!-- 步骤4：完成 -->
-			<div v-if="current === 3" class="step-content">
-			
-			</div>
+        <!-- 步骤4：完成 -->
+        <div
+          v-if="current === 3"
+          class="step-content"
+        />
+      </div>
 
-		</div>
-
-		<div class="step-actions">
-			<button v-if="current > 0" @click="current--">上一步</button>
-			<button v-if="current < steps.length - 1" @click="current++">下一步</button>
-			<button v-if="current === steps.length - 1" @click="submit">提交</button>
-		</div>
-	</div>
-	</zContainer>
+      <div class="step-actions">
+        <button
+          v-if="current > 0"
+          @click="current--"
+        >
+          上一步
+        </button>
+        <button
+          v-if="current < steps.length - 1"
+          @click="current++"
+        >
+          下一步
+        </button>
+        <button
+          v-if="current === steps.length - 1"
+          @click="submit"
+        >
+          提交
+        </button>
+      </div>
+    </div>
+  </zContainer>
 </template>
 
 <script setup lang="ts">

@@ -3,7 +3,7 @@
     class="z-divider"
     :class="{ 'z-divider--vertical': direction === 'vertical' }"
     :style="direction === 'vertical' ? (height ? { height } : undefined) : (width ? { width } : undefined)"
-  />
+  >
 </template>
 
 <script setup lang="ts">

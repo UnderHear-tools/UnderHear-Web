@@ -1,8 +1,19 @@
 <template>
-  <div class="z-table" :class="tableClasses">
+  <div
+    class="z-table"
+    :class="tableClasses"
+  >
     <div class="z-table__container">
-      <table class="z-table__table" :aria-label="ariaLabel">
-        <caption v-if="caption" class="z-table__sr-caption">{{ caption }}</caption>
+      <table
+        class="z-table__table"
+        :aria-label="ariaLabel"
+      >
+        <caption
+          v-if="caption"
+          class="z-table__sr-caption"
+        >
+          {{ caption }}
+        </caption>
         <thead class="z-table__head">
           <tr class="z-table__row z-table__row--head">
             <th
@@ -20,7 +31,10 @@
           </tr>
         </thead>
 
-        <tbody v-if="displayRows.length > 0" class="z-table__body">
+        <tbody
+          v-if="displayRows.length > 0"
+          class="z-table__body"
+        >
           <tr
             v-for="(row, rowIndex) in displayRows"
             :key="resolveRowKey(row, rowIndex)"
@@ -28,7 +42,10 @@
             :class="{ 'is-clickable': rowClickable }"
             @click="onRowClick(row, rowIndex)"
           >
-            <template v-for="column in columns" :key="column.key">
+            <template
+              v-for="column in columns"
+              :key="column.key"
+            >
               <component
                 :is="column.rowHeader ? 'th' : 'td'"
                 class="z-table__cell z-table__cell--body"
@@ -46,9 +63,15 @@
           </tr>
         </tbody>
 
-        <tbody v-else class="z-table__body">
+        <tbody
+          v-else
+          class="z-table__body"
+        >
           <tr class="z-table__row z-table__row--empty">
-            <td class="z-table__cell--empty" :colspan="colspan">
+            <td
+              class="z-table__cell--empty"
+              :colspan="colspan"
+            >
               {{ emptyText }}
             </td>
           </tr>

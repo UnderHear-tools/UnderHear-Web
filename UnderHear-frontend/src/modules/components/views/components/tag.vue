@@ -1,9 +1,14 @@
 <template>
   <ComponentDocsPage>
-    <ComponentDocsHeader title="Tag 标签" description="用于标记和选择。" />
+    <ComponentDocsHeader
+      title="Tag 标签"
+      description="用于标记和选择。"
+    />
 
     <ComponentDocsSection title="基础用法">
-      <template #description>直接使用 <code>zTag</code> 组件即可。</template>
+      <template #description>
+        直接使用 <code>zTag</code> 组件即可。
+      </template>
       <ComponentDocsDemoBlock :code="demo1Code">
         <div class="tag-row">
           <zTag>Tag</zTag>
@@ -12,44 +17,90 @@
     </ComponentDocsSection>
 
     <ComponentDocsSection title="不同尺寸">
-      <template #description>通过 <code>size</code> 属性设置标签尺寸。</template>
+      <template #description>
+        通过 <code>size</code> 属性设置标签尺寸。
+      </template>
       <ComponentDocsDemoBlock :code="demo2Code">
         <div class="tag-row">
-          <zTag size="small">Small</zTag>
-          <zTag size="medium">Medium</zTag>
-          <zTag size="large">Large</zTag>
-          <zTag size="xlarge">X-Large</zTag>
+          <zTag size="small">
+            Small
+          </zTag>
+          <zTag size="medium">
+            Medium
+          </zTag>
+          <zTag size="large">
+            Large
+          </zTag>
+          <zTag size="xlarge">
+            X-Large
+          </zTag>
         </div>
       </ComponentDocsDemoBlock>
     </ComponentDocsSection>
 
     <ComponentDocsSection title="自定义颜色">
-      <template #description>通过 <code>color</code> 和 <code>bgColor</code> 属性自定义字体颜色和背景色。</template>
+      <template #description>
+        通过 <code>color</code> 和 <code>bgColor</code> 属性自定义字体颜色和背景色。
+      </template>
       <ComponentDocsDemoBlock :code="demo3Code">
         <div class="tag-row">
           <zTag>默认</zTag>
-          <zTag color="#1a7f37" bgColor="#dafbe1">成功</zTag>
-          <zTag color="#9a6700" bgColor="#fff8c5">警告</zTag>
-          <zTag color="#cf222e" bgColor="#ffebe9">危险</zTag>
-          <zTag color="#6639ba" bgColor="#fbefff">紫色</zTag>
+          <zTag
+            color="#1a7f37"
+            bg-color="#dafbe1"
+          >
+            成功
+          </zTag>
+          <zTag
+            color="#9a6700"
+            bg-color="#fff8c5"
+          >
+            警告
+          </zTag>
+          <zTag
+            color="#cf222e"
+            bg-color="#ffebe9"
+          >
+            危险
+          </zTag>
+          <zTag
+            color="#6639ba"
+            bg-color="#fbefff"
+          >
+            紫色
+          </zTag>
         </div>
       </ComponentDocsDemoBlock>
     </ComponentDocsSection>
 
     <ComponentDocsSection title="带图标">
-      <template #description>通过 <code>visual</code> 插槽添加前置图标。</template>
+      <template #description>
+        通过 <code>visual</code> 插槽添加前置图标。
+      </template>
       <ComponentDocsDemoBlock :code="demo4Code">
         <div class="tag-row">
           <zTag>
-            <template #visual><Star /></template>
+            <template #visual>
+              <Star />
+            </template>
             Star
           </zTag>
-          <zTag color="#1a7f37" bgColor="#dafbe1">
-            <template #visual><Check /></template>
+          <zTag
+            color="#1a7f37"
+            bg-color="#dafbe1"
+          >
+            <template #visual>
+              <Check />
+            </template>
             已完成
           </zTag>
-          <zTag color="#cf222e" bgColor="#ffebe9">
-            <template #visual><Alert /></template>
+          <zTag
+            color="#cf222e"
+            bg-color="#ffebe9"
+          >
+            <template #visual>
+              <Alert />
+            </template>
             错误
           </zTag>
         </div>
@@ -57,28 +108,46 @@
     </ComponentDocsSection>
 
     <ComponentDocsSection title="操作图标">
-      <template #description>通过 <code>action</code> 插槽添加后置操作图标，通常用于关闭、删除等操作。</template>
+      <template #description>
+        通过 <code>action</code> 插槽添加后置操作图标，通常用于关闭、删除等操作。
+      </template>
       <ComponentDocsDemoBlock :code="demo5Code">
         <div class="tag-row">
           <zTag>
             Vue
-            <template #action><Trash /></template>
+            <template #action>
+              <Trash />
+            </template>
           </zTag>
           <zTag>
-            <template #visual><Star /></template>
+            <template #visual>
+              <Star />
+            </template>
             收藏
-            <template #action><X /></template>
+            <template #action>
+              <X />
+            </template>
           </zTag>
-          <zTag color="#1a7f37" bgColor="#dafbe1">
-            <template #visual><Check /></template>
+          <zTag
+            color="#1a7f37"
+            bg-color="#dafbe1"
+          >
+            <template #visual>
+              <Check />
+            </template>
             已完成
-            <template #action><X /></template>
+            <template #action>
+              <X />
+            </template>
           </zTag>
         </div>
       </ComponentDocsDemoBlock>
     </ComponentDocsSection>
 
-    <ComponentDocsSection title="API" variant="api">
+    <ComponentDocsSection
+      title="API"
+      variant="api"
+    >
       <h3>属性</h3>
       <zTable
         :columns="apiTableColumns"

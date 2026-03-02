@@ -1,8 +1,12 @@
 <template>
   <div class="pathplanner-container">
     <div class="pathplanner-header">
-      <h1 class="pathplanner-title">路径规划器</h1>
-      <p class="pathplanner-subtitle">矩阵地图 + 多算法可视化（最短路径｜全覆盖）</p>
+      <h1 class="pathplanner-title">
+        路径规划器
+      </h1>
+      <p class="pathplanner-subtitle">
+        矩阵地图 + 多算法可视化（最短路径｜全覆盖）
+      </p>
     </div>
 
     <div class="layout">
@@ -13,9 +17,21 @@
             <div class="group-l">
               <label>地图尺寸</label>
               <div class="inline">
-                <input type="number" min="1" max="60" v-model.number="rows" :disabled="isRunning" />
+                <input
+                  v-model.number="rows"
+                  type="number"
+                  min="1"
+                  max="60"
+                  :disabled="isRunning"
+                >
                 <span>×</span>
-                <input type="number" min="1" max="80" v-model.number="cols" :disabled="isRunning" />
+                <input
+                  v-model.number="cols"
+                  type="number"
+                  min="1"
+                  max="80"
+                  :disabled="isRunning"
+                >
               </div>
             </div>
           </div>
@@ -25,15 +41,39 @@
               <label>地图生成</label>
               <!-- 调整为三行：1) 演示地图 2) 障碍密度滑块 3) 随机/清除按钮 -->
               <div class="inline">
-                <button class="btn" @click="loadDemo" :disabled="isRunning">演示地图</button>
+                <button
+                  class="btn"
+                  :disabled="isRunning"
+                  @click="loadDemo"
+                >
+                  演示地图
+                </button>
               </div>
               <div class="inline">
-                <input type="range" min="0" max="100" v-model.number="randomDensity" :disabled="isRunning" />
+                <input
+                  v-model.number="randomDensity"
+                  type="range"
+                  min="0"
+                  max="100"
+                  :disabled="isRunning"
+                >
                 <span class="muted">障碍密度 {{ randomDensity }}%</span>
               </div>
               <div class="inline">
-                <button class="btn" @click="randomizeObstacles" :disabled="isRunning">随机障碍</button>
-                <button class="btn ghost" @click="clearObstacles" :disabled="isRunning">清除障碍</button>
+                <button
+                  class="btn"
+                  :disabled="isRunning"
+                  @click="randomizeObstacles"
+                >
+                  随机障碍
+                </button>
+                <button
+                  class="btn ghost"
+                  :disabled="isRunning"
+                  @click="clearObstacles"
+                >
+                  清除障碍
+                </button>
               </div>
             </div>
           </div>
@@ -42,13 +82,32 @@
             <div class="group-l">
               <label>编辑模式</label>
               <div class="inline">
-                <label class="radio"><input type="radio" value="start" v-model="editMode" :disabled="isRunning" />
+                <label class="radio"><input
+                  v-model="editMode"
+                  type="radio"
+                  value="start"
+                  :disabled="isRunning"
+                >
                   起点</label>
-                <label class="radio"><input type="radio" value="end" v-model="editMode"
-                    :disabled="isRunning || isCoverage" /> 终点</label>
-                <label class="radio"><input type="radio" value="wall" v-model="editMode" :disabled="isRunning" />
+                <label class="radio"><input
+                  v-model="editMode"
+                  type="radio"
+                  value="end"
+                  :disabled="isRunning || isCoverage"
+                > 终点</label>
+                <label class="radio"><input
+                  v-model="editMode"
+                  type="radio"
+                  value="wall"
+                  :disabled="isRunning"
+                >
                   障碍</label>
-                <label class="radio"><input type="radio" value="erase" v-model="editMode" :disabled="isRunning" />
+                <label class="radio"><input
+                  v-model="editMode"
+                  type="radio"
+                  value="erase"
+                  :disabled="isRunning"
+                >
                   橡皮擦</label>
               </div>
             </div>
@@ -58,11 +117,21 @@
             <div class="group-l">
               <label>算法选择</label>
               <div class="inline">
-                <zSelect v-model="category" :options="categoryOptions" placeholder="选择类别" :disabled="isRunning"
-                  style="min-width:120px" />
+                <zSelect
+                  v-model="category"
+                  :options="categoryOptions"
+                  placeholder="选择类别"
+                  :disabled="isRunning"
+                  style="min-width:120px"
+                />
 
-                <zSelect v-model="algorithm" :options="algorithmOptions" placeholder="选择算法" :disabled="isRunning"
-                  style="min-width:150px" />
+                <zSelect
+                  v-model="algorithm"
+                  :options="algorithmOptions"
+                  placeholder="选择算法"
+                  :disabled="isRunning"
+                  style="min-width:150px"
+                />
               </div>
             </div>
           </div>
@@ -71,15 +140,48 @@
         <div class="toolbar pathplanner-card">
           <div class="row space-between">
             <div class="group-r">
-              <button class="btn primary" @click="run" :disabled="!canRun || isRunning">运行</button>
-              <button class="btn danger" @click="stop" :disabled="!isRunning">停止</button>
-              <button class="btn" @click="clearVisited" :disabled="isRunning">清除轨迹</button>
-              <button class="btn ghost" @click="resetAll" :disabled="isRunning">重置</button>
+              <button
+                class="btn primary"
+                :disabled="!canRun || isRunning"
+                @click="run"
+              >
+                运行
+              </button>
+              <button
+                class="btn danger"
+                :disabled="!isRunning"
+                @click="stop"
+              >
+                停止
+              </button>
+              <button
+                class="btn"
+                :disabled="isRunning"
+                @click="clearVisited"
+              >
+                清除轨迹
+              </button>
+              <button
+                class="btn ghost"
+                :disabled="isRunning"
+                @click="resetAll"
+              >
+                重置
+              </button>
             </div>
             <div class="group-r">
-              <input type="range" min="1" max="200" v-model.number="speed" :disabled="isRunning" />
+              <input
+                v-model.number="speed"
+                type="range"
+                min="1"
+                max="200"
+                :disabled="isRunning"
+              >
               <span class="muted">速度{{ speed }} ms / 步</span>
-              <span class="muted" v-if="message">{{ message }}</span>
+              <span
+                v-if="message"
+                class="muted"
+              >{{ message }}</span>
             </div>
           </div>
         </div>
@@ -87,17 +189,31 @@
 
       <!-- 右侧：工具条 + 画布 + 说明 -->
       <main class="content">
-
         <!-- 矩阵地图 -->
         <div class="grid-wrapper pathplanner-card">
           <div class="grid-inner">
-            <div class="grid" :style="{ gridTemplateColumns: 'repeat(' + cols + ', var(--cell-size))' }"
-              @mouseleave="dragging = false">
-              <div v-for="cell in flatGrid" :key="cell.row + '-' + cell.col" class="cell" :class="cellClass(cell)"
-                @mousedown.prevent="onCellDown(cell)" @mouseenter.prevent="onCellEnter(cell)"
-                @mouseup.prevent="onCellUp(cell)">
-                <span v-if="cell.type === 'start'" class="badge">S</span>
-                <span v-else-if="cell.type === 'end'" class="badge">E</span>
+            <div
+              class="grid"
+              :style="{ gridTemplateColumns: 'repeat(' + cols + ', var(--cell-size))' }"
+              @mouseleave="dragging = false"
+            >
+              <div
+                v-for="cell in flatGrid"
+                :key="cell.row + '-' + cell.col"
+                class="cell"
+                :class="cellClass(cell)"
+                @mousedown.prevent="onCellDown(cell)"
+                @mouseenter.prevent="onCellEnter(cell)"
+                @mouseup.prevent="onCellUp(cell)"
+              >
+                <span
+                  v-if="cell.type === 'start'"
+                  class="badge"
+                >S</span>
+                <span
+                  v-else-if="cell.type === 'end'"
+                  class="badge"
+                >E</span>
               </div>
             </div>
           </div>
@@ -115,7 +231,6 @@
       </main>
     </div>
   </div>
-
 </template>
 
 <script setup lang="ts">

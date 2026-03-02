@@ -1,21 +1,48 @@
 <template>
   <div class="component-layout">
     <!-- 移动端菜单按钮 -->
-    <button class="mobile-menu-btn" @click="toggleSidebar" aria-label="切换菜单">
-      <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
-        <path d="M3 12h18M3 6h18M3 18h18" stroke="#d1d9e0" stroke-width="2" stroke-linecap="round" />
+    <button
+      class="mobile-menu-btn"
+      aria-label="切换菜单"
+      @click="toggleSidebar"
+    >
+      <svg
+        width="24"
+        height="24"
+        viewBox="0 0 24 24"
+        fill="none"
+      >
+        <path
+          d="M3 12h18M3 6h18M3 18h18"
+          stroke="#d1d9e0"
+          stroke-width="2"
+          stroke-linecap="round"
+        />
       </svg>
     </button>
 
     <!-- 遮罩层 -->
-    <div v-if="sidebarOpen" class="sidebar-overlay" @click="closeSidebar"></div>
+    <div
+      v-if="sidebarOpen"
+      class="sidebar-overlay"
+      @click="closeSidebar"
+    />
 
     <!-- 左侧导航栏 -->
-    <aside class="sidebar" :class="{ open: sidebarOpen }">
+    <aside
+      class="sidebar"
+      :class="{ open: sidebarOpen }"
+    >
       <!-- 可滚动的导航内容区域 -->
       <div class="sidebar-content">
-        <div v-for="section in navSections" :key="section.title" class="nav-section">
-          <div class="section-title">{{ section.title }}</div>
+        <div
+          v-for="section in navSections"
+          :key="section.title"
+          class="nav-section"
+        >
+          <div class="section-title">
+            {{ section.title }}
+          </div>
           <RouterLink
             v-for="item in section.items"
             :key="item.path"
@@ -31,14 +58,19 @@
     </aside>
 
     <!-- 主内容区域 -->
-    <main ref="mainContentRef" class="main-content">
+    <main
+      ref="mainContentRef"
+      class="main-content"
+    >
       <router-view />
     </main>
 
     <!-- 右侧目录区 -->
     <aside class="toc-sidebar">
       <div class="toc-content">
-        <div class="toc-title">目录</div>
+        <div class="toc-title">
+          目录
+        </div>
         <nav class="toc-nav">
           <a
             v-for="item in tocItems"

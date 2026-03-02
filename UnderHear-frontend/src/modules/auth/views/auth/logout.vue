@@ -1,15 +1,24 @@
 <template>
   <div class="logout-page">
     <section class="logout-panel">
-      <h2 class="logout-title">Select account to sign out</h2>
+      <h2 class="logout-title">
+        Select account to sign out
+      </h2>
 
       <div class="account-card">
         <div class="account-meta">
-          <zAvatar :src="userStore.userInfo?.avatarUrl" :size="32" />
+          <zAvatar
+            :src="userStore.userInfo?.avatarUrl"
+            :size="32"
+          />
 
           <div>
-            <p class="account-label">当前登录</p>
-            <p class="account-name">{{ userStore.userInfo?.nickname }}</p>
+            <p class="account-label">
+              当前登录
+            </p>
+            <p class="account-name">
+              {{ userStore.userInfo?.nickname }}
+            </p>
           </div>
         </div>
 
@@ -17,7 +26,8 @@
           type="button"
           class="action-button"
           :disabled="isSubmitting"
-          @click="handleLogout">
+          @click="handleLogout"
+        >
           退出登录
         </button>
       </div>
@@ -26,7 +36,8 @@
         type="button"
         class="action-button action-button--danger action-button--full"
         :disabled="isSubmitting"
-        @click="handleLogoutAll">
+        @click="handleLogoutAll"
+      >
         从所有设备上登出
       </button>
     </section>

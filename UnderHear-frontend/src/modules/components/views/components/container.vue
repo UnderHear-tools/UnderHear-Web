@@ -1,29 +1,48 @@
 <template>
   <ComponentDocsPage>
-    <ComponentDocsHeader title="Container 布局容器" description="用于包裹页面主体内容，提供居中与最大宽度约束。" />
+    <ComponentDocsHeader
+      title="Container 布局容器"
+      description="用于包裹页面主体内容，提供居中与最大宽度约束。"
+    />
 
     <ComponentDocsSection title="基础用法">
-      <template #description>使用 <code>zContainer</code> 包裹内容，自动居中且限制最大宽度为 1150px。</template>
+      <template #description>
+        使用 <code>zContainer</code> 包裹内容，自动居中且限制最大宽度为 1150px。
+      </template>
       <ComponentDocsDemoBlock :code="demo1Code">
         <div class="demo-wrapper">
           <zContainer>
-            <div class="demo-block">这是容器内的内容，宽度被限制并居中显示。</div>
+            <div class="demo-block">
+              这是容器内的内容，宽度被限制并居中显示。
+            </div>
           </zContainer>
         </div>
       </ComponentDocsDemoBlock>
     </ComponentDocsSection>
 
     <ComponentDocsSection title="嵌套内容">
-      <template #description>容器内可以放置任意内容，常用于页面级布局。</template>
+      <template #description>
+        容器内可以放置任意内容，常用于页面级布局。
+      </template>
       <ComponentDocsDemoBlock :code="demo2Code">
         <div class="demo-wrapper">
           <zContainer>
-            <div class="demo-title">页面标题</div>
-            <p class="demo-text">这是一段页面描述文字，容器会自动处理内边距和居中对齐。</p>
+            <div class="demo-title">
+              页面标题
+            </div>
+            <p class="demo-text">
+              这是一段页面描述文字，容器会自动处理内边距和居中对齐。
+            </p>
             <div class="demo-cards">
-              <div class="demo-card">卡片 A</div>
-              <div class="demo-card">卡片 B</div>
-              <div class="demo-card">卡片 C</div>
+              <div class="demo-card">
+                卡片 A
+              </div>
+              <div class="demo-card">
+                卡片 B
+              </div>
+              <div class="demo-card">
+                卡片 C
+              </div>
             </div>
           </zContainer>
         </div>
@@ -31,21 +50,40 @@
     </ComponentDocsSection>
 
     <ComponentDocsSection title="响应式">
-      <template #description>在小屏设备（≤768px）下内边距自动缩小为 1rem，适配移动端。</template>
+      <template #description>
+        在小屏设备（≤768px）下内边距自动缩小为 1rem，适配移动端。
+      </template>
       <ComponentDocsDemoBlock :code="demo3Code">
         <div class="demo-wrapper">
           <zContainer>
-            <div class="demo-block">缩小浏览器窗口至 768px 以下，观察内边距的变化。</div>
+            <div class="demo-block">
+              缩小浏览器窗口至 768px 以下，观察内边距的变化。
+            </div>
           </zContainer>
         </div>
       </ComponentDocsDemoBlock>
     </ComponentDocsSection>
 
-    <ComponentDocsSection title="API" variant="api">
+    <ComponentDocsSection
+      title="API"
+      variant="api"
+    >
       <h3>属性</h3>
-      <zTable :columns="apiCols" :data="apiRows" row-key="name" compact :hoverable="false" />
+      <zTable
+        :columns="apiCols"
+        :data="apiRows"
+        row-key="name"
+        compact
+        :hoverable="false"
+      />
       <h3>插槽</h3>
-      <zTable :columns="slotCols" :data="slotRows" row-key="name" compact :hoverable="false" />
+      <zTable
+        :columns="slotCols"
+        :data="slotRows"
+        row-key="name"
+        compact
+        :hoverable="false"
+      />
     </ComponentDocsSection>
   </ComponentDocsPage>
 </template>

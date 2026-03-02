@@ -1,29 +1,61 @@
 <template>
   <ComponentDocsPage>
-    <ComponentDocsHeader title="Select 选择器" description="下拉选择组件，支持键盘导航与搜索。" />
+    <ComponentDocsHeader
+      title="Select 选择器"
+      description="下拉选择组件，支持键盘导航与搜索。"
+    />
 
     <ComponentDocsSection title="基础用法">
-      <template #description>通过 <code>v-model</code> 绑定选中值，<code>options</code> 传入选项数组。</template>
+      <template #description>
+        通过 <code>v-model</code> 绑定选中值，<code>options</code> 传入选项数组。
+      </template>
       <ComponentDocsDemoBlock :code="demo1Code">
-        <zSelect v-model="val1" :options="fruitOptions" placeholder="请选择水果" />
-        <p class="demo-info">当前值：{{ val1 || '未选择' }}</p>
+        <zSelect
+          v-model="val1"
+          :options="fruitOptions"
+          placeholder="请选择水果"
+        />
+        <p class="demo-info">
+          当前值：{{ val1 || '未选择' }}
+        </p>
       </ComponentDocsDemoBlock>
     </ComponentDocsSection>
 
     <ComponentDocsSection title="禁用状态">
-      <template #description>设置 <code>disabled</code> 属性禁用选择器。</template>
+      <template #description>
+        设置 <code>disabled</code> 属性禁用选择器。
+      </template>
       <ComponentDocsDemoBlock :code="demo2Code">
-        <zSelect v-model="val2" :options="fruitOptions" placeholder="禁用状态" disabled />
+        <zSelect
+          v-model="val2"
+          :options="fruitOptions"
+          placeholder="禁用状态"
+          disabled
+        />
       </ComponentDocsDemoBlock>
     </ComponentDocsSection>
 
     <ComponentDocsSection title="多个选择器">
-      <template #description>多个 <code>zSelect</code> 并列时，展开一个会自动关闭其他已展开的实例。</template>
+      <template #description>
+        多个 <code>zSelect</code> 并列时，展开一个会自动关闭其他已展开的实例。
+      </template>
       <ComponentDocsDemoBlock :code="demo3Code">
         <div class="demo-row">
-          <zSelect v-model="val3a" :options="fruitOptions" placeholder="选择水果" />
-          <zSelect v-model="val3b" :options="colorOptions" placeholder="选择颜色" />
-          <zSelect v-model="val3c" :options="sizeOptions" placeholder="选择尺寸" />
+          <zSelect
+            v-model="val3a"
+            :options="fruitOptions"
+            placeholder="选择水果"
+          />
+          <zSelect
+            v-model="val3b"
+            :options="colorOptions"
+            placeholder="选择颜色"
+          />
+          <zSelect
+            v-model="val3c"
+            :options="sizeOptions"
+            placeholder="选择尺寸"
+          />
         </div>
       </ComponentDocsDemoBlock>
     </ComponentDocsSection>
@@ -33,17 +65,42 @@
         聚焦后支持键盘操作：<code>↑</code> <code>↓</code> 移动高亮、<code>Enter</code> / <code>Space</code> 选中、<code>Esc</code> 关闭。
       </template>
       <ComponentDocsDemoBlock :code="demo4Code">
-        <zSelect v-model="val4" :options="fruitOptions" placeholder="试试键盘操作" />
+        <zSelect
+          v-model="val4"
+          :options="fruitOptions"
+          placeholder="试试键盘操作"
+        />
       </ComponentDocsDemoBlock>
     </ComponentDocsSection>
 
-    <ComponentDocsSection title="API" variant="api">
+    <ComponentDocsSection
+      title="API"
+      variant="api"
+    >
       <h3>属性</h3>
-      <zTable :columns="apiCols" :data="apiRows" row-key="name" compact :hoverable="false" />
+      <zTable
+        :columns="apiCols"
+        :data="apiRows"
+        row-key="name"
+        compact
+        :hoverable="false"
+      />
       <h3>Option</h3>
-      <zTable :columns="apiCols" :data="optionRows" row-key="name" compact :hoverable="false" />
+      <zTable
+        :columns="apiCols"
+        :data="optionRows"
+        row-key="name"
+        compact
+        :hoverable="false"
+      />
       <h3>事件</h3>
-      <zTable :columns="eventCols" :data="eventRows" row-key="name" compact :hoverable="false" />
+      <zTable
+        :columns="eventCols"
+        :data="eventRows"
+        row-key="name"
+        compact
+        :hoverable="false"
+      />
     </ComponentDocsSection>
   </ComponentDocsPage>
 </template>

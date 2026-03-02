@@ -1,6 +1,9 @@
 <template>
   <ComponentDocsPage>
-    <ComponentDocsHeader title="Banner 横幅提示" description="用于在页面顶部展示状态信息与操作反馈。" />
+    <ComponentDocsHeader
+      title="Banner 横幅提示"
+      description="用于在页面顶部展示状态信息与操作反馈。"
+    />
 
     <ComponentDocsSection title="基础用法（服务调用）">
       <template #description>
@@ -9,13 +12,55 @@
 
       <ComponentDocsDemoBlock :code="serviceDemoCode">
         <div class="banner-demo-actions">
-          <button class="demo-btn" type="button" @click="showInfoBanner">Info</button>
-          <button class="demo-btn" type="button" @click="showSuccessBanner">Success</button>
-          <button class="demo-btn" type="button" @click="showTimedBanner">自动关闭</button>
-          <button class="demo-btn" type="button" @click="showWarningBanner">Warning</button>
-          <button class="demo-btn" type="button" @click="showCriticalBanner">Critical</button>
-          <button class="demo-btn" type="button" @click="showUpsellBanner">Upsell</button>
-          <button class="demo-btn demo-btn--ghost" type="button" @click="closeBanner">Close</button>
+          <button
+            class="demo-btn"
+            type="button"
+            @click="showInfoBanner"
+          >
+            Info
+          </button>
+          <button
+            class="demo-btn"
+            type="button"
+            @click="showSuccessBanner"
+          >
+            Success
+          </button>
+          <button
+            class="demo-btn"
+            type="button"
+            @click="showTimedBanner"
+          >
+            自动关闭
+          </button>
+          <button
+            class="demo-btn"
+            type="button"
+            @click="showWarningBanner"
+          >
+            Warning
+          </button>
+          <button
+            class="demo-btn"
+            type="button"
+            @click="showCriticalBanner"
+          >
+            Critical
+          </button>
+          <button
+            class="demo-btn"
+            type="button"
+            @click="showUpsellBanner"
+          >
+            Upsell
+          </button>
+          <button
+            class="demo-btn demo-btn--ghost"
+            type="button"
+            @click="closeBanner"
+          >
+            Close
+          </button>
         </div>
       </ComponentDocsDemoBlock>
     </ComponentDocsSection>
@@ -27,7 +72,13 @@
 
       <ComponentDocsDemoBlock :code="durationDemoCode">
         <div class="banner-demo-actions">
-          <button class="demo-btn" type="button" @click="showTimedBanner">展示自动关闭 Banner</button>
+          <button
+            class="demo-btn"
+            type="button"
+            @click="showTimedBanner"
+          >
+            展示自动关闭 Banner
+          </button>
         </div>
       </ComponentDocsDemoBlock>
     </ComponentDocsSection>
@@ -39,9 +90,27 @@
 
       <ComponentDocsDemoBlock :code="actionsDemoCode">
         <div class="banner-demo-actions">
-          <button class="demo-btn" type="button" @click="showDefaultActionsBanner">Default Actions</button>
-          <button class="demo-btn" type="button" @click="showInlineActionsBanner">Inline Actions</button>
-          <button class="demo-btn" type="button" @click="showStackedActionsBanner">Stacked Actions</button>
+          <button
+            class="demo-btn"
+            type="button"
+            @click="showDefaultActionsBanner"
+          >
+            Default Actions
+          </button>
+          <button
+            class="demo-btn"
+            type="button"
+            @click="showInlineActionsBanner"
+          >
+            Inline Actions
+          </button>
+          <button
+            class="demo-btn"
+            type="button"
+            @click="showStackedActionsBanner"
+          >
+            Stacked Actions
+          </button>
         </div>
       </ComponentDocsDemoBlock>
     </ComponentDocsSection>
@@ -55,25 +124,70 @@
         <div class="banner-demo-instance">
           <ZBannerView ref="bannerRef" />
           <div class="banner-demo-actions">
-            <button class="demo-btn" type="button" @click="showBannerWithRef">Call show()</button>
-            <button class="demo-btn demo-btn--ghost" type="button" @click="closeBannerWithRef">Call close()</button>
+            <button
+              class="demo-btn"
+              type="button"
+              @click="showBannerWithRef"
+            >
+              Call show()
+            </button>
+            <button
+              class="demo-btn demo-btn--ghost"
+              type="button"
+              @click="closeBannerWithRef"
+            >
+              Call close()
+            </button>
           </div>
         </div>
       </ComponentDocsDemoBlock>
     </ComponentDocsSection>
 
-    <ComponentDocsSection title="API" variant="api">
+    <ComponentDocsSection
+      title="API"
+      variant="api"
+    >
       <h4>zBanner 方法</h4>
-      <zTable :columns="methodTableColumns" :data="methodTableRows" row-key="name" compact :hoverable="false" />
+      <zTable
+        :columns="methodTableColumns"
+        :data="methodTableRows"
+        row-key="name"
+        compact
+        :hoverable="false"
+      />
 
-      <h4 style="margin-top: 24px;">zBannerOptions</h4>
-      <zTable :columns="optionsTableColumns" :data="optionsTableRows" row-key="name" compact :hoverable="false" />
+      <h4 style="margin-top: 24px;">
+        zBannerOptions
+      </h4>
+      <zTable
+        :columns="optionsTableColumns"
+        :data="optionsTableRows"
+        row-key="name"
+        compact
+        :hoverable="false"
+      />
 
-      <h4 style="margin-top: 24px;">zBannerAction</h4>
-      <zTable :columns="actionTableColumns" :data="actionTableRows" row-key="name" compact :hoverable="false" />
+      <h4 style="margin-top: 24px;">
+        zBannerAction
+      </h4>
+      <zTable
+        :columns="actionTableColumns"
+        :data="actionTableRows"
+        row-key="name"
+        compact
+        :hoverable="false"
+      />
 
-      <h4 style="margin-top: 24px;">zBannerExposed</h4>
-      <zTable :columns="exposedTableColumns" :data="exposedTableRows" row-key="name" compact :hoverable="false" />
+      <h4 style="margin-top: 24px;">
+        zBannerExposed
+      </h4>
+      <zTable
+        :columns="exposedTableColumns"
+        :data="exposedTableRows"
+        row-key="name"
+        compact
+        :hoverable="false"
+      />
     </ComponentDocsSection>
   </ComponentDocsPage>
 </template>

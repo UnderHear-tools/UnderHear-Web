@@ -30,7 +30,9 @@
       <ComponentDocsDemoBlock :code="compactDemoCode">
         <div class="table-demo table-demo--split">
           <div class="table-demo__panel">
-            <div class="table-demo__label">默认</div>
+            <div class="table-demo__label">
+              默认
+            </div>
             <zTable
               caption="Default table"
               :columns="columns"
@@ -39,7 +41,9 @@
             />
           </div>
           <div class="table-demo__panel">
-            <div class="table-demo__label">紧凑 / 无边框 / 关闭悬浮</div>
+            <div class="table-demo__label">
+              紧凑 / 无边框 / 关闭悬浮
+            </div>
             <zTable
               caption="Compact table"
               :columns="columns"
@@ -61,7 +65,10 @@
 
       <ComponentDocsDemoBlock :code="clickableDemoCode">
         <div class="table-demo">
-          <div class="status-bar" v-if="selectedName">
+          <div
+            v-if="selectedName"
+            class="status-bar"
+          >
             最近点击：<strong>{{ selectedName }}</strong>
           </div>
           <zTable
@@ -84,7 +91,9 @@
       <ComponentDocsDemoBlock :code="emptyDemoCode">
         <div class="table-demo table-demo--split">
           <div class="table-demo__panel">
-            <div class="table-demo__label">空状态</div>
+            <div class="table-demo__label">
+              空状态
+            </div>
             <zTable
               caption="Empty table"
               :columns="columns"
@@ -93,7 +102,9 @@
             />
           </div>
           <div class="table-demo__panel">
-            <div class="table-demo__label">空值占位符</div>
+            <div class="table-demo__label">
+              空值占位符
+            </div>
             <zTable
               caption="Placeholder table"
               :columns="columns"
@@ -123,7 +134,10 @@
       </ComponentDocsDemoBlock>
     </ComponentDocsSection>
 
-    <ComponentDocsSection title="API" variant="api">
+    <ComponentDocsSection
+      title="API"
+      variant="api"
+    >
       <zTable
         :columns="apiTableColumns"
         :data="apiTableRows"

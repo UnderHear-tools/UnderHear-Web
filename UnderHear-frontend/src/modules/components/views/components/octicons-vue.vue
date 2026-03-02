@@ -3,7 +3,11 @@
     <ComponentDocsHeader title="Octicons Vue 图标">
       <template #description>
         该图标库基于开源的
-        <zLink href="https://primer.style/octicons/" link-text="Octicons" variant="primary" />
+        <zLink
+          href="https://primer.style/octicons/"
+          link-text="Octicons"
+          variant="primary"
+        />
         图标库构建，为 Vue 项目提供可直接使用的图标组件。
       </template>
     </ComponentDocsHeader>
@@ -16,9 +20,9 @@
       <ComponentDocsDemoBlock :code="demo1Code">
         <div class="icon-demo-row">
           <component
+            :is="icon.component"
             v-for="icon in basicIconEntries"
             :key="icon.name"
-            :is="icon.component"
             :size="32"
             class="demo-icon"
           />
@@ -34,9 +38,9 @@
       <ComponentDocsDemoBlock :code="demo2Code">
         <div class="icon-demo-row">
           <component
+            :is="icon.component"
             v-for="icon in colorDemoEntries"
             :key="icon.name"
-            :is="icon.component"
             :size="icon.size"
             :color="icon.color"
           />
@@ -56,18 +60,30 @@
           class="icon-search-input"
           placeholder="Search icons..."
           aria-label="搜索图标名称"
-        />
+        >
       </div>
 
       <div class="icon-grid">
-        <div v-for="icon in filteredIconEntries" :key="icon.name" class="icon-card" @click="copySVG(icon.name, $event)">
-          <component :is="icon.component" :size="iconSize" class="icon-svg" />
+        <div
+          v-for="icon in filteredIconEntries"
+          :key="icon.name"
+          class="icon-card"
+          @click="copySVG(icon.name, $event)"
+        >
+          <component
+            :is="icon.component"
+            :size="iconSize"
+            class="icon-svg"
+          />
           <span class="icon-name">{{ icon.name }}</span>
         </div>
       </div>
     </ComponentDocsSection>
 
-    <ComponentDocsSection title="API" variant="api">
+    <ComponentDocsSection
+      title="API"
+      variant="api"
+    >
       <zTable
         :columns="apiTableColumns"
         :data="apiTableRows"

@@ -1,23 +1,36 @@
 <template>
-	<div class="z-steps" :class="`z-steps--${orientation}`">
-		<div
-			v-for="(step, i) in steps"
-			:key="i"
-			class="z-steps__item"
-			:data-state="getState(i)"
-		>
-			<span class="z-steps__indicator">
-				<slot :name="`icon-${i}`" :state="getState(i)" :index="i">
-					{{ i + 1 }}
-				</slot>
-			</span>
-			<div v-if="i < steps.length - 1" class="z-steps__separator" />
-			<div class="z-steps__content">
-				<span class="z-steps__title">{{ step.title }}</span>
-				<span v-if="step.description" class="z-steps__description">{{ step.description }}</span>
-			</div>
-		</div>
-	</div>
+  <div
+    class="z-steps"
+    :class="`z-steps--${orientation}`"
+  >
+    <div
+      v-for="(step, i) in steps"
+      :key="i"
+      class="z-steps__item"
+      :data-state="getState(i)"
+    >
+      <span class="z-steps__indicator">
+        <slot
+          :name="`icon-${i}`"
+          :state="getState(i)"
+          :index="i"
+        >
+          {{ i + 1 }}
+        </slot>
+      </span>
+      <div
+        v-if="i < steps.length - 1"
+        class="z-steps__separator"
+      />
+      <div class="z-steps__content">
+        <span class="z-steps__title">{{ step.title }}</span>
+        <span
+          v-if="step.description"
+          class="z-steps__description"
+        >{{ step.description }}</span>
+      </div>
+    </div>
+  </div>
 </template>
 
 <script setup lang="ts">

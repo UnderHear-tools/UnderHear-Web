@@ -1,7 +1,11 @@
 <template>
-  <div class="z-tooltip-wrapper" @mouseenter="show" @mouseleave="hide">
+  <div
+    class="z-tooltip-wrapper"
+    @mouseenter="show"
+    @mouseleave="hide"
+  >
     <!-- 触发元素插槽 -->
-    <slot></slot>
+    <slot />
     
     <!-- Tooltip 内容 -->
     <div 
@@ -9,7 +13,9 @@
       class="z-tooltip"
       :class="`z-tooltip--${placement}`"
     >
-      <div class="z-tooltip-content">{{ content }}</div>
+      <div class="z-tooltip-content">
+        {{ content }}
+      </div>
     </div>
   </div>
 </template>

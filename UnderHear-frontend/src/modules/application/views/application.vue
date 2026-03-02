@@ -1,35 +1,76 @@
 <template>
   <zContainer>
     <div class="application-header">
-      <h1 class="application-title">Web应用</h1>
-      <p class="application-subtitle">从一个小创意开始🐱。</p>
-      <p class="application-subtitle">想上传自己的Web应用吗？请<zLink href="/application/create" link-text="点击这里！" />欢迎大家上传！</p>
-      <p class="application-subtitle">希望这些应用能够帮到你。</p>
+      <h1 class="application-title">
+        Web应用
+      </h1>
+      <p class="application-subtitle">
+        从一个小创意开始🐱。
+      </p>
+      <p class="application-subtitle">
+        想上传自己的Web应用吗？请<zLink
+          href="/application/create"
+          link-text="点击这里！"
+        />欢迎大家上传！
+      </p>
+      <p class="application-subtitle">
+        希望这些应用能够帮到你。
+      </p>
     </div>
 
     <div class="applications-grid">
-      <div v-for="application in applications" :key="application.id" class="application-card">
+      <div
+        v-for="application in applications"
+        :key="application.id"
+        class="application-card"
+      >
         <div class="application-content">
           <div class="application-header-info">
-            <h3 class="application-name">{{ application.title }}</h3>
+            <h3 class="application-name">
+              {{ application.title }}
+            </h3>
             <span class="application-category">{{ application.category }}</span>
           </div>
           <div class="application-description">
             <p>{{ application.description.zh }}</p>
-            <p class="description-en">{{ application.description.en }}</p>
+            <p class="description-en">
+              {{ application.description.en }}
+            </p>
           </div>
           <div class="application-actions">
-            <div class="author-info" v-if="application.isOriginal && application.author">
-              <img :src="application.authorAvatar" :alt="application.author" class="author-avatar" />
-              <a :href="application.authorLink" class="author-link">{{ application.author }}</a>
+            <div
+              v-if="application.isOriginal && application.author"
+              class="author-info"
+            >
+              <img
+                :src="application.authorAvatar"
+                :alt="application.author"
+                class="author-avatar"
+              >
+              <a
+                :href="application.authorLink"
+                class="author-link"
+              >{{ application.author }}</a>
             </div>
-            <div class="collected-badge" v-if="!application.isOriginal">
+            <div
+              v-if="!application.isOriginal"
+              class="collected-badge"
+            >
               该应用为本站收录
             </div>
-            <a :href="application.link" class="try-button" v-if="application.isOriginal">
+            <a
+              v-if="application.isOriginal"
+              :href="application.link"
+              class="try-button"
+            >
               Try it
             </a>
-            <a :href="application.link" v-else target="_blank" class="try-button">
+            <a
+              v-else
+              :href="application.link"
+              target="_blank"
+              class="try-button"
+            >
               Try it
             </a>
           </div>

@@ -1,9 +1,14 @@
 <template>
   <ComponentDocsPage>
-    <ComponentDocsHeader title="Divider 分割线" description="用于分隔内容的水平或纵向分割线。" />
+    <ComponentDocsHeader
+      title="Divider 分割线"
+      description="用于分隔内容的水平或纵向分割线。"
+    />
 
     <ComponentDocsSection title="基础用法">
-      <template #description>最简单的分割线。</template>
+      <template #description>
+        最简单的分割线。
+      </template>
 
       <ComponentDocsDemoBlock :code="demo1Code">
         <div class="demo-container">
@@ -15,7 +20,9 @@
     </ComponentDocsSection>
 
     <ComponentDocsSection title="多内容分隔">
-      <template #description>分割线可以用于分隔多个段落或区块。</template>
+      <template #description>
+        分割线可以用于分隔多个段落或区块。
+      </template>
 
       <ComponentDocsDemoBlock :code="demo2Code">
         <div class="demo-container">
@@ -29,7 +36,9 @@
     </ComponentDocsSection>
 
     <ComponentDocsSection title="纵向分割线">
-      <template #description>设置 <code>direction="vertical"</code> 渲染纵向分割线，可通过 <code>height</code> 自定义高度。</template>
+      <template #description>
+        设置 <code>direction="vertical"</code> 渲染纵向分割线，可通过 <code>height</code> 自定义高度。
+      </template>
 
       <ComponentDocsDemoBlock :code="demo3Code">
         <div class="demo-inline">
@@ -43,7 +52,9 @@
     </ComponentDocsSection>
 
     <ComponentDocsSection title="自定义尺寸">
-      <template #description>水平模式下通过 <code>width</code> 自定义宽度，纵向模式下通过 <code>height</code> 自定义高度。</template>
+      <template #description>
+        水平模式下通过 <code>width</code> 自定义宽度，纵向模式下通过 <code>height</code> 自定义高度。
+      </template>
 
       <ComponentDocsDemoBlock :code="demo4Code">
         <div class="demo-container">
@@ -51,15 +62,24 @@
           <zDivider width="50%" />
           <p>下方内容</p>
         </div>
-        <div class="demo-inline" style="margin-top: 16px;">
+        <div
+          class="demo-inline"
+          style="margin-top: 16px;"
+        >
           <span>左</span>
-          <zDivider direction="vertical" height="2rem" />
+          <zDivider
+            direction="vertical"
+            height="2rem"
+          />
           <span>右</span>
         </div>
       </ComponentDocsDemoBlock>
     </ComponentDocsSection>
 
-    <ComponentDocsSection title="API" variant="api">
+    <ComponentDocsSection
+      title="API"
+      variant="api"
+    >
       <zTable
         :columns="apiTableColumns"
         :data="apiTableRows"

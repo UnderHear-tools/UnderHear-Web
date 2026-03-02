@@ -1,19 +1,34 @@
 <template>
   <ComponentDocsPage>
-    <ComponentDocsHeader title="Input 输入框" description="基础文本输入组件，支持 v-model 与原生 input 属性透传。" />
+    <ComponentDocsHeader
+      title="Input 输入框"
+      description="基础文本输入组件，支持 v-model 与原生 input 属性透传。"
+    />
 
     <ComponentDocsSection title="基础用法">
-      <template #description>通过 <code>v-model</code> 双向绑定输入值。</template>
+      <template #description>
+        通过 <code>v-model</code> 双向绑定输入值。
+      </template>
       <ComponentDocsDemoBlock :code="demo1Code">
-        <zInput v-model="val1" placeholder="请输入内容" />
-        <p class="demo-info">当前值：{{ val1 || '未输入' }}</p>
+        <zInput
+          v-model="val1"
+          placeholder="请输入内容"
+        />
+        <p class="demo-info">
+          当前值：{{ val1 || '未输入' }}
+        </p>
       </ComponentDocsDemoBlock>
     </ComponentDocsSection>
 
     <ComponentDocsSection title="禁用状态">
-      <template #description>设置原生属性 <code>disabled</code> 后输入框不可编辑。</template>
+      <template #description>
+        设置原生属性 <code>disabled</code> 后输入框不可编辑。
+      </template>
       <ComponentDocsDemoBlock :code="demo2Code">
-        <zInput v-model="val2" disabled />
+        <zInput
+          v-model="val2"
+          disabled
+        />
       </ComponentDocsDemoBlock>
     </ComponentDocsSection>
 
@@ -23,14 +38,26 @@
       </template>
       <ComponentDocsDemoBlock :code="demo3Code">
         <div class="demo-row">
-          <zInput v-model="email" type="email" placeholder="you@example.com" autocomplete="email" />
-          <zInput v-model="password" type="password" placeholder="请输入密码" autocomplete="current-password" />
+          <zInput
+            v-model="email"
+            type="email"
+            placeholder="you@example.com"
+            autocomplete="email"
+          />
+          <zInput
+            v-model="password"
+            type="password"
+            placeholder="请输入密码"
+            autocomplete="current-password"
+          />
         </div>
       </ComponentDocsDemoBlock>
     </ComponentDocsSection>
 
     <ComponentDocsSection title="结合 FormControl">
-      <template #description>与 <code>zFormControl</code> 组合，可快速添加标签、校验信息和辅助文案。</template>
+      <template #description>
+        与 <code>zFormControl</code> 组合，可快速添加标签、校验信息和辅助文案。
+      </template>
       <ComponentDocsDemoBlock :code="demo4Code">
         <zFormControl
           label="Name"
@@ -40,18 +67,42 @@
           validation="Names may not contain symbols"
           caption="This will be publicly visible"
         >
-          <zInput id="input-doc-name" v-model="profileName" />
+          <zInput
+            id="input-doc-name"
+            v-model="profileName"
+          />
         </zFormControl>
       </ComponentDocsDemoBlock>
     </ComponentDocsSection>
 
-    <ComponentDocsSection title="API" variant="api">
+    <ComponentDocsSection
+      title="API"
+      variant="api"
+    >
       <h3>属性</h3>
-      <zTable :columns="apiCols" :data="apiRows" row-key="name" compact :hoverable="false" />
+      <zTable
+        :columns="apiCols"
+        :data="apiRows"
+        row-key="name"
+        compact
+        :hoverable="false"
+      />
       <h3>原生属性透传（常用）</h3>
-      <zTable :columns="apiCols" :data="nativeRows" row-key="name" compact :hoverable="false" />
+      <zTable
+        :columns="apiCols"
+        :data="nativeRows"
+        row-key="name"
+        compact
+        :hoverable="false"
+      />
       <h3>事件</h3>
-      <zTable :columns="eventCols" :data="eventRows" row-key="name" compact :hoverable="false" />
+      <zTable
+        :columns="eventCols"
+        :data="eventRows"
+        row-key="name"
+        compact
+        :hoverable="false"
+      />
     </ComponentDocsSection>
   </ComponentDocsPage>
 </template>

@@ -4,22 +4,43 @@
       <slot />
     </div>
     <div class="demo-actions">
-      <zTooltip :content="codeCopied ? copiedLabel : copyLabel" placement="bottom">
-        <button class="action-btn" @click="copyCode">
+      <zTooltip
+        :content="codeCopied ? copiedLabel : copyLabel"
+        placement="bottom"
+      >
+        <button
+          class="action-btn"
+          @click="copyCode"
+        >
           <Copy />
         </button>
       </zTooltip>
-      <zTooltip :content="codeVisible ? hideCodeLabel : showCodeLabel" placement="bottom">
-        <button class="action-btn" @click="codeVisible = !codeVisible">
+      <zTooltip
+        :content="codeVisible ? hideCodeLabel : showCodeLabel"
+        placement="bottom"
+      >
+        <button
+          class="action-btn"
+          @click="codeVisible = !codeVisible"
+        >
           <Code />
         </button>
       </zTooltip>
     </div>
     <transition name="code-expand">
-      <div v-if="codeVisible" class="demo-code">
-        <div class="code-content" v-html="highlightedCode"></div>
+      <div
+        v-if="codeVisible"
+        class="demo-code"
+      >
+        <div
+          class="code-content"
+          v-html="highlightedCode"
+        />
         <div class="code-footer">
-          <button class="hide-code-btn" @click="codeVisible = false">
+          <button
+            class="hide-code-btn"
+            @click="codeVisible = false"
+          >
             {{ hideSourceLabel }}
           </button>
         </div>

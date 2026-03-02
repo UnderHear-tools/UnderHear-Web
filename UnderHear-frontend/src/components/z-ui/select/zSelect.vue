@@ -1,31 +1,80 @@
 <template>
-    <div class="z-select" :class="{ disabled, open }" @keydown.stop.prevent="onKeydown" tabindex="0">
-        <button class="z-select-trigger" :disabled="disabled" type="button" @click="toggle"
-            :aria-expanded="open ? 'true' : 'false'" :aria-haspopup="'listbox'">
-            <span class="z-select-value">{{ selectedLabel || placeholder }}</span>
-            <span class="z-select-arrow" :class="{ rotate: open }">
-                <svg aria-hidden="true" height="16" viewBox="0 0 16 16" width="16">
-                    <path
-                        d="m4.427 7.427 3.396 3.396a.25.25 0 0 0 .354 0l3.396-3.396A.25.25 0 0 0 11.396 7H4.604a.25.25 0 0 0-.177.427Z" />
-                </svg>
-            </span>
-        </button>
-        <transition name="z-select-fade">
-            <div v-if="open" class="z-select-dropdown" role="listbox" :aria-activedescendant="activeId">
-                <div ref="listEl" class="z-select-options">
-                    <div v-for="(option, idx) in options" :id="idBase + '-' + option.value" :key="option.value"
-                        class="z-select-option" :class="{
-                            selected: option.value === modelValue,
-                            active: idx === highlightedIndex,
-                        }" role="option" :aria-selected="option.value === modelValue ? 'true' : 'false'"
-                        @click="select(option.value)" @mousemove="setHighlight(idx)">
-                        <span class="label">{{ option.label }}</span>
-                        <span v-if="option.value === modelValue"><svg class="check" width="24" height="24" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M43 11L16.875 37L5 25.1818" stroke="#333" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
-                    </div>
-                </div>
-            </div>
-        </transition>
-    </div>
+  <div
+    class="z-select"
+    :class="{ disabled, open }"
+    tabindex="0"
+    @keydown.stop.prevent="onKeydown"
+  >
+    <button
+      class="z-select-trigger"
+      :disabled="disabled"
+      type="button"
+      :aria-expanded="open ? 'true' : 'false'"
+      :aria-haspopup="'listbox'"
+      @click="toggle"
+    >
+      <span class="z-select-value">{{ selectedLabel || placeholder }}</span>
+      <span
+        class="z-select-arrow"
+        :class="{ rotate: open }"
+      >
+        <svg
+          aria-hidden="true"
+          height="16"
+          viewBox="0 0 16 16"
+          width="16"
+        >
+          <path
+            d="m4.427 7.427 3.396 3.396a.25.25 0 0 0 .354 0l3.396-3.396A.25.25 0 0 0 11.396 7H4.604a.25.25 0 0 0-.177.427Z"
+          />
+        </svg>
+      </span>
+    </button>
+    <transition name="z-select-fade">
+      <div
+        v-if="open"
+        class="z-select-dropdown"
+        role="listbox"
+        :aria-activedescendant="activeId"
+      >
+        <div
+          ref="listEl"
+          class="z-select-options"
+        >
+          <div
+            v-for="(option, idx) in options"
+            :id="idBase + '-' + option.value"
+            :key="option.value"
+            class="z-select-option"
+            :class="{
+              selected: option.value === modelValue,
+              active: idx === highlightedIndex,
+            }"
+            role="option"
+            :aria-selected="option.value === modelValue ? 'true' : 'false'"
+            @click="select(option.value)"
+            @mousemove="setHighlight(idx)"
+          >
+            <span class="label">{{ option.label }}</span>
+            <span v-if="option.value === modelValue"><svg
+              class="check"
+              width="24"
+              height="24"
+              viewBox="0 0 48 48"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            ><path
+              d="M43 11L16.875 37L5 25.1818"
+              stroke="#333"
+              stroke-width="4"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            /></svg></span>
+          </div>
+        </div>
+      </div>
+    </transition>
+  </div>
 </template>
 
 <script setup lang="ts">

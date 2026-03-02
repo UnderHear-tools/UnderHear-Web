@@ -1,6 +1,9 @@
 <template>
   <ComponentDocsPage>
-    <ComponentDocsHeader title="UserMenu 用户菜单" description="由多个组件组成的用户菜单。" />
+    <ComponentDocsHeader
+      title="UserMenu 用户菜单"
+      description="由多个组件组成的用户菜单。"
+    />
 
     <ComponentDocsSection title="基础用法">
       <template #description>
@@ -16,14 +19,24 @@
         <div class="user-menu">
           <zDropdown>
             <template #trigger>
-              <zAvatar src="https://avatars.githubusercontent.com/u/131276691?v=4" :size="42" />
+              <zAvatar
+                src="https://avatars.githubusercontent.com/u/131276691?v=4"
+                :size="42"
+              />
             </template>
             <template #content>
               <div class="user-header">
-                <zAvatar src="https://avatars.githubusercontent.com/u/131276691?v=4" :size="36" />
+                <zAvatar
+                  src="https://avatars.githubusercontent.com/u/131276691?v=4"
+                  :size="36"
+                />
                 <div class="user-info">
-                  <div class="user-name">UnderHear Studio</div>
-                  <div class="user-email">hello@underhear.audio</div>
+                  <div class="user-name">
+                    UnderHear Studio
+                  </div>
+                  <div class="user-email">
+                    hello@underhear.audio
+                  </div>
                 </div>
               </div>
               <zMenu>
@@ -52,7 +65,6 @@
         </div>
       </ComponentDocsDemoBlock>
     </ComponentDocsSection>
-
   </ComponentDocsPage>
 </template>
 

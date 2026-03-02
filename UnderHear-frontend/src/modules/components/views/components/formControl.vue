@@ -1,14 +1,26 @@
 <template>
   <ComponentDocsPage>
-    <ComponentDocsHeader title="FormControl 表单控件" description="用于为输入类组件提供统一的标签、校验提示和辅助文案。" />
+    <ComponentDocsHeader
+      title="FormControl 表单控件"
+      description="用于为输入类组件提供统一的标签、校验提示和辅助文案。"
+    />
 
     <ComponentDocsSection title="基础用法">
       <template #description>
         通过 <code>label</code>、<code>html-for</code>、<code>caption</code> 快速为输入框补齐语义信息。
       </template>
       <ComponentDocsDemoBlock :code="demo1Code">
-        <zFormControl label="Username" html-for="form-control-demo-username" required caption="仅支持字母、数字和下划线">
-          <zInput id="form-control-demo-username" v-model="username" placeholder="请输入用户名" />
+        <zFormControl
+          label="Username"
+          html-for="form-control-demo-username"
+          required
+          caption="仅支持字母、数字和下划线"
+        >
+          <zInput
+            id="form-control-demo-username"
+            v-model="username"
+            placeholder="请输入用户名"
+          />
         </zFormControl>
       </ComponentDocsDemoBlock>
     </ComponentDocsSection>
@@ -25,9 +37,14 @@
           validation="Names may not contain symbols"
           caption="This will be publicly visible"
         >
-          <zInput id="form-control-demo-name" v-model="displayName" />
+          <zInput
+            id="form-control-demo-name"
+            v-model="displayName"
+          />
         </zFormControl>
-        <p class="demo-info">当前值：{{ displayName || '未输入' }}</p>
+        <p class="demo-info">
+          当前值：{{ displayName || '未输入' }}
+        </p>
       </ComponentDocsDemoBlock>
     </ComponentDocsSection>
 
@@ -36,22 +53,48 @@
         通过 <code>label</code>、<code>validation</code>、<code>caption</code> 具名插槽覆盖默认内容。
       </template>
       <ComponentDocsDemoBlock :code="demo3Code">
-        <zFormControl html-for="form-control-demo-email" :invalid="isEmailInvalid">
+        <zFormControl
+          html-for="form-control-demo-email"
+          :invalid="isEmailInvalid"
+        >
           <template #label>
             联系邮箱 <span class="slot-required">*</span>
           </template>
-          <zInput id="form-control-demo-email" v-model="email" placeholder="you@example.com" />
-          <template #validation>请输入有效的邮箱地址</template>
-          <template #caption>我们仅用于通知，不会公开展示。</template>
+          <zInput
+            id="form-control-demo-email"
+            v-model="email"
+            placeholder="you@example.com"
+          />
+          <template #validation>
+            请输入有效的邮箱地址
+          </template>
+          <template #caption>
+            我们仅用于通知，不会公开展示。
+          </template>
         </zFormControl>
       </ComponentDocsDemoBlock>
     </ComponentDocsSection>
 
-    <ComponentDocsSection title="API" variant="api">
+    <ComponentDocsSection
+      title="API"
+      variant="api"
+    >
       <h3>属性</h3>
-      <zTable :columns="apiCols" :data="apiRows" row-key="name" compact :hoverable="false" />
+      <zTable
+        :columns="apiCols"
+        :data="apiRows"
+        row-key="name"
+        compact
+        :hoverable="false"
+      />
       <h3>插槽</h3>
-      <zTable :columns="apiCols" :data="slotRows" row-key="name" compact :hoverable="false" />
+      <zTable
+        :columns="apiCols"
+        :data="slotRows"
+        row-key="name"
+        compact
+        :hoverable="false"
+      />
     </ComponentDocsSection>
   </ComponentDocsPage>
 </template>

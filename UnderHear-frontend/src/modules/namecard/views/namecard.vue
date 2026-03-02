@@ -1,35 +1,58 @@
 <template>
-	<zContainer>
-		<div class="namecard-header">
-			<h1 class="title">创作者名片</h1>
-			<p class="subtitle">这里展示本站创作者 / 贡献者的个人名片。点击进入详情页面了解更多。</p>
-			<p class="subtitle">你也想加入？前往
-				<zLink href="https://github.com/UnderHear/toolsWeb" link-text="本项目的GitHub" target="_blank" :external="true" />页！
-			</p>
-		</div>
+  <zContainer>
+    <div class="namecard-header">
+      <h1 class="title">
+        创作者名片
+      </h1>
+      <p class="subtitle">
+        这里展示本站创作者 / 贡献者的个人名片。点击进入详情页面了解更多。
+      </p>
+      <p class="subtitle">
+        你也想加入？前往
+        <zLink
+          href="https://github.com/UnderHear/toolsWeb"
+          link-text="本项目的GitHub"
+          target="_blank"
+          :external="true"
+        />页！
+      </p>
+    </div>
 
-		<div class="creator-grid">
-			<RouterLink to="/namecard/UnderHear" class="creator-card">
-				<div class="creator-main">
-					<img src="../views/namecard/UnderHear/assets/index/avatar.png" alt="UnderHear" class="avatar" />
-					<div class="info">
-						<div class="name-row">
-							<h3 class="name">UnderHear</h3>
-							<span class="role">原始创作者</span>
-						</div>
-						<div class="bio">
-							<p class="bio-en">Be interested in cutting-edge, advanced, and popular technologies and keep
-								exploring them.</p>
-							<p class="bio-zh">对前沿、先进和热门的技术感兴趣并保持探索。</p>
-						</div>
-					</div>
-				</div>
-				<div class="card-footer">
-					<span class="enter">enter</span>
-				</div>
-			</RouterLink>
-		</div>
-	</zContainer>
+    <div class="creator-grid">
+      <RouterLink
+        to="/namecard/UnderHear"
+        class="creator-card"
+      >
+        <div class="creator-main">
+          <img
+            src="../views/namecard/UnderHear/assets/index/avatar.png"
+            alt="UnderHear"
+            class="avatar"
+          >
+          <div class="info">
+            <div class="name-row">
+              <h3 class="name">
+                UnderHear
+              </h3>
+              <span class="role">原始创作者</span>
+            </div>
+            <div class="bio">
+              <p class="bio-en">
+                Be interested in cutting-edge, advanced, and popular technologies and keep
+                exploring them.
+              </p>
+              <p class="bio-zh">
+                对前沿、先进和热门的技术感兴趣并保持探索。
+              </p>
+            </div>
+          </div>
+        </div>
+        <div class="card-footer">
+          <span class="enter">enter</span>
+        </div>
+      </RouterLink>
+    </div>
+  </zContainer>
 </template>
 
 <script setup lang="ts">

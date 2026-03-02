@@ -18,7 +18,10 @@ const hasInvalidChars = computed(() => /[^a-zA-Z\s]/.test(name.value))
         validation="Names may not contain symbols"
         caption="This will be publicly visible"
       >
-        <zInput id="playground-name" v-model="name" />
+        <zInput
+          id="playground-name"
+          v-model="name"
+        />
       </zFormControl>
     </div>
   </main>

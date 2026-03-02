@@ -1,6 +1,6 @@
 <template>
   <div class="z-container">
-    <slot></slot>
+    <slot />
   </div>
 </template>
 

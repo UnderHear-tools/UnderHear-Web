@@ -1,8 +1,15 @@
 <template>
   <header class="page-header">
-    <h1 class="page-title">{{ title }}</h1>
-    <p v-if="description || $slots.description" class="page-description">
-      <slot name="description">{{ description }}</slot>
+    <h1 class="page-title">
+      {{ title }}
+    </h1>
+    <p
+      v-if="description || $slots.description"
+      class="page-description"
+    >
+      <slot name="description">
+        {{ description }}
+      </slot>
     </p>
   </header>
 </template>

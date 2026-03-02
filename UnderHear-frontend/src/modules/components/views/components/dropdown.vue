@@ -1,21 +1,34 @@
 <template>
   <ComponentDocsPage>
-    <ComponentDocsHeader title="Dropdown 下拉菜单" description="向下弹出的菜单容器。" />
+    <ComponentDocsHeader
+      title="Dropdown 下拉菜单"
+      description="向下弹出的菜单容器。"
+    />
 
     <ComponentDocsSection title="基础用法">
-      <template #description>通过 <code>trigger</code> 插槽定义触发元素，content 插槽放置下拉内容。</template>
+      <template #description>
+        通过 <code>trigger</code> 插槽定义触发元素，content 插槽放置下拉内容。
+      </template>
 
       <ComponentDocsDemoBlock :code="demo1Code">
         <div class="dropdown-demo">
           <zDropdown>
             <template #trigger>
-              <button class="demo-trigger">点击展开</button>
+              <button class="demo-trigger">
+                点击展开
+              </button>
             </template>
             <template #content>
               <div class="demo-content">
-                <div class="demo-item">选项一</div>
-                <div class="demo-item">选项二</div>
-                <div class="demo-item">选项三</div>
+                <div class="demo-item">
+                  选项一
+                </div>
+                <div class="demo-item">
+                  选项二
+                </div>
+                <div class="demo-item">
+                  选项三
+                </div>
               </div>
             </template>
           </zDropdown>
@@ -24,47 +37,68 @@
     </ComponentDocsSection>
 
     <ComponentDocsSection title="弹出方向">
-      <template #description>通过 <code>placement</code> 设置下拉菜单弹出方向。</template>
+      <template #description>
+        通过 <code>placement</code> 设置下拉菜单弹出方向。
+      </template>
 
       <ComponentDocsDemoBlock :code="demoPlacementCode">
         <div class="dropdown-placement-demo">
           <zDropdown placement="left-top">
             <template #trigger>
-              <button class="demo-trigger">左上</button>
+              <button class="demo-trigger">
+                左上
+              </button>
             </template>
             <template #content>
-              <div class="demo-content">左上内容</div>
+              <div class="demo-content">
+                左上内容
+              </div>
             </template>
           </zDropdown>
           <zDropdown placement="right-top">
             <template #trigger>
-              <button class="demo-trigger">右上</button>
+              <button class="demo-trigger">
+                右上
+              </button>
             </template>
             <template #content>
-              <div class="demo-content">右上内容</div>
+              <div class="demo-content">
+                右上内容
+              </div>
             </template>
           </zDropdown>
           <zDropdown placement="left-bottom">
             <template #trigger>
-              <button class="demo-trigger">左下</button>
+              <button class="demo-trigger">
+                左下
+              </button>
             </template>
             <template #content>
-              <div class="demo-content">左下内容</div>
+              <div class="demo-content">
+                左下内容
+              </div>
             </template>
           </zDropdown>
           <zDropdown placement="right-bottom">
             <template #trigger>
-              <button class="demo-trigger">右下</button>
+              <button class="demo-trigger">
+                右下
+              </button>
             </template>
             <template #content>
-              <div class="demo-content">右下内容</div>
+              <div class="demo-content">
+                右下内容
+              </div>
             </template>
           </zDropdown>
         </div>
       </ComponentDocsDemoBlock>
     </ComponentDocsSection>
 
-    <ComponentDocsSection title="API" variant="api">
+    <ComponentDocsSection
+      title="API"
+      variant="api"
+    >
       <h4>Props 属性</h4>
       <zTable
         :columns="propsTableColumns"
@@ -73,7 +107,9 @@
         compact
         :hoverable="false"
       />
-      <h4 style="margin-top: 24px;">Slots 插槽</h4>
+      <h4 style="margin-top: 24px;">
+        Slots 插槽
+      </h4>
       <zTable
         :columns="slotsTableColumns"
         :data="slotsTableRows"

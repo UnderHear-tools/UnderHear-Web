@@ -1,114 +1,258 @@
 <template>
-    <zContainer class="zContainer">
-        <div class="left-column">
-            <div class="profile">
-                <div class="profile-header">
-                    <img src="./assets/index/avatar.png" alt="Neko" class="avatar">
-                    <div class="profile-info">
-                        <div class="name">UnderHear</div>
-                        <div class="views">
-                            <IconPark type="preview-open" theme="outline" size="20" fill="#808080" />
-                            <div>1</div>
-                        </div>
-                    </div>
-                </div>
-                <p class="bio-en">Be interested in cutting-edge, advanced, and popular technologies and keep
-                    exploring them.</p>
-                <p class="bio-cn">对前沿、先进和热门的技术感兴趣并保持探索。</p>
-                <div class="links">
-                    <ul>
-                        <li><icon-park type="local" theme="outline" size="20" fill="#5a5a5a" /><span>Hangzhou,
-                                China</span></li>
-                        <li><icon-park type="time" theme="outline" size="20" fill="#5a5a5a" /><span>17:30 <span
-                                    class="time-suffix">-
-                                    same time</span></span></li>
-                        <li><icon-park type="mail" theme="outline" size="20" fill="#5a5a5a" /><span><a
-                                    href="mailto:2533643340@qq.com">2533643340@qq.com</a></span></li>
-                        <li><icon-park type="github" theme="filled" size="20" fill="#5a5a5a" /><span><a
-                                    href="https://github.com/UnderHear" target="_blank">@UnderHear</a></span></li>
-                        <li><icon-park type="facebook-one" theme="outline" size="20" fill="#5a5a5a" /><span><a
-                                    href="https://www.facebook.com/profile.php?id=100091494675623" target="_blank"
-                                    rel="noopener noreferrer">@张成炜</a></span></li>
-                        <li><icon-park type="twitter" theme="outline" size="20" fill="#5a5a5a" /><span><a
-                                    href="https://x.com/zhangch94743257" target="_blank"
-                                    rel="noopener noreferrer">@zhangch94743257</a></span></li>
-                        <li><icon-park type="phone-telephone" theme="outline" size="20" fill="#5a5a5a" /><span><a
-                                    href="tel:+8619858170547"><span class="country-code">+86
-                                    </span>19858170547</a></span></li>
-                    </ul>
-                </div>
+  <zContainer class="zContainer">
+    <div class="left-column">
+      <div class="profile">
+        <div class="profile-header">
+          <img
+            src="./assets/index/avatar.png"
+            alt="Neko"
+            class="avatar"
+          >
+          <div class="profile-info">
+            <div class="name">
+              UnderHear
             </div>
+            <div class="views">
+              <IconPark
+                type="preview-open"
+                theme="outline"
+                size="20"
+                fill="#808080"
+              />
+              <div>1</div>
+            </div>
+          </div>
         </div>
-        <div class="right-column">
-            <div class="personal-introduction">通过以下这些来了解我 Learn about me through the following</div>
-            <div class="greeting">你好 Hello 🤗</div>
-            <div class="tip-section">
-                <div class="tip-header">
-                    <span class="tip-icon"><icon-park type="tips" theme="filled" size="22" fill="#1a7f37" /></span>
-                    <span class="tip-title">Tip</span>
-                </div>
-                <div class="tip-content">
-                    <div class="description-en">
-                        Certainly! I am currently taking on some part-time projects, including but not limited to
-                        website development, mini-program development, management systems, and enterprise platforms.
-                        I am currently delving into the fields of artificial intelligence and machine learning. If
-                        you have related needs or would like to exchange ideas technically, feel free to reach out
-                        to me.
-                    </div>
-                    <div class="description-cn">
-                        目前我会接一些兼职项目，项目包括但不限于网站开发、小程序开发、管理系统、企业平台。目前我正在钻研的方向是人工智能与机器学习。如果你对此有需要或者想和我进行技术交流请联系我。
-                    </div>
-                </div>
-            </div>
-            <div class="languages">
-                <h4>我使用的语言、框架和工具 Languages & Frameworks & Tools I use</h4>
-                <div class="language-icons">
-                    <img src="./assets/index/skillsIcon/typescript-original.svg" class="language-icon" />
-                    <img src="./assets/index/skillsIcon/uniapp.svg" class="language-icon" />
-                    <img src="./assets/index/skillsIcon/vuejs-original.svg" class="language-icon" />
-                    <img src="./assets/index/skillsIcon/cplusplus-original.svg" class="language-icon" />
-                    <img src="./assets/index/skillsIcon/python-original.svg" class="language-icon" />
-                    <img src="./assets/index/skillsIcon/java-original.svg" class="language-icon" />
-                    <img src="./assets/index/skillsIcon/spring-original.svg" class="language-icon" />
-                    <img src="./assets/index/skillsIcon/mysql-original.svg" class="language-icon" />
-                    <img src="./assets/index/skillsIcon/kotlin-original.svg" class="language-icon" />
-                    <img src="./assets/index/skillsIcon/tailwindcss-original.svg" class="language-icon" />
-                    <img src="./assets/index/skillsIcon/vitejs-original.svg" class="language-icon" />
-                    <img src="./assets/index/skillsIcon/anaconda-original.svg" class="language-icon" />
-                    <img src="./assets/index/skillsIcon/matlab-original.svg" class="language-icon" />
-                    <img src="./assets/index/skillsIcon/neo4j-original.svg" class="language-icon" />
-                    <img src="./assets/index/skillsIcon/git-original.svg" class="language-icon" />
-                    <img src="./assets/index/skillsIcon/docker-plain.svg" class="language-icon" />
-                </div>
-            </div>
-            <div class="sessions">
-                <h4>项目经历和成果 Project Experience & Achievements</h4>
-                <div class="tip-section1">
-                    <div class="tip-content">
-                        <div class="description-cn">
-                            Maybe there's something you're interested in, maybe.
-                        </div>
-                    </div>
-                </div>
-                <div class="project-experience">
-                    <div v-for="project in projects" :key="project.id" class="project-card">
-                        <div class="project-header">
-                            <h3>{{ project.title }}</h3>
-                            <span class="project-date">{{ project.date }}</span>
-                        </div>
-                        <div class="project-description">
-                            <p>{{ project.description.zh }}</p>
-                            <p>{{ project.description.en }}</p>
-                        </div>
-                        <div class="project-tech">
-                            <zTag v-for="tech in project.technologies" :key="tech">{{ tech }}</zTag>
-                        </div>
-                    </div>
-                    <RouterLink to="/namecard/UnderHear/project" class="view-more-simple">Read more...</RouterLink>
-                </div>
-            </div>
+        <p class="bio-en">
+          Be interested in cutting-edge, advanced, and popular technologies and keep
+          exploring them.
+        </p>
+        <p class="bio-cn">
+          对前沿、先进和热门的技术感兴趣并保持探索。
+        </p>
+        <div class="links">
+          <ul>
+            <li>
+              <icon-park
+                type="local"
+                theme="outline"
+                size="20"
+                fill="#5a5a5a"
+              /><span>Hangzhou,
+                China</span>
+            </li>
+            <li>
+              <icon-park
+                type="time"
+                theme="outline"
+                size="20"
+                fill="#5a5a5a"
+              /><span>17:30 <span
+                class="time-suffix"
+              >-
+                same time</span></span>
+            </li>
+            <li>
+              <icon-park
+                type="mail"
+                theme="outline"
+                size="20"
+                fill="#5a5a5a"
+              /><span><a
+                href="mailto:2533643340@qq.com"
+              >2533643340@qq.com</a></span>
+            </li>
+            <li>
+              <icon-park
+                type="github"
+                theme="filled"
+                size="20"
+                fill="#5a5a5a"
+              /><span><a
+                href="https://github.com/UnderHear"
+                target="_blank"
+              >@UnderHear</a></span>
+            </li>
+            <li>
+              <icon-park
+                type="facebook-one"
+                theme="outline"
+                size="20"
+                fill="#5a5a5a"
+              /><span><a
+                href="https://www.facebook.com/profile.php?id=100091494675623"
+                target="_blank"
+                rel="noopener noreferrer"
+              >@张成炜</a></span>
+            </li>
+            <li>
+              <icon-park
+                type="twitter"
+                theme="outline"
+                size="20"
+                fill="#5a5a5a"
+              /><span><a
+                href="https://x.com/zhangch94743257"
+                target="_blank"
+                rel="noopener noreferrer"
+              >@zhangch94743257</a></span>
+            </li>
+            <li>
+              <icon-park
+                type="phone-telephone"
+                theme="outline"
+                size="20"
+                fill="#5a5a5a"
+              /><span><a
+                href="tel:+8619858170547"
+              ><span class="country-code">+86
+              </span>19858170547</a></span>
+            </li>
+          </ul>
         </div>
-    </zContainer>
+      </div>
+    </div>
+    <div class="right-column">
+      <div class="personal-introduction">
+        通过以下这些来了解我 Learn about me through the following
+      </div>
+      <div class="greeting">
+        你好 Hello 🤗
+      </div>
+      <div class="tip-section">
+        <div class="tip-header">
+          <span class="tip-icon"><icon-park
+            type="tips"
+            theme="filled"
+            size="22"
+            fill="#1a7f37"
+          /></span>
+          <span class="tip-title">Tip</span>
+        </div>
+        <div class="tip-content">
+          <div class="description-en">
+            Certainly! I am currently taking on some part-time projects, including but not limited to
+            website development, mini-program development, management systems, and enterprise platforms.
+            I am currently delving into the fields of artificial intelligence and machine learning. If
+            you have related needs or would like to exchange ideas technically, feel free to reach out
+            to me.
+          </div>
+          <div class="description-cn">
+            目前我会接一些兼职项目，项目包括但不限于网站开发、小程序开发、管理系统、企业平台。目前我正在钻研的方向是人工智能与机器学习。如果你对此有需要或者想和我进行技术交流请联系我。
+          </div>
+        </div>
+      </div>
+      <div class="languages">
+        <h4>我使用的语言、框架和工具 Languages & Frameworks & Tools I use</h4>
+        <div class="language-icons">
+          <img
+            src="./assets/index/skillsIcon/typescript-original.svg"
+            class="language-icon"
+          >
+          <img
+            src="./assets/index/skillsIcon/uniapp.svg"
+            class="language-icon"
+          >
+          <img
+            src="./assets/index/skillsIcon/vuejs-original.svg"
+            class="language-icon"
+          >
+          <img
+            src="./assets/index/skillsIcon/cplusplus-original.svg"
+            class="language-icon"
+          >
+          <img
+            src="./assets/index/skillsIcon/python-original.svg"
+            class="language-icon"
+          >
+          <img
+            src="./assets/index/skillsIcon/java-original.svg"
+            class="language-icon"
+          >
+          <img
+            src="./assets/index/skillsIcon/spring-original.svg"
+            class="language-icon"
+          >
+          <img
+            src="./assets/index/skillsIcon/mysql-original.svg"
+            class="language-icon"
+          >
+          <img
+            src="./assets/index/skillsIcon/kotlin-original.svg"
+            class="language-icon"
+          >
+          <img
+            src="./assets/index/skillsIcon/tailwindcss-original.svg"
+            class="language-icon"
+          >
+          <img
+            src="./assets/index/skillsIcon/vitejs-original.svg"
+            class="language-icon"
+          >
+          <img
+            src="./assets/index/skillsIcon/anaconda-original.svg"
+            class="language-icon"
+          >
+          <img
+            src="./assets/index/skillsIcon/matlab-original.svg"
+            class="language-icon"
+          >
+          <img
+            src="./assets/index/skillsIcon/neo4j-original.svg"
+            class="language-icon"
+          >
+          <img
+            src="./assets/index/skillsIcon/git-original.svg"
+            class="language-icon"
+          >
+          <img
+            src="./assets/index/skillsIcon/docker-plain.svg"
+            class="language-icon"
+          >
+        </div>
+      </div>
+      <div class="sessions">
+        <h4>项目经历和成果 Project Experience & Achievements</h4>
+        <div class="tip-section1">
+          <div class="tip-content">
+            <div class="description-cn">
+              Maybe there's something you're interested in, maybe.
+            </div>
+          </div>
+        </div>
+        <div class="project-experience">
+          <div
+            v-for="project in projects"
+            :key="project.id"
+            class="project-card"
+          >
+            <div class="project-header">
+              <h3>{{ project.title }}</h3>
+              <span class="project-date">{{ project.date }}</span>
+            </div>
+            <div class="project-description">
+              <p>{{ project.description.zh }}</p>
+              <p>{{ project.description.en }}</p>
+            </div>
+            <div class="project-tech">
+              <zTag
+                v-for="tech in project.technologies"
+                :key="tech"
+              >
+                {{ tech }}
+              </zTag>
+            </div>
+          </div>
+          <RouterLink
+            to="/namecard/UnderHear/project"
+            class="view-more-simple"
+          >
+            Read more...
+          </RouterLink>
+        </div>
+      </div>
+    </div>
+  </zContainer>
 </template>
 
 <script setup lang="ts">

@@ -1,10 +1,20 @@
 <template>
-  <div class="z-dropdown" ref="dropdownRef">
-    <div class="z-dropdown-trigger" @click="isOpen = !isOpen">
+  <div
+    ref="dropdownRef"
+    class="z-dropdown"
+  >
+    <div
+      class="z-dropdown-trigger"
+      @click="isOpen = !isOpen"
+    >
       <slot name="trigger" />
     </div>
     <Transition name="z-dropdown-fade">
-      <div v-if="isOpen" class="z-dropdown-content" :class="placementClass">
+      <div
+        v-if="isOpen"
+        class="z-dropdown-content"
+        :class="placementClass"
+      >
         <slot name="content" />
       </div>
     </Transition>

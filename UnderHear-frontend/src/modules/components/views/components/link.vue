@@ -1,25 +1,49 @@
 <template>
   <ComponentDocsPage>
-    <ComponentDocsHeader title="Link 链接" description="常用的文本超链接。" />
+    <ComponentDocsHeader
+      title="Link 链接"
+      description="常用的文本超链接。"
+    />
 
     <ComponentDocsSection title="基础用法">
-      <template #description>使用 <code>variant</code> 来定义链接的样式。</template>
+      <template #description>
+        使用 <code>variant</code> 来定义链接的样式。
+      </template>
 
       <ComponentDocsDemoBlock :code="demo1Code">
         <div class="link-row">
-          <zLink href="#" link-text="Primary Link" variant="primary" />
-          <zLink href="#" link-text="Secondary Link" variant="secondary" />
-          <zLink href="#" link-text="Danger Link" variant="danger" />
+          <zLink
+            href="#"
+            link-text="Primary Link"
+            variant="primary"
+          />
+          <zLink
+            href="#"
+            link-text="Secondary Link"
+            variant="secondary"
+          />
+          <zLink
+            href="#"
+            link-text="Danger Link"
+            variant="danger"
+          />
         </div>
       </ComponentDocsDemoBlock>
     </ComponentDocsSection>
 
     <ComponentDocsSection title="外部链接">
-      <template #description>设置 <code>external</code> 属性可以在链接后显示外部链接图标。</template>
+      <template #description>
+        设置 <code>external</code> 属性可以在链接后显示外部链接图标。
+      </template>
 
       <ComponentDocsDemoBlock :code="demo2Code">
         <div class="link-row">
-          <zLink href="https://github.com" link-text="GitHub" :external="true" target="_blank" />
+          <zLink
+            href="https://github.com"
+            link-text="GitHub"
+            :external="true"
+            target="_blank"
+          />
           <zLink
             href="https://vuejs.org"
             link-text="Vue.js"
@@ -38,14 +62,30 @@
 
       <ComponentDocsDemoBlock :code="demo3Code">
         <div class="link-column">
-          <zLink href="/component" link-text="组件文档" prefix-text="查看" />
-          <zLink href="/component" link-text="组件文档" suffix-text="了解更多" />
-          <zLink href="/component" link-text="组件文档" prefix-text="前往" suffix-text="查看详情" />
+          <zLink
+            href="/component"
+            link-text="组件文档"
+            prefix-text="查看"
+          />
+          <zLink
+            href="/component"
+            link-text="组件文档"
+            suffix-text="了解更多"
+          />
+          <zLink
+            href="/component"
+            link-text="组件文档"
+            prefix-text="前往"
+            suffix-text="查看详情"
+          />
         </div>
       </ComponentDocsDemoBlock>
     </ComponentDocsSection>
 
-    <ComponentDocsSection title="API" variant="api">
+    <ComponentDocsSection
+      title="API"
+      variant="api"
+    >
       <zTable
         :columns="apiTableColumns"
         :data="apiTableRows"

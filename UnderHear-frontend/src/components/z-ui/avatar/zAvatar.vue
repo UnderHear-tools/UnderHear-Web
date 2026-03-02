@@ -1,7 +1,18 @@
 <template>
-  <div class="z-avatar" :style="avatarStyle">
-    <img v-if="src" :src="src" :alt="alt" class="z-avatar-img" />
-    <span v-else class="z-avatar-placeholder">{{ placeholder }}</span>
+  <div
+    class="z-avatar"
+    :style="avatarStyle"
+  >
+    <img
+      v-if="src"
+      :src="src"
+      :alt="alt"
+      class="z-avatar-img"
+    >
+    <span
+      v-else
+      class="z-avatar-placeholder"
+    >{{ placeholder }}</span>
   </div>
 </template>
 

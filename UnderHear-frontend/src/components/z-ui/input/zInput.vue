@@ -5,7 +5,7 @@
     @input="onInput"
     @compositionstart="onCompositionStart"
     @compositionend="onCompositionEnd"
-  />
+  >
 </template>
 
 <script setup lang="ts">

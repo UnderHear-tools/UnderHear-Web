@@ -1,44 +1,103 @@
 <template>
   <ComponentDocsPage>
-    <ComponentDocsHeader title="Steps 步骤条" description="引导用户按步骤完成任务的导航条。" />
+    <ComponentDocsHeader
+      title="Steps 步骤条"
+      description="引导用户按步骤完成任务的导航条。"
+    />
 
     <ComponentDocsSection title="基础用法">
-      <template #description>通过 <code>steps</code> 传入步骤数组，<code>v-model</code> 控制当前步骤。</template>
+      <template #description>
+        通过 <code>steps</code> 传入步骤数组，<code>v-model</code> 控制当前步骤。
+      </template>
       <ComponentDocsDemoBlock :code="demo1Code">
-        <zSteps v-model="active1" :steps="basicSteps" />
+        <zSteps
+          v-model="active1"
+          :steps="basicSteps"
+        />
         <div class="demo-actions">
-          <button class="demo-btn" :disabled="active1 <= 0" @click="active1--">上一步</button>
-          <button class="demo-btn" :disabled="active1 >= 2" @click="active1++">下一步</button>
+          <button
+            class="demo-btn"
+            :disabled="active1 <= 0"
+            @click="active1--"
+          >
+            上一步
+          </button>
+          <button
+            class="demo-btn"
+            :disabled="active1 >= 2"
+            @click="active1++"
+          >
+            下一步
+          </button>
         </div>
       </ComponentDocsDemoBlock>
     </ComponentDocsSection>
 
     <ComponentDocsSection title="自定义图标">
-      <template #description>通过 <code>#icon-{index}</code> 插槽自定义每步的图标内容。</template>
+      <template #description>
+        通过 <code>#icon-{index}</code> 插槽自定义每步的图标内容。
+      </template>
       <ComponentDocsDemoBlock :code="demo3Code">
-        <zSteps v-model="active3" :steps="iconSteps">
-          <template #icon-0><Person /></template>
-          <template #icon-1><Package /></template>
-          <template #icon-2><CreditCard /></template>
-          <template #icon-3><Rocket /></template>
+        <zSteps
+          v-model="active3"
+          :steps="iconSteps"
+        >
+          <template #icon-0>
+            <Person />
+          </template>
+          <template #icon-1>
+            <Package />
+          </template>
+          <template #icon-2>
+            <CreditCard />
+          </template>
+          <template #icon-3>
+            <Rocket />
+          </template>
         </zSteps>
       </ComponentDocsDemoBlock>
     </ComponentDocsSection>
 
     <ComponentDocsSection title="带描述">
-      <template #description>步骤项可包含 <code>description</code> 字段显示辅助说明。</template>
+      <template #description>
+        步骤项可包含 <code>description</code> 字段显示辅助说明。
+      </template>
       <ComponentDocsDemoBlock :code="demo4Code">
-        <zSteps v-model="active4" :steps="descSteps" />
+        <zSteps
+          v-model="active4"
+          :steps="descSteps"
+        />
       </ComponentDocsDemoBlock>
     </ComponentDocsSection>
 
-    <ComponentDocsSection title="API" variant="api">
+    <ComponentDocsSection
+      title="API"
+      variant="api"
+    >
       <h3>属性</h3>
-      <zTable :columns="apiCols" :data="apiRows" row-key="name" compact :hoverable="false" />
+      <zTable
+        :columns="apiCols"
+        :data="apiRows"
+        row-key="name"
+        compact
+        :hoverable="false"
+      />
       <h3>StepItem</h3>
-      <zTable :columns="apiCols" :data="stepItemRows" row-key="name" compact :hoverable="false" />
+      <zTable
+        :columns="apiCols"
+        :data="stepItemRows"
+        row-key="name"
+        compact
+        :hoverable="false"
+      />
       <h3>插槽</h3>
-      <zTable :columns="slotCols" :data="slotRows" row-key="name" compact :hoverable="false" />
+      <zTable
+        :columns="slotCols"
+        :data="slotRows"
+        row-key="name"
+        compact
+        :hoverable="false"
+      />
     </ComponentDocsSection>
   </ComponentDocsPage>
 </template>

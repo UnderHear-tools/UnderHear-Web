@@ -1,9 +1,14 @@
 <template>
   <ComponentDocsPage>
-    <ComponentDocsHeader title="Menu 菜单" description="用于下拉菜单、导航菜单等场景的菜单组件。" />
+    <ComponentDocsHeader
+      title="Menu 菜单"
+      description="用于下拉菜单、导航菜单等场景的菜单组件。"
+    />
 
     <ComponentDocsSection title="基础用法">
-      <template #description>使用 <code>zMenu</code> 作为容器，<code>zMenuItem</code> 作为菜单项。</template>
+      <template #description>
+        使用 <code>zMenu</code> 作为容器，<code>zMenuItem</code> 作为菜单项。
+      </template>
 
       <ComponentDocsDemoBlock :code="demo1Code">
         <zMenu>
@@ -15,19 +20,35 @@
     </ComponentDocsSection>
 
     <ComponentDocsSection title="带链接的菜单项">
-      <template #description>通过 <code>href</code> 属性可以将菜单项渲染为链接。</template>
+      <template #description>
+        通过 <code>href</code> 属性可以将菜单项渲染为链接。
+      </template>
 
       <ComponentDocsDemoBlock :code="demo2Code">
         <zMenu>
-          <zMenuItem href="https://github.com" new-tab>GitHub (新标签页)</zMenuItem>
-          <zMenuItem href="https://vuejs.org">Vue.js</zMenuItem>
-          <zMenuItem href="https://vitejs.dev" new-tab>Vite (新标签页)</zMenuItem>
+          <zMenuItem
+            href="https://github.com"
+            new-tab
+          >
+            GitHub (新标签页)
+          </zMenuItem>
+          <zMenuItem href="https://vuejs.org">
+            Vue.js
+          </zMenuItem>
+          <zMenuItem
+            href="https://vitejs.dev"
+            new-tab
+          >
+            Vite (新标签页)
+          </zMenuItem>
         </zMenu>
       </ComponentDocsDemoBlock>
     </ComponentDocsSection>
 
     <ComponentDocsSection title="配合分割线">
-      <template #description>使用 <code>zDivider</code> 分隔不同类别的菜单项。</template>
+      <template #description>
+        使用 <code>zDivider</code> 分隔不同类别的菜单项。
+      </template>
 
       <ComponentDocsDemoBlock :code="demo3Code">
         <zMenu>
@@ -39,7 +60,10 @@
       </ComponentDocsDemoBlock>
     </ComponentDocsSection>
 
-    <ComponentDocsSection title="API" variant="api">
+    <ComponentDocsSection
+      title="API"
+      variant="api"
+    >
       <h4>zMenu</h4>
       <zTable
         :columns="slotsTableColumns"
@@ -49,7 +73,9 @@
         :hoverable="false"
       />
 
-      <h4 style="margin-top: 24px;">zMenuItem Props</h4>
+      <h4 style="margin-top: 24px;">
+        zMenuItem Props
+      </h4>
       <zTable
         :columns="apiTableColumns"
         :data="menuItemPropsRows"
@@ -58,7 +84,9 @@
         :hoverable="false"
       />
 
-      <h4 style="margin-top: 24px;">zMenuItem Events</h4>
+      <h4 style="margin-top: 24px;">
+        zMenuItem Events
+      </h4>
       <zTable
         :columns="eventsTableColumns"
         :data="menuItemEventsRows"
