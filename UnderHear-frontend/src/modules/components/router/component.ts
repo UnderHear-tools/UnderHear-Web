@@ -80,6 +80,11 @@ export const componentRoutes: Array<RouteRecordRaw> = [
                 component: () => import('../views/components/input.vue')
             },
             {
+                path: 'form-control',
+                name: 'FormControl',
+                component: () => import('../views/components/formControl.vue')
+            },
+            {
                 path: 'select',
                 name: 'Select',
                 component: () => import('../views/components/select.vue')
