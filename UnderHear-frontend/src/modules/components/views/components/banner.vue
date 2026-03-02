@@ -11,6 +11,7 @@
         <div class="banner-demo-actions">
           <button class="demo-btn" type="button" @click="showInfoBanner">Info</button>
           <button class="demo-btn" type="button" @click="showSuccessBanner">Success</button>
+          <button class="demo-btn" type="button" @click="showTimedBanner">Timed</button>
           <button class="demo-btn" type="button" @click="showWarningBanner">Warning</button>
           <button class="demo-btn" type="button" @click="showCriticalBanner">Critical</button>
           <button class="demo-btn" type="button" @click="showUpsellBanner">Upsell</button>
@@ -83,6 +84,10 @@ const showInfoBanner = () => {
 
 const showSuccessBanner = () => {
   zBanner.success('保存成功，配置已经生效。')
+}
+
+const showTimedBanner = () => {
+  zBanner.success('Will close in 3 seconds.', { duration: 3000 })
 }
 
 const showWarningBanner = () => {
@@ -164,6 +169,7 @@ const serviceDemoCode = `<template>
   <div class="banner-demo-actions">
     <button class="demo-btn" type="button" @click="showInfoBanner">Info</button>
     <button class="demo-btn" type="button" @click="showSuccessBanner">Success</button>
+    <button class="demo-btn" type="button" @click="showTimedBanner">Timed</button>
     <button class="demo-btn" type="button" @click="showWarningBanner">Warning</button>
     <button class="demo-btn" type="button" @click="showCriticalBanner">Critical</button>
     <button class="demo-btn" type="button" @click="showUpsellBanner">Upsell</button>
@@ -179,6 +185,7 @@ const showSuccessBanner = () => zBanner.success('保存成功，配置已经生�
 const showWarningBanner = () => zBanner.warning('存在潜在风险，请检查关键配置后再继续。')
 const showCriticalBanner = () => zBanner.critical('操作失败，请修复问题后重试。')
 const showUpsellBanner = () => zBanner.upsell('你可以升级到专业版解锁更多能力。')
+const showTimedBanner = () => zBanner.success('Will close in 3 seconds.', { duration: 3000 })
 const closeBanner = () => zBanner.close()
 <\/script>
 
@@ -361,7 +368,8 @@ const optionsTableRows = [
     type: "'default' | 'inline' | 'stacked'",
     default: "'default'"
   },
-  { name: 'flush', description: '是否使用通栏样式', type: 'boolean', default: 'false' }
+  { name: 'flush', description: '是否使用通栏样式', type: 'boolean', default: 'false' },
+  { name: 'duration', description: 'Auto close duration (ms)', type: 'number', default: "'undefined'" }
 ]
 
 const actionTableColumns: ZTableColumn[] = [

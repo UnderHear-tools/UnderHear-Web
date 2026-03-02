@@ -21,6 +21,7 @@ export interface zBannerOptions {
   secondaryAction?: zBannerAction
   actionsLayout?: zBannerActionsLayout
   flush?: boolean
+  duration?: number
 }
 
 export interface zBannerExposed {
@@ -58,8 +59,17 @@ const ICON_PATH: Record<zBannerType, string> = {
 }
 
 const banner = ref<BannerState | null>(null)
+let closeTimer: ReturnType<typeof setTimeout> | null = null
+
+function clearCloseTimer() {
+  if (closeTimer) {
+    clearTimeout(closeTimer)
+    closeTimer = null
+  }
+}
 
 function close() {
+  clearCloseTimer()
   banner.value = null
 }
 
@@ -68,6 +78,8 @@ function runAction(action: zBannerAction) {
 }
 
 function show(message: string, type: zBannerType = 'info', options: zBannerOptions = {}): zBannerResult {
+  clearCloseTimer()
+
   banner.value = {
     type,
     title: options.title ?? LABEL_BY_TYPE[type],
@@ -79,6 +91,10 @@ function show(message: string, type: zBannerType = 'info', options: zBannerOptio
     secondaryAction: options.secondaryAction,
     actionsLayout: options.actionsLayout ?? 'default',
     flush: options.flush ?? false
+  }
+
+  if (options.duration && options.duration > 0) {
+    closeTimer = setTimeout(close, options.duration)
   }
 
   return { close }
