@@ -53,6 +53,14 @@
             class="background-10"
             aria-hidden="true"
           />
+          <div
+            class="background-11"
+            aria-hidden="true"
+          />
+          <div
+            class="background-12"
+            aria-hidden="true"
+          />
         </div>
       </div>
       <div class="title">
@@ -116,7 +124,7 @@ onUnmounted(() => {
   overflow: hidden;
   transform: translateZ(0);
   transform-origin: 0% 0%;
-  --bg-offset: 80px;
+  --bg-offset: 48px;
   will-change: transform;
 }
 
@@ -257,6 +265,32 @@ onUnmounted(() => {
   background-repeat: no-repeat;
   background-size: 100% 100%;
   z-index: 10;
+}
+
+.background-11 {
+  position: absolute;
+  right: calc(min(29.76vw, 26.784rem) + (min(1.1vw, 0.99rem) - min(4.2vw, 70px)) / 2);
+  top: calc(min(13.35vw, 12.015rem) + var(--bg-offset) + (min(1.1vw, 0.99rem) - min(4.2vw, 70px)) / 2);
+  width: min(4.2vw, 70px);
+  aspect-ratio: 1 / 1;
+  background-image: url("../assests/background-11.svg");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+  z-index: 4;
+}
+
+.background-12 {
+  position: absolute;
+  right: calc(min(34.5vw, 31.05rem) + (min(1.2vw, 1.08rem) - min(3.6vw, 52px)) / 2);
+  top: calc(min(9.925vw, 8.9325rem) + var(--bg-offset) + (min(1.2vw, 1.08rem) - min(3.6vw, 52px)) / 2);
+  width: min(3.6vw, 52px);
+  aspect-ratio: 1 / 1;
+  background-image: url("../assests/background-12.svg");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+  z-index: 4;
 }
 
 .title {
