@@ -15,4 +15,9 @@ const router = createRouter({
   routes
 })
 
+router.beforeEach((to, _from, next) => {
+  document.title = typeof to.meta.title === 'string' ? to.meta.title : 'UnderHear'
+  next()
+})
+
 export default router
