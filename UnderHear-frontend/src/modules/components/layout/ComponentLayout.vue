@@ -224,8 +224,9 @@ const navSections = ref([
   {
     title: 'Blocks 组合式组件',
     items: [
-      { path: '/component/user-menu', label: 'UserMenu 用户菜单' },
-      { path: '/component/action-bar', label: 'ActionBar 操作栏' }
+      { path: '/component/action-bar', label: 'ActionBar 操作栏' },
+      { path: '/component/form-control', label: 'FormControl 表单控件' },
+      { path: '/component/user-menu', label: 'UserMenu 用户菜单' }
     ]
   },
   {
@@ -244,7 +245,6 @@ const navSections = ref([
     title: 'Form 表单组件',
     items: [
       { path: '/component/input', label: 'Input 输入框' },
-      { path: '/component/form-control', label: 'FormControl 表单控件' },
       { path: '/component/select', label: 'Select 选择器' },
       { path: '/component/upload', label: 'Upload 上传' }
     ]

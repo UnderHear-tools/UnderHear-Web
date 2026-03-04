@@ -28,14 +28,19 @@ export const componentRoutes: Array<RouteRecordRaw> = [
             },
             // Blocks
             {
-                path: 'user-menu',
-                name: 'UserMenu',
-                component: () => import('../views/components/user-menu.vue')
-            },
-            {
                 path: 'action-bar',
                 name: 'ActionBar',
                 component: () => import('../views/components/ActionBar.vue')
+            },
+            {
+                path: 'form-control',
+                name: 'FormControl',
+                component: () => import('../views/components/formControl.vue')
+            },
+            {
+                path: 'user-menu',
+                name: 'UserMenu',
+                component: () => import('../views/components/user-menu.vue')
             },
             // Basic
             {
@@ -78,11 +83,6 @@ export const componentRoutes: Array<RouteRecordRaw> = [
                 path: 'input',
                 name: 'Input',
                 component: () => import('../views/components/input.vue')
-            },
-            {
-                path: 'form-control',
-                name: 'FormControl',
-                component: () => import('../views/components/formControl.vue')
             },
             {
                 path: 'select',

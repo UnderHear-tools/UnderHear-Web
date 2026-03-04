@@ -7,7 +7,7 @@
 
     <ComponentDocsSection title="基础用法">
       <template #description>
-        通过 <code>label</code>、<code>html-for</code>、<code>caption</code> 快速为输入框补齐语义信息。
+        使用<code>FormControl</code>、<code>Input</code>组合而成的操作栏组件。通过<code>label</code>、<code>html-for</code>、<code>caption</code>快速为输入框补齐语义信息。
       </template>
       <ComponentDocsDemoBlock :code="demo1Code">
         <zFormControl
