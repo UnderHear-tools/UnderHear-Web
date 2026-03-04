@@ -96,8 +96,8 @@ const copyCode = () => {
   min-height: 160px;
   padding: 2rem;
   display: flex;
-  justify-content: center;
   align-items: center;
+  overflow-x: auto;
 }
 
 .demo-actions {
