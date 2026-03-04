@@ -38,6 +38,7 @@ const customStyle = computed(() => ({
     border-radius: 100px;
     font-weight: 500;
     gap: 6px;
+    white-space: nowrap;
 }
 
 .z-tag--small {
