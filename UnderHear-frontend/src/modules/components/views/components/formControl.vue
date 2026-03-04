@@ -42,9 +42,6 @@
             v-model="displayName"
           />
         </zFormControl>
-        <p class="demo-info">
-          当前值：{{ displayName || '未输入' }}
-        </p>
       </ComponentDocsDemoBlock>
     </ComponentDocsSection>
 
@@ -58,7 +55,7 @@
           :invalid="isEmailInvalid"
         >
           <template #label>
-            联系邮箱 <span class="slot-required">*</span>
+            联系邮箱 <span>*</span>
           </template>
           <zInput
             id="form-control-demo-email"
@@ -200,13 +197,4 @@ const slotRows = [
 </script>
 
 <style scoped>
-.demo-info {
-  margin-top: 8px;
-  font-size: 0.85rem;
-  color: var(--fgColor-muted);
-}
-
-.slot-required {
-  color: var(--fgColor-danger, #d1242f);
-}
 </style>
