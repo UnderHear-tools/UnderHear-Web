@@ -102,7 +102,11 @@
         <div
           v-if="current === 2"
           class="step-content"
-        />
+        >
+          <CreateAppInfoForm
+            v-model:form-data="formData"
+          />
+        </div>
 
         <!-- 步骤4：完成 -->
         <div
@@ -142,6 +146,7 @@ import { zContainer } from '@/components/z-ui/container'
 import { zTag } from '@/components/z-ui/tag'
 import { Stack, Package, IdBadge, Rocket } from '@/components/z-ui/icon/Octicons-vue'
 import { zUpload } from '@/components/z-ui/upload'
+import CreateAppInfoForm from '@/modules/application/components/CreateAppInfoForm.vue'
 
 const steps: StepItem[] = [
   { title: '选择框架' },
@@ -152,9 +157,16 @@ const steps: StepItem[] = [
 
 const current = ref(0)
 const file = ref<File | null>(null)
+const formData = ref({
+	appName: '',
+	displayName: ''
+})
 
 const submit = () => {
-	console.log('提交', file.value)
+	console.log('提交', {
+		file: file.value,
+		formData: formData.value
+	})
 }
 </script>
 
