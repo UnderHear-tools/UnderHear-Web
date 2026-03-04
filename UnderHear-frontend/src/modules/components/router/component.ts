@@ -30,12 +30,12 @@ export const componentRoutes: Array<RouteRecordRaw> = [
             {
                 path: 'action-bar',
                 name: 'ActionBar',
-                component: () => import('../views/components/ActionBar.vue')
+                component: () => import('../views/components/action-bar.vue')
             },
             {
                 path: 'form-control',
                 name: 'FormControl',
-                component: () => import('../views/components/formControl.vue')
+                component: () => import('../views/components/form-control.vue')
             },
             {
                 path: 'user-menu',
