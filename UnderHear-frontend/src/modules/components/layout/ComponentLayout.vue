@@ -251,7 +251,10 @@ const navSections = ref([
   },
   {
     title: 'Data 数据展示',
-    items: [{ path: '/component/table', label: 'Table 表格' }]
+    items: [
+      { path: '/component/table', label: 'Table 表格' },
+      { path: '/component/timeline', label: 'TimeLine 时间线' }
+    ]
   },
   {
     title: 'Navigation 导航',

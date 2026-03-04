@@ -100,6 +100,11 @@ export const componentRoutes: Array<RouteRecordRaw> = [
                 name: 'Table',
                 component: () => import('../views/components/table.vue')
             },
+            {
+                path: 'timeline',
+                name: 'TimeLine',
+                component: () => import('../views/components/timeline.vue')
+            },
             // Navigation
             {
                 path: 'steps',
