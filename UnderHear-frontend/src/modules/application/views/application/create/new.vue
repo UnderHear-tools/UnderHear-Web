@@ -1,42 +1,33 @@
 <template>
-  <zContainer>
-    <div class="create-app">
-      <zSteps
-        v-model="current"
-        :steps="steps"
-        class="steps"
-      >
-        <template #icon-0>
-          <Stack />
-        </template>
-        <template #icon-1>
-          <Package />
-        </template>
-        <template #icon-2>
-          <IdBadge />
-        </template>
-        <template #icon-3>
-          <Rocket />
-        </template>
-      </zSteps>
-
-      <div class="step-body">
-        <!-- 步骤1：选择框架 -->
-        <div
-          v-if="current === 0"
-          class="step-content"
-        >
+  <zContainer
+    style="max-width: 768px;"
+  >
+    <div class="page-header">
+      <div class="page-title">
+        创建一个新的应用
+      </div>
+      <span class="page-description">
+        请确保代码能够正确运行！
+      </span>
+    </div>
+    <Timeline clip-sidebar>
+      <Timeline.Item>
+        <Timeline.Badge>1</Timeline.Badge>
+        <Timeline.Body>
+          <div class="creatForm-heading">
+            点击选择你使用的前端框架
+          </div>
           <div class="options-grid">
             <button
               type="button"
               class="option-card"
             >
               <div class="option-header">
-                <h2 class="option-title">
+                <div class="option-title">
                   HTML<zTag>推荐</zTag>
-                </h2>
+                </div>
                 <p class="option-desc">
-                  从一段HTML代码开始！非常快速！
+                  从一段HTML代码开始！
                 </p>
               </div>
               <img
@@ -51,9 +42,9 @@
               class="option-card"
             >
               <div class="option-header">
-                <h2 class="option-title">
+                <div class="option-title">
                   Vue
-                </h2>
+                </div>
                 <p class="option-desc">
                   从一个Vue项目开始！
                 </p>
@@ -70,9 +61,9 @@
               class="option-card"
             >
               <div class="option-header">
-                <h2 class="option-title">
+                <div class="option-title">
                   React
-                </h2>
+                </div>
                 <p class="option-desc">
                   从一个React项目开始！
                 </p>
@@ -84,190 +75,161 @@
               >
             </button>
           </div>
-        </div>
-
-        <!-- 步骤2：上传应用 -->
-        <div
-          v-if="current === 1"
-          class="step-content"
-        >
+        </Timeline.Body>
+      </Timeline.Item>
+      <Timeline.Item>
+        <Timeline.Badge>2</Timeline.Badge>
+        <Timeline.Body>
+          <div class="creatForm-heading">
+            上传应用
+          </div>
           <zUpload
             v-model="file"
             accept=".zip,.html"
             hint="支持 .zip 格式的 dist 构建包或 .html 文件"
           />
-        </div>
-
-        <!-- 步骤3：基本资料 -->
-        <div
-          v-if="current === 2"
-          class="step-content"
-        >
+        </Timeline.Body>
+      </Timeline.Item>
+      <Timeline.Item>
+        <Timeline.Badge>3</Timeline.Badge>
+        <Timeline.Body>
+          <div class="creatForm-heading">
+            填写基本信息
+          </div>
           <CreateAppInfoForm
             v-model:form-data="formData"
           />
-        </div>
-
-        <!-- 步骤4：完成 -->
-        <div
-          v-if="current === 3"
-          class="step-content"
-        />
-      </div>
-
-      <div class="step-actions">
-        <button
-          v-if="current > 0"
-          @click="current--"
-        >
-          上一步
-        </button>
-        <button
-          v-if="current < steps.length - 1"
-          @click="current++"
-        >
-          下一步
-        </button>
-        <button
-          v-if="current === steps.length - 1"
-          @click="submit"
-        >
-          提交
-        </button>
-      </div>
-    </div>
+        </Timeline.Body>
+      </Timeline.Item>
+    </Timeline>
   </zContainer>
 </template>
 
 <script setup lang="ts">
 import { ref } from 'vue'
-import { zSteps, type StepItem } from '@/components/z-ui/steps'
 import { zContainer } from '@/components/z-ui/container'
+import { Timeline } from '@/components/z-ui/timeline'
 import { zTag } from '@/components/z-ui/tag'
-import { Stack, Package, IdBadge, Rocket } from '@/components/z-ui/icon/Octicons-vue'
 import { zUpload } from '@/components/z-ui/upload'
+
+const file = ref<File | null>(null)
+
 import CreateAppInfoForm from '@/modules/application/components/CreateAppInfoForm.vue'
 
-const steps: StepItem[] = [
-  { title: '选择框架' },
-  { title: '上传应用' },
-  { title: '应用信息' },
-  { title: '完成!' }
-] 
-
-const current = ref(0)
-const file = ref<File | null>(null)
 const formData = ref({
 	appName: '',
 	displayName: ''
 })
-
-const submit = () => {
-	console.log('提交', {
-		file: file.value,
-		formData: formData.value
-	})
-}
 </script>
 
 <style scoped>
-.create-app {
-	display: flex;
-	flex-direction: column;
-	gap: 64px;
+.page-header {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  margin-left: 2rem;
+  margin-bottom: 2rem;
 }
 
-.steps{
-	margin-top: 32px;
+.page-title {
+  color: var(--fgColor-default);
+  font-size: 20px;
+  font-weight: 600;
+  line-height: 1.25;
 }
 
-.step-body {
-	min-height: 200px;
+.page-description {
+  color: var(--fgColor-muted);
+  display: block;
+  font-size: 14px;
+  line-height: 1.6;
 }
 
-.step-content {
-	display: flex;
-	flex-direction: column;
-	gap: 12px;
-}
-
-.step-actions {
-	display: flex;
-	gap: 8px;
-	justify-content: flex-end;
-}
-
-.step-actions button {
-	padding: 8px 20px;
-	border: none;
-	border-radius: 6px;
-	cursor: pointer;
-	font-size: 14px;
-	background: var(--bgColor-accent-emphasis, #0969da);
-	color: var(--fgColor-onEmphasis, #fff);
+.creatForm-heading {
+  line-height: 24px;
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--fgColor-default);
+  margin-bottom: 1rem;
 }
 
 .options-grid {
-	display: grid;
-	grid-template-columns: repeat(3, 1fr);
-	gap: 1.25rem;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.25rem;
 }
 
 .option-card {
-	appearance: none;
-	width: 100%;
-	text-align: left;
-	border: 1px solid var(--borderColor-default);
-	border-radius: 6px;
-	background: var(--bgColor-muted);
-	padding: 1.5rem;
-	cursor: pointer;
+  appearance: none;
+  width: 100%;
+  text-align: left;
+  border: 1px solid var(--borderColor-default);
+  border-radius: 6px;
+  background: var(--bgColor-muted);
+  padding: 1rem;
+  cursor: pointer;
 }
 
 .option-card:hover {
-	border-color: var(--borderColor-accent-emphasis);
-	box-shadow: 0 4px 14px -4px color-mix(in srgb, var(--fgColor-default) 8%, var(--bgColor-transparent));
+	outline: 2px solid var(--borderColor-accent-emphasis);
+	outline-offset: -1px;
+  box-shadow: 0 4px 14px -4px color-mix(in srgb, var(--fgColor-default) 8%, var(--bgColor-transparent));
 }
 
 .option-title {
-	margin: 0 0 0.6rem 0;
-	font-size: 1.15rem;
-	font-weight: 700;
-	color: var(--fgColor-default);
-	display: flex;
-	align-items: center;
-	gap: 0.5rem;
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--fgColor-default);
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
 }
 
 .option-desc {
-	margin: 0;
-	font-size: 0.95rem;
-	line-height: 1.6;
-	color: var(--fgColor-muted);
+  margin: 0;
+  font-size: 14px;
+  line-height: 1.6;
+  color: var(--fgColor-muted);
 }
 
 .create-image {
-	margin-top: 2rem;
-	width: 70%;
-	height: auto;
-	margin: 0 auto;
+  width: 50%;
+  height: auto;
+  margin-top: 0.5rem;
 }
 
 @media (max-width: 768px) {
-	.steps {
-		margin-bottom: 12px;
-	}
-	.options-grid {
-		grid-template-columns: 1fr;
-	}
-	.option-card {
-		display: flex;
-	}
-	.option-header {
-		width: 60%;
-	}
-	.create-image {
-		width: 40%;
-	}
+  .page-header {
+    margin-top: 2rem;
+  }
+
+  .page-title {
+    font-size: 1.5rem;
+  }
+
+  .page-description {
+    font-size: 0.875rem;
+  }
+
+  .options-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .option-card {
+    display: flex;
+  }
+
+  .option-header {
+    width: 60%;
+  }
+
+  .option-title {
+    margin-bottom: 0.6rem;
+  }
+
+  .create-image {
+    width: 30%;
+    margin-top: 0;
+  }
 }
 </style>
