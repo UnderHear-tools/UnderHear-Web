@@ -121,11 +121,13 @@ const hasCaption = computed(() => Boolean(slots.caption || props.caption))
   color: var(--fgColor-muted, #656d76);
 }
 
-.z-form-control.is-invalid :deep(.z-input) {
+.z-form-control.is-invalid :deep(.z-input),
+.z-form-control.is-invalid :deep(.z-textarea) {
   border-color: var(--borderColor-danger-emphasis, #cf222e);
 }
 
-.z-form-control.is-invalid :deep(.z-input:focus) {
+.z-form-control.is-invalid :deep(.z-input:focus),
+.z-form-control.is-invalid :deep(.z-textarea:focus) {
   outline: 2px solid var(--borderColor-danger-emphasis, #cf222e);
 }
 </style>
