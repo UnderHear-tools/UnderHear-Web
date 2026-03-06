@@ -2,6 +2,13 @@
   <zContainer
     style="max-width: 768px;"
   >
+    <div class="ad-placeholder">
+      <img
+        src="@/modules/application/assets/ad.png"
+        class="ad-image"
+        alt="广告位图片"
+      >
+    </div>
     <div class="page-header">
       <div class="page-title">
         创建一个新的应用
@@ -10,6 +17,7 @@
         请确保代码能够正确运行！
       </span>
     </div>
+
     <Timeline clip-sidebar>
       <Timeline.Item>
         <Timeline.Badge>1</Timeline.Badge>
@@ -132,6 +140,34 @@ const formData = ref({
 </script>
 
 <style scoped>
+.ad-placeholder {
+  position: relative;
+  overflow: hidden;
+  margin-bottom: 2rem;
+  border-radius: 12px;
+}
+
+.ad-image {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.ad-placeholder::after {
+  position: absolute;
+  right: 1rem;
+  bottom: 2rem;
+  padding: 0.4rem 0.5rem;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--fgColor-default) 50%, transparent);
+  color: var(--bgColor-default);
+  font-size: 12px;
+  line-height: 1;
+  font-weight: 600;
+  box-shadow: 0 8px 24px -12px color-mix(in srgb, var(--fgColor-default) 48%, transparent);
+  content: "展示广告位，联系2533643340@qq.com";
+}
+
 .page-header {
   display: flex;
   flex-direction: column;
