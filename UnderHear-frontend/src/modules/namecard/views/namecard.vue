@@ -96,12 +96,12 @@ import { zLink } from '@/components/z-ui/link'
 	padding: 1.5rem 1.6rem 1.1rem;
 	text-decoration: none;
 	background: var(--bgColor-default);
-	transition: border-color .18s ease, box-shadow .18s ease;
 	position: relative;
 }
 
 .creator-card:hover {
-	border-color: var(--borderColor-accent-emphasis);
+	outline: 2px solid var(--borderColor-accent-emphasis);
+	outline-offset: -1px;
 	box-shadow: 0 4px 14px -4px color-mix(in srgb, var(--fgColor-default) 8%, var(--bgColor-transparent));
 }
 
