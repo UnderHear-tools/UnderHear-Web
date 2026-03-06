@@ -245,6 +245,7 @@ const navSections = ref([
     title: 'Form 表单组件',
     items: [
       { path: '/component/input', label: 'Input 输入框' },
+      { path: '/component/textarea', label: 'Textarea 文本域' },
       { path: '/component/select', label: 'Select 选择器' },
       { path: '/component/upload', label: 'Upload 上传' }
     ]

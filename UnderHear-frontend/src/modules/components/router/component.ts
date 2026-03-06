@@ -85,6 +85,11 @@ export const componentRoutes: Array<RouteRecordRaw> = [
                 component: () => import('../views/components/input.vue')
             },
             {
+                path: 'textarea',
+                name: 'Textarea',
+                component: () => import('../views/components/textarea.vue')
+            },
+            {
                 path: 'select',
                 name: 'Select',
                 component: () => import('../views/components/select.vue')
