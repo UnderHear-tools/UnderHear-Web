@@ -102,6 +102,14 @@
         </Timeline.Body>
       </Timeline.Item>
     </Timeline>
+    <div class="mt-6 flex justify-end">
+      <button
+        type="button"
+        class="inline-flex items-center justify-center rounded-md bg-blue-600 px-4 py-2 text-sm font-medium text-white shadow-sm transition-colors hover:bg-blue-700 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600"
+      >
+        创建应用
+      </button>
+    </div>
   </zContainer>
 </template>
 
@@ -118,7 +126,8 @@ import CreateAppInfoForm from '@/modules/application/components/CreateAppInfoFor
 
 const formData = ref({
 	appName: '',
-	displayName: ''
+	displayName: '',
+	displayDescription: ''
 })
 </script>
 

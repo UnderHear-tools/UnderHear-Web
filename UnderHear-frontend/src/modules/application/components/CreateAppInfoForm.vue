@@ -11,6 +11,7 @@
     >
       <zInput
         id="create-app-name"
+        class="w-full"
         :model-value="formData.appName"
         placeholder="请输入应用名称"
         @update:model-value="updateAppName"
@@ -27,9 +28,28 @@
     >
       <zInput
         id="create-display-name"
+        class="w-full"
         :model-value="formData.displayName"
         placeholder="请输入展示名称"
         @update:model-value="updateDisplayName"
+      />
+    </zFormControl>
+
+    <zFormControl
+      label="展示描述"
+      html-for="create-display-description"
+      required
+      validation="展示描述不能包含特殊符号。"
+      :caption="`${formData.displayDescription.length} / 1000`"
+    >
+      <zTextarea
+        id="create-display-description"
+        class="w-full"
+        :model-value="formData.displayDescription"
+        placeholder="请输入展示描述"
+        maxlength="1000"
+        rows="7"
+        @update:model-value="updateDisplayDescription"
       />
     </zFormControl>
   </form>
@@ -39,10 +59,12 @@
 import { computed } from 'vue'
 import { zFormControl } from '@/components/z-ui/formControl'
 import { zInput } from '@/components/z-ui/input'
+import { zTextarea } from '@/components/z-ui/textarea'
 
 interface AppFormData {
   appName: string
   displayName: string
+  displayDescription: string
 }
 
 interface Props {
@@ -72,12 +94,18 @@ const updateDisplayName = (value: string) => {
     displayName: value
   })
 }
+
+const updateDisplayDescription = (value: string) => {
+  emit('update:formData', {
+    ...props.formData,
+    displayDescription: value
+  })
+}
 </script>
 
 <style scoped>
 .app-info-form {
   display: grid;
-  justify-content: center;
   gap: 12px;
 }
 </style>
