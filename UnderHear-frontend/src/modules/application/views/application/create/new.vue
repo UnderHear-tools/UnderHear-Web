@@ -29,6 +29,9 @@
             <button
               type="button"
               class="option-card"
+              :class="{ 'option-card--active': selectedFramework === 'html' }"
+              :aria-pressed="selectedFramework === 'html'"
+              @click="selectFramework('html')"
             >
               <div class="option-header">
                 <div class="option-title">
@@ -48,6 +51,9 @@
             <button
               type="button"
               class="option-card"
+              :class="{ 'option-card--active': selectedFramework === 'vue' }"
+              :aria-pressed="selectedFramework === 'vue'"
+              @click="selectFramework('vue')"
             >
               <div class="option-header">
                 <div class="option-title">
@@ -67,6 +73,9 @@
             <button
               type="button"
               class="option-card"
+              :class="{ 'option-card--active': selectedFramework === 'react' }"
+              :aria-pressed="selectedFramework === 'react'"
+              @click="selectFramework('react')"
             >
               <div class="option-header">
                 <div class="option-title">
@@ -89,9 +98,29 @@
         <Timeline.Badge>2</Timeline.Badge>
         <Timeline.Body>
           <div class="creatForm-heading">
-            上传应用
+            上传应用 & 代码
           </div>
+
+          <div
+            v-if="selectedFramework === null"
+            class="upload-tip"
+          >
+            <LightBulb />
+            请先选择一个框架
+          </div>
+
+          <div
+            v-if="selectedFramework === 'html'"
+            class="html-editor-wrapper"
+          >
+            <div
+              ref="htmlEditorRef"
+              class="html-editor"
+            />
+          </div>
+
           <zUpload
+            v-if="selectedFramework === 'vue' || selectedFramework === 'react'"
             v-model="file"
             accept=".zip,.html"
             hint="支持 .zip 格式的 dist 构建包或 .html 文件"
@@ -114,6 +143,7 @@
       <button
         type="button"
         class="inline-flex items-center justify-center rounded-md bg-blue-600 px-4 py-2 text-sm font-medium text-white shadow-sm transition-colors hover:bg-blue-700 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600"
+        @click="submit"
       >
         创建应用
       </button>
@@ -122,21 +152,91 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue'
+import * as monaco from 'monaco-editor'
+import { nextTick, onBeforeUnmount, ref, shallowRef, watch } from 'vue'
+
 import { zContainer } from '@/components/z-ui/container'
-import { Timeline } from '@/components/z-ui/timeline'
 import { zTag } from '@/components/z-ui/tag'
+import { Timeline } from '@/components/z-ui/timeline'
 import { zUpload } from '@/components/z-ui/upload'
-
-const file = ref<File | null>(null)
-
 import CreateAppInfoForm from '@/modules/application/components/CreateAppInfoForm.vue'
+import LightBulb from '@/components/z-ui/icon/Octicons-vue/icons/light-bulb.vue'
 
-const formData = ref({
-	appName: '',
-	displayName: '',
-	displayDescription: ''
+// 第一步
+type FrameworkType = 'html' | 'vue' | 'react'
+
+const selectedFramework = ref<FrameworkType | null>(null)
+  
+function selectFramework(framework: FrameworkType) {
+  selectedFramework.value = framework
+}
+
+//第二步
+const file = ref<File | null>(null)
+//manoco编辑器相关
+const htmlEditorRef = ref<HTMLElement | null>(null)
+const htmlSource = ref(`<div>hello, world!</div>`)
+const htmlEditor = shallowRef<monaco.editor.IStandaloneCodeEditor | null>(null)
+
+function disposeHtmlEditor() {
+  const model = htmlEditor.value?.getModel()
+
+  htmlEditor.value?.dispose()
+  model?.dispose()
+  htmlEditor.value = null
+}
+
+function initHtmlEditor() {
+  if (!htmlEditorRef.value || htmlEditor.value) {
+    return
+  }
+
+  htmlEditor.value = monaco.editor.create(htmlEditorRef.value, {
+    value: htmlSource.value,
+    language: 'html',
+    automaticLayout: true,
+    fontSize: 14,
+    lineNumbersMinChars: 3,
+    minimap: { enabled: false },
+    scrollBeyondLastLine: false,
+    tabSize: 2
+  })
+
+  htmlEditor.value.onDidChangeModelContent(() => {
+    htmlSource.value = htmlEditor.value?.getValue() ?? ''
+  })
+}
+
+watch(selectedFramework, async (framework) => {
+  if (framework !== 'html') {
+    disposeHtmlEditor()
+    return
+  }
+
+  await nextTick()
+  initHtmlEditor()
+}, { immediate: true })
+
+onBeforeUnmount(() => {
+  disposeHtmlEditor()
 })
+
+
+//第三步
+const formData = ref({
+  appName: '',
+  displayName: '',
+  displayDescription: ''
+})
+
+//提交
+function submit() {
+  // 这里可以添加表单验证和提交逻辑
+  console.log('Selected Framework:', selectedFramework)
+  console.log('Uploaded File:', file)
+  console.log('HTML Source:', htmlSource.value)
+  console.log('Form Data:', formData)
+}
 </script>
 
 <style scoped>
@@ -198,6 +298,29 @@ const formData = ref({
   margin-bottom: 1rem;
 }
 
+.upload-tip {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: var(--fgColor-muted);
+  font-size: 14px;
+  line-height: 1.6;
+  width: 100%;
+  height: 100px;
+  gap: 10px;
+}
+
+.html-editor-wrapper {
+  overflow: hidden;
+  border: 1px solid var(--borderColor-default);
+  border-radius: 6px;
+}
+
+.html-editor {
+  width: 100%;
+  height: 360px;
+}
+
 .options-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -215,7 +338,8 @@ const formData = ref({
   cursor: pointer;
 }
 
-.option-card:hover {
+.option-card:hover,
+.option-card--active {
 	outline: 2px solid var(--borderColor-accent-emphasis);
 	outline-offset: -1px;
   box-shadow: 0 4px 14px -4px color-mix(in srgb, var(--fgColor-default) 8%, var(--bgColor-transparent));
