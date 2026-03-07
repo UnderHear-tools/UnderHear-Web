@@ -109,15 +109,10 @@
             请先选择一个框架
           </div>
 
-          <div
+          <HtmlMonacoEditor
             v-if="selectedFramework === 'html'"
-            class="html-editor-wrapper"
-          >
-            <div
-              ref="htmlEditorRef"
-              class="html-editor"
-            />
-          </div>
+            v-model="htmlSource"
+          />
 
           <zUpload
             v-if="selectedFramework === 'vue' || selectedFramework === 'react'"
@@ -152,9 +147,9 @@
 </template>
 
 <script setup lang="ts">
-import * as monaco from 'monaco-editor'
-import { nextTick, onBeforeUnmount, ref, shallowRef, watch } from 'vue'
+import { ref } from 'vue'
 
+import { HtmlMonacoEditor } from '@/components/monaco-editor'
 import { zContainer } from '@/components/z-ui/container'
 import { zTag } from '@/components/z-ui/tag'
 import { Timeline } from '@/components/z-ui/timeline'
@@ -174,52 +169,11 @@ function selectFramework(framework: FrameworkType) {
 //第二步
 const file = ref<File | null>(null)
 //manoco编辑器相关
-const htmlEditorRef = ref<HTMLElement | null>(null)
 const htmlSource = ref(`<div>hello, world!</div>`)
-const htmlEditor = shallowRef<monaco.editor.IStandaloneCodeEditor | null>(null)
 
-function disposeHtmlEditor() {
-  const model = htmlEditor.value?.getModel()
 
-  htmlEditor.value?.dispose()
-  model?.dispose()
-  htmlEditor.value = null
-}
 
-function initHtmlEditor() {
-  if (!htmlEditorRef.value || htmlEditor.value) {
-    return
-  }
 
-  htmlEditor.value = monaco.editor.create(htmlEditorRef.value, {
-    value: htmlSource.value,
-    language: 'html',
-    automaticLayout: true,
-    fontSize: 14,
-    lineNumbersMinChars: 3,
-    minimap: { enabled: false },
-    scrollBeyondLastLine: false,
-    tabSize: 2
-  })
-
-  htmlEditor.value.onDidChangeModelContent(() => {
-    htmlSource.value = htmlEditor.value?.getValue() ?? ''
-  })
-}
-
-watch(selectedFramework, async (framework) => {
-  if (framework !== 'html') {
-    disposeHtmlEditor()
-    return
-  }
-
-  await nextTick()
-  initHtmlEditor()
-}, { immediate: true })
-
-onBeforeUnmount(() => {
-  disposeHtmlEditor()
-})
 
 
 //第三步
@@ -308,17 +262,6 @@ function submit() {
   width: 100%;
   height: 100px;
   gap: 10px;
-}
-
-.html-editor-wrapper {
-  overflow: hidden;
-  border: 1px solid var(--borderColor-default);
-  border-radius: 6px;
-}
-
-.html-editor {
-  width: 100%;
-  height: 360px;
 }
 
 .options-grid {

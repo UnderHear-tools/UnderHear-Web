@@ -10,7 +10,7 @@ import App from './App.vue'
 import router from './router'
 import { useUserStore } from '@/stores/user'
 
-import '@/modules/application/lib/monaco/setupMonaco'
+import '@/components/monaco-editor/setupMonaco'
 
 const app = createApp(App)
 const pinia = createPinia()
