@@ -171,11 +171,6 @@ const file = ref<File | null>(null)
 //manoco编辑器相关
 const htmlSource = ref(`<div>hello, world!</div>`)
 
-
-
-
-
-
 //第三步
 const formData = ref({
   appName: '',
