@@ -112,6 +112,11 @@ onBeforeUnmount(() => {
   border-radius: 6px;
 }
 
+.html-editor-wrapper:focus-within {
+  outline: 2px solid var(--borderColor-accent-emphasis);
+  outline-offset: -1px;
+}
+
 .html-editor {
   width: 100%;
   height: 360px;

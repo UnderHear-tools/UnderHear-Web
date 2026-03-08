@@ -25,7 +25,12 @@
           <div class="creatForm-heading">
             点击选择你使用的前端框架
           </div>
-          <FirstStep v-model:selected-framework="selectedFramework" />
+          <FirstStep
+            :selected-framework="selectedFramework"
+            :invalid="showStepOneError"
+            :validation="stepOneError"
+            @update:selected-framework="updateSelectedFramework"
+          />
         </Timeline.Body>
       </Timeline.Item>
       <Timeline.Item>
@@ -35,9 +40,13 @@
             上传应用 & 代码
           </div>
           <SecondStep
-            v-model:file="file"
-            v-model:html-source="htmlSource"
+            :file="file"
+            :html-source="htmlSource"
             :selected-framework="selectedFramework"
+            :invalid="showStepTwoError"
+            :validation="stepTwoError"
+            @update:file="updateFile"
+            @update:html-source="updateHtmlSource"
           />
         </Timeline.Body>
       </Timeline.Item>
@@ -48,7 +57,9 @@
             填写基本信息
           </div>
           <ThirdStep
-            v-model:form-data="formData"
+            :form-data="formData"
+            :errors="displayedFormErrors"
+            @update:form-data="updateFormData"
           />
         </Timeline.Body>
       </Timeline.Item>
@@ -66,7 +77,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue'
+import { computed, reactive, ref } from 'vue'
 
 import { zContainer } from '@/components/z-ui/container'
 import { Timeline } from '@/components/z-ui/timeline'
@@ -76,18 +87,175 @@ import ThirdStep from '@/modules/application/components/newForm/ThirdStep.vue'
 
 type FrameworkType = 'html' | 'vue' | 'react'
 
+interface AppFormData {
+  appName: string
+  englishName: string
+  appDescription: string
+}
+
+interface AppFormErrors {
+  appName: string
+  englishName: string
+  appDescription: string
+}
+
 const selectedFramework = ref<FrameworkType | null>(null)
 
 const file = ref<File | null>(null)
 const htmlSource = ref(`<div>hello, world!</div>`)
 
-const formData = ref({
+const formData = ref<AppFormData>({
   appName: '',
-  displayName: '',
-  displayDescription: ''
+  englishName: '',
+  appDescription: ''
 })
 
+const submitAttempted = ref(false)
+const touched = reactive({
+  file: false,
+  htmlSource: false,
+  appName: false,
+  englishName: false,
+  appDescription: false
+})
+
+function createEmptyFormErrors(): AppFormErrors {
+  return {
+    appName: '',
+    englishName: '',
+    appDescription: ''
+  }
+}
+
+const stepOneError = computed(() => {
+  return selectedFramework.value === null ? '请选择一个前端框架。' : ''
+})
+
+const stepTwoError = computed(() => {
+  if (selectedFramework.value === null) {
+    return ''
+  }
+
+  if (selectedFramework.value === 'html') {
+    return htmlSource.value.trim() ? '' : '请输入 HTML 代码。'
+  }
+
+  return file.value ? '' : '请上传文件。'
+})
+
+const formErrors = computed<AppFormErrors>(() => {
+  const errors = createEmptyFormErrors()
+
+  if (!formData.value.appName.trim()) {
+    errors.appName = '请输入应用名称。'
+  } else if (formData.value.appName.length > 100) {
+    errors.appName = '应用名称不能超过 100 个字符。'
+  }
+
+  if (!formData.value.englishName.trim()) {
+    errors.englishName = '请输入英文名称。'
+  } else if (formData.value.englishName.length > 63) {
+    errors.englishName = '英文名称不能超过 63 个字符。'
+  } else if (!/^[a-z0-9](?:[a-z0-9-]*[a-z0-9])?$/.test(formData.value.englishName)) {
+    errors.englishName = '仅支持小写字母、数字和连字符（-），且不能以连字符开头或结尾。'
+  }
+
+  if (!formData.value.appDescription.trim()) {
+    errors.appDescription = '请输入应用描述。'
+  } else if (formData.value.appDescription.length > 1000) {
+    errors.appDescription = '应用描述不能超过 1000 个字符。'
+  }
+
+  return errors
+})
+
+const displayedFormErrors = computed<AppFormErrors>(() => {
+  const errors = createEmptyFormErrors()
+
+  if (submitAttempted.value || touched.appName) {
+    errors.appName = formErrors.value.appName
+  }
+
+  if (submitAttempted.value || touched.englishName) {
+    errors.englishName = formErrors.value.englishName
+  }
+
+  if (submitAttempted.value || touched.appDescription) {
+    errors.appDescription = formErrors.value.appDescription
+  }
+
+  return errors
+})
+
+const showStepOneError = computed(() => {
+  return submitAttempted.value && Boolean(stepOneError.value)
+})
+
+const showStepTwoError = computed(() => {
+  if (!stepTwoError.value) {
+    return false
+  }
+
+  if (submitAttempted.value) {
+    return true
+  }
+
+  if (selectedFramework.value === 'html') {
+    return touched.htmlSource
+  }
+
+  if (selectedFramework.value === 'vue' || selectedFramework.value === 'react') {
+    return touched.file
+  }
+
+  return false
+})
+
+const isFormValid = computed(() => {
+  return !stepOneError.value
+    && !stepTwoError.value
+    && !formErrors.value.appName
+    && !formErrors.value.englishName
+    && !formErrors.value.appDescription
+})
+
+function updateSelectedFramework(value: FrameworkType) {
+  selectedFramework.value = value
+}
+
+function updateFile(value: File | null) {
+  touched.file = true
+  file.value = value
+}
+
+function updateHtmlSource(value: string) {
+  touched.htmlSource = true
+  htmlSource.value = value
+}
+
+function updateFormData(value: AppFormData) {
+  if (value.appName !== formData.value.appName) {
+    touched.appName = true
+  }
+
+  if (value.englishName !== formData.value.englishName) {
+    touched.englishName = true
+  }
+
+  if (value.appDescription !== formData.value.appDescription) {
+    touched.appDescription = true
+  }
+
+  formData.value = value
+}
+
 function submit() {
+  submitAttempted.value = true
+
+  if (!isFormValid.value) {
+    return
+  }
+
   console.log('Selected Framework:', selectedFramework.value)
   console.log('Uploaded File:', file.value)
   console.log('HTML Source:', htmlSource.value)
