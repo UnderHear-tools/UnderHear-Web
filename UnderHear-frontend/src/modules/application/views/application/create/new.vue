@@ -25,73 +25,7 @@
           <div class="creatForm-heading">
             点击选择你使用的前端框架
           </div>
-          <div class="options-grid">
-            <button
-              type="button"
-              class="option-card"
-              :class="{ 'option-card--active': selectedFramework === 'html' }"
-              :aria-pressed="selectedFramework === 'html'"
-              @click="selectFramework('html')"
-            >
-              <div class="option-header">
-                <div class="option-title">
-                  HTML<zTag>推荐</zTag>
-                </div>
-                <p class="option-desc">
-                  从一段HTML代码开始！
-                </p>
-              </div>
-              <img
-                class="create-image"
-                src="@/modules/application/assets/new-html.svg"
-                alt="Create Collect"
-              >
-            </button>
-
-            <button
-              type="button"
-              class="option-card"
-              :class="{ 'option-card--active': selectedFramework === 'vue' }"
-              :aria-pressed="selectedFramework === 'vue'"
-              @click="selectFramework('vue')"
-            >
-              <div class="option-header">
-                <div class="option-title">
-                  Vue
-                </div>
-                <p class="option-desc">
-                  从一个Vue项目开始！
-                </p>
-              </div>
-              <img
-                class="create-image"
-                src="@/modules/application/assets/new-vue.svg"
-                alt="Create New"
-              >
-            </button>
-
-            <button
-              type="button"
-              class="option-card"
-              :class="{ 'option-card--active': selectedFramework === 'react' }"
-              :aria-pressed="selectedFramework === 'react'"
-              @click="selectFramework('react')"
-            >
-              <div class="option-header">
-                <div class="option-title">
-                  React
-                </div>
-                <p class="option-desc">
-                  从一个React项目开始！
-                </p>
-              </div>
-              <img
-                class="create-image"
-                src="@/modules/application/assets/new-react.svg"
-                alt="Create Website"
-              >
-            </button>
-          </div>
+          <FirstStep v-model:selected-framework="selectedFramework" />
         </Timeline.Body>
       </Timeline.Item>
       <Timeline.Item>
@@ -100,25 +34,10 @@
           <div class="creatForm-heading">
             上传应用 & 代码
           </div>
-
-          <div
-            v-if="selectedFramework === null"
-            class="upload-tip"
-          >
-            <LightBulb />
-            请先选择一个框架
-          </div>
-
-          <HtmlMonacoEditor
-            v-if="selectedFramework === 'html'"
-            v-model="htmlSource"
-          />
-
-          <zUpload
-            v-if="selectedFramework === 'vue' || selectedFramework === 'react'"
-            v-model="file"
-            accept=".zip,.html"
-            hint="支持 .zip 格式的 dist 构建包或 .html 文件"
+          <SecondStep
+            v-model:file="file"
+            v-model:html-source="htmlSource"
+            :selected-framework="selectedFramework"
           />
         </Timeline.Body>
       </Timeline.Item>
@@ -128,7 +47,7 @@
           <div class="creatForm-heading">
             填写基本信息
           </div>
-          <CreateAppInfoForm
+          <ThirdStep
             v-model:form-data="formData"
           />
         </Timeline.Body>
@@ -149,42 +68,30 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 
-import { HtmlMonacoEditor } from '@/components/monaco-editor'
 import { zContainer } from '@/components/z-ui/container'
-import { zTag } from '@/components/z-ui/tag'
 import { Timeline } from '@/components/z-ui/timeline'
-import { zUpload } from '@/components/z-ui/upload'
-import CreateAppInfoForm from '@/modules/application/components/CreateAppInfoForm.vue'
-import LightBulb from '@/components/z-ui/icon/Octicons-vue/icons/light-bulb.vue'
+import FirstStep from '@/modules/application/components/newForm/FirstStep.vue'
+import SecondStep from '@/modules/application/components/newForm/SecondStep.vue'
+import ThirdStep from '@/modules/application/components/newForm/ThirdStep.vue'
 
-// 第一步
 type FrameworkType = 'html' | 'vue' | 'react'
 
 const selectedFramework = ref<FrameworkType | null>(null)
-  
-function selectFramework(framework: FrameworkType) {
-  selectedFramework.value = framework
-}
 
-//第二步
 const file = ref<File | null>(null)
-//manoco编辑器相关
 const htmlSource = ref(`<div>hello, world!</div>`)
 
-//第三步
 const formData = ref({
   appName: '',
   displayName: '',
   displayDescription: ''
 })
 
-//提交
 function submit() {
-  // 这里可以添加表单验证和提交逻辑
-  console.log('Selected Framework:', selectedFramework)
-  console.log('Uploaded File:', file)
+  console.log('Selected Framework:', selectedFramework.value)
+  console.log('Uploaded File:', file.value)
   console.log('HTML Source:', htmlSource.value)
-  console.log('Form Data:', formData)
+  console.log('Form Data:', formData.value)
 }
 </script>
 
@@ -247,64 +154,6 @@ function submit() {
   margin-bottom: 1rem;
 }
 
-.upload-tip {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  color: var(--fgColor-muted);
-  font-size: 14px;
-  line-height: 1.6;
-  width: 100%;
-  height: 100px;
-  gap: 10px;
-}
-
-.options-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 1.25rem;
-}
-
-.option-card {
-  appearance: none;
-  width: 100%;
-  text-align: left;
-  border: 1px solid var(--borderColor-default);
-  border-radius: 6px;
-  background: var(--bgColor-muted);
-  padding: 1rem;
-  cursor: pointer;
-}
-
-.option-card:hover,
-.option-card--active {
-	outline: 2px solid var(--borderColor-accent-emphasis);
-	outline-offset: -1px;
-  box-shadow: 0 4px 14px -4px color-mix(in srgb, var(--fgColor-default) 8%, var(--bgColor-transparent));
-}
-
-.option-title {
-  font-size: 1rem;
-  font-weight: 700;
-  color: var(--fgColor-default);
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-}
-
-.option-desc {
-  margin: 0;
-  font-size: 14px;
-  line-height: 1.6;
-  color: var(--fgColor-muted);
-}
-
-.create-image {
-  width: 50%;
-  height: auto;
-  margin-top: 0.5rem;
-}
-
 @media (max-width: 768px) {
   .page-header {
     margin-top: 2rem;
@@ -316,27 +165,6 @@ function submit() {
 
   .page-description {
     font-size: 0.875rem;
-  }
-
-  .options-grid {
-    grid-template-columns: 1fr;
-  }
-
-  .option-card {
-    display: flex;
-  }
-
-  .option-header {
-    width: 60%;
-  }
-
-  .option-title {
-    margin-bottom: 0.6rem;
-  }
-
-  .create-image {
-    width: 30%;
-    margin-top: 0;
   }
 }
 </style>
