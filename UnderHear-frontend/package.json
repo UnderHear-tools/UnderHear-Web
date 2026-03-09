@@ -15,7 +15,7 @@
     "@tailwindcss/vite": "^4.1.12",
     "axios": "^1.13.5",
     "gsap": "^3.14.2",
-    "monaco-editor": "^0.55.1",
+    "monaco-editor": "^0.53.0",
     "pinia": "^3.0.4",
     "shiki": "^3.22.0",
     "tailwindcss": "^4.1.12",
