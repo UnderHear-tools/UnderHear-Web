@@ -258,7 +258,7 @@ function submit() {
 
   console.log('Selected Framework:', selectedFramework.value)
   console.log('Uploaded File:', file.value)
-  console.log('HTML Source:', htmlSource.value)
+  console.log('HTML Source:', new File([htmlSource.value], 'index.html', { type: 'text/html;charset=utf-8' }))
   console.log('Form Data:', formData.value)
 }
 </script>
