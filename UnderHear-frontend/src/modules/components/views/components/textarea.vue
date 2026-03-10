@@ -50,24 +50,27 @@
 
     <ComponentDocsSection title="结合 FormControl">
       <template #description>
-        与 <code>zFormControl</code> 组合，可快速添加标签、校验信息和辅助文案。
+        与 <code>FormControl</code> 组合，可快速添加标签、校验信息和辅助文案。
       </template>
       <ComponentDocsDemoBlock :code="demo4Code">
-        <zFormControl
-          label="Project Description"
-          html-for="textarea-doc-description"
-          :invalid="descriptionTooLong"
-          validation="Keep the description under 80 characters"
-          caption="This will be shown on the project detail page"
-        >
+        <FormControl>
+          <FormControl.Label>Project Description</FormControl.Label>
           <zTextarea
-            id="textarea-doc-description"
             v-model="description"
             class="demo-textarea"
             rows="5"
             maxlength="120"
           />
-        </zFormControl>
+          <FormControl.Caption>
+            This will be shown on the project detail page
+          </FormControl.Caption>
+          <FormControl.Validation
+            v-if="descriptionTooLong"
+            variant="error"
+          >
+            Keep the description under 80 characters
+          </FormControl.Validation>
+        </FormControl>
       </ComponentDocsDemoBlock>
     </ComponentDocsSection>
 
@@ -105,7 +108,7 @@
 
 <script setup lang="ts">
 import { computed, ref } from 'vue'
-import { zFormControl } from '@/components/z-ui/formControl'
+import { FormControl } from '@/components/z-ui/form-control'
 import { zTable, type ZTableColumn } from '@/components/z-ui/table'
 import { zTextarea } from '@/components/z-ui/textarea'
 import ComponentDocsDemoBlock from '@/modules/components/components/ComponentDocsPage/ComponentDocsDemoBlock.vue'
@@ -160,20 +163,19 @@ const val = ref('Disabled textarea value')
 <\/script>`
 
 const demo4Code = `<template>
-  <zFormControl
-    label="Project Description"
-    html-for="description"
-    :invalid="descriptionTooLong"
-    validation="Keep the description under 80 characters"
-    caption="This will be shown on the project detail page"
-  >
-    <zTextarea id="description" v-model="description" rows="5" maxlength="120" />
-  </zFormControl>
+  <FormControl>
+    <FormControl.Label>Project Description</FormControl.Label>
+    <zTextarea v-model="description" rows="5" maxlength="120" />
+    <FormControl.Caption>This will be shown on the project detail page</FormControl.Caption>
+    <FormControl.Validation v-if="descriptionTooLong" variant="error">
+      Keep the description under 80 characters
+    </FormControl.Validation>
+  </FormControl>
 </template>
 
 <script setup lang="ts">
 import { computed, ref } from 'vue'
-import { zFormControl } from '@/components/z-ui/formControl'
+import { FormControl } from '@/components/z-ui/form-control'
 import { zTextarea } from '@/components/z-ui/textarea'
 
 const description = ref('Build a collaborative audio workspace for distributed teams.')
@@ -192,11 +194,11 @@ const apiRows = [
 ]
 
 const nativeRows = [
-  { name: 'placeholder', description: '占位文本', type: 'string', default: '—' },
-  { name: 'rows', description: '默认可见行数', type: 'number | string', default: '—' },
+  { name: 'placeholder', description: '占位文本', type: 'string', default: '-' },
+  { name: 'rows', description: '默认可见行数', type: 'number | string', default: '-' },
   { name: 'disabled', description: '禁用文本域', type: 'boolean', default: 'false' },
-  { name: 'maxlength', description: '最大输入长度', type: 'number | string', default: '—' },
-  { name: 'id / name / aria-*', description: '其他原生属性会透传到 textarea 元素', type: 'string', default: '—' }
+  { name: 'maxlength', description: '最大输入长度', type: 'number | string', default: '-' },
+  { name: 'id / name / aria-*', description: '其他原生属性会透传到 textarea 元素', type: 'string', default: '-' }
 ]
 
 const eventCols: ZTableColumn[] = [

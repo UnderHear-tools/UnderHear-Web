@@ -2,73 +2,68 @@
   <ComponentDocsPage>
     <ComponentDocsHeader
       title="FormControl 表单控件"
-      description="用于为输入类组件提供统一的标签、校验提示和辅助文案。"
+      description="使用复合组件组织标签、说明文案和校验信息。"
     />
 
     <ComponentDocsSection title="基础用法">
       <template #description>
-        使用<code>FormControl</code>、<code>Input</code>组合而成的操作栏组件。通过<code>label</code>、<code>html-for</code>、<code>caption</code>快速为输入框补齐语义信息。
+        使用 <code>FormControl</code> 与其子组件显式描述表单项结构。
       </template>
       <ComponentDocsDemoBlock :code="demo1Code">
-        <zFormControl
-          label="Username"
-          html-for="form-control-demo-username"
-          required
-          caption="仅支持字母、数字和下划线"
-        >
+        <FormControl>
+          <FormControl.Label>Username</FormControl.Label>
           <zInput
-            id="form-control-demo-username"
             v-model="username"
             placeholder="请输入用户名"
           />
-        </zFormControl>
+          <FormControl.Caption>
+            仅支持字母、数字和下划线
+          </FormControl.Caption>
+        </FormControl>
       </ComponentDocsDemoBlock>
     </ComponentDocsSection>
 
     <ComponentDocsSection title="校验状态">
       <template #description>
-        当 <code>invalid</code> 为 <code>true</code> 时显示校验文案，并高亮子输入组件。
+        通过 <code>FormControl.Validation</code> 展示错误或成功信息，根容器会同步输入框样式。
       </template>
       <ComponentDocsDemoBlock :code="demo2Code">
-        <zFormControl
-          label="Display Name"
-          html-for="form-control-demo-name"
-          :invalid="hasInvalidChars"
-          validation="Names may not contain symbols"
-          caption="This will be publicly visible"
-        >
-          <zInput
-            id="form-control-demo-name"
-            v-model="displayName"
-          />
-        </zFormControl>
+        <FormControl>
+          <FormControl.Label>Display Name</FormControl.Label>
+          <zInput v-model="displayName" />
+          <FormControl.Caption>
+            This will be publicly visible
+          </FormControl.Caption>
+          <FormControl.Validation :variant="hasInvalidChars ? 'error' : 'success'">
+            {{ hasInvalidChars ? 'Names may not contain symbols' : 'Looks good' }}
+          </FormControl.Validation>
+        </FormControl>
       </ComponentDocsDemoBlock>
     </ComponentDocsSection>
 
-    <ComponentDocsSection title="插槽自定义">
+    <ComponentDocsSection title="组合结构">
       <template #description>
-        通过 <code>label</code>、<code>validation</code>、<code>caption</code> 具名插槽覆盖默认内容。
+        子组件都是结构块，你可以在中间插入自定义内容，而不依赖旧的 prop 和具名插槽。
       </template>
       <ComponentDocsDemoBlock :code="demo3Code">
-        <zFormControl
-          html-for="form-control-demo-email"
-          :invalid="isEmailInvalid"
-        >
-          <template #label>
-            联系邮箱 <span>*</span>
-          </template>
+        <FormControl>
+          <FormControl.Label>
+            联系邮箱 <span class="required-mark">*</span>
+          </FormControl.Label>
           <zInput
-            id="form-control-demo-email"
             v-model="email"
             placeholder="you@example.com"
           />
-          <template #validation>
-            请输入有效的邮箱地址
-          </template>
-          <template #caption>
+          <FormControl.Caption>
             我们仅用于通知，不会公开展示。
-          </template>
-        </zFormControl>
+          </FormControl.Caption>
+          <FormControl.Validation
+            v-if="isEmailInvalid"
+            variant="error"
+          >
+            请输入有效的邮箱地址
+          </FormControl.Validation>
+        </FormControl>
       </ComponentDocsDemoBlock>
     </ComponentDocsSection>
 
@@ -76,18 +71,18 @@
       title="API"
       variant="api"
     >
-      <h3>属性</h3>
+      <h3>组件</h3>
       <zTable
         :columns="apiCols"
-        :data="apiRows"
+        :data="componentRows"
         row-key="name"
         compact
         :hoverable="false"
       />
-      <h3>插槽</h3>
+      <h3>Validation Props</h3>
       <zTable
         :columns="apiCols"
-        :data="slotRows"
+        :data="validationRows"
         row-key="name"
         compact
         :hoverable="false"
@@ -98,7 +93,7 @@
 
 <script setup lang="ts">
 import { computed, ref } from 'vue'
-import { zFormControl } from '@/components/z-ui/formControl'
+import { FormControl } from '@/components/z-ui/form-control'
 import { zInput } from '@/components/z-ui/input'
 import { zTable, type ZTableColumn } from '@/components/z-ui/table'
 import ComponentDocsDemoBlock from '@/modules/components/components/ComponentDocsPage/ComponentDocsDemoBlock.vue'
@@ -114,39 +109,35 @@ const hasInvalidChars = computed(() => /[^a-zA-Z\s]/.test(displayName.value))
 const isEmailInvalid = computed(() => email.value.length > 0 && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.value))
 
 const demo1Code = `<template>
-  <zFormControl
-    label="Username"
-    html-for="username"
-    required
-    caption="仅支持字母、数字和下划线"
-  >
-    <zInput id="username" v-model="username" placeholder="请输入用户名" />
-  </zFormControl>
+  <FormControl>
+    <FormControl.Label>Username</FormControl.Label>
+    <zInput v-model="username" placeholder="请输入用户名" />
+    <FormControl.Caption>仅支持字母、数字和下划线</FormControl.Caption>
+  </FormControl>
 </template>
 
 <script setup lang="ts">
 import { ref } from 'vue'
-import { zFormControl } from '@/components/z-ui/formControl'
+import { FormControl } from '@/components/z-ui/form-control'
 import { zInput } from '@/components/z-ui/input'
 
 const username = ref('')
 <\/script>`
 
 const demo2Code = `<template>
-  <zFormControl
-    label="Display Name"
-    html-for="display-name"
-    :invalid="hasInvalidChars"
-    validation="Names may not contain symbols"
-    caption="This will be publicly visible"
-  >
-    <zInput id="display-name" v-model="displayName" />
-  </zFormControl>
+  <FormControl>
+    <FormControl.Label>Display Name</FormControl.Label>
+    <zInput v-model="displayName" />
+    <FormControl.Caption>This will be publicly visible</FormControl.Caption>
+    <FormControl.Validation :variant="hasInvalidChars ? 'error' : 'success'">
+      {{ hasInvalidChars ? 'Names may not contain symbols' : 'Looks good' }}
+    </FormControl.Validation>
+  </FormControl>
 </template>
 
 <script setup lang="ts">
 import { computed, ref } from 'vue'
-import { zFormControl } from '@/components/z-ui/formControl'
+import { FormControl } from '@/components/z-ui/form-control'
 import { zInput } from '@/components/z-ui/input'
 
 const displayName = ref('Mona L!$a')
@@ -154,17 +145,19 @@ const hasInvalidChars = computed(() => /[^a-zA-Z\\s]/.test(displayName.value))
 <\/script>`
 
 const demo3Code = `<template>
-  <zFormControl html-for="email" :invalid="isEmailInvalid">
-    <template #label>联系邮箱 <span>*</span></template>
-    <zInput id="email" v-model="email" placeholder="you@example.com" />
-    <template #validation>请输入有效的邮箱地址</template>
-    <template #caption>我们仅用于通知，不会公开展示。</template>
-  </zFormControl>
+  <FormControl>
+    <FormControl.Label>联系邮箱 <span>*</span></FormControl.Label>
+    <zInput v-model="email" placeholder="you@example.com" />
+    <FormControl.Caption>我们仅用于通知，不会公开展示。</FormControl.Caption>
+    <FormControl.Validation v-if="isEmailInvalid" variant="error">
+      请输入有效的邮箱地址
+    </FormControl.Validation>
+  </FormControl>
 </template>
 
 <script setup lang="ts">
 import { computed, ref } from 'vue'
-import { zFormControl } from '@/components/z-ui/formControl'
+import { FormControl } from '@/components/z-ui/form-control'
 import { zInput } from '@/components/z-ui/input'
 
 const email = ref('')
@@ -172,29 +165,26 @@ const isEmailInvalid = computed(() => email.value.length > 0 && !/^[^\\s@]+@[^\\
 <\/script>`
 
 const apiCols: ZTableColumn[] = [
-  { key: 'name', label: '属性名', rowHeader: true, minWidth: '140px' },
-  { key: 'description', label: '说明', minWidth: '220px', wrap: true },
+  { key: 'name', label: '名称', rowHeader: true, minWidth: '180px' },
+  { key: 'description', label: '说明', minWidth: '240px', wrap: true },
   { key: 'type', label: '类型', minWidth: '220px', wrap: true },
   { key: 'default', label: '默认值', minWidth: '120px' }
 ]
 
-const apiRows = [
-  { name: 'label', description: '标签文本', type: 'string', default: "''" },
-  { name: 'htmlFor', description: '绑定标签的表单控件 id', type: 'string', default: "''" },
-  { name: 'required', description: '是否显示必填标记', type: 'boolean', default: 'false' },
-  { name: 'requiredIndicator', description: '必填标记字符', type: 'string', default: "'*'" },
-  { name: 'invalid', description: '是否处于错误状态', type: 'boolean', default: 'false' },
-  { name: 'validation', description: '错误提示文案（invalid=true 时显示）', type: 'string', default: "''" },
-  { name: 'caption', description: '辅助说明文案', type: 'string', default: "''" }
+const componentRows = [
+  { name: 'FormControl', description: '表单项根容器，负责排列子组件并根据 Validation.variant 同步输入样式。', type: 'component', default: '-' },
+  { name: 'FormControl.Label', description: '标签区域，内容通过默认插槽传入。', type: 'slot', default: '-' },
+  { name: 'FormControl.Caption', description: '辅助说明区域，通常放计数、说明或提示。', type: 'slot', default: '-' },
+  { name: 'FormControl.Validation', description: '校验信息区域，会显示图标并向根容器同步 variant。', type: 'slot', default: '-' }
 ]
 
-const slotRows = [
-  { name: 'default', description: '表单控件主体内容', type: 'slot', default: '—' },
-  { name: 'label', description: '自定义标签区域', type: 'slot', default: '—' },
-  { name: 'validation', description: '自定义校验提示区域', type: 'slot', default: '—' },
-  { name: 'caption', description: '自定义辅助文案区域', type: 'slot', default: '—' }
+const validationRows = [
+  { name: 'variant', description: '校验信息样式，同时影响输入框边框颜色。', type: "'error' | 'success'", default: "'error'" }
 ]
 </script>
 
 <style scoped>
+.required-mark {
+  color: var(--fgColor-danger, #d1242f);
+}
 </style>

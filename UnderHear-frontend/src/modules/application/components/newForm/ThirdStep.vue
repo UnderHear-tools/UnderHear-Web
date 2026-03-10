@@ -3,13 +3,10 @@
     class="app-info-form"
     @submit.prevent
   >
-    <zFormControl
-      label="应用名称"
-      required
-      :invalid="Boolean(errors.appName)"
-      :validation="errors.appName"
-      :caption="`${formData.appName.length} / 100`"
-    >
+    <FormControl>
+      <FormControl.Label>
+        应用名称 <span class="required-mark">*</span>
+      </FormControl.Label>
       <zInput
         class="w-full"
         :model-value="formData.appName"
@@ -17,15 +14,21 @@
         maxlength="100"
         @update:model-value="updateAppName"
       />
-    </zFormControl>
+      <FormControl.Validation
+        v-if="errors.appName"
+        variant="error"
+      >
+        {{ errors.appName }}
+      </FormControl.Validation>
+      <FormControl.Caption>
+        {{ `${formData.appName.length} / 100` }}
+      </FormControl.Caption>
+    </FormControl>
 
-    <zFormControl
-      label="英文名称"
-      required
-      :invalid="Boolean(errors.englishName)"
-      :validation="errors.englishName"
-      :caption="formData.englishName.trim() ? `应用地址：https://${formData.englishName}.underhear.cn/` : ''"
-    >
+    <FormControl>
+      <FormControl.Label>
+        英文名称 <span class="required-mark">*</span>
+      </FormControl.Label>
       <zInput
         class="w-full"
         :model-value="formData.englishName"
@@ -33,15 +36,21 @@
         maxlength="63"
         @update:model-value="updateEnglishName"
       />
-    </zFormControl>
+      <FormControl.Validation
+        v-if="errors.englishName"
+        variant="error"
+      >
+        {{ errors.englishName }}
+      </FormControl.Validation>
+      <FormControl.Caption v-if="formData.englishName.trim()">
+        应用地址：https://{{ formData.englishName }}.underhear.cn/
+      </FormControl.Caption>
+    </FormControl>
 
-    <zFormControl
-      label="应用描述"
-      required
-      :invalid="Boolean(errors.appDescription)"
-      :validation="errors.appDescription"
-      :caption="`${formData.appDescription.length} / 1000`"
-    >
+    <FormControl>
+      <FormControl.Label>
+        应用描述 <span class="required-mark">*</span>
+      </FormControl.Label>
       <zTextarea
         class="w-full"
         :model-value="formData.appDescription"
@@ -50,12 +59,21 @@
         rows="7"
         @update:model-value="updateAppDescription"
       />
-    </zFormControl>
+      <FormControl.Caption>
+        {{ `${formData.appDescription.length} / 1000` }}
+      </FormControl.Caption>
+      <FormControl.Validation
+        v-if="errors.appDescription"
+        variant="error"
+      >
+        {{ errors.appDescription }}
+      </FormControl.Validation>
+    </FormControl>
   </form>
 </template>
 
 <script setup lang="ts">
-import { zFormControl } from '@/components/z-ui/formControl'
+import { FormControl } from '@/components/z-ui/form-control'
 import { zInput } from '@/components/z-ui/input'
 import { zTextarea } from '@/components/z-ui/textarea'
 
@@ -110,5 +128,9 @@ const updateAppDescription = (value: string) => {
 .app-info-form {
   display: grid;
   gap: 12px;
+}
+
+.required-mark {
+  color: var(--fgColor-danger, #d1242f);
 }
 </style>

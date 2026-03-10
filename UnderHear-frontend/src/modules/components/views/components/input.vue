@@ -56,22 +56,24 @@
 
     <ComponentDocsSection title="结合 FormControl">
       <template #description>
-        与 <code>zFormControl</code> 组合，可快速添加标签、校验信息和辅助文案。
+        与 <code>FormControl</code> 组合，可快速添加标签、校验信息和辅助文案。
       </template>
       <ComponentDocsDemoBlock :code="demo4Code">
-        <zFormControl
-          label="Name"
-          html-for="input-doc-name"
-          required
-          :invalid="hasInvalidChars"
-          validation="Names may not contain symbols"
-          caption="This will be publicly visible"
-        >
-          <zInput
-            id="input-doc-name"
-            v-model="profileName"
-          />
-        </zFormControl>
+        <FormControl>
+          <FormControl.Label>
+            Name <span class="required-mark">*</span>
+          </FormControl.Label>
+          <zInput v-model="profileName" />
+          <FormControl.Caption>
+            This will be publicly visible
+          </FormControl.Caption>
+          <FormControl.Validation
+            v-if="hasInvalidChars"
+            variant="error"
+          >
+            Names may not contain symbols
+          </FormControl.Validation>
+        </FormControl>
       </ComponentDocsDemoBlock>
     </ComponentDocsSection>
 
@@ -109,8 +111,8 @@
 
 <script setup lang="ts">
 import { computed, ref } from 'vue'
+import { FormControl } from '@/components/z-ui/form-control'
 import { zInput } from '@/components/z-ui/input'
-import { zFormControl } from '@/components/z-ui/formControl'
 import { zTable, type ZTableColumn } from '@/components/z-ui/table'
 import ComponentDocsDemoBlock from '@/modules/components/components/ComponentDocsPage/ComponentDocsDemoBlock.vue'
 import ComponentDocsHeader from '@/modules/components/components/ComponentDocsPage/ComponentDocsHeader.vue'
@@ -164,21 +166,19 @@ const password = ref('')
 <\/script>`
 
 const demo4Code = `<template>
-  <zFormControl
-    label="Name"
-    html-for="name"
-    required
-    :invalid="hasInvalidChars"
-    validation="Names may not contain symbols"
-    caption="This will be publicly visible"
-  >
-    <zInput id="name" v-model="name" />
-  </zFormControl>
+  <FormControl>
+    <FormControl.Label>Name <span>*</span></FormControl.Label>
+    <zInput v-model="name" />
+    <FormControl.Caption>This will be publicly visible</FormControl.Caption>
+    <FormControl.Validation v-if="hasInvalidChars" variant="error">
+      Names may not contain symbols
+    </FormControl.Validation>
+  </FormControl>
 </template>
 
 <script setup lang="ts">
 import { computed, ref } from 'vue'
-import { zFormControl } from '@/components/z-ui/formControl'
+import { FormControl } from '@/components/z-ui/form-control'
 import { zInput } from '@/components/z-ui/input'
 
 const name = ref('Mona L!$a')
@@ -198,11 +198,11 @@ const apiRows = [
 
 const nativeRows = [
   { name: 'type', description: '输入类型', type: 'string', default: "'text'" },
-  { name: 'placeholder', description: '占位文本', type: 'string', default: '—' },
+  { name: 'placeholder', description: '占位文本', type: 'string', default: '-' },
   { name: 'disabled', description: '禁用输入', type: 'boolean', default: 'false' },
-  { name: 'maxlength', description: '最大输入长度', type: 'number | string', default: '—' },
-  { name: 'autocomplete', description: '自动填充提示', type: 'string', default: '—' },
-  { name: 'id / name / aria-*', description: '其他原生属性会透传到 input 元素', type: 'string', default: '—' }
+  { name: 'maxlength', description: '最大输入长度', type: 'number | string', default: '-' },
+  { name: 'autocomplete', description: '自动填充提示', type: 'string', default: '-' },
+  { name: 'id / name / aria-*', description: '其他原生属性会透传到 input 元素', type: 'string', default: '-' }
 ]
 
 const eventCols: ZTableColumn[] = [
@@ -227,6 +227,10 @@ const eventRows = [
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 12px;
+}
+
+.required-mark {
+  color: var(--fgColor-danger, #d1242f);
 }
 
 @media (max-width: 768px) {
