@@ -3,9 +3,9 @@
     class="app-info-form"
     @submit.prevent
   >
-    <FormControl>
+    <FormControl required>
       <FormControl.Label>
-        应用名称 <span class="required-mark">*</span>
+        应用名称
       </FormControl.Label>
       <zInput
         class="w-full"
@@ -25,9 +25,9 @@
       </FormControl.Caption>
     </FormControl>
 
-    <FormControl>
+    <FormControl required>
       <FormControl.Label>
-        英文名称 <span class="required-mark">*</span>
+        英文名称
       </FormControl.Label>
       <zInput
         class="w-full"
@@ -47,9 +47,9 @@
       </FormControl.Caption>
     </FormControl>
 
-    <FormControl>
+    <FormControl required>
       <FormControl.Label>
-        应用描述 <span class="required-mark">*</span>
+        应用描述
       </FormControl.Label>
       <zTextarea
         class="w-full"
@@ -128,9 +128,5 @@ const updateAppDescription = (value: string) => {
 .app-info-form {
   display: grid;
   gap: 12px;
-}
-
-.required-mark {
-  color: var(--fgColor-danger, #d1242f);
 }
 </style>

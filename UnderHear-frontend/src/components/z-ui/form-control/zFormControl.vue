@@ -8,13 +8,20 @@
 </template>
 
 <script setup lang="ts">
+import { toRef } from 'vue'
 import { createFormControlContext, provideFormControlContext } from './context'
 
 defineOptions({
   name: 'FormControl'
 })
 
-const context = createFormControlContext()
+const props = withDefaults(defineProps<{
+  required?: boolean
+}>(), {
+  required: false
+})
+
+const context = createFormControlContext(toRef(props, 'required'))
 
 provideFormControlContext(context)
 
