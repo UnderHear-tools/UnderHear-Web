@@ -59,15 +59,15 @@
         rows="7"
         @update:model-value="updateAppDescription"
       />
-      <FormControl.Caption>
-        {{ `${formData.appDescription.length} / 1000` }}
-      </FormControl.Caption>
       <FormControl.Validation
         v-if="errors.appDescription"
         variant="error"
       >
         {{ errors.appDescription }}
       </FormControl.Validation>
+      <FormControl.Caption>
+        {{ `${formData.appDescription.length} / 1000` }}
+      </FormControl.Caption>
     </FormControl>
   </form>
 </template>
