@@ -33,6 +33,7 @@
         class="w-full"
         :model-value="formData.englishName"
         placeholder="请输入英文名称"
+        minlength="4"
         maxlength="63"
         @update:model-value="updateEnglishName"
       />

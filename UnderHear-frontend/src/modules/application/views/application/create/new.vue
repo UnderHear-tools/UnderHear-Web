@@ -152,8 +152,12 @@ const formErrors = computed<AppFormErrors>(() => {
     errors.appName = '应用名称不能超过 100 个字符。'
   }
 
-  if (!formData.value.englishName.trim()) {
+  const trimmedEnglishName = formData.value.englishName.trim()
+
+  if (!trimmedEnglishName) {
     errors.englishName = '请输入英文名称。'
+  } else if (trimmedEnglishName.length < 4) {
+    errors.englishName = '英文名称至少 4 个字符。'
   } else if (formData.value.englishName.length > 63) {
     errors.englishName = '英文名称不能超过 63 个字符。'
   } else if (!/^[a-z0-9](?:[a-z0-9-]*[a-z0-9])?$/.test(formData.value.englishName)) {
