@@ -33,11 +33,6 @@ export const componentRoutes: Array<RouteRecordRaw> = [
                 component: () => import('../views/components/action-bar.vue')
             },
             {
-                path: 'form-control',
-                name: 'FormControl',
-                component: () => import('../views/components/form-control.vue')
-            },
-            {
                 path: 'user-menu',
                 name: 'UserMenu',
                 component: () => import('../views/components/user-menu.vue')
@@ -79,6 +74,11 @@ export const componentRoutes: Array<RouteRecordRaw> = [
                 component: () => import('../views/components/tag.vue')
             },
             // Form
+            {
+                path: 'form-control',
+                name: 'FormControl',
+                component: () => import('../views/components/form-control.vue')
+            },
             {
                 path: 'input',
                 name: 'Input',

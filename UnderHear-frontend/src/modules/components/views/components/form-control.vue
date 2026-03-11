@@ -2,7 +2,7 @@
   <ComponentDocsPage>
     <ComponentDocsHeader
       title="FormControl 表单控件"
-      description="用于组织标签、辅助说明和校验反馈的组合式表单容器。"
+      description="用于组织标签、辅助说明和校验反馈的表单控件容器。"
     />
 
     <ComponentDocsSection title="基础用法">
