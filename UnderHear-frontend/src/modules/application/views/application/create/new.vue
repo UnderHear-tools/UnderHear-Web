@@ -156,12 +156,12 @@ const formErrors = computed<AppFormErrors>(() => {
 
   if (!trimmedEnglishName) {
     errors.englishName = '请输入英文名称。'
+  } else if (!/^[a-z0-9](?:[a-z0-9-]*[a-z0-9])?$/.test(formData.value.englishName)) {
+    errors.englishName = '仅支持小写字母、数字和连字符（-），且不能以连字符开头或结尾。'
   } else if (trimmedEnglishName.length < 4) {
     errors.englishName = '英文名称至少 4 个字符。'
   } else if (formData.value.englishName.length > 63) {
     errors.englishName = '英文名称不能超过 63 个字符。'
-  } else if (!/^[a-z0-9](?:[a-z0-9-]*[a-z0-9])?$/.test(formData.value.englishName)) {
-    errors.englishName = '仅支持小写字母、数字和连字符（-），且不能以连字符开头或结尾。'
   }
 
   if (!formData.value.appDescription.trim()) {

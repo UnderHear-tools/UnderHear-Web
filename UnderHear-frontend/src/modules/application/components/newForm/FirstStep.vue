@@ -171,14 +171,17 @@ function selectFramework(framework: FrameworkType) {
 }
 
 .step-validation {
-  display: inline-flex;
-  align-items: center;
-  gap: 3px;
-  margin: 0;
+  display: flex;
   font-size: 12px;
-  line-height: 1.4;
+  line-height: 1.3333333333;
   font-weight: 600;
   color: var(--fgColor-danger, #d1242f);
+}
+
+.icon-svg {
+  margin-top: 2px;
+  margin-right: 4px;
+  flex-shrink: 0;
 }
 
 @media (max-width: 768px) {
