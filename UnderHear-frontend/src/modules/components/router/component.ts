@@ -44,6 +44,11 @@ export const componentRoutes: Array<RouteRecordRaw> = [
                 component: () => import('../views/components/container.vue')
             },
             {
+                path: 'button',
+                name: 'Button',
+                component: () => import('../views/components/button.vue')
+            },
+            {
                 path: 'link',
                 name: 'Link',
                 component: () => import('../views/components/link.vue')

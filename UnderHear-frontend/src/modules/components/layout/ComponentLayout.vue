@@ -232,6 +232,7 @@ const navSections = ref([
     title: 'Basic 基础组件',
     items: [
       { path: '/component/container', label: 'Container 布局容器' },
+      { path: '/component/button', label: 'Button 按钮' },
       { path: '/component/link', label: 'Link 链接' },
       { path: '/component/divider', label: 'Divider 分隔线' },
       { path: '/component/avatar', label: 'Avatar 头像' },
