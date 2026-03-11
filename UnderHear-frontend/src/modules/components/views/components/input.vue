@@ -64,15 +64,15 @@
             Name <span class="required-mark">*</span>
           </FormControl.Label>
           <zInput v-model="profileName" />
-          <FormControl.Caption>
-            This will be publicly visible
-          </FormControl.Caption>
           <FormControl.Validation
             v-if="hasInvalidChars"
             variant="error"
           >
             Names may not contain symbols
           </FormControl.Validation>
+          <FormControl.Caption>
+            This will be publicly visible
+          </FormControl.Caption>
         </FormControl>
       </ComponentDocsDemoBlock>
     </ComponentDocsSection>
@@ -169,10 +169,10 @@ const demo4Code = `<template>
   <FormControl>
     <FormControl.Label>Name <span>*</span></FormControl.Label>
     <zInput v-model="name" />
-    <FormControl.Caption>This will be publicly visible</FormControl.Caption>
     <FormControl.Validation v-if="hasInvalidChars" variant="error">
       Names may not contain symbols
     </FormControl.Validation>
+    <FormControl.Caption>This will be publicly visible</FormControl.Caption>
   </FormControl>
 </template>
 

@@ -13,19 +13,19 @@ const appDescription = ref('A compact demo that shows how the compound FormContr
     <section class="playground-card">
       <header class="playground-header">
         <h1>FormControl Playground</h1>
-        <p>Namespaced compound usage with <code>&lt;FormControl.Label&gt;</code>, <code>&lt;FormControl.Caption&gt;</code> and <code>&lt;FormControl.Validation&gt;</code>.</p>
+        <p>Namespaced compound usage with <code>&lt;FormControl.Label&gt;</code>, <code>&lt;FormControl.Validation&gt;</code> and <code>&lt;FormControl.Caption&gt;</code>.</p>
       </header>
 
       <div class="playground-stack">
         <FormControl class="playground-control">
           <FormControl.Label>Application Name</FormControl.Label>
           <zInput v-model="appName" />
-          <FormControl.Caption>
-            Keep the title short and readable.
-          </FormControl.Caption>
           <FormControl.Validation variant="success">
             Name is available.
           </FormControl.Validation>
+          <FormControl.Caption>
+            Keep the title short and readable.
+          </FormControl.Caption>
         </FormControl>
 
         <FormControl class="playground-control">
@@ -34,12 +34,12 @@ const appDescription = ref('A compact demo that shows how the compound FormContr
             v-model="appDescription"
             rows="5"
           />
-          <FormControl.Caption>
-            This block is optional helper text.
-          </FormControl.Caption>
           <FormControl.Validation variant="error">
             Something went wrong.
           </FormControl.Validation>
+          <FormControl.Caption>
+            This block is optional helper text.
+          </FormControl.Caption>
         </FormControl>
       </div>
     </section>

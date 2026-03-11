@@ -2,22 +2,42 @@
   <ComponentDocsPage>
     <ComponentDocsHeader
       title="FormControl 表单控件"
-      description="使用复合组件组织标签、说明文案和校验信息。"
+      description="用于组织标签、辅助说明和校验反馈的组合式表单容器。"
     />
 
     <ComponentDocsSection title="基础用法">
       <template #description>
-        使用 <code>FormControl</code> 与其子组件显式描述表单项结构。
+        使用 <code>FormControl</code>、<code>FormControl.Label</code> 和 <code>FormControl.Caption</code>
+        组织一个完整的表单项。
       </template>
-      <ComponentDocsDemoBlock :code="demo1Code">
+      <ComponentDocsDemoBlock :code="basicDemoCode">
         <FormControl>
-          <FormControl.Label>Username</FormControl.Label>
+          <FormControl.Label>应用名称</FormControl.Label>
           <zInput
-            v-model="username"
-            placeholder="请输入用户名"
+            v-model="appName"
+            placeholder="请输入应用名称"
           />
           <FormControl.Caption>
-            仅支持字母、数字和下划线
+            将显示在应用卡片和页面标题中。
+          </FormControl.Caption>
+        </FormControl>
+      </ComponentDocsDemoBlock>
+    </ComponentDocsSection>
+
+    <ComponentDocsSection title="自动必填标记">
+      <template #description>
+        在根组件上传入 <code>required</code> 后，<code>FormControl.Label</code>
+        会自动读取上下文并追加必填星号，无需手动渲染。
+      </template>
+      <ComponentDocsDemoBlock :code="requiredDemoCode">
+        <FormControl required>
+          <FormControl.Label>英文名称</FormControl.Label>
+          <zInput
+            v-model="englishName"
+            placeholder="underhear-app"
+          />
+          <FormControl.Caption>
+            Label 会自动显示必填标记。
           </FormControl.Caption>
         </FormControl>
       </ComponentDocsDemoBlock>
@@ -25,44 +45,53 @@
 
     <ComponentDocsSection title="校验状态">
       <template #description>
-        通过 <code>FormControl.Validation</code> 展示错误或成功信息，根容器会同步输入框样式。
+        <code>FormControl.Validation</code> 支持 <code>error</code> 和 <code>success</code>
+        两种状态；它会显示对应图标，并把状态同步到根容器，从而联动内部
+        <code>.z-input</code> 与 <code>.z-textarea</code> 的边框样式。使用时建议放在
+        <code>FormControl.Caption</code> 上方。
       </template>
-      <ComponentDocsDemoBlock :code="demo2Code">
+      <ComponentDocsDemoBlock :code="validationDemoCode">
         <FormControl>
-          <FormControl.Label>Display Name</FormControl.Label>
-          <zInput v-model="displayName" />
-          <FormControl.Caption>
-            This will be publicly visible
-          </FormControl.Caption>
-          <FormControl.Validation :variant="hasInvalidChars ? 'error' : 'success'">
-            {{ hasInvalidChars ? 'Names may not contain symbols' : 'Looks good' }}
+          <FormControl.Label>发布地址</FormControl.Label>
+          <zInput
+            v-model="releaseSlug"
+            placeholder="underhear-app"
+          />
+          <FormControl.Validation :variant="isReleaseSlugValid ? 'success' : 'error'">
+            {{
+              isReleaseSlugValid
+                ? '格式正确，根容器已同步 success 状态。'
+                : '仅支持小写字母、数字和连字符，且至少 4 个字符。'
+            }}
           </FormControl.Validation>
+          <FormControl.Caption>
+            仅支持小写字母、数字和连字符，且至少 4 个字符。
+          </FormControl.Caption>
         </FormControl>
       </ComponentDocsDemoBlock>
     </ComponentDocsSection>
 
-    <ComponentDocsSection title="组合结构">
+    <ComponentDocsSection title="灵活组合">
       <template #description>
-        子组件都是结构块，你可以在中间插入自定义内容，而不依赖旧的 prop 和具名插槽。
+        这些子组件只是结构块。你可以在它们之间插入自定义布局或额外信息，而不是依赖固定的 prop 排布。
       </template>
-      <ComponentDocsDemoBlock :code="demo3Code">
-        <FormControl>
-          <FormControl.Label>
-            联系邮箱 <span class="required-mark">*</span>
-          </FormControl.Label>
-          <zInput
-            v-model="email"
-            placeholder="you@example.com"
-          />
+      <ComponentDocsDemoBlock :code="compositionDemoCode">
+        <FormControl required>
+          <FormControl.Label>应用域名前缀</FormControl.Label>
+          <div class="domain-row">
+            <span class="domain-affix">https://</span>
+            <zInput
+              v-model="domainPrefix"
+              placeholder="my-app"
+            />
+            <span class="domain-affix">.underhear.cn</span>
+          </div>
           <FormControl.Caption>
-            我们仅用于通知，不会公开展示。
+            你可以在结构块之间插入任意自定义内容。
           </FormControl.Caption>
-          <FormControl.Validation
-            v-if="isEmailInvalid"
-            variant="error"
-          >
-            请输入有效的邮箱地址
-          </FormControl.Validation>
+          <p class="demo-preview">
+            预览地址：https://{{ domainPrefix || 'your-app' }}.underhear.cn
+          </p>
         </FormControl>
       </ComponentDocsDemoBlock>
     </ComponentDocsSection>
@@ -71,18 +100,28 @@
       title="API"
       variant="api"
     >
-      <h3>组件</h3>
+      <h3>FormControl Props</h3>
       <zTable
         :columns="apiCols"
-        :data="componentRows"
+        :data="rootPropRows"
         row-key="name"
         compact
         :hoverable="false"
       />
+
+      <h3>子组件</h3>
+      <zTable
+        :columns="subComponentCols"
+        :data="subComponentRows"
+        row-key="name"
+        compact
+        :hoverable="false"
+      />
+
       <h3>Validation Props</h3>
       <zTable
         :columns="apiCols"
-        :data="validationRows"
+        :data="validationPropRows"
         row-key="name"
         compact
         :hoverable="false"
@@ -101,18 +140,20 @@ import ComponentDocsHeader from '@/modules/components/components/ComponentDocsPa
 import ComponentDocsPage from '@/modules/components/components/ComponentDocsPage/ComponentDocsPage.vue'
 import ComponentDocsSection from '@/modules/components/components/ComponentDocsPage/ComponentDocsSection.vue'
 
-const username = ref('')
-const displayName = ref('Mona L!$a')
-const email = ref('')
+const appName = ref('')
+const englishName = ref('underhear-app')
+const releaseSlug = ref('underhear-app')
+const domainPrefix = ref('podcast-hub')
 
-const hasInvalidChars = computed(() => /[^a-zA-Z\s]/.test(displayName.value))
-const isEmailInvalid = computed(() => email.value.length > 0 && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.value))
+const isReleaseSlugValid = computed(() => {
+  return /^[a-z0-9-]+$/.test(releaseSlug.value) && releaseSlug.value.length >= 4
+})
 
-const demo1Code = `<template>
+const basicDemoCode = `<template>
   <FormControl>
-    <FormControl.Label>Username</FormControl.Label>
-    <zInput v-model="username" placeholder="请输入用户名" />
-    <FormControl.Caption>仅支持字母、数字和下划线</FormControl.Caption>
+    <FormControl.Label>应用名称</FormControl.Label>
+    <zInput v-model="appName" placeholder="请输入应用名称" />
+    <FormControl.Caption>将显示在应用卡片和页面标题中。</FormControl.Caption>
   </FormControl>
 </template>
 
@@ -121,17 +162,33 @@ import { ref } from 'vue'
 import { FormControl } from '@/components/z-ui/form-control'
 import { zInput } from '@/components/z-ui/input'
 
-const username = ref('')
+const appName = ref('')
 <\/script>`
 
-const demo2Code = `<template>
+const requiredDemoCode = `<template>
+  <FormControl required>
+    <FormControl.Label>英文名称</FormControl.Label>
+    <zInput v-model="englishName" placeholder="underhear-app" />
+    <FormControl.Caption>Label 会自动显示必填标记。</FormControl.Caption>
+  </FormControl>
+</template>
+
+<script setup lang="ts">
+import { ref } from 'vue'
+import { FormControl } from '@/components/z-ui/form-control'
+import { zInput } from '@/components/z-ui/input'
+
+const englishName = ref('underhear-app')
+<\/script>`
+
+const validationDemoCode = `<template>
   <FormControl>
-    <FormControl.Label>Display Name</FormControl.Label>
-    <zInput v-model="displayName" />
-    <FormControl.Caption>This will be publicly visible</FormControl.Caption>
-    <FormControl.Validation :variant="hasInvalidChars ? 'error' : 'success'">
-      {{ hasInvalidChars ? 'Names may not contain symbols' : 'Looks good' }}
+    <FormControl.Label>发布地址</FormControl.Label>
+    <zInput v-model="releaseSlug" placeholder="underhear-app" />
+    <FormControl.Validation :variant="isReleaseSlugValid ? 'success' : 'error'">
+      {{ isReleaseSlugValid ? '格式正确，根容器已同步 success 状态。' : '仅支持小写字母、数字和连字符，且至少 4 个字符。' }}
     </FormControl.Validation>
+    <FormControl.Caption>仅支持小写字母、数字和连字符，且至少 4 个字符。</FormControl.Caption>
   </FormControl>
 </template>
 
@@ -140,51 +197,104 @@ import { computed, ref } from 'vue'
 import { FormControl } from '@/components/z-ui/form-control'
 import { zInput } from '@/components/z-ui/input'
 
-const displayName = ref('Mona L!$a')
-const hasInvalidChars = computed(() => /[^a-zA-Z\\s]/.test(displayName.value))
+const releaseSlug = ref('underhear-app')
+const isReleaseSlugValid = computed(() => /^[a-z0-9-]+$/.test(releaseSlug.value) && releaseSlug.value.length >= 4)
 <\/script>`
 
-const demo3Code = `<template>
-  <FormControl>
-    <FormControl.Label>联系邮箱 <span>*</span></FormControl.Label>
-    <zInput v-model="email" placeholder="you@example.com" />
-    <FormControl.Caption>我们仅用于通知，不会公开展示。</FormControl.Caption>
-    <FormControl.Validation v-if="isEmailInvalid" variant="error">
-      请输入有效的邮箱地址
-    </FormControl.Validation>
+const compositionDemoCode = `<template>
+  <FormControl required>
+    <FormControl.Label>应用域名前缀</FormControl.Label>
+    <div class="domain-row">
+      <span class="domain-affix">https://</span>
+      <zInput v-model="domainPrefix" placeholder="my-app" />
+      <span class="domain-affix">.underhear.cn</span>
+    </div>
+    <FormControl.Caption>你可以在结构块之间插入任意自定义内容。</FormControl.Caption>
+    <p class="demo-preview">预览地址：https://{{ domainPrefix || 'your-app' }}.underhear.cn</p>
   </FormControl>
 </template>
 
 <script setup lang="ts">
-import { computed, ref } from 'vue'
+import { ref } from 'vue'
 import { FormControl } from '@/components/z-ui/form-control'
 import { zInput } from '@/components/z-ui/input'
 
-const email = ref('')
-const isEmailInvalid = computed(() => email.value.length > 0 && !/^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$/.test(email.value))
+const domainPrefix = ref('podcast-hub')
 <\/script>`
 
 const apiCols: ZTableColumn[] = [
   { key: 'name', label: '名称', rowHeader: true, minWidth: '180px' },
-  { key: 'description', label: '说明', minWidth: '240px', wrap: true },
+  { key: 'description', label: '说明', minWidth: '280px', wrap: true },
   { key: 'type', label: '类型', minWidth: '220px', wrap: true },
   { key: 'default', label: '默认值', minWidth: '120px' }
 ]
 
-const componentRows = [
-  { name: 'FormControl', description: '表单项根容器，负责排列子组件并根据 Validation.variant 同步输入样式。', type: 'component', default: '-' },
-  { name: 'FormControl.Label', description: '标签区域，内容通过默认插槽传入。', type: 'slot', default: '-' },
-  { name: 'FormControl.Caption', description: '辅助说明区域，通常放计数、说明或提示。', type: 'slot', default: '-' },
-  { name: 'FormControl.Validation', description: '校验信息区域，会显示图标并向根容器同步 variant。', type: 'slot', default: '-' }
+const rootPropRows = [
+  {
+    name: 'required',
+    description: '标记当前表单项为必填，并让 FormControl.Label 自动追加 *。',
+    type: 'boolean',
+    default: 'false'
+  }
 ]
 
-const validationRows = [
-  { name: 'variant', description: '校验信息样式，同时影响输入框边框颜色。', type: "'error' | 'success'", default: "'error'" }
+const subComponentCols: ZTableColumn[] = [
+  { key: 'name', label: '子组件', rowHeader: true, minWidth: '200px' },
+  { key: 'description', label: '说明', minWidth: '320px', wrap: true },
+  { key: 'publicProps', label: '公开 Props', minWidth: '220px', wrap: true }
+]
+
+const subComponentRows = [
+  {
+    name: 'FormControl.Label',
+    description: '标签区域；读取根组件的 required 上下文并自动显示必填标记。',
+    publicProps: '无'
+  },
+  {
+    name: 'FormControl.Validation',
+    description: '校验消息区域；通常放在 Caption 上方，显示状态图标，并把 variant 同步到根容器。',
+    publicProps: '见下方 Validation Props'
+  },
+  {
+    name: 'FormControl.Caption',
+    description: '辅助说明区域；通常用于提示、说明或补充文案。',
+    publicProps: '无'
+  }
+]
+
+const validationPropRows = [
+  {
+    name: 'variant',
+    description: '校验信息的视觉状态；同时影响图标、文字颜色和根容器的 data-validation-variant。',
+    type: "'error' | 'success'",
+    default: "'error'"
+  }
 ]
 </script>
 
 <style scoped>
-.required-mark {
-  color: var(--fgColor-danger, #d1242f);
+.domain-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.domain-affix {
+  font-size: 13px;
+  line-height: 1.4;
+  color: var(--fgColor-muted, #656d76);
+}
+
+.domain-row :deep(.z-input) {
+  flex: 1 1 220px;
+  min-width: 0;
+}
+
+.demo-preview {
+  margin: 0;
+  font-size: 12px;
+  line-height: 1.4;
+  color: var(--fgColor-muted, #656d76);
 }
 </style>

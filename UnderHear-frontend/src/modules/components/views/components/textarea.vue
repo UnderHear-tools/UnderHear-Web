@@ -61,15 +61,15 @@
             rows="5"
             maxlength="120"
           />
-          <FormControl.Caption>
-            This will be shown on the project detail page
-          </FormControl.Caption>
           <FormControl.Validation
             v-if="descriptionTooLong"
             variant="error"
           >
             Keep the description under 80 characters
           </FormControl.Validation>
+          <FormControl.Caption>
+            This will be shown on the project detail page
+          </FormControl.Caption>
         </FormControl>
       </ComponentDocsDemoBlock>
     </ComponentDocsSection>
@@ -166,10 +166,10 @@ const demo4Code = `<template>
   <FormControl>
     <FormControl.Label>Project Description</FormControl.Label>
     <zTextarea v-model="description" rows="5" maxlength="120" />
-    <FormControl.Caption>This will be shown on the project detail page</FormControl.Caption>
     <FormControl.Validation v-if="descriptionTooLong" variant="error">
       Keep the description under 80 characters
     </FormControl.Validation>
+    <FormControl.Caption>This will be shown on the project detail page</FormControl.Caption>
   </FormControl>
 </template>
 
