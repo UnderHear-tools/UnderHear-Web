@@ -80,7 +80,7 @@
             :href="`#${item.id}`"
             @click="handleTocClick(item.id)"
           >
-            {{ item.text }}
+            {{ item.content }}
           </a>
         </nav>
       </div>
@@ -88,18 +88,11 @@
   </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import { nextTick, onBeforeUnmount, onMounted, ref, watch } from 'vue'
 import { useRoute } from 'vue-router'
 
 const sidebarOpen = ref(false)
-const mainContentRef = ref(null)
-const tocItems = ref([])
-const tocHeadings = ref([])
-const activeTocId = ref('')
-const lockedTocId = ref('')
-const scrollTicking = ref(false)
-const route = useRoute()
 
 const toggleSidebar = () => {
   sidebarOpen.value = !sidebarOpen.value
@@ -109,106 +102,82 @@ const closeSidebar = () => {
   sidebarOpen.value = false
 }
 
-const handleTocClick = (id) => {
-  lockedTocId.value = id
+//TOC 相关逻辑
+const mainContentRef = ref<HTMLElement | null>(null)
+const tocItems = ref<{ id: string; content: string; level: string }[]>([])
+const activeTocId = ref('')
+const route = useRoute()
+
+let observer: IntersectionObserver | null = null
+let clickPriorityUntil = 0
+
+const handleTocClick = (id: string) => {
   activeTocId.value = id
+  clickPriorityUntil = Date.now() + 500
 }
 
-const setActiveFromScroll = () => {
-  const headings = tocHeadings.value
-  if (!headings.length) {
-    activeTocId.value = ''
-    return
-  }
+const buildToc = () => {
+  observer?.disconnect()
 
-  if (lockedTocId.value) {
-    const lockedHeading = headings.find((heading) => heading.id === lockedTocId.value)
-    if (lockedHeading) {
-      const rect = lockedHeading.getBoundingClientRect()
-      const isVisible = rect.bottom > 0 && rect.top < window.innerHeight
-      if (isVisible) {
-        activeTocId.value = lockedTocId.value
-        return
-      }
-    }
-    lockedTocId.value = ''
-  }
+  const headings = Array.from(
+    mainContentRef.value?.querySelectorAll('h2, h3') ?? []
+  ) as HTMLElement[]
 
-  const offset = 120
-  let current = headings[0]
+  tocItems.value = headings.map((heading) => {
+    const content = heading.textContent
+    const id = content
 
-  for (const heading of headings) {
-    const top = heading.getBoundingClientRect().top - offset
-    if (top <= 0) {
-      current = heading
-    } else {
-      break
-    }
-  }
-
-  activeTocId.value = current.id
-}
-
-const handleScroll = () => {
-  if (scrollTicking.value) {
-    return
-  }
-
-  scrollTicking.value = true
-  requestAnimationFrame(() => {
-    setActiveFromScroll()
-    scrollTicking.value = false
-  })
-}
-
-const updateToc = () => {
-  const container = mainContentRef.value
-  if (!container) {
-    tocItems.value = []
-    tocHeadings.value = []
-    activeTocId.value = ''
-    return
-  }
-
-  const headings = Array.from(container.querySelectorAll('h2, h3'))
-  const items = headings.map((heading) => {
-    const text = heading.textContent
-    const id = text
     heading.id = id
 
     return {
       id,
-      text,
-      level: heading.tagName.toLowerCase()
+      content,
+      level: heading.tagName
     }
   })
 
-  tocHeadings.value = headings
-  tocItems.value = items
-  setActiveFromScroll()
+  observer = new IntersectionObserver(
+    (entries) => {
+      if (Date.now() < clickPriorityUntil) {
+        return
+      }
+
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          const el = entry.target as HTMLElement
+          activeTocId.value = el.id
+        }
+      })
+    },
+    {
+      root: null,
+      rootMargin: '-92px 0px -100% 0px', // 提前触发
+      threshold: 0
+    }
+  )
+
+  headings.forEach((heading) => observer?.observe(heading))
 }
 
-const refreshToc = async () => {
+onMounted(async () => {
   await nextTick()
-  updateToc()
-}
-
-onMounted(() => {
-  window.addEventListener('scroll', handleScroll, { passive: true })
-  refreshToc()
-})
-
-onBeforeUnmount(() => {
-  window.removeEventListener('scroll', handleScroll)
+  buildToc()
 })
 
 watch(
-  () => route.fullPath,
+  () => route.path,
   () => {
-    refreshToc()
-  }
+    activeTocId.value = ''
+    buildToc()
+  },
+  { flush: 'post' }
 )
 
+onBeforeUnmount(() => {
+  observer?.disconnect()
+})
+
+//左侧导航数据
 const navSections = ref([
   {
     title: 'Overview 组件总览',
@@ -403,7 +372,7 @@ const navSections = ref([
   border-left-color: var(--borderColor-accent-emphasis);
 }
 
-.toc-h3 {
+.toc-H3 {
   padding-left: 1.5rem;
   font-size: 0.8125rem;
 }
