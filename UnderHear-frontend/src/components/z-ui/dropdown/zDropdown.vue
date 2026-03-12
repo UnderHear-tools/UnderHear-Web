@@ -57,10 +57,13 @@ onMounted(() => {
 .z-dropdown-content {
   position: absolute;
   z-index: 1000;
-  border: 1px solid var(--borderColor-default, #d1d9e0);
-  border-radius: 6px;
-  background: var(--bgColor-default, #ffffff);
-  box-shadow: 0 8px 24px color-mix(in srgb, var(--fgColor-muted, #59636e) 20%, var(--bgColor-transparent, #ffffff00));
+  min-width: 192px;
+  max-width: calc(100vw - 2rem);
+  max-height: 100vh;
+  width: auto;
+  border-radius: 12px;
+  background: var(--overlay-bgColor, #ffffff);
+  box-shadow: var(--shadow-floating-small, 0px 0px 0px 1px #d1d9e080, 0px 6px 12px -3px #25292e0a, 0px 6px 18px 0px #25292e1f);
 }
 
 .z-dropdown-content--left-bottom {
