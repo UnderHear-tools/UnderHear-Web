@@ -7,6 +7,7 @@
     :data-loading="loading"
     :data-size="size"
     :data-variant="variant"
+    :data-icon-button="!$slots.default ? 'true' : 'false'"
   >
     <span
       class="z-button__content"
@@ -18,7 +19,10 @@
         >
           <slot name="leadingVisual" />
         </span>
-        <span class="z-button__label">
+        <span
+          v-if="$slots.default"
+          class="z-button__label"
+        >
           <slot />
         </span>
         <span
@@ -120,6 +124,7 @@ withDefaults(defineProps<Props>(), {
   grid-template-areas: 'stack';
   place-items: center;
   width: 100%;
+  justify-content: center;
 }
 
 .z-button__content-row,
@@ -152,6 +157,21 @@ withDefaults(defineProps<Props>(), {
 
 .z-button[data-loading='true'] .z-button__content-row {
   visibility: hidden;
+}
+
+.z-button[data-icon-button='true'] {
+  justify-content: center;
+  min-width: unset;
+  padding: unset;
+  width: var(--control-medium-size, 2rem);
+}
+
+.z-button[data-icon-button='true'][data-size='small'] {
+  width: var(--control-small-size, 1.75rem);
+}
+
+.z-button[data-icon-button='true'][data-size='large'] {
+  width: var(--control-large-size, 2.5rem);
 }
 
 .z-button[data-size='small'] {

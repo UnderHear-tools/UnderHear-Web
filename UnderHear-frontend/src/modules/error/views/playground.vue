@@ -139,11 +139,10 @@ function handleReset() {
 
         <div class="variant-list">
           <div class="demo-row">
-            <zButton>
+            <zButton loading variant="primary">
               <template #leadingVisual>
                 <Search size="16" />
               </template>
-              Search
             </zButton>
 
             <zButton variant="primary">
