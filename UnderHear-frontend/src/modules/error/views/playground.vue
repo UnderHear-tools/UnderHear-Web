@@ -3,7 +3,7 @@
 
     <zDropdown>
       <template #trigger>
-        <zButton>
+        <zButton variant="link">
           <template #leadingVisual>
             <Repo />
           </template>

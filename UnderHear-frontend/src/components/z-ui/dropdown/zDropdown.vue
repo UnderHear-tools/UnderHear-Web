@@ -5,6 +5,7 @@
   >
     <div
       class="z-dropdown-trigger"
+      :data-open="isOpen || undefined"
       @click="isOpen = !isOpen"
     >
       <slot name="trigger" />
@@ -67,22 +68,22 @@ onMounted(() => {
 }
 
 .z-dropdown-content--left-bottom {
-  top: calc(100% + 8px);
+  top: calc(100% + 4px);
   right: 0;
 }
 
 .z-dropdown-content--right-bottom {
-  top: calc(100% + 8px);
+  top: calc(100% + 4px);
   left: 0;
 }
 
 .z-dropdown-content--left-top {
-  bottom: calc(100% + 8px);
+  bottom: calc(100% + 4px);
   right: 0;
 }
 
 .z-dropdown-content--right-top {
-  bottom: calc(100% + 8px);
+  bottom: calc(100% + 4px);
   left: 0;
 }
 
@@ -92,5 +93,32 @@ onMounted(() => {
 
 .z-dropdown-fade-enter-from {
   transform: translateY(-8px);
+}
+
+/* 弹出时自动给 trigger 内的 Button 添加激活样式 */
+.z-dropdown-trigger[data-open] :deep(.z-button[data-variant='default']) {
+  background-color: var(--button-default-bgColor-active, var(--control-bgColor-active, #ebecf0));
+  border-color: var(--button-default-borderColor-active, var(--button-default-borderColor-rest, #d0d7de));
+}
+
+.z-dropdown-trigger[data-open] :deep(.z-button[data-variant='primary']) {
+  background-color: var(--button-primary-bgColor-active, #197935);
+  border-color: var(--button-primary-borderColor-active, var(--button-primary-borderColor-rest, #1f232826));
+  box-shadow: var(--button-primary-shadow-selected, var(--shadow-resting-small, 0 1px 0 0 #1f23280a));
+}
+
+.z-dropdown-trigger[data-open] :deep(.z-button[data-variant='danger']) {
+  background-color: var(--button-danger-bgColor-active, var(--bgColor-danger-emphasis, #cf222e));
+  border-color: var(--button-danger-borderColor-active, var(--button-danger-borderColor-hover, #1f232826));
+  box-shadow: var(--button-danger-shadow-selected, var(--shadow-resting-small, 0 1px 0 0 #1f23280a));
+  color: var(--button-danger-fgColor-active, #ffffff);
+}
+
+.z-dropdown-trigger[data-open] :deep(.z-button[data-variant='invisible']) {
+  background-color: var(--button-invisible-bgColor-active, var(--control-transparent-bgColor-active, rgba(129, 139, 152, 0.16)));
+}
+
+.z-dropdown-trigger[data-open] :deep(.z-button[data-variant='link']) {
+  text-decoration: underline;
 }
 </style>
