@@ -147,7 +147,7 @@ const onFileChange = (e: Event) => {
 	align-items: center;
 	gap: 12px;
 	margin-top: 12px;
-	padding: 10px 14px;
+	padding: 6px 6px 6px 14px;
 	border: 1px solid var(--borderColor-default);
 	border-radius: 6px;
 	background: var(--bgColor-muted);
