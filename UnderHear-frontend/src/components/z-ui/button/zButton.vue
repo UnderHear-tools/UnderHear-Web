@@ -93,7 +93,6 @@ withDefaults(defineProps<Props>(), {
   color: var(--button-default-fgColor-rest, var(--control-fgColor-rest, #1f2328));
   cursor: pointer;
   display: inline-flex;
-  font-family: inherit;
   font-size: var(--text-body-size-medium, 0.875rem);
   font-weight: var(--base-text-weight-medium, 500);
   height: var(--control-medium-size, 2rem);

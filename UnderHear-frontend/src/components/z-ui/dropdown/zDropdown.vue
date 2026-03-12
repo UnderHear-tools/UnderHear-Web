@@ -86,14 +86,11 @@ onMounted(() => {
   left: 0;
 }
 
-.z-dropdown-fade-enter-active,
-.z-dropdown-fade-leave-active {
-  transition: opacity 0.15s, transform 0.15s;
+.z-dropdown-fade-enter-active {
+  transition: transform 0.15s;
 }
 
-.z-dropdown-fade-enter-from,
-.z-dropdown-fade-leave-to {
-  opacity: 0;
-  transform: translateY(-6px);
+.z-dropdown-fade-enter-from {
+  transform: translateY(-8px);
 }
 </style>
