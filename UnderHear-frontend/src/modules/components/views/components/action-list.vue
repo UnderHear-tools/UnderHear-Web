@@ -1,62 +1,62 @@
 <template>
   <ComponentDocsPage>
     <ComponentDocsHeader
-      title="Menu 菜单"
-      description="用于下拉菜单、导航菜单等场景的菜单组件。"
+      title="ActionList 操作列表"
+      description="用于下拉菜单、导航菜单等场景的操作列表组件。"
     />
 
     <ComponentDocsSection title="基础用法">
       <template #description>
-        使用 <code>zMenu</code> 作为容器，<code>zMenuItem</code> 作为菜单项。
+        使用 <code>ActionList</code> 作为容器，<code>ActionList.Item</code> 作为列表项。
       </template>
 
       <ComponentDocsDemoBlock :code="demo1Code">
-        <zMenu>
-          <zMenuItem>新建文件</zMenuItem>
-          <zMenuItem>打开文件</zMenuItem>
-          <zMenuItem>保存文件</zMenuItem>
-        </zMenu>
+        <ActionList>
+          <ActionList.Item>新建文件</ActionList.Item>
+          <ActionList.Item>打开文件</ActionList.Item>
+          <ActionList.Item>保存文件</ActionList.Item>
+        </ActionList>
       </ComponentDocsDemoBlock>
     </ComponentDocsSection>
 
-    <ComponentDocsSection title="带链接的菜单项">
+    <ComponentDocsSection title="带链接的列表项">
       <template #description>
-        通过 <code>href</code> 属性可以将菜单项渲染为链接。
+        通过 <code>href</code> 属性可以将列表项渲染为链接。
       </template>
 
       <ComponentDocsDemoBlock :code="demo2Code">
-        <zMenu>
-          <zMenuItem
+        <ActionList>
+          <ActionList.Item
             href="https://github.com"
             new-tab
           >
             GitHub (新标签页)
-          </zMenuItem>
-          <zMenuItem href="https://vuejs.org">
+          </ActionList.Item>
+          <ActionList.Item href="https://vuejs.org">
             Vue.js
-          </zMenuItem>
-          <zMenuItem
+          </ActionList.Item>
+          <ActionList.Item
             href="https://vitejs.dev"
             new-tab
           >
             Vite (新标签页)
-          </zMenuItem>
-        </zMenu>
+          </ActionList.Item>
+        </ActionList>
       </ComponentDocsDemoBlock>
     </ComponentDocsSection>
 
     <ComponentDocsSection title="配合分割线">
       <template #description>
-        使用 <code>zDivider</code> 分隔不同类别的菜单项。
+        使用 <code>zDivider</code> 分隔不同类别的列表项。
       </template>
 
       <ComponentDocsDemoBlock :code="demo3Code">
-        <zMenu>
-          <zMenuItem>个人资料</zMenuItem>
-          <zMenuItem>账户设置</zMenuItem>
+        <ActionList>
+          <ActionList.Item>个人资料</ActionList.Item>
+          <ActionList.Item>账户设置</ActionList.Item>
           <zDivider />
-          <zMenuItem>退出登录</zMenuItem>
-        </zMenu>
+          <ActionList.Item>退出登录</ActionList.Item>
+        </ActionList>
       </ComponentDocsDemoBlock>
     </ComponentDocsSection>
 
@@ -64,32 +64,32 @@
       title="API"
       variant="api"
     >
-      <h4>zMenu</h4>
+      <h4>ActionList</h4>
       <zTable
         :columns="slotsTableColumns"
-        :data="menuSlotsRows"
+        :data="actionListSlotsRows"
         row-key="name"
         compact
         :hoverable="false"
       />
 
       <h4 style="margin-top: 24px;">
-        zMenuItem Props
+        ActionList.Item Props
       </h4>
       <zTable
         :columns="apiTableColumns"
-        :data="menuItemPropsRows"
+        :data="actionListItemPropsRows"
         row-key="name"
         compact
         :hoverable="false"
       />
 
       <h4 style="margin-top: 24px;">
-        zMenuItem Events
+        ActionList.Item Events
       </h4>
       <zTable
         :columns="eventsTableColumns"
-        :data="menuItemEventsRows"
+        :data="actionListItemEventsRows"
         row-key="name"
         compact
         :hoverable="false"
@@ -100,7 +100,7 @@
 
 <script setup lang="ts">
 import { zDivider } from '@/components/z-ui/divider'
-import { zMenu, zMenuItem } from '@/components/z-ui/menu'
+import { ActionList } from '@/components/z-ui/action-list'
 import { zTable, type ZTableColumn } from '@/components/z-ui/table'
 import ComponentDocsDemoBlock from '@/modules/components/components/ComponentDocsPage/ComponentDocsDemoBlock.vue'
 import ComponentDocsHeader from '@/modules/components/components/ComponentDocsPage/ComponentDocsHeader.vue'
@@ -108,41 +108,41 @@ import ComponentDocsPage from '@/modules/components/components/ComponentDocsPage
 import ComponentDocsSection from '@/modules/components/components/ComponentDocsPage/ComponentDocsSection.vue'
 
 const demo1Code = `<template>
-  <zMenu>
-    <zMenuItem>新建文件</zMenuItem>
-    <zMenuItem>打开文件</zMenuItem>
-    <zMenuItem>保存文件</zMenuItem>
-  </zMenu>
+  <ActionList>
+    <ActionList.Item>新建文件</ActionList.Item>
+    <ActionList.Item>打开文件</ActionList.Item>
+    <ActionList.Item>保存文件</ActionList.Item>
+  </ActionList>
 </template>
 
 <script setup lang="ts">
-import { zMenu, zMenuItem } from '@/components/z-ui/menu'
+import { ActionList } from '@/components/z-ui/action-list'
 <\/script>`
 
 const demo2Code = `<template>
-  <zMenu>
-    <zMenuItem href="https://github.com" new-tab>GitHub (新标签页)</zMenuItem>
-    <zMenuItem href="https://vuejs.org">Vue.js</zMenuItem>
-    <zMenuItem href="https://vitejs.dev" new-tab>Vite (新标签页)</zMenuItem>
-  </zMenu>
+  <ActionList>
+    <ActionList.Item href="https://github.com" new-tab>GitHub (新标签页)</ActionList.Item>
+    <ActionList.Item href="https://vuejs.org">Vue.js</ActionList.Item>
+    <ActionList.Item href="https://vitejs.dev" new-tab>Vite (新标签页)</ActionList.Item>
+  </ActionList>
 </template>
 
 <script setup lang="ts">
-import { zMenu, zMenuItem } from '@/components/z-ui/menu'
+import { ActionList } from '@/components/z-ui/action-list'
 <\/script>`
 
 const demo3Code = `<template>
-  <zMenu>
-    <zMenuItem>个人资料</zMenuItem>
-    <zMenuItem>账户设置</zMenuItem>
+  <ActionList>
+    <ActionList.Item>个人资料</ActionList.Item>
+    <ActionList.Item>账户设置</ActionList.Item>
     <zDivider />
-    <zMenuItem>退出登录</zMenuItem>
-  </zMenu>
+    <ActionList.Item>退出登录</ActionList.Item>
+  </ActionList>
 </template>
 
 <script setup lang="ts">
 import { zDivider } from '@/components/z-ui/divider'
-import { zMenu, zMenuItem } from '@/components/z-ui/menu'
+import { ActionList } from '@/components/z-ui/action-list'
 <\/script>`
 
 const slotsTableColumns: ZTableColumn[] = [
@@ -150,10 +150,10 @@ const slotsTableColumns: ZTableColumn[] = [
   { key: 'description', label: '说明', minWidth: '300px', wrap: true }
 ]
 
-const menuSlotsRows = [
+const actionListSlotsRows = [
   {
     name: 'default',
-    description: '菜单内容，通常放置 zMenuItem 组件'
+    description: '列表内容，通常放置 ActionList.Item 组件'
   }
 ]
 
@@ -164,10 +164,10 @@ const apiTableColumns: ZTableColumn[] = [
   { key: 'default', label: '默认值', minWidth: '120px' }
 ]
 
-const menuItemPropsRows = [
+const actionListItemPropsRows = [
   {
     name: 'href',
-    description: '链接地址，设置后菜单项会渲染为 <a> 标签',
+    description: '链接地址，设置后列表项会渲染为 <a> 标签',
     type: 'string',
     default: '—'
   },
@@ -184,10 +184,10 @@ const eventsTableColumns: ZTableColumn[] = [
   { key: 'description', label: '说明', minWidth: '300px', wrap: true }
 ]
 
-const menuItemEventsRows = [
+const actionListItemEventsRows = [
   {
     name: 'click',
-    description: '点击菜单项时触发'
+    description: '点击列表项时触发'
   }
 ]
 </script>

@@ -206,7 +206,7 @@ const navSections = ref([
       { path: '/component/divider', label: 'Divider 分隔线' },
       { path: '/component/avatar', label: 'Avatar 头像' },
       { path: '/component/dropdown', label: 'Dropdown 下拉菜单' },
-      { path: '/component/menu', label: 'Menu 菜单' },
+      { path: '/component/action-list', label: 'ActionList 操作列表' },
       { path: '/component/tag', label: 'Tag 标签' }
     ]
   },

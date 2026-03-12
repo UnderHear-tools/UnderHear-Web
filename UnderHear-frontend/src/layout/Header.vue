@@ -50,25 +50,25 @@
                 </div>
               </div>
             </div>
-            <zMenu>
+            <ActionList>
               <zDivider />
-              <zMenuItem>
+              <ActionList.Item>
                 <Person class="menu-icon" />
                 个人资料
-              </zMenuItem>
-              <zMenuItem
+              </ActionList.Item>
+              <ActionList.Item
                 href="https://github.com/underhear"
                 new-tab
               >
                 <MarkGithub class="menu-icon" />
                 前往 GitHub
-              </zMenuItem>
+              </ActionList.Item>
               <zDivider />
-              <zMenuItem href="/auth/logout">
+              <ActionList.Item href="/auth/logout">
                 <SignOut class="menu-icon" />
                 退出登录
-              </zMenuItem>
-            </zMenu>
+              </ActionList.Item>
+            </ActionList>
           </template>
         </zDropdown>
       </div>
@@ -82,7 +82,7 @@ import { useRouter, useRoute } from 'vue-router'
 import { useUserStore } from '@/stores/user'
 import { zDropdown } from '@/components/z-ui/dropdown'
 import { zAvatar } from '@/components/z-ui/avatar'
-import { zMenu, zMenuItem } from '@/components/z-ui/menu'
+import { ActionList } from '@/components/z-ui/action-list'
 import { zDivider } from '@/components/z-ui/divider'
 import { Person, MarkGithub, SignOut } from '@/components/z-ui/icon/Octicons-vue'
 

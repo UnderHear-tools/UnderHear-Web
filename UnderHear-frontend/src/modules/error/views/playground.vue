@@ -14,11 +14,11 @@
         </zButton>
       </template>
       <template #content>
-        <zMenu>
-          <zMenuItem>新建文件</zMenuItem>
-          <zMenuItem>打开文件</zMenuItem>
-          <zMenuItem>保存文件</zMenuItem>
-        </zMenu>
+        <ActionList>
+          <ActionList.Item>新建文件</ActionList.Item>
+          <ActionList.Item>打开文件</ActionList.Item>
+          <ActionList.Item>保存文件</ActionList.Item>
+        </ActionList>
       </template>
     </zDropdown>
 
@@ -29,7 +29,7 @@
 <script setup lang="ts">
 import { zButton } from '@/components/z-ui/button';
 import { zDropdown } from '@/components/z-ui/dropdown';
-import { zMenu, zMenuItem } from '@/components/z-ui/menu';
+import { ActionList } from '@/components/z-ui/action-list';
 import Repo from '@/components/z-ui/icon/Octicons-vue/icons/repo.vue';
 import TriangleDown from '@/components/z-ui/icon/Octicons-vue/icons/triangle-down.vue';
 

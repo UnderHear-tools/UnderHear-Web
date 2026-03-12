@@ -1,11 +1,11 @@
 <template>
-  <div class="z-menu">
+  <div class="z-action-list">
     <slot />
   </div>
 </template>
 
 <style scoped>
-.z-menu {
+.z-action-list {
   padding: 8px;
 }
 </style>

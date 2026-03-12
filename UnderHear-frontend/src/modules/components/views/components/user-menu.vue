@@ -10,7 +10,7 @@
         使用 
         <code>Dropdown</code>、
         <code>Avatar</code>、
-        <code>Menu</code>、<code>MenuItem</code>、
+        <code>ActionList</code>、<code>ActionList.Item</code>、
         <code>Divider</code>、
         <code>Octicons-vue</code>
         组合而成的用户菜单组件。
@@ -39,27 +39,27 @@
                   </div>
                 </div>
               </div>
-              <zMenu>
+              <ActionList>
                 <zDivider />
-                <zMenuItem>
+                <ActionList.Item>
                   <Person class="menu-icon" />
                   个人资料
-                </zMenuItem>
-                <zMenuItem href="https://github.com/underhear">
+                </ActionList.Item>
+                <ActionList.Item href="https://github.com/underhear">
                   <MarkGithub class="menu-icon" />
                   前往 GitHub
-                </zMenuItem>
+                </ActionList.Item>
                 <zDivider />
-                <zMenuItem>
+                <ActionList.Item>
                   <Gear class="menu-icon" />
                   设置
-                </zMenuItem>
+                </ActionList.Item>
                 <zDivider />
-                <zMenuItem>
+                <ActionList.Item>
                   <SignOut class="menu-icon" />
                   退出登录
-                </zMenuItem>
-              </zMenu>
+                </ActionList.Item>
+              </ActionList>
             </template>
           </zDropdown>
         </div>
@@ -75,7 +75,7 @@ import ComponentDocsPage from '@/modules/components/components/ComponentDocsPage
 import ComponentDocsSection from '@/modules/components/components/ComponentDocsPage/ComponentDocsSection.vue'
 import { zDropdown } from '@/components/z-ui/dropdown'
 import { zAvatar } from '@/components/z-ui/avatar'
-import { zMenu, zMenuItem } from '@/components/z-ui/menu'
+import { ActionList } from '@/components/z-ui/action-list'
 import { zDivider } from '@/components/z-ui/divider'
 import { Person, MarkGithub, SignOut, Gear } from '@/components/z-ui/icon/Octicons-vue'
 
@@ -93,27 +93,27 @@ const demo1Code = `<template>
             <div class="user-email">hello@underhear.audio</div>
           </div>
         </div>
-        <zMenu>
+        <ActionList>
           <zDivider />
-          <zMenuItem>
+          <ActionList.Item>
             <Person class="menu-icon" />
             个人资料
-          </zMenuItem>
-          <zMenuItem href="https://github.com/underhear">
+          </ActionList.Item>
+          <ActionList.Item href="https://github.com/underhear">
             <MarkGithub class="menu-icon" />
             前往 GitHub
-          </zMenuItem>
+          </ActionList.Item>
           <zDivider />
-          <zMenuItem>
+          <ActionList.Item>
             <Gear class="menu-icon" />
             设置
-          </zMenuItem>
+          </ActionList.Item>
           <zDivider />
-          <zMenuItem>
+          <ActionList.Item>
             <SignOut class="menu-icon" />
             退出登录
-          </zMenuItem>
-        </zMenu>
+          </ActionList.Item>
+        </ActionList>
       </template>
     </zDropdown>
   </div>
@@ -122,7 +122,7 @@ const demo1Code = `<template>
 <script setup lang="ts">
 import { zDropdown } from '@/components/z-ui/dropdown'
 import { zAvatar } from '@/components/z-ui/avatar'
-import { zMenu, zMenuItem } from '@/components/z-ui/menu'
+import { ActionList } from '@/components/z-ui/action-list'
 import { zDivider } from '@/components/z-ui/divider'
 import { Person, MarkGithub, SignOut, Gear } from '@/components/z-ui/icon/Octicons-vue'
 <\/script>

@@ -5,7 +5,7 @@
     :target="props.href ? (props.newTab ? '_blank' : '_self') : undefined"
     :rel="props.href && props.newTab ? 'noopener noreferrer' : undefined"
     :type="props.href ? undefined : 'button'"
-    class="z-menu-item"
+    class="z-action-list-item"
     @click="$emit('click')"
   >
     <slot />
@@ -27,7 +27,7 @@ defineEmits<{ click: [] }>()
 </script>
 
 <style scoped>
-.z-menu-item {
+.z-action-list-item {
   display: flex;
   align-items: center;
   gap: 8px;
@@ -43,7 +43,7 @@ defineEmits<{ click: [] }>()
   cursor: pointer;
 }
 
-.z-menu-item:hover {
+.z-action-list-item:hover {
   background: var(--control-transparent-bgColor-hover, #818b981a);
 }
 </style>
