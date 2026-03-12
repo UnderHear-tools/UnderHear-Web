@@ -298,13 +298,13 @@ const slotsTableRows = [
   padding: 8px 16px;
   border: 1px solid var(--borderColor-default);
   border-radius: 6px;
-  background: var(--bgColor-default);
+  background: var(--control-transparent-bgColor-rest, #ffffff00);
   font-size: 14px;
   cursor: pointer;
 }
 
 .demo-trigger:hover {
-  background: var(--bgColor-muted);
+  background: var(--control-transparent-bgColor-hover, #818b981a);
 }
 
 .demo-content {
@@ -320,7 +320,7 @@ const slotsTableRows = [
 }
 
 .demo-item:hover {
-  background: var(--bgColor-muted);
+  background: var(--control-transparent-bgColor-hover, #818b981a);
 }
 
 h4 {
