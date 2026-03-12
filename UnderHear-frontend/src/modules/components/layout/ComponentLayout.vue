@@ -151,7 +151,7 @@ const buildToc = () => {
     },
     {
       root: null,
-      rootMargin: '-92px 0px -100% 0px', // 提前触发
+      rootMargin: '-192px 0px -100% 0px', // 提前触发
       threshold: 0
     }
   )
