@@ -8,6 +8,7 @@
     <ComponentDocsSection title="基础用法">
       <template #description>
         使用
+        <code>Button</code>、
         <code>Tooltip</code>、
         <code>Divider</code>、
         <code>Octicons-vue</code>
@@ -19,33 +20,41 @@
             content="Bold"
             placement="bottom"
           >
-            <button class="action-btn">
-              <Bold />
-            </button>
+            <zButton variant="invisible">
+              <template #leadingVisual>
+                <Bold />
+              </template>
+            </zButton>
           </zTooltip>
           <zTooltip
             content="Italic"
             placement="bottom"
           >
-            <button class="action-btn">
-              <Italic />
-            </button>
+            <zButton variant="invisible">
+              <template #leadingVisual>
+                <Italic />
+              </template>
+            </zButton>
           </zTooltip>
           <zTooltip
             content="Code"
             placement="bottom"
           >
-            <button class="action-btn">
-              <Code />
-            </button>
+            <zButton variant="invisible">
+              <template #leadingVisual>
+                <Code />
+              </template>
+            </zButton>
           </zTooltip>
           <zTooltip
             content="Link"
             placement="bottom"
           >
-            <button class="action-btn">
-              <Link />
-            </button>
+            <zButton variant="invisible">
+              <template #leadingVisual>
+                <Link />
+              </template>
+            </zButton>
           </zTooltip>
           <zDivider
             direction="vertical"
@@ -55,17 +64,21 @@
             content="File Added"
             placement="bottom"
           >
-            <button class="action-btn">
-              <FileAdded />
-            </button>
+            <zButton variant="invisible">
+              <template #leadingVisual>
+                <FileAdded />
+              </template>
+            </zButton>
           </zTooltip>
           <zTooltip
             content="Search"
             placement="bottom"
           >
-            <button class="action-btn">
-              <Search />
-            </button>
+            <zButton variant="invisible">
+              <template #leadingVisual>
+                <Search />
+              </template>
+            </zButton>
           </zTooltip>
         </div>
       </ComponentDocsDemoBlock>
@@ -81,34 +94,48 @@ import ComponentDocsSection from '@/modules/components/components/ComponentDocsP
 import { zTooltip } from '@/components/z-ui/tooltip'
 import { zDivider } from '@/components/z-ui/divider'
 import { Bold, Italic, Code, Link, FileAdded, Search } from '@/components/z-ui/icon/Octicons-vue'
+import { zButton } from '@/components/z-ui/button'
 
 const demo1Code = `<template>
   <div class="demo-actions">
     <zTooltip content="Bold" placement="bottom">
-      <button class="action-btn"><Bold /></button>
+      <zButton variant="invisible">
+        <template #leadingVisual><Bold /></template>
+      </zButton>
     </zTooltip>
     <zTooltip content="Italic" placement="bottom">
-      <button class="action-btn"><Italic /></button>
+      <zButton variant="invisible">
+        <template #leadingVisual><Italic /></template>
+      </zButton>
     </zTooltip>
     <zTooltip content="Code" placement="bottom">
-      <button class="action-btn"><Code /></button>
+      <zButton variant="invisible">
+        <template #leadingVisual><Code /></template>
+      </zButton>
     </zTooltip>
     <zTooltip content="Link" placement="bottom">
-      <button class="action-btn"><Link /></button>
+      <zButton variant="invisible">
+        <template #leadingVisual><Link /></template>
+      </zButton>
     </zTooltip>
 
     <zDivider direction="vertical" height="20px" />
 
     <zTooltip content="File Added" placement="bottom">
-      <button class="action-btn"><FileAdded /></button>
+      <zButton variant="invisible">
+        <template #leadingVisual><FileAdded /></template>
+      </zButton>
     </zTooltip>
     <zTooltip content="Search" placement="bottom">
-      <button class="action-btn"><Search /></button>
+      <zButton variant="invisible">
+        <template #leadingVisual><Search /></template>
+      </zButton>
     </zTooltip>
   </div>
 </template>
 
 <script setup lang="ts">
+import { zButton } from '@/components/z-ui/button'
 import { zTooltip } from '@/components/z-ui/tooltip'
 import { zDivider } from '@/components/z-ui/divider'
 import { Bold, Italic, Code, Link, FileAdded, Search } from '@/components/z-ui/icon/Octicons-vue'
@@ -121,22 +148,6 @@ import { Bold, Italic, Code, Link, FileAdded, Search } from '@/components/z-ui/i
   justify-content: flex-end;
   align-items: center;
 }
-
-.action-btn {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 32px;
-  height: 32px;
-  border: none;
-  color: var(--fgColor-muted);
-  cursor: pointer;
-  border-radius: 4px;
-}
-
-.action-btn:hover {
-  background-color: var(--button-invisible-bgColor-hover);
-}
 </style>`
 </script>
 
@@ -146,21 +157,5 @@ import { Bold, Italic, Code, Link, FileAdded, Search } from '@/components/z-ui/i
   gap: 8px;
   justify-content: flex-end;
   align-items: center;
-}
-
-.action-btn {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 32px;
-  height: 32px;
-  border: none;
-  color: var(--fgColor-muted);
-  cursor: pointer;
-  border-radius: 4px;
-}
-
-.action-btn:hover {
-  background-color: var(--button-invisible-bgColor-hover);
 }
 </style>

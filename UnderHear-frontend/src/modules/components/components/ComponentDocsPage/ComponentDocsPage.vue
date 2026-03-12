@@ -6,7 +6,7 @@
 
 <style scoped>
 .component-docs {
-  max-width: 1200px;
+  max-width: 928px;
   margin: 0 auto;
   width: 100%;
 }

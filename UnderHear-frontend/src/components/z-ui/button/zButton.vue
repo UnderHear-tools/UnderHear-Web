@@ -159,6 +159,8 @@ withDefaults(defineProps<Props>(), {
   visibility: hidden;
 }
 
+/* IconButton样式 */
+
 .z-button[data-icon-button='true'] {
   justify-content: center;
   min-width: unset;
@@ -173,6 +175,16 @@ withDefaults(defineProps<Props>(), {
 .z-button[data-icon-button='true'][data-size='large'] {
   width: var(--control-large-size, 2.5rem);
 }
+
+.z-button[data-icon-button='true'][data-variant='default'] {
+  color: var(--fgColor-muted, #59636e);
+}
+
+.z-button[data-icon-button='true'][data-variant='invisible'] {
+  color: var(--fgColor-muted, #59636e);
+}
+
+/*  */
 
 .z-button[data-size='small'] {
   font-size: var(--text-body-size-small, 0.75rem);
