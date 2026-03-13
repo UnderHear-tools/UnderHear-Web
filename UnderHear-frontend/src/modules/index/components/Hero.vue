@@ -87,10 +87,21 @@
   inset: 0;
   z-index: -1;
   overflow: hidden;
-  transform: translateZ(0);
   transform-origin: 0% 0%;
   --bg-offset: 48px;
   will-change: transform;
+  animation: parallax-background linear both;
+  animation-timeline: scroll(root);
+  animation-range: 0 var(100vh - var(--header-height));
+}
+
+@keyframes parallax-background {
+  from {
+    transform: translateY(0) translateZ(0);
+  }
+  to {
+    transform: translateY(-30vh) translateZ(0);
+  }
 }
 
 .background-0,
