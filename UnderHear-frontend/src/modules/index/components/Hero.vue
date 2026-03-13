@@ -1,114 +1,78 @@
 <template>
   <div class="index-page">
     <div
-      ref="wrapperRef"
-      class="hero-wrapper"
+      class="background-root"
     >
       <div
-        ref="contentRef"
-        class="background-root"
-      >
+        class="background-0"
+        aria-hidden="true"
+      />
+      <div
+        class="background-1"
+        aria-hidden="true"
+      />
+      <div
+        class="background-2"
+        aria-hidden="true"
+      />
+      <div class="hero-stage">
         <div
-          class="background-0"
+          class="background-3"
           aria-hidden="true"
         />
         <div
-          class="background-1"
+          class="background-4"
           aria-hidden="true"
         />
         <div
-          class="background-2"
+          class="background-5 animate-stretch-vertical-loop"
           aria-hidden="true"
         />
-        <div class="hero-stage">
-          <div
-            class="background-3"
-            aria-hidden="true"
-          />
-          <div
-            class="background-4"
-            aria-hidden="true"
-          />
-          <div
-            class="background-5 animate-stretch-vertical-loop"
-            aria-hidden="true"
-          />
-          <div
-            class="background-6 animate-stretch-horizontal-loop"
-            aria-hidden="true"
-          />
-          <div
-            class="background-7"
-            aria-hidden="true"
-          />
-          <div
-            class="background-8 animate-stretch-vertical-loop"
-            aria-hidden="true"
-          />
-          <div
-            class="background-9 animate-stretch-horizontal-loop"
-            aria-hidden="true"
-          />
-          <div
-            class="background-10"
-            aria-hidden="true"
-          />
-          <div
-            class="background-11"
-            aria-hidden="true"
-          />
-          <div
-            class="background-12"
-            aria-hidden="true"
-          />
-        </div>
+        <div
+          class="background-6 animate-stretch-horizontal-loop"
+          aria-hidden="true"
+        />
+        <div
+          class="background-7"
+          aria-hidden="true"
+        />
+        <div
+          class="background-8 animate-stretch-vertical-loop"
+          aria-hidden="true"
+        />
+        <div
+          class="background-9 animate-stretch-horizontal-loop"
+          aria-hidden="true"
+        />
+        <div
+          class="background-10"
+          aria-hidden="true"
+        />
+        <div
+          class="background-11"
+          aria-hidden="true"
+        />
+        <div
+          class="background-12"
+          aria-hidden="true"
+        />
       </div>
-      <div class="title">
-        EXPLORE
-      </div>
+    </div>
+    <div class="title">
+      EXPLORE
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted, onUnmounted } from 'vue'
-import { gsap } from 'gsap'
-import { ScrollTrigger } from 'gsap/ScrollTrigger'
 
-gsap.registerPlugin(ScrollTrigger)
-
-const wrapperRef = ref<HTMLElement>()
-const contentRef = ref<HTMLElement>()
-
-let ctx: gsap.Context | undefined
-const getHeaderHeight = () => getComputedStyle(document.documentElement).getPropertyValue('--header-height').trim()
-
-onMounted(() => {
-  if (!wrapperRef.value || !contentRef.value) return
-
-  ctx = gsap.context(() => {
-    gsap.to(contentRef.value!, {
-      y: () => wrapperRef.value!.offsetHeight * 0.5,
-      ease: 'none',
-      scrollTrigger: {
-        trigger: wrapperRef.value,
-        start: () => (window.innerWidth < 768 ? 'top top' : `top ${getHeaderHeight()}`),
-        end: 'bottom top',
-        scrub: true,
-        invalidateOnRefresh: true,
-      },
-    })
-  })
-})
-
-onUnmounted(() => {
-  ctx?.revert()
-})
 </script>
 
 <style scoped>
 .index-page {
+  position: relative;
   height: calc(100vh - var(--header-height));
+  clip-path: inset(0 0 0 0); /* Create a clipping context to contain fixed children to this section */
 }
 
 .hero-wrapper {
@@ -119,8 +83,9 @@ onUnmounted(() => {
 }
 
 .background-root {
-  position: absolute;
+  position: fixed;
   inset: 0;
+  z-index: -1;
   overflow: hidden;
   transform: translateZ(0);
   transform-origin: 0% 0%;
