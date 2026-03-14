@@ -7,26 +7,63 @@
     :type="props.href ? undefined : 'button'"
     class="z-action-list-item"
     :data-keep-open="props.keepOpen || undefined"
-    @click="$emit('click')"
+    :aria-checked="isSingleSelect ? (isSelected ? 'true' : 'false') : undefined"
+    @click="handleClick"
   >
+    <span
+      v-if="isSingleSelect"
+      class="z-action-list-check"
+      :data-checked="isSelected || undefined"
+      aria-hidden="true"
+    >
+      <svg
+        data-v-459898ce=""
+        aria-hidden="true"
+        focusable="false"
+        width="24"
+        height="24"
+        viewBox="0 0 16 16"
+        fill="currentColor"
+        class="icon-svg"
+      ><path d="M13.78 4.22a.75.75 0 0 1 0 1.06l-7.25 7.25a.75.75 0 0 1-1.06 0L2.22 9.28a.751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018L6 10.94l6.72-6.72a.75.75 0 0 1 1.06 0Z" /></svg>
+    </span>
     <slot />
   </component>
 </template>
 
 <script setup lang="ts">
+import { computed } from 'vue'
+import { useContext } from './context'
+
 const props = withDefaults(
   defineProps<{
     href?: string
     newTab?: boolean
     keepOpen?: boolean
+    value?: string
   }>(),
   {
     href: '',
     newTab: false,
-    keepOpen: false
+    keepOpen: false,
+    value: ''
   }
 )
-defineEmits<{ click: [] }>()
+
+const emit = defineEmits<{ click: [] }>()
+const actionListContext = useContext()
+
+const isSingleSelect = computed(() => actionListContext?.selectionMode.value === 'single')
+const isSelectable = computed(() => isSingleSelect.value && Boolean(props.value))
+const isSelected = computed(() => isSelectable.value && actionListContext?.modelValue.value === props.value)
+
+const handleClick = () => {
+  if (isSelectable.value && props.value) {
+    actionListContext?.select(props.value)
+  }
+
+  emit('click')
+}
 </script>
 
 <style scoped>
@@ -44,6 +81,25 @@ defineEmits<{ click: [] }>()
   text-align: left;
   text-decoration: none;
   cursor: pointer;
+}
+
+.z-action-list-check {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 16px;
+  height: 16px;
+  flex-shrink: 0;
+  color: var(--fgColor-muted, #59636e);
+}
+
+.z-action-list-check svg {
+  opacity: 0;
+  transition: opacity 0.15s ease;
+}
+
+.z-action-list-check[data-checked] svg {
+  opacity: 1;
 }
 
 .z-action-list-item:hover {

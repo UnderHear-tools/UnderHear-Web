@@ -13,14 +13,26 @@
         </zButton>
       </template>
       <template #content>
-        <ActionList>
-          <ActionList.Item @click="label = '新建文件'">
+        <ActionList
+          v-model="selectedAction"
+          selection-mode="single"
+        >
+          <ActionList.Item
+            value="1"
+            @click="label = '新建文件'"
+          >
             新建文件
           </ActionList.Item>
-          <ActionList.Item @click="label = '打开文件'">
+          <ActionList.Item
+            value="2"
+            @click="label = '打开文件'"
+          >
             打开文件
           </ActionList.Item>
-          <ActionList.Item @click="label = '保存文件'">
+          <ActionList.Item
+            value="3"
+            @click="label = '保存文件'"
+          >
             保存文件
           </ActionList.Item>
         </ActionList>
@@ -75,6 +87,7 @@ import Repo from "@/components/z-ui/icon/Octicons-vue/icons/repo.vue";
 import TriangleDown from "@/components/z-ui/icon/Octicons-vue/icons/triangle-down.vue";
 import { ChevronRight } from '@/components/z-ui/icon/Octicons-vue';
 
+const selectedAction = ref('1')
 const label = ref('新建文件')
 </script>
 <style scoped>
