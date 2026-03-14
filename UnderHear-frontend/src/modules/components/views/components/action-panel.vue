@@ -119,10 +119,81 @@
         </zDropdown>
       </ComponentDocsDemoBlock>
     </ComponentDocsSection>
+    <ComponentDocsSection title="选中状态同步">
+      <template #description>
+        通过 <code>@click</code> 更新响应式变量，将选中项的文字同步显示到触发按钮上。
+      </template>
+      <ComponentDocsDemoBlock :code="demo4Code">
+        <zDropdown>
+          <template #trigger>
+            <zButton>
+              <template #leadingVisual>
+                <Repo class="action-icon" />
+              </template>
+              {{ selectedLabel }}
+              <template #trailingVisual>
+                <TriangleDown />
+              </template>
+            </zButton>
+          </template>
+          <template #content>
+            <ActionList>
+              <ActionList.Item @click="selectedLabel = '新建文件'">新建文件</ActionList.Item>
+              <ActionList.Item @click="selectedLabel = '打开文件'">打开文件</ActionList.Item>
+              <ActionList.Item @click="selectedLabel = '保存文件'">保存文件</ActionList.Item>
+            </ActionList>
+          </template>
+        </zDropdown>
+      </ComponentDocsDemoBlock>
+    </ComponentDocsSection>
+
+    <ComponentDocsSection title="嵌套二级菜单">
+      <template #description>
+        通过 <code>keep-open</code> 将某个 <code>ActionList.Item</code> 作为嵌套
+        <code>zDropdown</code> 的触发器，实现多级菜单效果。
+      </template>
+      <ComponentDocsDemoBlock :code="demo5Code">
+        <zDropdown>
+          <template #trigger>
+            <zButton>
+              打开菜单
+              <template #trailingVisual>
+                <TriangleDown />
+              </template>
+            </zButton>
+          </template>
+          <template #content>
+            <ActionList>
+              <ActionList.Item>选项1</ActionList.Item>
+              <ActionList.Item>选项2</ActionList.Item>
+              <zDropdown>
+                <template #trigger>
+                  <ActionList.Item
+                    keep-open
+                    class="submenu-trigger"
+                  >
+                    选项3 <ChevronRight color="#59636e" />
+                  </ActionList.Item>
+                </template>
+                <template #content>
+                  <ActionList>
+                    <ActionList.Item>子选项1</ActionList.Item>
+                    <ActionList.Item>子选项2</ActionList.Item>
+                    <ActionList.Item>子选项3</ActionList.Item>
+                  </ActionList>
+                </template>
+              </zDropdown>
+            </ActionList>
+          </template>
+        </zDropdown>
+      </ComponentDocsDemoBlock>
+    </ComponentDocsSection>
+
   </ComponentDocsPage>
 </template>
 
 <script setup lang="ts">
+import { ref } from 'vue'
 import ComponentDocsDemoBlock from '@/modules/components/components/ComponentDocsPage/ComponentDocsDemoBlock.vue'
 import ComponentDocsHeader from '@/modules/components/components/ComponentDocsPage/ComponentDocsHeader.vue'
 import ComponentDocsPage from '@/modules/components/components/ComponentDocsPage/ComponentDocsPage.vue'
@@ -139,12 +210,15 @@ import {
   Copy,
   KebabHorizontal,
   Pencil,
-  Trash
+  Trash,
+  ChevronRight
 } from '@/components/z-ui/icon/Octicons-vue'
 
 const handleClick = (action: string) => {
   alert(`执行操作：${action}`)
 }
+
+const selectedLabel = ref('新建文件')
 
 const demo1Code = `<template>
   <zDropdown>
@@ -246,6 +320,82 @@ import { zButton } from '@/components/z-ui/button'
 import { ActionList } from '@/components/z-ui/action-list'
 import { TriangleDown } from '@/components/z-ui/icon/Octicons-vue'
 <\/script>`
+
+const demo4Code = `<template>
+  <zDropdown>
+    <template #trigger>
+      <zButton>
+        <template #leadingVisual><Repo /></template>
+        {{ label }}
+        <template #trailingVisual><TriangleDown /></template>
+      </zButton>
+    </template>
+    <template #content>
+      <ActionList>
+        <ActionList.Item @click="label = '新建文件'">新建文件</ActionList.Item>
+        <ActionList.Item @click="label = '打开文件'">打开文件</ActionList.Item>
+        <ActionList.Item @click="label = '保存文件'">保存文件</ActionList.Item>
+      </ActionList>
+    </template>
+  </zDropdown>
+</template>
+
+<script setup lang="ts">
+import { ref } from 'vue'
+import { zDropdown } from '@/components/z-ui/dropdown'
+import { zButton } from '@/components/z-ui/button'
+import { ActionList } from '@/components/z-ui/action-list'
+import { Repo, TriangleDown } from '@/components/z-ui/icon/Octicons-vue'
+
+const label = ref('新建文件')
+<\/script>`
+
+const demo5Code = `<template>
+  <zDropdown>
+    <template #trigger>
+      <zButton>
+        打开菜单
+        <template #trailingVisual><TriangleDown /></template>
+      </zButton>
+    </template>
+    <template #content>
+      <ActionList>
+        <ActionList.Item>选项1</ActionList.Item>
+        <ActionList.Item>选项2</ActionList.Item>
+        <zDropdown>
+          <template #trigger>
+            <ActionList.Item keep-open class="submenu-trigger">
+              选项3 <ChevronRight color="#59636e" />
+            </ActionList.Item>
+          </template>
+          <template #content>
+            <ActionList>
+              <ActionList.Item>子选项1</ActionList.Item>
+              <ActionList.Item>子选项2</ActionList.Item>
+              <ActionList.Item>子选项3</ActionList.Item>
+            </ActionList>
+          </template>
+        </zDropdown>
+      </ActionList>
+    </template>
+  </zDropdown>
+</template>
+
+<script setup lang="ts">
+import { zDropdown } from '@/components/z-ui/dropdown'
+import { zButton } from '@/components/z-ui/button'
+import { ActionList } from '@/components/z-ui/action-list'
+import { TriangleDown, ChevronRight } from '@/components/z-ui/icon/Octicons-vue'
+<\/script>
+
+<style scoped>
+.submenu-trigger {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+}
+<\/style>`
 </script>
 
 <style scoped>
@@ -255,5 +405,12 @@ import { TriangleDown } from '@/components/z-ui/icon/Octicons-vue'
 
 .danger {
   color: var(--fgColor-danger);
+}
+
+.submenu-trigger {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
 }
 </style>

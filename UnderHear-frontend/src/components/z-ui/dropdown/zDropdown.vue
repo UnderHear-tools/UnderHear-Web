@@ -15,6 +15,7 @@
         v-if="isOpen"
         class="z-dropdown-content"
         :class="placementClass"
+        @click="onContentClick"
       >
         <slot name="content" />
       </div>
@@ -44,6 +45,14 @@ onMounted(() => {
     if (!dropdownRef.value?.contains(e.target as Node)) isOpen.value = false
   })
 })
+
+function onContentClick(e: MouseEvent) {
+  if (!(e.target as HTMLElement).closest('[data-keep-open]')) {
+    isOpen.value = false
+  }
+}
+
+defineExpose({ close: () => { isOpen.value = false } })
 </script>
 
 <style scoped>

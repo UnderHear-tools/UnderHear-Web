@@ -1,13 +1,12 @@
 <template>
   <div class="hero">
-
     <zDropdown>
       <template #trigger>
-        <zButton variant="link">
+        <zButton>
           <template #leadingVisual>
             <Repo />
           </template>
-          公开的
+          {{ label }}
           <template #trailingVisual>
             <TriangleDown />
           </template>
@@ -15,31 +14,72 @@
       </template>
       <template #content>
         <ActionList>
-          <ActionList.Item>新建文件</ActionList.Item>
-          <ActionList.Item>打开文件</ActionList.Item>
-          <ActionList.Item>保存文件</ActionList.Item>
+          <ActionList.Item @click="label = '新建文件'">新建文件</ActionList.Item>
+          <ActionList.Item @click="label = '打开文件'">打开文件</ActionList.Item>
+          <ActionList.Item @click="label = '保存文件'"> 保存文件</ActionList.Item>
         </ActionList>
       </template>
     </zDropdown>
 
 
-
+        <zDropdown>
+      <template #trigger>
+        <zButton>
+          <template #leadingVisual>
+            <Repo />
+          </template>
+          打开菜单
+          <template #trailingVisual>
+            <TriangleDown />
+          </template>
+        </zButton>
+      </template>
+      <template #content>
+        <ActionList>
+          <ActionList.Item>选项1</ActionList.Item>
+          <ActionList.Item>选项2</ActionList.Item>
+                  <zDropdown>
+      <template #trigger>
+        <ActionList.Item keep-open class="select">
+          选项3 <ChevronRight color="#59636e" />
+        </ActionList.Item>
+      </template>
+      <template #content>
+        <ActionList>
+          <ActionList.Item>选项1</ActionList.Item>
+          <ActionList.Item>选项2</ActionList.Item>
+          <ActionList.Item>选项3</ActionList.Item>
+        </ActionList>
+      </template>
+    </zDropdown>
+        </ActionList>
+      </template>
+    </zDropdown>
   </div>
 </template>
 <script setup lang="ts">
-import { zButton } from '@/components/z-ui/button';
-import { zDropdown } from '@/components/z-ui/dropdown';
-import { ActionList } from '@/components/z-ui/action-list';
-import Repo from '@/components/z-ui/icon/Octicons-vue/icons/repo.vue';
-import TriangleDown from '@/components/z-ui/icon/Octicons-vue/icons/triangle-down.vue';
+import { ref } from 'vue'
+import { zButton } from "@/components/z-ui/button";
+import { zDropdown } from "@/components/z-ui/dropdown";
+import { ActionList } from "@/components/z-ui/action-list";
+import Repo from "@/components/z-ui/icon/Octicons-vue/icons/repo.vue";
+import TriangleDown from "@/components/z-ui/icon/Octicons-vue/icons/triangle-down.vue";
+import { ChevronRight } from '@/components/z-ui/icon/Octicons-vue';
 
-
+const label = ref('新建文件')
 </script>
 <style scoped>
-.hero{
+.hero {
   height: 80vh;
   display: flex;
   justify-content: center;
   align-items: center;
+}
+
+.select {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
 }
 </style>

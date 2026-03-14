@@ -6,6 +6,7 @@
     :rel="props.href && props.newTab ? 'noopener noreferrer' : undefined"
     :type="props.href ? undefined : 'button'"
     class="z-action-list-item"
+    :data-keep-open="props.keepOpen || undefined"
     @click="$emit('click')"
   >
     <slot />
@@ -17,10 +18,12 @@ const props = withDefaults(
   defineProps<{
     href?: string
     newTab?: boolean
+    keepOpen?: boolean
   }>(),
   {
     href: '',
-    newTab: false
+    newTab: false,
+    keepOpen: false
   }
 )
 defineEmits<{ click: [] }>()

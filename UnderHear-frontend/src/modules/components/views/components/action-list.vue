@@ -60,6 +60,29 @@
       </ComponentDocsDemoBlock>
     </ComponentDocsSection>
 
+    <ComponentDocsSection title="配合 Dropdown 使用 keep-open">
+      <template #description>
+        在 <code>zDropdown</code> 内使用时，点击列表项默认会关闭下拉菜单。为某个 <code>ActionList.Item</code> 添加
+        <code>keep-open</code> 属性，点击后不会收起内容区。
+      </template>
+
+      <ComponentDocsDemoBlock :code="demo4Code">
+        <zDropdown>
+          <template #trigger>
+            <button class="demo-trigger">
+              点击展开
+            </button>
+          </template>
+          <template #content>
+            <ActionList>
+              <ActionList.Item>点击后关闭</ActionList.Item>
+              <ActionList.Item keep-open>keep-open：点击不关闭</ActionList.Item>
+            </ActionList>
+          </template>
+        </zDropdown>
+      </ComponentDocsDemoBlock>
+    </ComponentDocsSection>
+
     <ComponentDocsSection
       title="API"
       variant="api"
@@ -101,6 +124,7 @@
 <script setup lang="ts">
 import { zDivider } from '@/components/z-ui/divider'
 import { ActionList } from '@/components/z-ui/action-list'
+import { zDropdown } from '@/components/z-ui/dropdown'
 import { zTable, type ZTableColumn } from '@/components/z-ui/table'
 import ComponentDocsDemoBlock from '@/modules/components/components/ComponentDocsPage/ComponentDocsDemoBlock.vue'
 import ComponentDocsHeader from '@/modules/components/components/ComponentDocsPage/ComponentDocsHeader.vue'
@@ -145,6 +169,25 @@ import { zDivider } from '@/components/z-ui/divider'
 import { ActionList } from '@/components/z-ui/action-list'
 <\/script>`
 
+const demo4Code = `<template>
+  <zDropdown>
+    <template #trigger>
+      <button>点击展开</button>
+    </template>
+    <template #content>
+      <ActionList>
+        <ActionList.Item>点击后关闭</ActionList.Item>
+        <ActionList.Item keep-open>keep-open：点击不关闭</ActionList.Item>
+      </ActionList>
+    </template>
+  </zDropdown>
+</template>
+
+<script setup lang="ts">
+import { zDropdown } from '@/components/z-ui/dropdown'
+import { ActionList } from '@/components/z-ui/action-list'
+<\/script>`
+
 const slotsTableColumns: ZTableColumn[] = [
   { key: 'name', label: '插槽名', rowHeader: true, minWidth: '140px' },
   { key: 'description', label: '说明', minWidth: '300px', wrap: true }
@@ -176,6 +219,12 @@ const actionListItemPropsRows = [
     description: '是否在新标签页打开链接（仅在设置 href 时生效）',
     type: 'boolean',
     default: 'false'
+  },
+  {
+    name: 'keepOpen',
+    description: '在 zDropdown 内使用时，点击该列表项后不会收起下拉内容',
+    type: 'boolean',
+    default: 'false'
   }
 ]
 
@@ -198,5 +247,18 @@ h4 {
   font-size: 14px;
   font-weight: 600;
   color: var(--fgColor-default);
+}
+
+.demo-trigger {
+  padding: 8px 16px;
+  border: 1px solid var(--borderColor-default);
+  border-radius: 6px;
+  background: var(--control-transparent-bgColor-rest, #ffffff00);
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.demo-trigger:hover {
+  background: var(--control-transparent-bgColor-hover, #818b981a);
 }
 </style>
