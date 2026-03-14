@@ -14,15 +14,21 @@
       </template>
       <template #content>
         <ActionList>
-          <ActionList.Item @click="label = '新建文件'">新建文件</ActionList.Item>
-          <ActionList.Item @click="label = '打开文件'">打开文件</ActionList.Item>
-          <ActionList.Item @click="label = '保存文件'"> 保存文件</ActionList.Item>
+          <ActionList.Item @click="label = '新建文件'">
+            新建文件
+          </ActionList.Item>
+          <ActionList.Item @click="label = '打开文件'">
+            打开文件
+          </ActionList.Item>
+          <ActionList.Item @click="label = '保存文件'">
+            保存文件
+          </ActionList.Item>
         </ActionList>
       </template>
     </zDropdown>
 
 
-        <zDropdown>
+    <zDropdown>
       <template #trigger>
         <zButton>
           <template #leadingVisual>
@@ -38,20 +44,23 @@
         <ActionList>
           <ActionList.Item>选项1</ActionList.Item>
           <ActionList.Item>选项2</ActionList.Item>
-                  <zDropdown>
-      <template #trigger>
-        <ActionList.Item keep-open class="select">
-          选项3 <ChevronRight color="#59636e" />
-        </ActionList.Item>
-      </template>
-      <template #content>
-        <ActionList>
-          <ActionList.Item>选项1</ActionList.Item>
-          <ActionList.Item>选项2</ActionList.Item>
-          <ActionList.Item>选项3</ActionList.Item>
-        </ActionList>
-      </template>
-    </zDropdown>
+          <zDropdown>
+            <template #trigger>
+              <ActionList.Item
+                keep-open
+                class="select"
+              >
+                选项3 <ChevronRight color="#59636e" />
+              </ActionList.Item>
+            </template>
+            <template #content>
+              <ActionList>
+                <ActionList.Item>选项1</ActionList.Item>
+                <ActionList.Item>选项2</ActionList.Item>
+                <ActionList.Item>选项3</ActionList.Item>
+              </ActionList>
+            </template>
+          </zDropdown>
         </ActionList>
       </template>
     </zDropdown>

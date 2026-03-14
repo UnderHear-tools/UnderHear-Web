@@ -76,7 +76,9 @@
           <template #content>
             <ActionList>
               <ActionList.Item>点击后关闭</ActionList.Item>
-              <ActionList.Item keep-open>keep-open：点击不关闭</ActionList.Item>
+              <ActionList.Item keep-open>
+                keep-open：点击不关闭
+              </ActionList.Item>
             </ActionList>
           </template>
         </zDropdown>

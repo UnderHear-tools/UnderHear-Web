@@ -138,9 +138,15 @@
           </template>
           <template #content>
             <ActionList>
-              <ActionList.Item @click="selectedLabel = '新建文件'">新建文件</ActionList.Item>
-              <ActionList.Item @click="selectedLabel = '打开文件'">打开文件</ActionList.Item>
-              <ActionList.Item @click="selectedLabel = '保存文件'">保存文件</ActionList.Item>
+              <ActionList.Item @click="selectedLabel = '新建文件'">
+                新建文件
+              </ActionList.Item>
+              <ActionList.Item @click="selectedLabel = '打开文件'">
+                打开文件
+              </ActionList.Item>
+              <ActionList.Item @click="selectedLabel = '保存文件'">
+                保存文件
+              </ActionList.Item>
             </ActionList>
           </template>
         </zDropdown>
@@ -188,7 +194,6 @@
         </zDropdown>
       </ComponentDocsDemoBlock>
     </ComponentDocsSection>
-
   </ComponentDocsPage>
 </template>
 
