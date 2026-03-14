@@ -172,7 +172,7 @@
             <ActionList>
               <ActionList.Item>选项1</ActionList.Item>
               <ActionList.Item>选项2</ActionList.Item>
-              <zDropdown>
+              <zDropdown side="outside-right">
                 <template #trigger>
                   <ActionList.Item
                     keep-open
@@ -367,7 +367,7 @@ const demo5Code = `<template>
       <ActionList>
         <ActionList.Item>选项1</ActionList.Item>
         <ActionList.Item>选项2</ActionList.Item>
-        <zDropdown>
+        <zDropdown side="outside-right">
           <template #trigger>
             <ActionList.Item keep-open class="submenu-trigger">
               选项3 <ChevronRight color="#59636e" />
