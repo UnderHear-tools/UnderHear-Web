@@ -13,8 +13,9 @@
     <Transition name="z-dropdown-fade">
       <div
         v-if="isOpen"
+        ref="contentRef"
         class="z-dropdown-content"
-        :class="placementClass"
+        :class="sideClass"
         @click="onContentClick"
       >
         <slot name="content" />
@@ -24,27 +25,176 @@
 </template>
 
 <script setup lang="ts">
-import { computed, ref, onMounted } from 'vue'
+import { computed, ref, onMounted, onBeforeUnmount, watch, nextTick } from 'vue'
 
-const props = withDefaults(
-  defineProps<{
-    placement?: 'left-top' | 'right-top' | 'left-bottom' | 'right-bottom'
-  }>(),
-  {
-    placement: 'right-bottom'
-  }
-)
+type DropdownSide =
+  | 'inside-top'
+  | 'inside-bottom'
+  | 'inside-left'
+  | 'inside-right'
+  | 'inside-center'
+  | 'outside-top'
+  | 'outside-bottom'
+  | 'outside-left'
+  | 'outside-right'
+
+type OutsideSide = 'outside-top' | 'outside-bottom' | 'outside-left' | 'outside-right'
+
+const OUTSIDE_SIDES: OutsideSide[] = ['outside-bottom', 'outside-top', 'outside-right', 'outside-left']
+const SIDE_TO_OUTSIDE: Record<DropdownSide, OutsideSide> = {
+  'inside-top': 'outside-top',
+  'inside-bottom': 'outside-bottom',
+  'inside-left': 'outside-left',
+  'inside-right': 'outside-right',
+  'inside-center': 'outside-bottom',
+  'outside-top': 'outside-top',
+  'outside-bottom': 'outside-bottom',
+  'outside-left': 'outside-left',
+  'outside-right': 'outside-right'
+}
+const OFFSET = 4
+
+const props = defineProps<{
+  side?: DropdownSide
+}>()
 
 const isOpen = ref(false)
 const dropdownRef = ref<HTMLElement>()
+const contentRef = ref<HTMLElement>()
+const autoSide = ref<OutsideSide>('outside-bottom')
+const isInsideSide = computed(() => props.side?.startsWith('inside-') ?? false)
 
-const placementClass = computed(() => `z-dropdown-content--${props.placement}`)
+const preferredOutsideSide = computed<OutsideSide>(() => {
+  if (!props.side) return 'outside-bottom'
+  return SIDE_TO_OUTSIDE[props.side]
+})
+
+const effectiveSide = computed<DropdownSide>(() => {
+  if (isInsideSide.value && props.side) {
+    return props.side
+  }
+
+  return autoSide.value
+})
+const sideClass = computed(() => `z-dropdown-content--${effectiveSide.value}`)
+
+function getOutsidePosition(side: OutsideSide, anchorRect: DOMRect, contentWidth: number, contentHeight: number) {
+  if (side === 'outside-top') {
+    return { x: anchorRect.left, y: anchorRect.top - contentHeight - OFFSET }
+  }
+
+  if (side === 'outside-left') {
+    return { x: anchorRect.left - contentWidth - OFFSET, y: anchorRect.top }
+  }
+
+  if (side === 'outside-right') {
+    return { x: anchorRect.right + OFFSET, y: anchorRect.top }
+  }
+
+  return { x: anchorRect.left, y: anchorRect.bottom + OFFSET }
+}
+
+function getOverflowScore(x: number, y: number, width: number, height: number, viewportWidth: number, viewportHeight: number) {
+  const overflowLeft = Math.max(0, -x)
+  const overflowTop = Math.max(0, -y)
+  const overflowRight = Math.max(0, x + width - viewportWidth)
+  const overflowBottom = Math.max(0, y + height - viewportHeight)
+  return overflowLeft + overflowTop + overflowRight + overflowBottom
+}
+
+function chooseBestOutsideSide(
+  anchorRect: DOMRect,
+  contentWidth: number,
+  contentHeight: number,
+  viewportWidth: number,
+  viewportHeight: number,
+  preferred: OutsideSide
+) {
+  const candidates = [preferred, ...OUTSIDE_SIDES.filter(side => side !== preferred)]
+  let bestSide = candidates[0]
+  let bestScore = Number.POSITIVE_INFINITY
+
+  for (const side of candidates) {
+    const { x, y } = getOutsidePosition(side, anchorRect, contentWidth, contentHeight)
+    const score = getOverflowScore(x, y, contentWidth, contentHeight, viewportWidth, viewportHeight)
+
+    if (score < bestScore) {
+      bestScore = score
+      bestSide = side
+    }
+  }
+
+  return bestSide
+}
+
+function updateAutoSide() {
+  if (isInsideSide.value) return
+  if (!isOpen.value) return
+
+  const anchor = dropdownRef.value
+  const content = contentRef.value
+  if (!anchor || !content) return
+
+  const anchorRect = anchor.getBoundingClientRect()
+  const contentWidth = content.offsetWidth
+  const contentHeight = content.offsetHeight
+  const viewportWidth = window.innerWidth
+  const viewportHeight = window.innerHeight
+
+  autoSide.value = chooseBestOutsideSide(
+    anchorRect,
+    contentWidth,
+    contentHeight,
+    viewportWidth,
+    viewportHeight,
+    preferredOutsideSide.value
+  )
+}
+
+function handleDocumentClick(e: MouseEvent) {
+  if (!dropdownRef.value?.contains(e.target as Node)) isOpen.value = false
+}
+
+function handleViewportChange() {
+  updateAutoSide()
+}
+
+function addViewportListeners() {
+  window.addEventListener('resize', handleViewportChange)
+  window.addEventListener('scroll', handleViewportChange, true)
+}
+
+function removeViewportListeners() {
+  window.removeEventListener('resize', handleViewportChange)
+  window.removeEventListener('scroll', handleViewportChange, true)
+}
 
 onMounted(() => {
-  document.addEventListener('click', (e: MouseEvent) => {
-    if (!dropdownRef.value?.contains(e.target as Node)) isOpen.value = false
-  })
+  document.addEventListener('click', handleDocumentClick)
 })
+
+onBeforeUnmount(() => {
+  document.removeEventListener('click', handleDocumentClick)
+  removeViewportListeners()
+})
+
+watch(isOpen, async open => {
+  if (!open) {
+    removeViewportListeners()
+    return
+  }
+
+  addViewportListeners()
+  await nextTick()
+  updateAutoSide()
+}, { flush: 'post' })
+
+watch(() => props.side, async () => {
+  const open = isOpen.value
+  if (!open) return
+  await nextTick()
+  updateAutoSide()
+}, { flush: 'post' })
 
 function onContentClick(e: MouseEvent) {
   if (!(e.target as HTMLElement).closest('[data-keep-open]')) {
@@ -67,6 +217,8 @@ defineExpose({ close: () => { isOpen.value = false } })
 .z-dropdown-content {
   position: absolute;
   z-index: 1000;
+  --z-dropdown-enter-x: 0;
+  --z-dropdown-enter-y: 0;
   min-width: 192px;
   max-width: calc(100vw - 2rem);
   max-height: 100vh;
@@ -76,32 +228,78 @@ defineExpose({ close: () => { isOpen.value = false } })
   box-shadow: var(--shadow-floating-small, 0px 0px 0px 1px #d1d9e080, 0px 6px 12px -3px #25292e0a, 0px 6px 18px 0px #25292e1f);
 }
 
-.z-dropdown-content--left-bottom {
-  top: calc(100% + 4px);
-  right: 0;
-}
-
-.z-dropdown-content--right-bottom {
+.z-dropdown-content--outside-bottom {
   top: calc(100% + 4px);
   left: 0;
+  --z-dropdown-enter-y: -8px;
 }
 
-.z-dropdown-content--left-top {
-  bottom: calc(100% + 4px);
-  right: 0;
-}
-
-.z-dropdown-content--right-top {
+.z-dropdown-content--outside-top {
   bottom: calc(100% + 4px);
   left: 0;
+  --z-dropdown-enter-y: 8px;
+}
+
+.z-dropdown-content--outside-left {
+  top: 0;
+  right: calc(100% + 4px);
+  --z-dropdown-enter-x: 8px;
+}
+
+.z-dropdown-content--outside-right {
+  top: 0;
+  left: calc(100% + 4px);
+  --z-dropdown-enter-x: -8px;
+}
+
+.z-dropdown-content--inside-top {
+  top: 4px;
+  left: 4px;
+  --z-dropdown-enter-y: 8px;
+}
+
+.z-dropdown-content--inside-bottom {
+  bottom: 4px;
+  left: 4px;
+  --z-dropdown-enter-y: -8px;
+}
+
+.z-dropdown-content--inside-left {
+  top: 4px;
+  left: 4px;
+  --z-dropdown-enter-x: 8px;
+}
+
+.z-dropdown-content--inside-right {
+  top: 4px;
+  right: 4px;
+  --z-dropdown-enter-x: -8px;
+}
+
+.z-dropdown-content--inside-center {
+  top: 4px;
+  left: 50%;
+  --z-dropdown-enter-x: -50%;
+  --z-dropdown-enter-y: -8px;
+  transform: translate(-50%, 0);
 }
 
 .z-dropdown-fade-enter-active {
-  transition: transform 0.15s;
+  transition: opacity 0.15s, transform 0.15s;
+}
+
+.z-dropdown-content--inside-center.z-dropdown-fade-enter-active {
+  transition: none;
 }
 
 .z-dropdown-fade-enter-from {
-  transform: translateY(-8px);
+  opacity: 0;
+  transform: translate(var(--z-dropdown-enter-x), var(--z-dropdown-enter-y));
+}
+
+.z-dropdown-content--inside-center.z-dropdown-fade-enter-from {
+  opacity: 1;
+  transform: translate(-50%, 0);
 }
 
 /* 弹出时自动给 trigger 内的 Button 添加激活样式 */

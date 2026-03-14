@@ -51,7 +51,7 @@
         使用图标按钮作为触发器，适用于表格行尾的操作菜单。
       </template>
       <ComponentDocsDemoBlock :code="demo2Code">
-        <zDropdown placement="left-bottom">
+        <zDropdown side="outside-bottom">
           <template #trigger>
             <zButton variant="invisible">
               <template #leadingVisual>
@@ -267,7 +267,7 @@ const handleClick = (action: string) => {
 <\/script>`
 
 const demo2Code = `<template>
-  <zDropdown placement="left-bottom">
+  <zDropdown side="outside-bottom">
     <template #trigger>
       <zButton variant="invisible">
         <template #leadingVisual><KebabHorizontal /></template>

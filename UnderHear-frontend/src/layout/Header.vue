@@ -27,7 +27,7 @@
         </div>
         <zDropdown
           v-else
-          placement="left-bottom"
+          side="outside-bottom"
         >
           <template #trigger>
             <zAvatar

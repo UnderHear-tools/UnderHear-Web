@@ -38,56 +38,116 @@
 
     <ComponentDocsSection title="弹出方向">
       <template #description>
-        通过 <code>placement</code> 设置下拉菜单弹出方向。
+        通过 <code>side</code> 设置下拉菜单弹出方向。
       </template>
 
       <ComponentDocsDemoBlock :code="demoPlacementCode">
         <div class="dropdown-placement-demo">
-          <zDropdown placement="left-top">
+          <zDropdown side="inside-top">
             <template #trigger>
               <button class="demo-trigger">
-                左上
+                内侧上方
               </button>
             </template>
             <template #content>
               <div class="demo-content">
-                左上内容
+                内侧上方内容
               </div>
             </template>
           </zDropdown>
-          <zDropdown placement="right-top">
+          <zDropdown side="inside-bottom">
             <template #trigger>
               <button class="demo-trigger">
-                右上
+                内侧下方
               </button>
             </template>
             <template #content>
               <div class="demo-content">
-                右上内容
+                内侧下方内容
               </div>
             </template>
           </zDropdown>
-          <zDropdown placement="left-bottom">
+          <zDropdown side="inside-left">
             <template #trigger>
               <button class="demo-trigger">
-                左下
+                内侧左边
               </button>
             </template>
             <template #content>
               <div class="demo-content">
-                左下内容
+                内侧左边内容
               </div>
             </template>
           </zDropdown>
-          <zDropdown placement="right-bottom">
+          <zDropdown side="inside-right">
             <template #trigger>
               <button class="demo-trigger">
-                右下
+                内侧右边
               </button>
             </template>
             <template #content>
               <div class="demo-content">
-                右下内容
+                内侧右边内容
+              </div>
+            </template>
+          </zDropdown>
+          <zDropdown side="inside-center">
+            <template #trigger>
+              <button class="demo-trigger">
+                内侧居中
+              </button>
+            </template>
+            <template #content>
+              <div class="demo-content">
+                内侧居中内容
+              </div>
+            </template>
+          </zDropdown>
+          <zDropdown side="outside-top">
+            <template #trigger>
+              <button class="demo-trigger">
+                外侧上方
+              </button>
+            </template>
+            <template #content>
+              <div class="demo-content">
+                外侧上方内容
+              </div>
+            </template>
+          </zDropdown>
+          <zDropdown side="outside-bottom">
+            <template #trigger>
+              <button class="demo-trigger">
+                外侧下方
+              </button>
+            </template>
+            <template #content>
+              <div class="demo-content">
+                外侧下方内容
+              </div>
+            </template>
+          </zDropdown>
+          <zDropdown side="outside-left">
+            <template #trigger>
+              <button class="demo-trigger">
+                外侧左边
+              </button>
+            </template>
+            <template #content>
+              <div class="demo-content">
+                外侧左边内容
+              </div>
+            </template>
+          </zDropdown>
+          <zDropdown side="outside-right">
+            <template #trigger>
+              <button class="demo-trigger">
+                外侧右边
+              </button>
+            </template>
+            <template #content>
+              <div class="demo-content">
+                外侧右边内容
               </div>
             </template>
           </zDropdown>
@@ -256,36 +316,76 @@ import { zDropdown } from '@/components/z-ui/dropdown'
 
 const demoPlacementCode = `<template>
   <div class="dropdown-placement-demo">
-    <zDropdown placement="left-top">
+    <zDropdown side="inside-top">
       <template #trigger>
-        <button class="demo-trigger">左上</button>
+        <button class="demo-trigger">内侧上方</button>
       </template>
       <template #content>
-        <div class="demo-content">左上内容</div>
+        <div class="demo-content">内侧上方内容</div>
       </template>
     </zDropdown>
-    <zDropdown placement="right-top">
+    <zDropdown side="inside-bottom">
       <template #trigger>
-        <button class="demo-trigger">右上</button>
+        <button class="demo-trigger">内侧下方</button>
       </template>
       <template #content>
-        <div class="demo-content">右上内容</div>
+        <div class="demo-content">内侧下方内容</div>
       </template>
     </zDropdown>
-    <zDropdown placement="left-bottom">
+    <zDropdown side="inside-left">
       <template #trigger>
-        <button class="demo-trigger">左下</button>
+        <button class="demo-trigger">内侧左边</button>
       </template>
       <template #content>
-        <div class="demo-content">左下内容</div>
+        <div class="demo-content">内侧左边内容</div>
       </template>
     </zDropdown>
-    <zDropdown placement="right-bottom">
+    <zDropdown side="inside-right">
       <template #trigger>
-        <button class="demo-trigger">右下</button>
+        <button class="demo-trigger">内侧右边</button>
       </template>
       <template #content>
-        <div class="demo-content">右下内容</div>
+        <div class="demo-content">内侧右边内容</div>
+      </template>
+    </zDropdown>
+    <zDropdown side="inside-center">
+      <template #trigger>
+        <button class="demo-trigger">内侧居中</button>
+      </template>
+      <template #content>
+        <div class="demo-content">内侧居中内容</div>
+      </template>
+    </zDropdown>
+    <zDropdown side="outside-top">
+      <template #trigger>
+        <button class="demo-trigger">外侧上方</button>
+      </template>
+      <template #content>
+        <div class="demo-content">外侧上方内容</div>
+      </template>
+    </zDropdown>
+    <zDropdown side="outside-bottom">
+      <template #trigger>
+        <button class="demo-trigger">外侧下方</button>
+      </template>
+      <template #content>
+        <div class="demo-content">外侧下方内容</div>
+      </template>
+    </zDropdown>
+    <zDropdown side="outside-left">
+      <template #trigger>
+        <button class="demo-trigger">外侧左边</button>
+      </template>
+      <template #content>
+        <div class="demo-content">外侧左边内容</div>
+      </template>
+    </zDropdown>
+    <zDropdown side="outside-right">
+      <template #trigger>
+        <button class="demo-trigger">外侧右边</button>
+      </template>
+      <template #content>
+        <div class="demo-content">外侧右边内容</div>
       </template>
     </zDropdown>
   </div>
@@ -297,7 +397,8 @@ import { zDropdown } from '@/components/z-ui/dropdown'
 
 <style scoped>
 .dropdown-placement-demo {
-  display: flex;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 20px;
 }
 
@@ -329,10 +430,10 @@ const propsTableColumns: ZTableColumn[] = [
 
 const propsTableRows = [
   {
-    name: 'placement',
+    name: 'side',
     description: '下拉菜单弹出方向',
-    type: `'left-top' | 'right-top' | 'left-bottom' | 'right-bottom'`,
-    default: 'right-bottom'
+    type: `'inside-top' | 'inside-bottom' | 'inside-left' | 'inside-right' | 'inside-center' | 'outside-top' | 'outside-bottom' | 'outside-left' | 'outside-right'`,
+    default: 'outside-bottom'
   }
 ]
 
@@ -405,7 +506,8 @@ const dropdownRef = ref<InstanceType<typeof zDropdown>>()
 }
 
 .dropdown-placement-demo {
-  display: flex;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 20px;
 }
 
