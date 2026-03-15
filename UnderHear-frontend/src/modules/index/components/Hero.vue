@@ -70,7 +70,6 @@
 
 <style scoped>
 .index-page {
-  position: relative;
   height: calc(100vh - var(--header-height));
   clip-path: inset(0 0 0 0); /* Create a clipping context to contain fixed children to this section */
 }
@@ -342,7 +341,7 @@
 
 @media (max-width: 768px) {
   .index-page {
-    height: 100vh;
+    height: 100dvh;
   }
   
   .title {
