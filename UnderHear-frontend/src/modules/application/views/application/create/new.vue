@@ -81,17 +81,17 @@ import { computed, reactive, ref } from 'vue'
 
 import { zContainer } from '@/components/z-ui/container'
 import { Timeline } from '@/components/z-ui/timeline'
+import {
+  createApplication,
+  type ApplicationFormData,
+  type ApplicationFramework,
+  type CreateApplicationRequest
+} from '@/modules/application/api/create-new'
 import FirstStep from '@/modules/application/components/newForm/FirstStep.vue'
 import SecondStep from '@/modules/application/components/newForm/SecondStep.vue'
 import ThirdStep from '@/modules/application/components/newForm/ThirdStep.vue'
 
-type FrameworkType = 'html' | 'vue' | 'react'
-
-interface AppFormData {
-  appName: string
-  englishName: string
-  appDescription: string
-}
+type FrameworkType = ApplicationFramework
 
 interface AppFormErrors {
   appName: string
@@ -104,9 +104,10 @@ const selectedFramework = ref<FrameworkType | null>(null)
 const file = ref<File | null>(null)
 const htmlSource = ref(`<div>hello, world!</div>`)
 
-const formData = ref<AppFormData>({
+const formData = ref<ApplicationFormData>({
   appName: '',
   englishName: '',
+  visibility: '公开的',
   appDescription: ''
 })
 
@@ -116,6 +117,7 @@ const touched = reactive({
   htmlSource: false,
   appName: false,
   englishName: false,
+  visibility: false,
   appDescription: false
 })
 
@@ -224,7 +226,20 @@ const isFormValid = computed(() => {
 })
 
 function updateSelectedFramework(value: FrameworkType) {
+  if (selectedFramework.value === value) {
+    return
+  }
+
   selectedFramework.value = value
+
+  if (value === 'html') {
+    file.value = null
+    touched.file = false
+    return
+  }
+
+  htmlSource.value = ''
+  touched.htmlSource = false
 }
 
 function updateFile(value: File | null) {
@@ -237,13 +252,17 @@ function updateHtmlSource(value: string) {
   htmlSource.value = value
 }
 
-function updateFormData(value: AppFormData) {
+function updateFormData(value: ApplicationFormData) {
   if (value.appName !== formData.value.appName) {
     touched.appName = true
   }
 
   if (value.englishName !== formData.value.englishName) {
     touched.englishName = true
+  }
+
+  if (value.visibility !== formData.value.visibility) {
+    touched.visibility = true
   }
 
   if (value.appDescription !== formData.value.appDescription) {
@@ -253,17 +272,32 @@ function updateFormData(value: AppFormData) {
   formData.value = value
 }
 
-function submit() {
+async function submit() {
   submitAttempted.value = true
 
   if (!isFormValid.value) {
     return
   }
 
-  console.log('Selected Framework:', selectedFramework.value)
-  console.log('Uploaded File:', file.value)
-  console.log('HTML Source:', new File([htmlSource.value], 'index.html', { type: 'text/html;charset=utf-8' }))
-  console.log('Form Data:', formData.value)
+  const framework = selectedFramework.value
+
+  if (!framework) {
+    return
+  }
+
+  const htmlFile = new File([htmlSource.value], 'index.html', {
+    type: 'text/html;charset=utf-8'
+  })
+
+  const request: CreateApplicationRequest = {
+    framework,
+    file: file.value,
+    fileSource: framework === 'html' ? htmlFile : null,
+    formData: formData.value
+  }
+
+  await createApplication(request)
+
 }
 </script>
 

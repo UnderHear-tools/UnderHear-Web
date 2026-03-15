@@ -60,7 +60,10 @@
           <template #trigger>
             <zButton>
               <template #leadingVisual>
-                <Repo color="var(--fgColor-muted)" />
+                <component
+                  :is="selectedVisibilityOption.icon"
+                  color="var(--fgColor-muted)"
+                />
               </template>
               {{ label }}
               <template #trailingVisual>
@@ -74,31 +77,19 @@
               selection-mode="single"
             >
               <ActionList.Item
+                v-for="item in visibilityOptions"
+                :key="item.value"
                 class="visibility-action-item"
-                :value="visibilityActionItems[0]"
-                @click="label = visibilityActionItems[0]"
+                :value="item.value"
               >
-                <Repo
+                <component
+                  :is="item.icon"
                   class="visibility-item-icon"
                   color="var(--fgColor-muted)"
                 />
                 <span class="visibility-item-content">
-                  <span class="visibility-item-title">{{ visibilityActionItems[0] }}</span>
-                  <span class="visibility-item-desc">你的应用被公开，所有人都能够在应用广场上看见它。</span>
-                </span>
-              </ActionList.Item>
-              <ActionList.Item
-                class="visibility-action-item"
-                :value="visibilityActionItems[1]"
-                @click="label = visibilityActionItems[1]"
-              >
-                <Lock
-                  class="visibility-item-icon"
-                  color="var(--fgColor-muted)"
-                />
-                <span class="visibility-item-content">
-                  <span class="visibility-item-title">{{ visibilityActionItems[1] }}</span>
-                  <span class="visibility-item-desc">你可以在个人应用中查看和管理它。当然别人也可以通过URL进行访问。</span>
+                  <span class="visibility-item-title">{{ item.value }}</span>
+                  <span class="visibility-item-desc">{{ item.description }}</span>
                 </span>
               </ActionList.Item>
             </ActionList>
@@ -133,14 +124,28 @@
 </template>
 
 <script setup lang="ts">
+import { computed } from 'vue'
 import { FormControl } from '@/components/z-ui/form-control'
 import { zInput } from '@/components/z-ui/input'
 import { zTextarea } from '@/components/z-ui/textarea'
+import { zButton } from '@/components/z-ui/button'
+import { zDropdown } from '@/components/z-ui/dropdown'
+import { ActionList } from '@/components/z-ui/action-list'
+import Repo from '@/components/z-ui/icon/Octicons-vue/icons/repo.vue'
+import TriangleDown from '@/components/z-ui/icon/Octicons-vue/icons/triangle-down.vue'
+import Lock from '@/components/z-ui/icon/Octicons-vue/icons/lock.vue'
 
 interface AppFormData {
   appName: string
   englishName: string
+  visibility: string
   appDescription: string
+}
+
+interface VisibilityOption {
+  value: string
+  description: string
+  icon: typeof Repo
 }
 
 interface AppFormErrors {
@@ -183,18 +188,34 @@ const updateAppDescription = (value: string) => {
   })
 }
 
-import { ref } from 'vue'
-import { zButton } from "@/components/z-ui/button";
-import { zDropdown } from "@/components/z-ui/dropdown";
-import { ActionList } from "@/components/z-ui/action-list";
-import Repo from "@/components/z-ui/icon/Octicons-vue/icons/repo.vue";
-import TriangleDown from "@/components/z-ui/icon/Octicons-vue/icons/triangle-down.vue";
-import Lock from '@/components/z-ui/icon/Octicons-vue/icons/lock.vue'
+const visibilityOptions: VisibilityOption[] = [
+  {
+    value: '公开的',
+    description: '你的应用被公开，所有人都能够在应用广场上看见它。',
+    icon: Repo
+  },
+  {
+    value: '私有的',
+    description: '你可以在个人应用中查看和管理它。当然别人也可以通过URL进行访问。',
+    icon: Lock
+  }
+]
 
-const visibilityActionItems = ["公开的","私有的"]
+const selectedVisibilityOption = computed(() => {
+  return visibilityOptions.find(item => item.value === props.formData.visibility) ?? visibilityOptions[0]
+})
 
-const selectedAction = ref(visibilityActionItems[0])
-const label = ref(visibilityActionItems[0])
+const selectedAction = computed({
+  get: () => props.formData.visibility,
+  set: value => {
+    emit('update:formData', {
+      ...props.formData,
+      visibility: value
+    })
+  }
+})
+
+const label = computed(() => selectedVisibilityOption.value.value)
 </script>
 
 <style scoped>
