@@ -341,7 +341,7 @@
 
 @media (max-width: 768px) {
   .index-page {
-    height: 100svh;
+    min-height: 100svh;
   }
   
   .title {
