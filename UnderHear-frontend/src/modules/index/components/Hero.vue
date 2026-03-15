@@ -70,8 +70,10 @@
 
 <style scoped>
 .index-page {
-  height: calc(100vh - var(--header-height));
-  clip-path: inset(0 0 0 0); /* Create a clipping context to contain fixed children to this section */
+  position: relative;
+  height: calc(100svh - var(--header-height));
+  min-height: calc(100svh - var(--header-height));
+  overflow: hidden;
 }
 
 .hero-wrapper {
@@ -82,7 +84,7 @@
 }
 
 .background-root {
-  position: fixed;
+  position: absolute;
   inset: 0;
   z-index: -1;
   overflow: hidden;
@@ -91,7 +93,7 @@
   will-change: transform;
   animation: parallax-background linear both;
   animation-timeline: scroll(root);
-  animation-range: 0 var(100vh - var(--header-height));
+  animation-range: 0 calc(100svh - var(--header-height));
 }
 
 @keyframes parallax-background {
@@ -99,7 +101,7 @@
     transform: translateY(0) translateZ(0);
   }
   to {
-    transform: translateY(-30vh) translateZ(0);
+    transform: translateY(-30svh) translateZ(0);
   }
 }
 
