@@ -85,7 +85,7 @@
 }
 
 .background-root {
-  position: fixed;
+  position: absolute;
   inset: 0;
   z-index: -1;
   overflow: hidden;
@@ -102,7 +102,7 @@
     transform: translateY(0) translateZ(0);
   }
   to {
-    transform: translateY(-30svh) translateZ(0);
+    transform: translateY(50svh) translateZ(0);
   }
 }
 
