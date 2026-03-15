@@ -75,29 +75,29 @@
             >
               <ActionList.Item
                 class="visibility-action-item"
-                value="public"
-                @click="label = '公开的'"
+                :value="visibilityActionItems[0]"
+                @click="label = visibilityActionItems[0]"
               >
                 <Repo
                   class="visibility-item-icon"
                   color="var(--fgColor-muted)"
                 />
                 <span class="visibility-item-content">
-                  <span class="visibility-item-title">公开的</span>
+                  <span class="visibility-item-title">{{ visibilityActionItems[0] }}</span>
                   <span class="visibility-item-desc">你的应用被公开，所有人都能够在应用广场上看见它。</span>
                 </span>
               </ActionList.Item>
               <ActionList.Item
                 class="visibility-action-item"
-                value="private"
-                @click="label = '私有的'"
+                :value="visibilityActionItems[1]"
+                @click="label = visibilityActionItems[1]"
               >
                 <Lock
                   class="visibility-item-icon"
                   color="var(--fgColor-muted)"
                 />
                 <span class="visibility-item-content">
-                  <span class="visibility-item-title">私有的</span>
+                  <span class="visibility-item-title">{{ visibilityActionItems[1] }}</span>
                   <span class="visibility-item-desc">你可以在个人应用中查看和管理它。当然别人也可以通过URL进行访问。</span>
                 </span>
               </ActionList.Item>
@@ -191,8 +191,10 @@ import Repo from "@/components/z-ui/icon/Octicons-vue/icons/repo.vue";
 import TriangleDown from "@/components/z-ui/icon/Octicons-vue/icons/triangle-down.vue";
 import Lock from '@/components/z-ui/icon/Octicons-vue/icons/lock.vue'
 
-const selectedAction = ref('public')
-const label = ref('Public')
+const visibilityActionItems = ["公开的","私有的"]
+
+const selectedAction = ref(visibilityActionItems[0])
+const label = ref(visibilityActionItems[0])
 </script>
 
 <style scoped>
