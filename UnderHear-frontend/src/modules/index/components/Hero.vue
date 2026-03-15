@@ -74,6 +74,7 @@
   height: calc(100svh - var(--header-height));
   min-height: calc(100svh - var(--header-height));
   overflow: hidden;
+  clip-path: inset(0 0 0 0); /* Create a clipping context to contain fixed children to this section */
 }
 
 .hero-wrapper {
@@ -84,7 +85,7 @@
 }
 
 .background-root {
-  position: absolute;
+  position: fixed;
   inset: 0;
   z-index: -1;
   overflow: hidden;
