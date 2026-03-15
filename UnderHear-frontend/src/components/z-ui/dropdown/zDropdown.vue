@@ -78,20 +78,28 @@ const effectiveSide = computed<DropdownSide>(() => {
 })
 const sideClass = computed(() => `z-dropdown-content--${effectiveSide.value}`)
 
-function getOutsidePosition(side: OutsideSide, anchorRect: DOMRect, contentWidth: number, contentHeight: number) {
+function getOutsidePosition(
+  side: OutsideSide,
+  anchorLeft: number,
+  anchorTop: number,
+  anchorRight: number,
+  anchorBottom: number,
+  contentWidth: number,
+  contentHeight: number
+) {
   if (side === 'outside-top') {
-    return { x: anchorRect.left, y: anchorRect.top - contentHeight - OFFSET }
+    return { x: anchorLeft, y: anchorTop - contentHeight - OFFSET }
   }
 
   if (side === 'outside-left') {
-    return { x: anchorRect.left - contentWidth - OFFSET, y: anchorRect.top }
+    return { x: anchorLeft - contentWidth - OFFSET, y: anchorTop }
   }
 
   if (side === 'outside-right') {
-    return { x: anchorRect.right + OFFSET, y: anchorRect.top }
+    return { x: anchorRight + OFFSET, y: anchorTop }
   }
 
-  return { x: anchorRect.left, y: anchorRect.bottom + OFFSET }
+  return { x: anchorLeft, y: anchorBottom + OFFSET }
 }
 
 function getOverflowScore(x: number, y: number, width: number, height: number, viewportWidth: number, viewportHeight: number) {
@@ -103,11 +111,14 @@ function getOverflowScore(x: number, y: number, width: number, height: number, v
 }
 
 function chooseBestOutsideSide(
-  anchorRect: DOMRect,
+  anchorLeft: number,
+  anchorTop: number,
+  anchorRight: number,
+  anchorBottom: number,
   contentWidth: number,
   contentHeight: number,
-  viewportWidth: number,
-  viewportHeight: number,
+  pageWidth: number,
+  pageHeight: number,
   preferred: OutsideSide
 ) {
   const candidates = [preferred, ...OUTSIDE_SIDES.filter(side => side !== preferred)]
@@ -115,8 +126,8 @@ function chooseBestOutsideSide(
   let bestScore = Number.POSITIVE_INFINITY
 
   for (const side of candidates) {
-    const { x, y } = getOutsidePosition(side, anchorRect, contentWidth, contentHeight)
-    const score = getOverflowScore(x, y, contentWidth, contentHeight, viewportWidth, viewportHeight)
+    const { x, y } = getOutsidePosition(side, anchorLeft, anchorTop, anchorRight, anchorBottom, contentWidth, contentHeight)
+    const score = getOverflowScore(x, y, contentWidth, contentHeight, pageWidth, pageHeight)
 
     if (score < bestScore) {
       bestScore = score
@@ -136,17 +147,28 @@ function updateAutoSide() {
   if (!anchor || !content) return
 
   const anchorRect = anchor.getBoundingClientRect()
+  const scrollX = window.scrollX
+  const scrollY = window.scrollY
+  const anchorLeft = anchorRect.left + scrollX
+  const anchorTop = anchorRect.top + scrollY
+  const anchorRight = anchorRect.right + scrollX
+  const anchorBottom = anchorRect.bottom + scrollY
   const contentWidth = content.offsetWidth
   const contentHeight = content.offsetHeight
-  const viewportWidth = window.innerWidth
-  const viewportHeight = window.innerHeight
+  const doc = document.documentElement
+  const body = document.body
+  const pageWidth = Math.max(doc.scrollWidth, doc.clientWidth, body?.scrollWidth ?? 0, body?.clientWidth ?? 0)
+  const pageHeight = Math.max(doc.scrollHeight, doc.clientHeight, body?.scrollHeight ?? 0, body?.clientHeight ?? 0)
 
   autoSide.value = chooseBestOutsideSide(
-    anchorRect,
+    anchorLeft,
+    anchorTop,
+    anchorRight,
+    anchorBottom,
     contentWidth,
     contentHeight,
-    viewportWidth,
-    viewportHeight,
+    pageWidth,
+    pageHeight,
     preferredOutsideSide.value
   )
 }
@@ -220,7 +242,7 @@ defineExpose({ close: () => { isOpen.value = false } })
   --z-dropdown-enter-x: 0;
   --z-dropdown-enter-y: 0;
   min-width: 192px;
-  max-width: calc(100vw - 2rem);
+  max-width: calc(100vw - 80px);
   max-height: 100vh;
   width: auto;
   border-radius: 12px;
