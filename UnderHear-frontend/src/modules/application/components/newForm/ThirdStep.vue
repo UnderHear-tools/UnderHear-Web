@@ -9,10 +9,10 @@
       </FormControl.Label>
       <zInput
         class="w-full"
-        :model-value="formData.appName"
+        :model-value="appName"
         placeholder="请输入应用名称"
         maxlength="100"
-        @update:model-value="updateAppName"
+        @update:model-value="value => emit('update:app-name', value)"
       />
       <FormControl.Validation
         v-if="errors.appName"
@@ -28,11 +28,11 @@
       </FormControl.Label>
       <zInput
         class="w-full"
-        :model-value="formData.englishName"
+        :model-value="englishName"
         placeholder="请输入英文名称"
         minlength="4"
         maxlength="63"
-        @update:model-value="updateEnglishName"
+        @update:model-value="value => emit('update:english-name', value)"
       />
       <FormControl.Validation
         v-if="errors.englishName"
@@ -40,8 +40,8 @@
       >
         {{ errors.englishName }}
       </FormControl.Validation>
-      <FormControl.Caption v-if="formData.englishName.trim()">
-        应用地址：https://{{ formData.englishName }}.underhear.cn/
+      <FormControl.Caption v-if="englishName.trim()">
+        应用地址：https://{{ englishName }}.underhear.cn/
       </FormControl.Caption>
     </FormControl>
 
@@ -104,11 +104,11 @@
       </FormControl.Label>
       <zTextarea
         class="w-full"
-        :model-value="formData.appDescription"
+        :model-value="appDescription"
         placeholder="请输入应用描述"
         maxlength="1000"
         rows="7"
-        @update:model-value="updateAppDescription"
+        @update:model-value="value => emit('update:app-description', value)"
       />
       <FormControl.Validation
         v-if="errors.appDescription"
@@ -117,7 +117,7 @@
         {{ errors.appDescription }}
       </FormControl.Validation>
       <FormControl.Caption>
-        {{ `${formData.appDescription.length} / 1000` }}
+        {{ `${appDescription.length} / 1000` }}
       </FormControl.Caption>
     </FormControl>
   </form>
@@ -134,13 +134,7 @@ import { ActionList } from '@/components/z-ui/action-list'
 import Repo from '@/components/z-ui/icon/Octicons-vue/icons/repo.vue'
 import TriangleDown from '@/components/z-ui/icon/Octicons-vue/icons/triangle-down.vue'
 import Lock from '@/components/z-ui/icon/Octicons-vue/icons/lock.vue'
-
-interface AppFormData {
-  appName: string
-  englishName: string
-  visibility: string
-  appDescription: string
-}
+import type { AppFormErrors } from './useCreateApplicationForm'
 
 interface VisibilityOption {
   value: string
@@ -148,15 +142,12 @@ interface VisibilityOption {
   icon: typeof Repo
 }
 
-interface AppFormErrors {
-  appName?: string
-  englishName?: string
-  appDescription?: string
-}
-
 interface Props {
-  formData: AppFormData
-  errors?: AppFormErrors
+  appName: string
+  englishName: string
+  visibility: string
+  appDescription: string
+  errors?: Partial<AppFormErrors>
 }
 
 const props = withDefaults(defineProps<Props>(), {
@@ -164,29 +155,11 @@ const props = withDefaults(defineProps<Props>(), {
 })
 
 const emit = defineEmits<{
-  'update:formData': [value: AppFormData]
+  'update:app-name': [value: string]
+  'update:english-name': [value: string]
+  'update:visibility': [value: string]
+  'update:app-description': [value: string]
 }>()
-
-const updateAppName = (value: string) => {
-  emit('update:formData', {
-    ...props.formData,
-    appName: value
-  })
-}
-
-const updateEnglishName = (value: string) => {
-  emit('update:formData', {
-    ...props.formData,
-    englishName: value
-  })
-}
-
-const updateAppDescription = (value: string) => {
-  emit('update:formData', {
-    ...props.formData,
-    appDescription: value
-  })
-}
 
 const visibilityOptions: VisibilityOption[] = [
   {
@@ -202,16 +175,13 @@ const visibilityOptions: VisibilityOption[] = [
 ]
 
 const selectedVisibilityOption = computed(() => {
-  return visibilityOptions.find(item => item.value === props.formData.visibility) ?? visibilityOptions[0]
+  return visibilityOptions.find(item => item.value === props.visibility) ?? visibilityOptions[0]
 })
 
 const selectedAction = computed({
-  get: () => props.formData.visibility,
+  get: () => props.visibility,
   set: value => {
-    emit('update:formData', {
-      ...props.formData,
-      visibility: value
-    })
+    emit('update:visibility', value)
   }
 })
 

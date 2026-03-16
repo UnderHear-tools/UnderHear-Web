@@ -1,41 +1,23 @@
 import { post } from '@/api'
 
-export type ApplicationFramework = 'html' | 'vue' | 'react'
-
-export interface ApplicationFormData {
+export interface CreateApplicationRequest {
+	framework: string
+	uploadFile: File
 	appName: string
 	englishName: string
 	visibility: string
 	appDescription: string
 }
 
-export interface CreateApplicationRequest {
-	framework: ApplicationFramework
-	file: File | null
-	fileSource: File | null
-	formData: ApplicationFormData
-}
-
-function resolveUploadFile(request: CreateApplicationRequest): File {
-	const uploadFile = request.file ?? request.fileSource
-
-	if (!uploadFile) {
-		throw new Error('未找到可上传的文件。')
-	}
-
-	return uploadFile
-}
-
 function buildCreateApplicationFormData(request: CreateApplicationRequest): FormData {
 	const payload = new FormData()
-	const uploadFile = resolveUploadFile(request)
 
 	payload.append('framework', request.framework)
-	payload.append('file', uploadFile)
-	payload.append('appName', request.formData.appName)
-	payload.append('englishName', request.formData.englishName)
-	payload.append('visibility', request.formData.visibility)
-	payload.append('appDescription', request.formData.appDescription)
+	payload.append('file', request.uploadFile)
+	payload.append('appName', request.appName)
+	payload.append('englishName', request.englishName)
+	payload.append('visibility', request.visibility)
+	payload.append('appDescription', request.appDescription)
 
 	return payload
 }

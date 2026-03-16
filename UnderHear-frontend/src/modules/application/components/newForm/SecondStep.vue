@@ -50,11 +50,10 @@
 import { HtmlMonacoEditor } from '@/components/monaco-editor'
 import LightBulb from '@/components/z-ui/icon/Octicons-vue/icons/light-bulb.vue'
 import { zUpload } from '@/components/z-ui/upload'
-
-type FrameworkType = 'html' | 'vue' | 'react'
+import type { FrameworkValue } from './useCreateApplicationForm'
 
 interface Props {
-  selectedFramework: FrameworkType | null
+  selectedFramework: FrameworkValue | null
   file: File | null
   htmlSource: string
   invalid?: boolean
@@ -68,7 +67,7 @@ withDefaults(defineProps<Props>(), {
 
 const emit = defineEmits<{
   'update:file': [value: File | null]
-  'update:htmlSource': [value: string]
+  'update:html-source': [value: string]
 }>()
 
 function updateFile(value: File | null) {
@@ -76,7 +75,7 @@ function updateFile(value: File | null) {
 }
 
 function updateHtmlSource(value: string) {
-  emit('update:htmlSource', value)
+  emit('update:html-source', value)
 }
 </script>
 
