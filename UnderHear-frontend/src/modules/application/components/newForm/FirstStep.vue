@@ -91,11 +91,10 @@
 
 <script setup lang="ts">
 import { zTag } from '@/components/z-ui/tag'
-
-type FrameworkType = 'html' | 'vue' | 'react'
+import type { FrameworkValue } from './useCreateApplicationForm'
 
 interface Props {
-  selectedFramework: FrameworkType | null
+  selectedFramework: FrameworkValue | null
   invalid?: boolean
   validation?: string
 }
@@ -106,11 +105,11 @@ withDefaults(defineProps<Props>(), {
 })
 
 const emit = defineEmits<{
-  'update:selectedFramework': [value: FrameworkType]
+  'update:selected-framework': [value: FrameworkValue]
 }>()
 
-function selectFramework(framework: FrameworkType) {
-  emit('update:selectedFramework', framework)
+function selectFramework(framework: FrameworkValue) {
+  emit('update:selected-framework', framework)
 }
 </script>
 

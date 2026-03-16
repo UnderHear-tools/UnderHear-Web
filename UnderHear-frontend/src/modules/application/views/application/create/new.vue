@@ -27,9 +27,9 @@
           </div>
           <FirstStep
             :selected-framework="selectedFramework"
-            :invalid="showStepOneError"
-            :validation="stepOneError"
-            @update:selected-framework="updateSelectedFramework"
+            :invalid="showFrameworkError"
+            :validation="frameworkError"
+            @update:selected-framework="setFramework"
           />
         </Timeline.Body>
       </Timeline.Item>
@@ -43,10 +43,10 @@
             :file="file"
             :html-source="htmlSource"
             :selected-framework="selectedFramework"
-            :invalid="showStepTwoError"
-            :validation="stepTwoError"
-            @update:file="updateFile"
-            @update:html-source="updateHtmlSource"
+            :invalid="showUploadError"
+            :validation="uploadError"
+            @update:file="setFile"
+            @update:html-source="setHtmlSource"
           />
         </Timeline.Body>
       </Timeline.Item>
@@ -57,9 +57,17 @@
             填写基本信息
           </div>
           <ThirdStep
-            :form-data="formData"
-            :errors="displayedFormErrors"
-            @update:form-data="updateFormData"
+            :app-name="appName"
+            :english-name="englishName"
+            :visibility="visibility"
+            :app-description="appDescription"
+            :app-name-error="displayedAppNameError"
+            :english-name-error="displayedEnglishNameError"
+            :app-description-error="displayedAppDescriptionError"
+            @update:app-name="setAppName"
+            @update:english-name="setEnglishName"
+            @update:visibility="setVisibility"
+            @update:app-description="setAppDescription"
           />
         </Timeline.Body>
       </Timeline.Item>
@@ -77,227 +85,46 @@
 </template>
 
 <script setup lang="ts">
-import { computed, reactive, ref } from 'vue'
-
 import { zContainer } from '@/components/z-ui/container'
 import { Timeline } from '@/components/z-ui/timeline'
-import {
-  createApplication,
-  type ApplicationFormData,
-  type ApplicationFramework,
-  type CreateApplicationRequest
-} from '@/modules/application/api/create-new'
+import { createApplication } from '@/modules/application/api/create-new'
 import FirstStep from '@/modules/application/components/newForm/FirstStep.vue'
 import SecondStep from '@/modules/application/components/newForm/SecondStep.vue'
 import ThirdStep from '@/modules/application/components/newForm/ThirdStep.vue'
+import { useCreateApplicationForm } from '@/modules/application/components/newForm/useCreateApplicationForm'
 
-type FrameworkType = ApplicationFramework
-
-interface AppFormErrors {
-  appName: string
-  englishName: string
-  appDescription: string
-}
-
-const selectedFramework = ref<FrameworkType | null>(null)
-
-const file = ref<File | null>(null)
-const htmlSource = ref(`<div>hello, world!</div>`)
-
-const formData = ref<ApplicationFormData>({
-  appName: '',
-  englishName: '',
-  visibility: '公开的',
-  appDescription: ''
-})
-
-const submitAttempted = ref(false)
-const touched = reactive({
-  file: false,
-  htmlSource: false,
-  appName: false,
-  englishName: false,
-  visibility: false,
-  appDescription: false
-})
-
-function createEmptyFormErrors(): AppFormErrors {
-  return {
-    appName: '',
-    englishName: '',
-    appDescription: ''
-  }
-}
-
-const stepOneError = computed(() => {
-  return selectedFramework.value === null ? '请选择一个前端框架。' : ''
-})
-
-const stepTwoError = computed(() => {
-  if (selectedFramework.value === null) {
-    return ''
-  }
-
-  if (selectedFramework.value === 'html') {
-    return htmlSource.value.trim() ? '' : '请输入 HTML 代码。'
-  }
-
-  return file.value ? '' : '请上传文件。'
-})
-
-const formErrors = computed<AppFormErrors>(() => {
-  const errors = createEmptyFormErrors()
-
-  if (!formData.value.appName.trim()) {
-    errors.appName = '请输入应用名称。'
-  } else if (formData.value.appName.length > 100) {
-    errors.appName = '应用名称不能超过 100 个字符。'
-  }
-
-  const trimmedEnglishName = formData.value.englishName.trim()
-
-  if (!trimmedEnglishName) {
-    errors.englishName = '请输入英文名称。'
-  } else if (!/^[a-z0-9](?:[a-z0-9-]*[a-z0-9])?$/.test(formData.value.englishName)) {
-    errors.englishName = '仅支持小写字母、数字和连字符（-），且不能以连字符开头或结尾。'
-  } else if (trimmedEnglishName.length < 4) {
-    errors.englishName = '英文名称至少 4 个字符。'
-  } else if (formData.value.englishName.length > 63) {
-    errors.englishName = '英文名称不能超过 63 个字符。'
-  }
-
-  if (!formData.value.appDescription.trim()) {
-    errors.appDescription = '请输入应用描述。'
-  } else if (formData.value.appDescription.length > 1000) {
-    errors.appDescription = '应用描述不能超过 1000 个字符。'
-  }
-
-  return errors
-})
-
-const displayedFormErrors = computed<AppFormErrors>(() => {
-  const errors = createEmptyFormErrors()
-
-  if (submitAttempted.value || touched.appName) {
-    errors.appName = formErrors.value.appName
-  }
-
-  if (submitAttempted.value || touched.englishName) {
-    errors.englishName = formErrors.value.englishName
-  }
-
-  if (submitAttempted.value || touched.appDescription) {
-    errors.appDescription = formErrors.value.appDescription
-  }
-
-  return errors
-})
-
-const showStepOneError = computed(() => {
-  return submitAttempted.value && Boolean(stepOneError.value)
-})
-
-const showStepTwoError = computed(() => {
-  if (!stepTwoError.value) {
-    return false
-  }
-
-  if (submitAttempted.value) {
-    return true
-  }
-
-  if (selectedFramework.value === 'html') {
-    return touched.htmlSource
-  }
-
-  if (selectedFramework.value === 'vue' || selectedFramework.value === 'react') {
-    return touched.file
-  }
-
-  return false
-})
-
-const isFormValid = computed(() => {
-  return !stepOneError.value
-    && !stepTwoError.value
-    && !formErrors.value.appName
-    && !formErrors.value.englishName
-    && !formErrors.value.appDescription
-})
-
-function updateSelectedFramework(value: FrameworkType) {
-  if (selectedFramework.value === value) {
-    return
-  }
-
-  selectedFramework.value = value
-
-  if (value === 'html') {
-    file.value = null
-    touched.file = false
-    return
-  }
-
-  htmlSource.value = ''
-  touched.htmlSource = false
-}
-
-function updateFile(value: File | null) {
-  touched.file = true
-  file.value = value
-}
-
-function updateHtmlSource(value: string) {
-  touched.htmlSource = true
-  htmlSource.value = value
-}
-
-function updateFormData(value: ApplicationFormData) {
-  if (value.appName !== formData.value.appName) {
-    touched.appName = true
-  }
-
-  if (value.englishName !== formData.value.englishName) {
-    touched.englishName = true
-  }
-
-  if (value.visibility !== formData.value.visibility) {
-    touched.visibility = true
-  }
-
-  if (value.appDescription !== formData.value.appDescription) {
-    touched.appDescription = true
-  }
-
-  formData.value = value
-}
+const {
+  selectedFramework,
+  file,
+  htmlSource,
+  appName,
+  englishName,
+  visibility,
+  appDescription,
+  frameworkError,
+  uploadError,
+  displayedAppNameError,
+  displayedEnglishNameError,
+  displayedAppDescriptionError,
+  showFrameworkError,
+  showUploadError,
+  setFramework,
+  setFile,
+  setHtmlSource,
+  setAppName,
+  setEnglishName,
+  setVisibility,
+  setAppDescription,
+  prepareSubmit,
+  buildRequest
+} = useCreateApplicationForm()
 
 async function submit() {
-  submitAttempted.value = true
-
-  if (!isFormValid.value) {
+  if (!prepareSubmit()) {
     return
   }
 
-  const framework = selectedFramework.value
-
-  if (!framework) {
-    return
-  }
-
-  const htmlFile = new File([htmlSource.value], 'index.html', {
-    type: 'text/html;charset=utf-8'
-  })
-
-  const request: CreateApplicationRequest = {
-    framework,
-    file: file.value,
-    fileSource: framework === 'html' ? htmlFile : null,
-    formData: formData.value
-  }
-
-  await createApplication(request)
-
+  await createApplication(buildRequest())
 }
 </script>
 
