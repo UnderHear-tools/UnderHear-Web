@@ -61,7 +61,9 @@
             :english-name="englishName"
             :visibility="visibility"
             :app-description="appDescription"
-            :errors="displayedFormErrors"
+            :app-name-error="displayedAppNameError"
+            :english-name-error="displayedEnglishNameError"
+            :app-description-error="displayedAppDescriptionError"
             @update:app-name="setAppName"
             @update:english-name="setEnglishName"
             @update:visibility="setVisibility"
@@ -101,7 +103,9 @@ const {
   appDescription,
   frameworkError,
   uploadError,
-  displayedFormErrors,
+  displayedAppNameError,
+  displayedEnglishNameError,
+  displayedAppDescriptionError,
   showFrameworkError,
   showUploadError,
   setFramework,

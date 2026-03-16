@@ -15,10 +15,10 @@
         @update:model-value="value => emit('update:app-name', value)"
       />
       <FormControl.Validation
-        v-if="errors.appName"
+        v-if="appNameError"
         variant="error"
       >
-        {{ errors.appName }}
+        {{ appNameError }}
       </FormControl.Validation>
     </FormControl>
 
@@ -35,10 +35,10 @@
         @update:model-value="value => emit('update:english-name', value)"
       />
       <FormControl.Validation
-        v-if="errors.englishName"
+        v-if="englishNameError"
         variant="error"
       >
-        {{ errors.englishName }}
+        {{ englishNameError }}
       </FormControl.Validation>
       <FormControl.Caption v-if="englishName.trim()">
         应用地址：https://{{ englishName }}.underhear.cn/
@@ -111,10 +111,10 @@
         @update:model-value="value => emit('update:app-description', value)"
       />
       <FormControl.Validation
-        v-if="errors.appDescription"
+        v-if="appDescriptionError"
         variant="error"
       >
-        {{ errors.appDescription }}
+        {{ appDescriptionError }}
       </FormControl.Validation>
       <FormControl.Caption>
         {{ `${appDescription.length} / 1000` }}
@@ -134,7 +134,6 @@ import { ActionList } from '@/components/z-ui/action-list'
 import Repo from '@/components/z-ui/icon/Octicons-vue/icons/repo.vue'
 import TriangleDown from '@/components/z-ui/icon/Octicons-vue/icons/triangle-down.vue'
 import Lock from '@/components/z-ui/icon/Octicons-vue/icons/lock.vue'
-import type { AppFormErrors } from './useCreateApplicationForm'
 
 interface VisibilityOption {
   value: string
@@ -147,11 +146,15 @@ interface Props {
   englishName: string
   visibility: string
   appDescription: string
-  errors?: Partial<AppFormErrors>
+  appNameError?: string
+  englishNameError?: string
+  appDescriptionError?: string
 }
 
 const props = withDefaults(defineProps<Props>(), {
-  errors: () => ({})
+  appNameError: '',
+  englishNameError: '',
+  appDescriptionError: ''
 })
 
 const emit = defineEmits<{
