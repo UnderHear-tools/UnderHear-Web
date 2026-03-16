@@ -151,7 +151,7 @@ const buildToc = () => {
     },
     {
       root: null,
-      rootMargin: '-192px 0px -100% 0px', // 提前触发
+      rootMargin: '-84px 0px -100% 0px', // 提前触发
       threshold: 0
     }
   )
@@ -378,10 +378,9 @@ const navSections = ref([
   font-size: 0.8125rem;
 }
 
-.main-content :deep(h1),
 .main-content :deep(h2),
 .main-content :deep(h3) {
-  scroll-margin-top: 90px;
+  scroll-margin-top: calc(var(--header-height) + 20px);
 }
 
 /* 默认隐藏移动端菜单按钮 */
