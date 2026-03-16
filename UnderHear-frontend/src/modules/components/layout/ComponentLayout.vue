@@ -136,6 +136,13 @@ const buildToc = () => {
     }
   })
 
+  const headerHeight = parseFloat(
+    getComputedStyle(document.documentElement)
+      .getPropertyValue('--header-height')
+  ) || 0
+
+  const topOffset = -(headerHeight + 20)
+
   observer = new IntersectionObserver(
     (entries) => {
       if (Date.now() < clickPriorityUntil) {
@@ -151,7 +158,7 @@ const buildToc = () => {
     },
     {
       root: null,
-      rootMargin: '-84px 0px -100% 0px', // 提前触发
+      rootMargin: `${topOffset}px 0px -100% 0px`, // 提前触发
       threshold: 0
     }
   )
