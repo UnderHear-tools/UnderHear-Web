@@ -11,7 +11,7 @@ import org.springframework.stereotype.Service;
 import com.underhear.exception.BizException;
 import com.underhear.exception.ErrorCode;
 import com.underhear.pojo.entity.User;
-import com.underhear.service.api.UserService;
+import com.underhear.service.user.UserService;
 
 @Service
 public class SessionAuthService {

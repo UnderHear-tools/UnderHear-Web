@@ -1,10 +1,10 @@
-package com.underhear.mapper.api;
+package com.underhear.mapper.user;
 
 import java.time.LocalDateTime;
 
+import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
-import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
 

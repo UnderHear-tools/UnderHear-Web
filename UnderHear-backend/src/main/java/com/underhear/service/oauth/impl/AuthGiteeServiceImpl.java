@@ -18,7 +18,7 @@ import com.underhear.pojo.entity.User;
 import com.underhear.pojo.entity.UserGitee;
 import com.underhear.security.JwtTokenService;
 import com.underhear.security.SessionAuthService;
-import com.underhear.service.api.UserService;
+import com.underhear.service.user.UserService;
 import com.underhear.service.oauth.AuthGiteeService;
 
 import me.zhyd.oauth.model.AuthResponse;

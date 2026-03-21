@@ -1,4 +1,4 @@
-package com.underhear.controller.api;
+package com.underhear.controller.user;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CookieValue;
