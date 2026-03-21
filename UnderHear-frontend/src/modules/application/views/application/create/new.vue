@@ -73,25 +73,29 @@
       </Timeline.Item>
     </Timeline>
     <div class="mt-6 flex justify-end">
-      <button
-        type="button"
-        class="inline-flex items-center justify-center rounded-md bg-blue-600 px-4 py-2 text-sm font-medium text-white shadow-sm transition-colors hover:bg-blue-700 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600"
+      <zButton
+        variant="primary"
         @click="submit"
       >
+        <template #leadingVisual>
+          <Rocket />
+        </template>
         创建应用
-      </button>
+      </zButton>
     </div>
   </zContainer>
 </template>
 
 <script setup lang="ts">
 import { zContainer } from '@/components/z-ui/container'
+import { zButton } from '@/components/z-ui/button'
 import { Timeline } from '@/components/z-ui/timeline'
 import { createApplication } from '@/modules/application/api/create-new'
 import FirstStep from '@/modules/application/components/newForm/FirstStep.vue'
 import SecondStep from '@/modules/application/components/newForm/SecondStep.vue'
 import ThirdStep from '@/modules/application/components/newForm/ThirdStep.vue'
 import { useCreateApplicationForm } from '@/modules/application/components/newForm/useCreateApplicationForm'
+import Rocket from '@/components/z-ui/icon/Octicons-vue/icons/rocket.vue'
 
 const {
   selectedFramework,
