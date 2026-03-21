@@ -22,10 +22,10 @@ function buildCreateApplicationFormData(request: CreateApplicationRequest): Form
 	return payload
 }
 
-export const createApplication = (request: CreateApplicationRequest) => {
+export const applicationCreateNew = (request: CreateApplicationRequest) => {
 	const data = buildCreateApplicationFormData(request)
 
-	return post<void>('/application/create', data, {
+	return post<void>('/application/create/new', data, {
 		headers: {
 			'Content-Type': 'multipart/form-data'
 		},

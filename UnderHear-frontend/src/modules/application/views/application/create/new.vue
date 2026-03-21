@@ -90,7 +90,7 @@
 import { zContainer } from '@/components/z-ui/container'
 import { zButton } from '@/components/z-ui/button'
 import { Timeline } from '@/components/z-ui/timeline'
-import { createApplication } from '@/modules/application/api/create-new'
+import { applicationCreateNew } from '@/modules/application/api/create-new'
 import FirstStep from '@/modules/application/components/newForm/FirstStep.vue'
 import SecondStep from '@/modules/application/components/newForm/SecondStep.vue'
 import ThirdStep from '@/modules/application/components/newForm/ThirdStep.vue'
@@ -128,7 +128,7 @@ async function submit() {
     return
   }
 
-  await createApplication(buildRequest())
+  await applicationCreateNew(buildRequest())
 }
 </script>
 
