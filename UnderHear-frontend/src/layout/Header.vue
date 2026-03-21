@@ -1,6 +1,12 @@
 <template>
   <header class="header">
     <div class="header-inner">
+
+      <a class="logo" href="/">
+        <LogoUnderHear size="32" />
+        <span>UnderHear</span>
+      </a>
+
       <nav>
         <ul class="nav-list">
           <li
@@ -84,7 +90,7 @@ import { zDropdown } from '@/components/z-ui/dropdown'
 import { zAvatar } from '@/components/z-ui/avatar'
 import { ActionList } from '@/components/z-ui/action-list'
 import { zDivider } from '@/components/z-ui/divider'
-import { Person, MarkGithub, SignOut } from '@/components/z-ui/icon/Octicons-vue'
+import { Person, MarkGithub, SignOut, LogoUnderHear } from '@/components/z-ui/icon/Octicons-vue'
 
 interface NavigationItem {
   name: string
@@ -170,6 +176,17 @@ watch(() => route.path, () => {
   justify-content: center;
 }
 
+.logo {
+  position: absolute;
+  left: 2rem;
+  color: var(--fgColor-default);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
 .nav-list {
   display: flex;
   gap: 1.5rem;
@@ -239,7 +256,7 @@ watch(() => route.path, () => {
   color: var(--fgColor-muted);
 }
 
-@media (max-width: 767px) {
+@media (max-width: 768px) {
   .header {
     position: fixed;
     top: 1rem;
@@ -254,6 +271,10 @@ watch(() => route.path, () => {
 
   .header-inner {
     height: auto;
+  }
+
+  .logo{
+    display: none;
   }
 
   .nav-list {
