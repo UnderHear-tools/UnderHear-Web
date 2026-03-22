@@ -4,7 +4,7 @@ export interface CreateApplicationRequest {
 	framework: string
 	uploadFile: File
 	appName: string
-	englishName: string
+	appEnglishName: string
 	visibility: string
 	appDescription: string
 }
@@ -15,7 +15,7 @@ function buildCreateApplicationFormData(request: CreateApplicationRequest): Form
 	payload.append('framework', request.framework)
 	payload.append('file', request.uploadFile)
 	payload.append('appName', request.appName)
-	payload.append('englishName', request.englishName)
+	payload.append('appEnglishName', request.appEnglishName)
 	payload.append('visibility', request.visibility)
 	payload.append('appDescription', request.appDescription)
 

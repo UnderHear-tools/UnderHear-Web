@@ -28,20 +28,20 @@
       </FormControl.Label>
       <zInput
         class="w-full"
-        :model-value="englishName"
+        :model-value="appEnglishName"
         placeholder="请输入英文名称"
         minlength="4"
         maxlength="63"
-        @update:model-value="value => emit('update:english-name', value)"
+        @update:model-value="value => emit('update:app-english-name', value)"
       />
       <FormControl.Validation
-        v-if="englishNameError"
+        v-if="appEnglishNameError"
         variant="error"
       >
-        {{ englishNameError }}
+        {{ appEnglishNameError }}
       </FormControl.Validation>
-      <FormControl.Caption v-if="englishName.trim()">
-        应用地址：https://{{ englishName }}.underhear.cn/
+      <FormControl.Caption v-if="appEnglishName.trim()">
+        应用地址：https://{{ appEnglishName }}.underhear.cn/
       </FormControl.Caption>
     </FormControl>
 
@@ -143,23 +143,23 @@ interface VisibilityOption {
 
 interface Props {
   appName: string
-  englishName: string
+  appEnglishName: string
   visibility: string
   appDescription: string
   appNameError?: string
-  englishNameError?: string
+  appEnglishNameError?: string
   appDescriptionError?: string
 }
 
 const props = withDefaults(defineProps<Props>(), {
   appNameError: '',
-  englishNameError: '',
+  appEnglishNameError: '',
   appDescriptionError: ''
 })
 
 const emit = defineEmits<{
   'update:app-name': [value: string]
-  'update:english-name': [value: string]
+  'update:app-english-name': [value: string]
   'update:visibility': [value: string]
   'update:app-description': [value: string]
 }>()

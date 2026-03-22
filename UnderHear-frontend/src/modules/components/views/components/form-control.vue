@@ -33,7 +33,7 @@
         <FormControl required>
           <FormControl.Label>英文名称</FormControl.Label>
           <zInput
-            v-model="englishName"
+            v-model="appEnglishName"
             placeholder="underhear-app"
           />
           <FormControl.Caption>
@@ -141,7 +141,7 @@ import ComponentDocsPage from '@/modules/components/components/ComponentDocsPage
 import ComponentDocsSection from '@/modules/components/components/ComponentDocsPage/ComponentDocsSection.vue'
 
 const appName = ref('')
-const englishName = ref('underhear-app')
+const appEnglishName = ref('underhear-app')
 const releaseSlug = ref('underhear-app')
 const domainPrefix = ref('podcast-hub')
 
@@ -168,7 +168,7 @@ const appName = ref('')
 const requiredDemoCode = `<template>
   <FormControl required>
     <FormControl.Label>英文名称</FormControl.Label>
-    <zInput v-model="englishName" placeholder="underhear-app" />
+    <zInput v-model="appEnglishName" placeholder="underhear-app" />
     <FormControl.Caption>Label 会自动显示必填标记。</FormControl.Caption>
   </FormControl>
 </template>
@@ -178,7 +178,7 @@ import { ref } from 'vue'
 import { FormControl } from '@/components/z-ui/form-control'
 import { zInput } from '@/components/z-ui/input'
 
-const englishName = ref('underhear-app')
+const appEnglishName = ref('underhear-app')
 <\/script>`
 
 const validationDemoCode = `<template>

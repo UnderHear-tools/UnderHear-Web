@@ -12,7 +12,7 @@ export function useCreateApplicationForm() {
   const htmlSource = ref('<div>hello, world!</div>')
 
   const appName = ref('')
-  const englishName = ref('')
+  const appEnglishName = ref('')
   const visibility = ref('公开的')
   const appDescription = ref('')
 
@@ -20,7 +20,7 @@ export function useCreateApplicationForm() {
   const touchedFile = ref(false)
   const touchedHtmlSource = ref(false)
   const touchedAppName = ref(false)
-  const touchedEnglishName = ref(false)
+  const touchedAppEnglishName = ref(false)
   const touchedAppDescription = ref(false)
 
   const frameworkError = computed(() => {
@@ -51,22 +51,22 @@ export function useCreateApplicationForm() {
     return ''
   })
 
-  const englishNameError = computed(() => {
-    const trimmedEnglishName = englishName.value.trim()
+  const appEnglishNameError = computed(() => {
+    const trimmedAppEnglishName = appEnglishName.value.trim()
 
-    if (!trimmedEnglishName) {
+    if (!trimmedAppEnglishName) {
       return '请输入英文名称。'
     }
 
-    if (!/^[a-z0-9](?:[a-z0-9-]*[a-z0-9])?$/.test(englishName.value)) {
+    if (!/^[a-z0-9](?:[a-z0-9-]*[a-z0-9])?$/.test(appEnglishName.value)) {
       return '仅支持小写字母、数字和连字符（-），且不能以连字符开头或结尾。'
     }
 
-    if (trimmedEnglishName.length < 4) {
+    if (trimmedAppEnglishName.length < 4) {
       return '英文名称至少 4 个字符。'
     }
 
-    if (englishName.value.length > 63) {
+    if (appEnglishName.value.length > 63) {
       return '英文名称不能超过 63 个字符。'
     }
 
@@ -89,8 +89,8 @@ export function useCreateApplicationForm() {
     return submitAttempted.value || touchedAppName.value ? appNameError.value : ''
   })
 
-  const displayedEnglishNameError = computed(() => {
-    return submitAttempted.value || touchedEnglishName.value ? englishNameError.value : ''
+  const displayedAppEnglishNameError = computed(() => {
+    return submitAttempted.value || touchedAppEnglishName.value ? appEnglishNameError.value : ''
   })
 
   const displayedAppDescriptionError = computed(() => {
@@ -117,7 +117,7 @@ export function useCreateApplicationForm() {
     return !frameworkError.value
       && !uploadError.value
       && !appNameError.value
-      && !englishNameError.value
+      && !appEnglishNameError.value
       && !appDescriptionError.value
   })
 
@@ -149,9 +149,9 @@ export function useCreateApplicationForm() {
     appName.value = value
   }
 
-  function setEnglishName(value: string) {
-    touchedEnglishName.value = true
-    englishName.value = value
+  function setAppEnglishName(value: string) {
+    touchedAppEnglishName.value = true
+    appEnglishName.value = value
   }
 
   function setVisibility(value: string) {
@@ -173,7 +173,7 @@ export function useCreateApplicationForm() {
       framework,
       uploadFile,
       appName: appName.value,
-      englishName: englishName.value,
+      appEnglishName: appEnglishName.value,
       visibility: visibility.value,
       appDescription: appDescription.value
     }
@@ -189,13 +189,13 @@ export function useCreateApplicationForm() {
     file,
     htmlSource,
     appName,
-    englishName,
+    appEnglishName,
     visibility,
     appDescription,
     frameworkError,
     uploadError,
     displayedAppNameError,
-    displayedEnglishNameError,
+    displayedAppEnglishNameError,
     displayedAppDescriptionError,
     showFrameworkError,
     showUploadError,
@@ -203,7 +203,7 @@ export function useCreateApplicationForm() {
     setFile,
     setHtmlSource,
     setAppName,
-    setEnglishName,
+    setAppEnglishName,
     setVisibility,
     setAppDescription,
     prepareSubmit,
