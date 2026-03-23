@@ -39,11 +39,11 @@
       <button
         type="button"
         class="option-card"
-        @click="goWebsite"
+        @click="goConnect"
       >
         <div class="option-header">
           <h2 class="option-title">
-            已有自己的网站！
+            接入网站
           </h2>
           <p class="option-desc">
             提交站点链接与基本信息，直接发布
@@ -51,8 +51,8 @@
         </div>
         <img
           class="create-image"
-          src="@/modules/application/assets/create-website.svg"
-          alt="Create Website"
+          src="@/modules/application/assets/create-connect.svg"
+          alt="Create Connect"
         >
       </button>
 
@@ -91,8 +91,8 @@ function goNew() {
   router.push('/application/create/new')
 }
 
-function goWebsite() {
-  router.push('/application/create/website')
+function goConnect() {
+  router.push('/application/create/connect')
 }
 
 function goCollect() {
