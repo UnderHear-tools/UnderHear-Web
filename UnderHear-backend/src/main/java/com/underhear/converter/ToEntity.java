@@ -2,11 +2,14 @@ package com.underhear.converter;
 
 import java.time.LocalDateTime;
 
+import com.underhear.pojo.dto.request.ApplicationCreateNewDort;
 import com.underhear.pojo.dto.request.UserGiteeDort;
 import com.underhear.pojo.dto.request.UserGithubDort;
+import com.underhear.pojo.entity.Application;
 import com.underhear.pojo.entity.User;
 import com.underhear.pojo.entity.UserGitee;
 import com.underhear.pojo.entity.UserGithub;
+import com.underhear.util.ApplicationUuidGenerator;
 import com.underhear.util.ShortUuidGenerator;
 
 public final class ToEntity {
@@ -93,5 +96,27 @@ public final class ToEntity {
         user.setLastLoginAt(lastLoginAt);
         user.setLastLoginSource(lastLoginSource);
         return user;
+    }
+
+    public static Application toApplication(User user, ApplicationCreateNewDort request) {
+        Application application = new Application();
+        String appid = ApplicationUuidGenerator.next();
+        String ownerUuid = user.getUuid();
+        String originalFilename = request.getAppFile().getOriginalFilename();
+
+        application.setAppid(appid);
+        application.setOwnerUuid(ownerUuid);
+        application.setCreationMethod("NEW");
+        application.setFramework(request.getFramework());
+        application.setAppName(request.getAppName());
+        application.setAppEnglishName(request.getAppEnglishName());
+        application.setAppUrl("https://" + request.getAppEnglishName() + ".underhear.cn/");
+        application.setVisibility(request.getVisibility());
+        application.setAppDescription(request.getAppDescription());
+        application.setStoragePath(ownerUuid + "/" + appid + "/" + originalFilename);
+        application.setOriginalFilename(originalFilename);
+        application.setFileType(request.getAppFile().getContentType());
+        application.setFileSize(Double.valueOf(request.getAppFile().getSize()));
+        return application;
     }
 }

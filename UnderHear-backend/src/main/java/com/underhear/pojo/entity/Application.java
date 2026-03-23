@@ -18,7 +18,7 @@ public class Application {
     private String appDescription;
     private String storagePath;
     private String originalFilename;
-    private String contentType;
+    private String fileType;
     private Double fileSize;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
