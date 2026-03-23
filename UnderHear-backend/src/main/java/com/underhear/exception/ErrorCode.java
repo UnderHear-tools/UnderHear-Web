@@ -5,18 +5,20 @@ import org.springframework.http.HttpStatusCode;
 
 public enum ErrorCode {
 
-    //常见错误
+    // 通用错误
     BAD_REQUEST("BAD_REQUEST", "请求错误", HttpStatus.BAD_REQUEST),
+    VALIDATION_FAILED("VALIDATION_FAILED", "参数校验失败", HttpStatus.BAD_REQUEST),
     UNAUTHORIZED("UNAUTHORIZED", "未授权", HttpStatus.UNAUTHORIZED),
     FORBIDDEN("FORBIDDEN", "禁止访问", HttpStatus.FORBIDDEN),
     NOT_FOUND("NOT_FOUND", "未找到资源", HttpStatus.NOT_FOUND),
     INTERNAL_ERROR("INTERNAL_ERROR", "服务器内部错误", HttpStatus.INTERNAL_SERVER_ERROR),
-    //自定义错误
+
+    // 业务错误
     USER_NOT_FOUND("USER_NOT_FOUND", "未找到该用户", HttpStatus.NOT_FOUND),
     BAD_AUTHORIZED("BAD_AUTHORIZED", "授权失败", HttpStatus.UNAUTHORIZED),
     NOT_LOGIN("NOT_LOGIN", "未登录或登录已过期", HttpStatus.OK),
 
-    //万能错误
+    // 兜底错误
     UNKNOWN_ERROR("UNKNOWN_ERROR", "未知错误", HttpStatus.INTERNAL_SERVER_ERROR);
 
     private final String code;

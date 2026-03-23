@@ -4,18 +4,18 @@ import com.underhear.pojo.entity.User;
 
 public interface UserService {
 
-    // 鏍规嵁 UUID 鏌ョ敤鎴凤紝鏌ヤ笉鍒板氨杩斿洖绌?
+    // 根据 UUID 查询用户信息。
     User getUserByUuid(String uuid);
 
-    // 鏍规嵁 GitHub ID 鏌ョ敤鎴凤紝鏌ヤ笉鍒板氨杩斿洖绌?
+    // 根据 GitHub ID 查询用户信息。
     User getUserByGithubId(Long githubId);
 
-    // 鏍规嵁 Gitee ID 鏌ョ敤鎴凤紝鏌ヤ笉鍒板氨杩斿洖绌?
+    // 根据 Gitee ID 查询用户信息。
     User getUserByGiteeId(Long giteeId);
 
-    // 鏇存柊鏈€鍚庣櫥褰曚俊鎭紝杩斿洖鍙楀奖鍝嶈鏁?
+    // 更新用户最后登录信息，返回受影响的行数。
     int updateUserLastLoginByUuid(String uuid, java.time.LocalDateTime lastLoginAt, String lastLoginSource);
 
-    // 璁板綍涓€娆＄櫥褰曟潵婧愶紝杩斿洖鍙楀奖鍝嶈鏁?
+    // 记录一次登录来源，返回受影响的行数。
     int insertUserLoginRecord(String uuid, String loginSource);
 }

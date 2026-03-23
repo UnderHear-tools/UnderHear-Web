@@ -2,7 +2,7 @@ import { post } from '@/api'
 
 export interface CreateApplicationRequest {
 	framework: string
-	uploadFile: File
+	appFile: File
 	appName: string
 	appEnglishName: string
 	visibility: string
@@ -13,7 +13,7 @@ function buildCreateApplicationFormData(request: CreateApplicationRequest): Form
 	const payload = new FormData()
 
 	payload.append('framework', request.framework)
-	payload.append('file', request.uploadFile)
+	payload.append('appFile', request.appFile)
 	payload.append('appName', request.appName)
 	payload.append('appEnglishName', request.appEnglishName)
 	payload.append('visibility', request.visibility)
@@ -26,9 +26,6 @@ export const applicationCreateNew = (request: CreateApplicationRequest) => {
 	const data = buildCreateApplicationFormData(request)
 
 	return post<void>('/application/create/new', data, {
-		headers: {
-			'Content-Type': 'multipart/form-data'
-		},
 		withCredentials: true
 	})
 }

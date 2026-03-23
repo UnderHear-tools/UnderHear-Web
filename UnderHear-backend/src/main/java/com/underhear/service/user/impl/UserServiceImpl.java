@@ -16,13 +16,13 @@ public class UserServiceImpl implements UserService {
 
     @Override
     @Cacheable(cacheNames = "user:info", key = "#uuid")
-    // 閫氳繃 UUID 鏌ョ敤鎴凤紙鍏堣 Redis锛屾湭鍛戒腑鍐嶆煡鏁版嵁搴擄級
+    // 根据 UUID 查询用户信息，命中 Redis 缓存时可减少数据库访问。
     public User getUserByUuid(String uuid) {
         return userMapper.getUserByUuid(uuid);
     }
 
     @Override
-    // 閫氳繃 GitHub ID 鏌ョ敤鎴?
+    // 根据 GitHub ID 查询用户信息。
     public User getUserByGithubId(Long githubId) {
         if (githubId == null) {
             return null;
@@ -31,7 +31,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    // 閫氳繃 Gitee ID 鏌ョ敤鎴?
+    // 根据 Gitee ID 查询用户信息。
     public User getUserByGiteeId(Long giteeId) {
         if (giteeId == null) {
             return null;
@@ -40,7 +40,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    // 鏇存柊鏈€鍚庣櫥褰曚俊鎭?
+    // 更新用户最后登录信息。
     public int updateUserLastLoginByUuid(String uuid, java.time.LocalDateTime lastLoginAt, String lastLoginSource) {
         if (uuid == null || uuid.isBlank()) {
             return 0;
@@ -49,7 +49,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    // 璁板綍涓€娆＄櫥褰曟潵婧?
+    // 记录一次登录来源。
     public int insertUserLoginRecord(String uuid, String loginSource) {
         if (uuid == null || uuid.isBlank() || loginSource == null || loginSource.isBlank()) {
             return 0;

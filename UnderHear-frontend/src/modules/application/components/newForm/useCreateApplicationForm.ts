@@ -165,13 +165,13 @@ export function useCreateApplicationForm() {
 
   function buildRequest(): CreateApplicationRequest {
     const framework = selectedFramework.value as FrameworkValue
-    const uploadFile = framework === 'html'
+    const appFile = framework === 'html'
       ? new File([htmlSource.value], 'index.html', { type: 'text/html;charset=utf-8' })
       : (file.value as File)
 
     return {
       framework,
-      uploadFile,
+      appFile,
       appName: appName.value,
       appEnglishName: appEnglishName.value,
       visibility: visibility.value,
