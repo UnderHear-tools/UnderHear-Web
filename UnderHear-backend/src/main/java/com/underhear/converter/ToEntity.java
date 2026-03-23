@@ -106,7 +106,7 @@ public final class ToEntity {
 
         application.setAppid(appid);
         application.setOwnerUuid(ownerUuid);
-        application.setCreationMethod("NEW");
+        application.setCreationMethod("new");
         application.setFramework(request.getFramework());
         application.setAppName(request.getAppName());
         application.setAppEnglishName(request.getAppEnglishName());
