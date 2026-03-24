@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.underhear.pojo.dto.request.ApplicationCreateNewDort;
+import com.underhear.pojo.dto.response.ApplicationCreateNewDore;
 import com.underhear.pojo.dto.response.common.ApiResponse;
 import com.underhear.pojo.entity.User;
 import com.underhear.security.SessionAuthService;
@@ -28,11 +29,11 @@ public class ApplicationCreateController {
     //consumes = MediaType.MULTIPART_FORM_DATA_VALUE
     //非 multipart/form-data 的请求会在映射阶段就被挡住，通常返回 415 Unsupported Media Type
     @PostMapping(value = "/new", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    public ApiResponse<Void> applicationCreateNew(
+    public ApiResponse<ApplicationCreateNewDore> applicationCreateNew(
             @CookieValue(value = "auth_token", required = false) String token,
             @Valid @ModelAttribute ApplicationCreateNewDort request) {
         User user = sessionAuthService.getCurrentUser(token);
-        applicationCreateService.applicationCreateNew(user, request);
-        return ApiResponse.success(null);
+        ApplicationCreateNewDore applicationCreateNewDore = applicationCreateService.applicationCreateNew(user, request);
+        return ApiResponse.success("应用创建成功！", applicationCreateNewDore);
     }
 }

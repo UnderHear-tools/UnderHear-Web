@@ -1,8 +1,10 @@
 package com.underhear.converter;
 
+import com.underhear.pojo.dto.response.ApplicationCreateNewDore;
 import com.underhear.pojo.dto.response.UserInfoDore;
 import com.underhear.pojo.dto.response.UserLoginDore;
 import com.underhear.pojo.dto.response.UserLoginWithTokenDore;
+import com.underhear.pojo.entity.Application;
 import com.underhear.pojo.entity.User;
 
 public final class ToDore {
@@ -33,6 +35,12 @@ public final class ToDore {
         userLoginDore.setLoginSource(userLoginWithTokenDore.getLoginSource());
         userLoginDore.setUserInfo(userLoginWithTokenDore.getUserInfo());
         return userLoginDore;
+    }
+
+    public static ApplicationCreateNewDore toApplicationCreateNewDore(Application application) {
+        ApplicationCreateNewDore applicationCreateNewDore = new ApplicationCreateNewDore();
+        applicationCreateNewDore.setAppUrl(application.getAppUrl());
+        return applicationCreateNewDore;
     }
     
 }

@@ -18,6 +18,10 @@ public class ApiResponse<T> {
         return new ApiResponse<>("OK", "请求成功", data);
     }
 
+    public static <T> ApiResponse<T> success(String message, T data) {
+        return new ApiResponse<>("OK", message, data);
+    }
+
     public static <T> ApiResponse<T> fail(String code, String message) {
         return new ApiResponse<>(code, message, null);
     }
