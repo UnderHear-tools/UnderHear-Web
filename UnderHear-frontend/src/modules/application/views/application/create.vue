@@ -43,7 +43,7 @@
       >
         <div class="option-header">
           <h2 class="option-title">
-            接入网站
+            已有自己的网站？
           </h2>
           <p class="option-desc">
             提交站点链接与基本信息，直接发布
