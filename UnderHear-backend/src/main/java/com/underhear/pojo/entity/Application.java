@@ -19,7 +19,7 @@ public class Application {
     private String storagePath;
     private String originalFilename;
     private String fileType;
-    private Double fileSize;
+    private String fileSize;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
 }

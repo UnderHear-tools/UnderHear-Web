@@ -10,6 +10,7 @@ import com.underhear.pojo.entity.User;
 import com.underhear.pojo.entity.UserGitee;
 import com.underhear.pojo.entity.UserGithub;
 import com.underhear.util.ApplicationUuidGenerator;
+import com.underhear.util.FileSizeFormatter;
 import com.underhear.util.ShortUuidGenerator;
 
 public final class ToEntity {
@@ -116,7 +117,7 @@ public final class ToEntity {
         application.setStoragePath(ownerUuid + "/" + appid + "/" + originalFilename);
         application.setOriginalFilename(originalFilename);
         application.setFileType(request.getAppFile().getContentType());
-        application.setFileSize(Double.valueOf(request.getAppFile().getSize()));
+        application.setFileSize(FileSizeFormatter.format(request.getAppFile().getSize()));
         return application;
     }
 }
