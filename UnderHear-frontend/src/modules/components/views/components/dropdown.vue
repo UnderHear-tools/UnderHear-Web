@@ -155,12 +155,12 @@
       </ComponentDocsDemoBlock>
     </ComponentDocsSection>
 
-    <ComponentDocsSection title="点击内容自动关闭">
+    <ComponentDocsSection title="点击内容保持展开">
       <template #description>
-        点击 <code>content</code> 插槽内的任意元素，下拉菜单会自动收起。配合 <code>ActionList</code> 使用时无需手动绑定关闭逻辑。
+        点击 <code>content</code> 插槽内的任意元素时，下拉菜单会保持展开；点击组件外部区域才会关闭。
       </template>
 
-      <ComponentDocsDemoBlock :code="demoAutoCloseCode">
+      <ComponentDocsDemoBlock :code="demoKeepOpenCode">
         <div class="dropdown-demo">
           <zDropdown>
             <template #trigger>
@@ -171,10 +171,10 @@
             <template #content>
               <div class="demo-content">
                 <div class="demo-item">
-                  选项一（点击自动关闭）
+                  选项一（点击后保持展开）
                 </div>
                 <div class="demo-item">
-                  选项二（点击自动关闭）
+                  选项二（点击后保持展开）
                 </div>
               </div>
             </template>
@@ -449,7 +449,7 @@ const slotsTableRows = [
   },
   {
     name: 'content',
-    description: '下拉菜单的内容，点击内容区域会自动关闭下拉菜单'
+    description: '下拉菜单的内容，点击内容区域会保持展开，点击组件外部区域会关闭'
   }
 ]
 
@@ -465,14 +465,14 @@ const exposeTableRows = [
   }
 ]
 
-const demoAutoCloseCode = `<template>
+const demoKeepOpenCode = `<template>
   <zDropdown>
     <template #trigger>
       <button>点击展开</button>
     </template>
     <template #content>
-      <div class="demo-item">选项一（点击自动关闭）</div>
-      <div class="demo-item">选项二（点击自动关闭）</div>
+      <div class="demo-item">选项一（点击后保持展开）</div>
+      <div class="demo-item">选项二（点击后保持展开）</div>
     </template>
   </zDropdown>
 </template>

@@ -155,8 +155,7 @@
 
     <ComponentDocsSection title="嵌套二级菜单">
       <template #description>
-        通过 <code>keep-open</code> 将某个 <code>ActionList.Item</code> 作为嵌套
-        <code>zDropdown</code> 的触发器，实现多级菜单效果。
+        直接将某个 <code>ActionList.Item</code> 作为嵌套 <code>zDropdown</code> 的触发器，实现多级菜单效果。
       </template>
       <ComponentDocsDemoBlock :code="demo5Code">
         <zDropdown>
@@ -174,10 +173,7 @@
               <ActionList.Item>选项2</ActionList.Item>
               <zDropdown side="outside-right">
                 <template #trigger>
-                  <ActionList.Item
-                    keep-open
-                    class="submenu-trigger"
-                  >
+                  <ActionList.Item class="submenu-trigger">
                     选项3 <ChevronRight color="#59636e" />
                   </ActionList.Item>
                 </template>
@@ -369,7 +365,7 @@ const demo5Code = `<template>
         <ActionList.Item>选项2</ActionList.Item>
         <zDropdown side="outside-right">
           <template #trigger>
-            <ActionList.Item keep-open class="submenu-trigger">
+            <ActionList.Item class="submenu-trigger">
               选项3 <ChevronRight color="#59636e" />
             </ActionList.Item>
           </template>

@@ -60,10 +60,9 @@
       </ComponentDocsDemoBlock>
     </ComponentDocsSection>
 
-    <ComponentDocsSection title="配合 Dropdown 使用 keep-open">
+    <ComponentDocsSection title="配合 Dropdown 使用">
       <template #description>
-        在 <code>zDropdown</code> 内使用时，点击列表项默认会关闭下拉菜单。为某个 <code>ActionList.Item</code> 添加
-        <code>keep-open</code> 属性，点击后不会收起内容区。
+        在 <code>zDropdown</code> 内使用时，点击列表项会保持展开；只有点击组件外部区域时，下拉菜单才会关闭。
       </template>
 
       <ComponentDocsDemoBlock :code="demo4Code">
@@ -75,10 +74,8 @@
           </template>
           <template #content>
             <ActionList>
-              <ActionList.Item>点击后关闭</ActionList.Item>
-              <ActionList.Item keep-open>
-                keep-open：点击不关闭
-              </ActionList.Item>
+              <ActionList.Item>点击后保持展开</ActionList.Item>
+              <ActionList.Item>点击其他列表项也保持展开</ActionList.Item>
             </ActionList>
           </template>
         </zDropdown>
@@ -178,8 +175,8 @@ const demo4Code = `<template>
     </template>
     <template #content>
       <ActionList>
-        <ActionList.Item>点击后关闭</ActionList.Item>
-        <ActionList.Item keep-open>keep-open：点击不关闭</ActionList.Item>
+        <ActionList.Item>点击后保持展开</ActionList.Item>
+        <ActionList.Item>点击其他列表项也保持展开</ActionList.Item>
       </ActionList>
     </template>
   </zDropdown>
@@ -219,12 +216,6 @@ const actionListItemPropsRows = [
   {
     name: 'newTab',
     description: '是否在新标签页打开链接（仅在设置 href 时生效）',
-    type: 'boolean',
-    default: 'false'
-  },
-  {
-    name: 'keepOpen',
-    description: '在 zDropdown 内使用时，点击该列表项后不会收起下拉内容',
     type: 'boolean',
     default: 'false'
   }

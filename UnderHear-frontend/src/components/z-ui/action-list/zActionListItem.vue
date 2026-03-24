@@ -6,7 +6,6 @@
     :rel="props.href && props.newTab ? 'noopener noreferrer' : undefined"
     :type="props.href ? undefined : 'button'"
     class="z-action-list-item"
-    :data-keep-open="props.keepOpen || undefined"
     :aria-checked="isSingleSelect ? (isSelected ? 'true' : 'false') : undefined"
     @click="handleClick"
   >
@@ -39,13 +38,11 @@ const props = withDefaults(
   defineProps<{
     href?: string
     newTab?: boolean
-    keepOpen?: boolean
     value?: string
   }>(),
   {
     href: '',
     newTab: false,
-    keepOpen: false,
     value: ''
   }
 )

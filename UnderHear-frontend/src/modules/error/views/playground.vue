@@ -58,10 +58,7 @@
           <ActionList.Item>选项2</ActionList.Item>
           <zDropdown>
             <template #trigger>
-              <ActionList.Item
-                keep-open
-                class="select"
-              >
+              <ActionList.Item class="select">
                 选项3 <ChevronRight color="#59636e" />
               </ActionList.Item>
             </template>

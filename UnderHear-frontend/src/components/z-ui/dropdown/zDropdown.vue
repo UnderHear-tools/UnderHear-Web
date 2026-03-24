@@ -17,7 +17,6 @@
         class="z-dropdown-content"
         :class="sideClass"
         :style="contentStyle"
-        @click="onContentClick"
       >
         <slot name="content" />
       </div>
@@ -275,12 +274,6 @@ watch(() => props.side, async () => {
   await nextTick()
   updateAutoSide()
 }, { flush: 'post' })
-
-function onContentClick(e: MouseEvent) {
-  if (!(e.target as HTMLElement).closest('[data-keep-open]')) {
-    isOpen.value = false
-  }
-}
 
 defineExpose({ close: () => { isOpen.value = false } })
 </script>
