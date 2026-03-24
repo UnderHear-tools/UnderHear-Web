@@ -78,6 +78,7 @@ const isOpen = ref(false)
 const dropdownRef = ref<HTMLElement>()
 const contentRef = ref<HTMLElement>()
 const autoPlacement = ref<OutsidePlacement>({ side: 'outside-bottom', align: 'start' })
+const openDocumentHeight = ref(0)
 const isInsideSide = computed(() => props.side?.startsWith('inside-') ?? false)
 
 function isOutsideSide(side: DropdownSide): side is OutsideSide {
@@ -155,6 +156,12 @@ function getOverflowScore(x: number, y: number, width: number, height: number, v
   return overflowLeft + overflowTop + overflowRight + overflowBottom
 }
 
+function getVerticalOverflowScore(y: number, height: number, documentHeight: number) {
+  const overflowTop = Math.max(0, -y)
+  const overflowBottom = Math.max(0, y + height - documentHeight)
+  return overflowTop + overflowBottom
+}
+
 function getPlacementCandidates(preferred: OutsideSide): OutsidePlacement[] {
   const sideOrder = [preferred, OPPOSITE_SIDE[preferred], ...CROSS_AXIS_SIDES[preferred]]
   return sideOrder.flatMap(side => [
@@ -163,7 +170,8 @@ function getPlacementCandidates(preferred: OutsideSide): OutsidePlacement[] {
   ])
 }
 
-function chooseBestOutsidePlacement(
+function chooseBestPlacementFromCandidates(
+  candidates: OutsidePlacement[],
   anchorLeft: number,
   anchorTop: number,
   anchorRight: number,
@@ -171,10 +179,8 @@ function chooseBestOutsidePlacement(
   contentWidth: number,
   contentHeight: number,
   viewportWidth: number,
-  documentHeight: number,
-  preferred: OutsideSide
+  documentHeight: number
 ) {
-  const candidates = getPlacementCandidates(preferred)
   let bestPlacement = candidates[0]
   let bestScore = Number.POSITIVE_INFINITY
 
@@ -191,6 +197,86 @@ function chooseBestOutsidePlacement(
   return bestPlacement
 }
 
+function chooseBestOutsidePlacement(
+  anchorLeft: number,
+  anchorTop: number,
+  anchorRight: number,
+  anchorBottom: number,
+  contentWidth: number,
+  contentHeight: number,
+  viewportWidth: number,
+  documentHeight: number,
+  preferred: OutsideSide
+) {
+  if (preferred === 'outside-top' || preferred === 'outside-bottom') {
+    const preferredPlacement = chooseBestPlacementFromCandidates(
+      [
+        { side: preferred, align: 'start' },
+        { side: preferred, align: 'end' }
+      ],
+      anchorLeft,
+      anchorTop,
+      anchorRight,
+      anchorBottom,
+      contentWidth,
+      contentHeight,
+      viewportWidth,
+      documentHeight
+    )
+    const preferredPosition = getOutsidePosition(preferredPlacement, anchorLeft, anchorTop, anchorRight, anchorBottom, contentWidth, contentHeight)
+    const preferredVerticalOverflow = getVerticalOverflowScore(preferredPosition.y, contentHeight, documentHeight)
+
+    if (preferredVerticalOverflow === 0) {
+      return preferredPlacement
+    }
+
+    const opposite = OPPOSITE_SIDE[preferred]
+    const oppositePlacement = chooseBestPlacementFromCandidates(
+      [
+        { side: opposite, align: 'start' },
+        { side: opposite, align: 'end' }
+      ],
+      anchorLeft,
+      anchorTop,
+      anchorRight,
+      anchorBottom,
+      contentWidth,
+      contentHeight,
+      viewportWidth,
+      documentHeight
+    )
+    const oppositePosition = getOutsidePosition(oppositePlacement, anchorLeft, anchorTop, anchorRight, anchorBottom, contentWidth, contentHeight)
+    const oppositeVerticalOverflow = getVerticalOverflowScore(oppositePosition.y, contentHeight, documentHeight)
+
+    if (oppositeVerticalOverflow === 0) {
+      return oppositePlacement
+    }
+  }
+
+  return chooseBestPlacementFromCandidates(
+    getPlacementCandidates(preferred),
+    anchorLeft,
+    anchorTop,
+    anchorRight,
+    anchorBottom,
+    contentWidth,
+    contentHeight,
+    viewportWidth,
+    documentHeight
+  )
+}
+
+function getDocumentHeight() {
+  const doc = document.documentElement
+  const body = document.body
+  return Math.max(
+    doc.scrollHeight,
+    doc.clientHeight,
+    body?.scrollHeight ?? 0,
+    body?.clientHeight ?? 0
+  )
+}
+
 function updateAutoSide() {
   if (isInsideSide.value) return
   if (!isOpen.value) return
@@ -201,8 +287,6 @@ function updateAutoSide() {
 
   const anchorRect = anchor.getBoundingClientRect()
   const scrollY = window.scrollY
-  const doc = document.documentElement
-  const body = document.body
   const anchorLeft = anchorRect.left
   const anchorTop = anchorRect.top + scrollY
   const anchorRight = anchorRect.right
@@ -210,12 +294,7 @@ function updateAutoSide() {
   const contentWidth = content.offsetWidth
   const contentHeight = content.offsetHeight
   const viewportWidth = window.innerWidth
-  const documentHeight = Math.max(
-    doc.scrollHeight,
-    doc.clientHeight,
-    body?.scrollHeight ?? 0,
-    body?.clientHeight ?? 0
-  )
+  const documentHeight = openDocumentHeight.value || getDocumentHeight()
 
   autoPlacement.value = chooseBestOutsidePlacement(
     anchorLeft,
@@ -259,14 +338,19 @@ onBeforeUnmount(() => {
 
 watch(isOpen, async open => {
   if (!open) {
+    openDocumentHeight.value = 0
     removeViewportListeners()
     return
+  }
+
+  if (!openDocumentHeight.value) {
+    openDocumentHeight.value = getDocumentHeight()
   }
 
   addViewportListeners()
   await nextTick()
   updateAutoSide()
-}, { flush: 'post' })
+})
 
 watch(() => props.side, async () => {
   const open = isOpen.value

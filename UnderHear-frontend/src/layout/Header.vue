@@ -159,7 +159,7 @@ watch(() => route.path, () => {
 .header {
   position: sticky;
   top: 0;
-  z-index: 999;
+  z-index: 9999;
   width: 100%;
   background: var(--bgColor-muted);
   backdrop-filter: blur(40px);

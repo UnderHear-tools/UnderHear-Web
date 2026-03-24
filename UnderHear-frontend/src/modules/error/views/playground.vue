@@ -1,6 +1,6 @@
 <template>
   <div class="hero">
-    <zDropdown>
+    <zDropdown side="outside-right">
       <template #trigger>
         <zButton>
           <template #leadingVisual>
@@ -56,7 +56,7 @@
         <ActionList>
           <ActionList.Item>选项1</ActionList.Item>
           <ActionList.Item>选项2</ActionList.Item>
-          <zDropdown>
+          <zDropdown side="outside-right">
             <template #trigger>
               <ActionList.Item class="select">
                 选项3 <ChevronRight color="#59636e" />
@@ -89,10 +89,9 @@ const label = ref('新建文件')
 </script>
 <style scoped>
 .hero {
-  height: 80vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  position: absolute;
+  right: 0;
+  bottom: 0;
 }
 
 .select {
