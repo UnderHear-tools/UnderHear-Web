@@ -8,6 +8,7 @@ import org.springframework.validation.BindException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+import org.springframework.web.multipart.MaxUploadSizeExceededException;
 
 import com.underhear.pojo.dto.response.common.ApiResponse;
 
@@ -30,6 +31,14 @@ public class GlobalExceptionHandler {
         log.warn("Validation failed: {}", message);
         return ResponseEntity.status(ErrorCode.VALIDATION_FAILED.getStatus())
                 .body(ApiResponse.fail(ErrorCode.VALIDATION_FAILED.getCode(), message));
+    }
+
+    @ExceptionHandler(MaxUploadSizeExceededException.class)
+    public ResponseEntity<ApiResponse<Void>> handleMaxUploadSizeExceededException(MaxUploadSizeExceededException ex) {
+        String message = ErrorCode.MAX_UPLOAD_SIZE_EXCEEDED.getMessage();
+        log.warn("Upload size exceeded: {}", ex.getMessage());
+        return ResponseEntity.status(ErrorCode.MAX_UPLOAD_SIZE_EXCEEDED.getStatus())
+                .body(ApiResponse.fail(ErrorCode.MAX_UPLOAD_SIZE_EXCEEDED.getCode(), message));
     }
 
     // 兜底处理未被前面捕获的异常，统一返回服务器内部错误。

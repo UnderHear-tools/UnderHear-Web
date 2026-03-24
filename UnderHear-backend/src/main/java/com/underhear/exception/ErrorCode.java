@@ -12,6 +12,7 @@ public enum ErrorCode {
     FORBIDDEN("FORBIDDEN", "禁止访问", HttpStatus.FORBIDDEN),
     NOT_FOUND("NOT_FOUND", "未找到资源", HttpStatus.NOT_FOUND),
     INTERNAL_ERROR("INTERNAL_ERROR", "服务器内部错误", HttpStatus.INTERNAL_SERVER_ERROR),
+    MAX_UPLOAD_SIZE_EXCEEDED("MAX_UPLOAD_SIZE_EXCEEDED", "上传文件大小超过限制", HttpStatus.CONTENT_TOO_LARGE),
 
     // 业务错误
     USER_NOT_FOUND("USER_NOT_FOUND", "未找到该用户", HttpStatus.NOT_FOUND),
