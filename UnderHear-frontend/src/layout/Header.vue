@@ -164,7 +164,7 @@ watch(() => route.path, () => {
   background: var(--bgColor-muted);
   backdrop-filter: blur(40px);
   -webkit-backdrop-filter: blur(40px);
-  box-shadow: 0 1px 1px var(--borderColor-default);
+  box-shadow: inset 0 calc(var(--borderWidth-thin, 1px) * -1) var(--borderColor-default);
 }
 
 .header-inner {

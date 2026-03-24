@@ -39,7 +39,7 @@ const avatarStyle = computed(() => {
   display: flex;
   align-items: center;
   justify-content: center;
-  outline: 2px solid var(--borderColor-default, #d1d9e0);
+  outline: 1px solid var(--borderColor-default, #d1d9e0);
   border-radius: 50%;
   background: color-mix(in srgb, var(--bgColor-default, #ffffff) 80%, var(--bgColor-transparent, #ffffff00));
   backdrop-filter: blur(8px);
