@@ -16,6 +16,7 @@ public enum ErrorCode {
     // 业务错误
     USER_NOT_FOUND("USER_NOT_FOUND", "未找到该用户", HttpStatus.NOT_FOUND),
     BAD_AUTHORIZED("BAD_AUTHORIZED", "授权失败", HttpStatus.UNAUTHORIZED),
+    APP_ENGLISH_NAME_ALREADY_EXISTS("APP_ENGLISH_NAME_ALREADY_EXISTS", "应用英文名称已存在", HttpStatus.CONFLICT),
     APPLICATION_CREATE_FAILED("APPLICATION_CREATE_FAILED", "应用创建失败", HttpStatus.INTERNAL_SERVER_ERROR),
     NOT_LOGIN("NOT_LOGIN", "未登录或登录已过期", HttpStatus.OK),
 

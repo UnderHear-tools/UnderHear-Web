@@ -1,6 +1,7 @@
 package com.underhear.service.application.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DuplicateKeyException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -25,7 +26,17 @@ public class ApplicationCreateServiceImpl implements ApplicationCreateService {
     @Transactional
     public ApplicationCreateNewDore applicationCreateNew(User user, ApplicationCreateNewDort request) {
         Application application = ToEntity.toApplication(user, request);
-        int rows = applicationCreateMapper.insertApplication(application);
+        if (applicationCreateMapper.countByAppEnglishName(application.getAppEnglishName()) > 0) {
+            throw new BizException(ErrorCode.APP_ENGLISH_NAME_ALREADY_EXISTS);
+        }
+
+        int rows;
+        try {
+            rows = applicationCreateMapper.insertApplication(application);
+        } catch (DuplicateKeyException ex) {
+            throw new BizException(ErrorCode.APP_ENGLISH_NAME_ALREADY_EXISTS);
+        }
+
         if (rows != 1) {
             throw new BizException(ErrorCode.APPLICATION_CREATE_FAILED);
         }

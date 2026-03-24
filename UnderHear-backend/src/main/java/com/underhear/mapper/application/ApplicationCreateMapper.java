@@ -2,11 +2,20 @@ package com.underhear.mapper.application;
 
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
+import org.apache.ibatis.annotations.Select;
 
 import com.underhear.pojo.entity.Application;
 
 @Mapper
 public interface ApplicationCreateMapper {
+
+    @Select("""
+            select count(1)
+            from `application`
+            where `app_english_name` = #{appEnglishName}
+            """)
+    int countByAppEnglishName(@Param("appEnglishName") String appEnglishName);
 
     @Insert("""
             insert into `application`
