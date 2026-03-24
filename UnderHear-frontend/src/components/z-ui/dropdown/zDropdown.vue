@@ -16,6 +16,7 @@
         ref="contentRef"
         class="z-dropdown-content"
         :class="sideClass"
+        :style="contentStyle"
         @click="onContentClick"
       >
         <slot name="content" />
@@ -27,30 +28,46 @@
 <script setup lang="ts">
 import { computed, ref, onMounted, onBeforeUnmount, watch, nextTick } from 'vue'
 
-type DropdownSide =
+type InsideSide =
   | 'inside-top'
   | 'inside-bottom'
   | 'inside-left'
   | 'inside-right'
   | 'inside-center'
+
+type OutsideSide = 'outside-top' | 'outside-bottom' | 'outside-left' | 'outside-right'
+
+type DropdownSide =
+  | InsideSide
   | 'outside-top'
   | 'outside-bottom'
   | 'outside-left'
   | 'outside-right'
 
-type OutsideSide = 'outside-top' | 'outside-bottom' | 'outside-left' | 'outside-right'
+type OutsideAlign = 'start' | 'end'
+type OutsidePlacement = {
+  side: OutsideSide
+  align: OutsideAlign
+}
 
-const OUTSIDE_SIDES: OutsideSide[] = ['outside-bottom', 'outside-top', 'outside-right', 'outside-left']
-const SIDE_TO_OUTSIDE: Record<DropdownSide, OutsideSide> = {
+const INSIDE_TO_OUTSIDE: Record<InsideSide, OutsideSide> = {
   'inside-top': 'outside-top',
   'inside-bottom': 'outside-bottom',
   'inside-left': 'outside-left',
   'inside-right': 'outside-right',
-  'inside-center': 'outside-bottom',
-  'outside-top': 'outside-top',
-  'outside-bottom': 'outside-bottom',
-  'outside-left': 'outside-left',
-  'outside-right': 'outside-right'
+  'inside-center': 'outside-bottom'
+}
+const OPPOSITE_SIDE: Record<OutsideSide, OutsideSide> = {
+  'outside-top': 'outside-bottom',
+  'outside-bottom': 'outside-top',
+  'outside-left': 'outside-right',
+  'outside-right': 'outside-left'
+}
+const CROSS_AXIS_SIDES: Record<OutsideSide, OutsideSide[]> = {
+  'outside-top': ['outside-right', 'outside-left'],
+  'outside-bottom': ['outside-right', 'outside-left'],
+  'outside-left': ['outside-bottom', 'outside-top'],
+  'outside-right': ['outside-bottom', 'outside-top']
 }
 const OFFSET = 4
 
@@ -61,12 +78,17 @@ const props = defineProps<{
 const isOpen = ref(false)
 const dropdownRef = ref<HTMLElement>()
 const contentRef = ref<HTMLElement>()
-const autoSide = ref<OutsideSide>('outside-bottom')
+const autoPlacement = ref<OutsidePlacement>({ side: 'outside-bottom', align: 'start' })
 const isInsideSide = computed(() => props.side?.startsWith('inside-') ?? false)
+
+function isOutsideSide(side: DropdownSide): side is OutsideSide {
+  return side.startsWith('outside-')
+}
 
 const preferredOutsideSide = computed<OutsideSide>(() => {
   if (!props.side) return 'outside-bottom'
-  return SIDE_TO_OUTSIDE[props.side]
+  if (isOutsideSide(props.side)) return props.side
+  return INSIDE_TO_OUTSIDE[props.side]
 })
 
 const effectiveSide = computed<DropdownSide>(() => {
@@ -74,12 +96,22 @@ const effectiveSide = computed<DropdownSide>(() => {
     return props.side
   }
 
-  return autoSide.value
+  return autoPlacement.value.side
 })
 const sideClass = computed(() => `z-dropdown-content--${effectiveSide.value}`)
+const contentStyle = computed(() => {
+  if (isInsideSide.value) return undefined
+
+  const { side, align } = autoPlacement.value
+  if (side === 'outside-bottom' || side === 'outside-top') {
+    return align === 'end' ? { left: 'auto', right: '0' } : { left: '0', right: 'auto' }
+  }
+
+  return align === 'end' ? { top: 'auto', bottom: '0' } : { top: '0', bottom: 'auto' }
+})
 
 function getOutsidePosition(
-  side: OutsideSide,
+  placement: OutsidePlacement,
   anchorLeft: number,
   anchorTop: number,
   anchorRight: number,
@@ -87,55 +119,77 @@ function getOutsidePosition(
   contentWidth: number,
   contentHeight: number
 ) {
+  const { side, align } = placement
+
   if (side === 'outside-top') {
-    return { x: anchorLeft, y: anchorTop - contentHeight - OFFSET }
+    return {
+      x: align === 'end' ? anchorRight - contentWidth : anchorLeft,
+      y: anchorTop - contentHeight - OFFSET
+    }
   }
 
   if (side === 'outside-left') {
-    return { x: anchorLeft - contentWidth - OFFSET, y: anchorTop }
+    return {
+      x: anchorLeft - contentWidth - OFFSET,
+      y: align === 'end' ? anchorBottom - contentHeight : anchorTop
+    }
   }
 
   if (side === 'outside-right') {
-    return { x: anchorRight + OFFSET, y: anchorTop }
+    return {
+      x: anchorRight + OFFSET,
+      y: align === 'end' ? anchorBottom - contentHeight : anchorTop
+    }
   }
 
-  return { x: anchorLeft, y: anchorBottom + OFFSET }
+  return {
+    x: align === 'end' ? anchorRight - contentWidth : anchorLeft,
+    y: anchorBottom + OFFSET
+  }
 }
 
-function getOverflowScore(x: number, y: number, width: number, height: number, viewportWidth: number, viewportHeight: number) {
+function getOverflowScore(x: number, y: number, width: number, height: number, viewportWidth: number, documentHeight: number) {
   const overflowLeft = Math.max(0, -x)
   const overflowTop = Math.max(0, -y)
   const overflowRight = Math.max(0, x + width - viewportWidth)
-  const overflowBottom = Math.max(0, y + height - viewportHeight)
+  const overflowBottom = Math.max(0, y + height - documentHeight)
   return overflowLeft + overflowTop + overflowRight + overflowBottom
 }
 
-function chooseBestOutsideSide(
+function getPlacementCandidates(preferred: OutsideSide): OutsidePlacement[] {
+  const sideOrder = [preferred, OPPOSITE_SIDE[preferred], ...CROSS_AXIS_SIDES[preferred]]
+  return sideOrder.flatMap(side => [
+    { side, align: 'start' as const },
+    { side, align: 'end' as const }
+  ])
+}
+
+function chooseBestOutsidePlacement(
   anchorLeft: number,
   anchorTop: number,
   anchorRight: number,
   anchorBottom: number,
   contentWidth: number,
   contentHeight: number,
-  pageWidth: number,
-  pageHeight: number,
+  viewportWidth: number,
+  documentHeight: number,
   preferred: OutsideSide
 ) {
-  const candidates = [preferred, ...OUTSIDE_SIDES.filter(side => side !== preferred)]
-  let bestSide = candidates[0]
+  const candidates = getPlacementCandidates(preferred)
+  let bestPlacement = candidates[0]
   let bestScore = Number.POSITIVE_INFINITY
 
-  for (const side of candidates) {
-    const { x, y } = getOutsidePosition(side, anchorLeft, anchorTop, anchorRight, anchorBottom, contentWidth, contentHeight)
-    const score = getOverflowScore(x, y, contentWidth, contentHeight, pageWidth, pageHeight)
+  for (const placement of candidates) {
+    const { x, y } = getOutsidePosition(placement, anchorLeft, anchorTop, anchorRight, anchorBottom, contentWidth, contentHeight)
+    const score = getOverflowScore(x, y, contentWidth, contentHeight, viewportWidth, documentHeight)
 
     if (score < bestScore) {
       bestScore = score
-      bestSide = side
+      bestPlacement = placement
     }
   }
 
-  return bestSide
+  return bestPlacement
 }
 
 function updateAutoSide() {
@@ -147,28 +201,32 @@ function updateAutoSide() {
   if (!anchor || !content) return
 
   const anchorRect = anchor.getBoundingClientRect()
-  const scrollX = window.scrollX
   const scrollY = window.scrollY
-  const anchorLeft = anchorRect.left + scrollX
+  const doc = document.documentElement
+  const body = document.body
+  const anchorLeft = anchorRect.left
   const anchorTop = anchorRect.top + scrollY
-  const anchorRight = anchorRect.right + scrollX
+  const anchorRight = anchorRect.right
   const anchorBottom = anchorRect.bottom + scrollY
   const contentWidth = content.offsetWidth
   const contentHeight = content.offsetHeight
-  const doc = document.documentElement
-  const body = document.body
-  const pageWidth = Math.max(doc.scrollWidth, doc.clientWidth, body?.scrollWidth ?? 0, body?.clientWidth ?? 0)
-  const pageHeight = Math.max(doc.scrollHeight, doc.clientHeight, body?.scrollHeight ?? 0, body?.clientHeight ?? 0)
+  const viewportWidth = window.innerWidth
+  const documentHeight = Math.max(
+    doc.scrollHeight,
+    doc.clientHeight,
+    body?.scrollHeight ?? 0,
+    body?.clientHeight ?? 0
+  )
 
-  autoSide.value = chooseBestOutsideSide(
+  autoPlacement.value = chooseBestOutsidePlacement(
     anchorLeft,
     anchorTop,
     anchorRight,
     anchorBottom,
     contentWidth,
     contentHeight,
-    pageWidth,
-    pageHeight,
+    viewportWidth,
+    documentHeight,
     preferredOutsideSide.value
   )
 }
@@ -252,24 +310,20 @@ defineExpose({ close: () => { isOpen.value = false } })
 
 .z-dropdown-content--outside-bottom {
   top: calc(100% + 4px);
-  left: 0;
   --z-dropdown-enter-y: -8px;
 }
 
 .z-dropdown-content--outside-top {
   bottom: calc(100% + 4px);
-  left: 0;
   --z-dropdown-enter-y: 8px;
 }
 
 .z-dropdown-content--outside-left {
-  top: 0;
   right: calc(100% + 4px);
   --z-dropdown-enter-x: 8px;
 }
 
 .z-dropdown-content--outside-right {
-  top: 0;
   left: calc(100% + 4px);
   --z-dropdown-enter-x: -8px;
 }
