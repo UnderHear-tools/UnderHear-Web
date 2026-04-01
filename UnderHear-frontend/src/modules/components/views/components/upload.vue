@@ -2,20 +2,20 @@
   <ComponentDocsPage>
     <ComponentDocsHeader
       title="Upload 上传"
-      description="通过拖拽或点击选择文件进行上传。"
+      description="通过拖拽或点击选择文件，也可通过 directory 模式选择文件夹。"
     />
 
     <ComponentDocsSection title="基础用法">
       <template #description>
-        通过 <code>v-model</code> 绑定选中的文件对象，支持点击与拖拽两种方式。
+        通过 <code>v-model</code> 绑定选中的文件数组，默认保持单文件交互。
       </template>
       <ComponentDocsDemoBlock :code="demo1Code">
-        <zUpload v-model="file1" />
+        <zUpload v-model="files1" />
         <p
-          v-if="file1"
+          v-if="files1.length"
           class="demo-info"
         >
-          已选择：{{ file1.name }}（{{ (file1.size / 1024).toFixed(1) }} KB）
+          {{ formatSelectedInfo(files1) }}
         </p>
       </ComponentDocsDemoBlock>
     </ComponentDocsSection>
@@ -26,10 +26,35 @@
       </template>
       <ComponentDocsDemoBlock :code="demo2Code">
         <zUpload
-          v-model="file2"
+          v-model="files2"
           accept=".zip,.html"
           hint="仅支持 .zip 和 .html 文件"
         />
+        <p
+          v-if="files2.length"
+          class="demo-info"
+        >
+          {{ formatSelectedInfo(files2) }}
+        </p>
+      </ComponentDocsDemoBlock>
+    </ComponentDocsSection>
+
+    <ComponentDocsSection title="文件夹模式">
+      <template #description>
+        设置 <code>directory</code> 后启用文件夹上传。组件会返回扁平化后的文件数组。
+      </template>
+      <ComponentDocsDemoBlock :code="demo3Code">
+        <zUpload
+          v-model="files3"
+          directory
+          hint="点击选择文件夹，或拖拽文件夹到此处"
+        />
+        <p
+          v-if="files3.length"
+          class="demo-info"
+        >
+          {{ formatSelectedInfo(files3) }}
+        </p>
       </ComponentDocsDemoBlock>
     </ComponentDocsSection>
 
@@ -37,9 +62,9 @@
       <template #description>
         通过 <code>hint</code> 属性在上传区域底部展示辅助说明。
       </template>
-      <ComponentDocsDemoBlock :code="demo3Code">
+      <ComponentDocsDemoBlock :code="demo4Code">
         <zUpload
-          v-model="file3"
+          v-model="files4"
           hint="支持 .zip 格式的 dist 构建包或 .html 文件"
         />
       </ComponentDocsDemoBlock>
@@ -49,8 +74,8 @@
       <template #description>
         使用默认插槽替换上传区域的内部内容。
       </template>
-      <ComponentDocsDemoBlock :code="demo4Code">
-        <zUpload v-model="file4">
+      <ComponentDocsDemoBlock :code="demo5Code">
+        <zUpload v-model="files5">
           <div class="custom-upload-content">
             <Upload />
             <p class="custom-upload-text">
@@ -106,47 +131,67 @@ import ComponentDocsHeader from '@/modules/components/components/ComponentDocsPa
 import ComponentDocsPage from '@/modules/components/components/ComponentDocsPage/ComponentDocsPage.vue'
 import ComponentDocsSection from '@/modules/components/components/ComponentDocsPage/ComponentDocsSection.vue'
 
-const file1 = ref<File | null>(null)
-const file2 = ref<File | null>(null)
-const file3 = ref<File | null>(null)
-const file4 = ref<File | null>(null)
+const files1 = ref<File[]>([])
+const files2 = ref<File[]>([])
+const files3 = ref<File[]>([])
+const files4 = ref<File[]>([])
+const files5 = ref<File[]>([])
 
 const demo1Code = `<template>
-  <zUpload v-model="file" />
-  <p v-if="file">已选择：{{ file.name }}（{{ (file.size / 1024).toFixed(1) }} KB）</p>
+  <zUpload v-model="files" />
+  <p v-if="files.length">{{ files[0].name }}</p>
 </template>
 
 <script setup lang="ts">
 import { ref } from 'vue'
 import { zUpload } from '@/components/z-ui/upload'
 
-const file = ref<File | null>(null)
+const files = ref<File[]>([])
 <\/script>`
 
 const demo2Code = `<template>
-  <zUpload v-model="file" accept=".zip,.html" hint="仅支持 .zip 和 .html 文件" />
+  <zUpload
+    v-model="files"
+    accept=".zip,.html"
+    hint="仅支持 .zip 和 .html 文件"
+  />
 </template>
 
 <script setup lang="ts">
 import { ref } from 'vue'
 import { zUpload } from '@/components/z-ui/upload'
 
-const file = ref<File | null>(null)
+const files = ref<File[]>([])
 <\/script>`
 
 const demo3Code = `<template>
-  <zUpload v-model="file" hint="支持 .zip 格式的 dist 构建包或 .html 文件" />
+  <zUpload
+    v-model="files"
+    directory
+    hint="点击选择文件夹，或拖拽文件夹到此处"
+  />
 </template>
 
 <script setup lang="ts">
 import { ref } from 'vue'
 import { zUpload } from '@/components/z-ui/upload'
 
-const file = ref<File | null>(null)
+const files = ref<File[]>([])
 <\/script>`
 
 const demo4Code = `<template>
-  <zUpload v-model="file">
+  <zUpload v-model="files" hint="支持 .zip 格式的 dist 构建包或 .html 文件" />
+</template>
+
+<script setup lang="ts">
+import { ref } from 'vue'
+import { zUpload } from '@/components/z-ui/upload'
+
+const files = ref<File[]>([])
+<\/script>`
+
+const demo5Code = `<template>
+  <zUpload v-model="files">
     <div class="custom-upload-content">
       <Upload />
       <p>点击或拖拽文件到这里</p>
@@ -160,7 +205,7 @@ import { ref } from 'vue'
 import { zUpload } from '@/components/z-ui/upload'
 import { Upload } from '@/components/z-ui/icon/Octicons-vue'
 
-const file = ref<File | null>(null)
+const files = ref<File[]>([])
 <\/script>`
 
 const apiCols: ZTableColumn[] = [
@@ -171,9 +216,10 @@ const apiCols: ZTableColumn[] = [
 ]
 
 const apiRows = [
-  { name: 'modelValue', description: '绑定的文件对象（v-model）', type: 'File | null', default: 'null' },
+  { name: 'modelValue', description: '绑定的文件数组（v-model）', type: 'File[]', default: '[]' },
   { name: 'accept', description: '接受的文件类型，格式同原生 input accept', type: 'string', default: "''" },
-  { name: 'hint', description: '上传区域底部的提示文案', type: 'string', default: "''" }
+  { name: 'hint', description: '上传区域底部的提示文案', type: 'string', default: "''" },
+  { name: 'directory', description: '启用文件夹上传模式，并返回扁平化后的文件数组', type: 'boolean', default: 'false' }
 ]
 
 const eventCols: ZTableColumn[] = [
@@ -183,7 +229,7 @@ const eventCols: ZTableColumn[] = [
 ]
 
 const eventRows = [
-  { name: 'update:modelValue', description: '选择文件或移除文件时触发', type: 'File | null' }
+  { name: 'update:modelValue', description: '选择文件、文件夹或移除文件时触发', type: 'File[]' }
 ]
 
 const slotCols: ZTableColumn[] = [
@@ -194,6 +240,29 @@ const slotCols: ZTableColumn[] = [
 const slotRows = [
   { name: 'default', description: '自定义上传区域的内部内容（替换默认图标和文字）' }
 ]
+
+function formatSelectedInfo(files: File[]): string {
+  if (files.length === 1) {
+    return `已选择：${files[0].name}（${formatFileSize(files[0].size)}）`
+  }
+
+  const totalSize = files.reduce((sum, file) => sum + file.size, 0)
+  return `已选择：${files.length} 个文件（${formatFileSize(totalSize)}）`
+}
+
+function formatFileSize(size: number): string {
+  if (size < 1024) {
+    return `${size} B`
+  }
+  if (size < 1024 * 1024) {
+    return `${(size / 1024).toFixed(1)} KB`
+  }
+  if (size < 1024 * 1024 * 1024) {
+    return `${(size / (1024 * 1024)).toFixed(1)} MB`
+  }
+
+  return `${(size / (1024 * 1024 * 1024)).toFixed(1)} GB`
+}
 </script>
 
 <style scoped>

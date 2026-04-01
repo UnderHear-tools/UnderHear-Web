@@ -4,9 +4,9 @@
       class="z-upload-drop"
       :class="{ 'z-upload-drop--over': dragging }"
       @dragover.prevent="dragging = true"
-      @dragleave="dragging = false"
+      @dragleave="onDragLeave"
       @drop.prevent="onDrop"
-      @click="inputRef!.click()"
+      @click="openFileDialog"
     >
       <slot>
         <svg
@@ -19,7 +19,7 @@
           <path d="M11.78 4.72a.749.749 0 1 1-1.06 1.06L8.75 3.811V9.5a.75.75 0 0 1-1.5 0V3.811L5.28 5.78a.749.749 0 1 1-1.06-1.06l3.25-3.25a.749.749 0 0 1 1.06 0l3.25 3.25Z" />
         </svg>
         <p class="z-upload-text">
-          拖拽文件到此处，或点击选择
+          {{ dropzoneText }}
         </p>
       </slot>
       <p
@@ -32,20 +32,24 @@
         ref="inputRef"
         type="file"
         :accept="accept"
+        v-bind="inputAttrs"
         hidden
         @change="onFileChange"
       >
     </div>
 
     <div
-      v-if="modelValue"
+      v-if="selectedFiles.length"
       class="z-upload-file"
     >
-      <span class="z-upload-file-name">{{ modelValue.name }}</span>
-      <span class="z-upload-file-size">{{ (modelValue.size / 1024).toFixed(1) }} KB</span>
+      <div class="z-upload-file-meta">
+        <span class="z-upload-file-name">{{ selectedFileLabel }}</span>
+        <span class="z-upload-file-size">{{ selectedFileSizeLabel }}</span>
+      </div>
       <button
         class="z-upload-file-remove"
-        @click="emit('update:modelValue', null)"
+        type="button"
+        @click="clearFiles"
       >
         <svg
           aria-hidden="true"
@@ -60,50 +64,131 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue'
+import { computed, ref } from 'vue'
+import { collectFilesFromDrop, collectFilesFromInput } from './fileSelection'
 
 interface Props {
-	modelValue?: File | null
-	accept?: string
-	hint?: string
+  modelValue?: File[]
+  accept?: string
+  hint?: string
+  directory?: boolean
 }
 
 const props = withDefaults(defineProps<Props>(), {
-	modelValue: null,
-	accept: '',
-	hint: ''
+  modelValue: () => [],
+  accept: '',
+  hint: '',
+  directory: false
 })
 
 const emit = defineEmits<{
-	'update:modelValue': [value: File | null]
+  'update:modelValue': [value: File[]]
 }>()
 
 const inputRef = ref<HTMLInputElement>()
 const dragging = ref(false)
 
-const isAccepted = (file: File) => {
-	if (!props.accept) return true
-	const types = props.accept.split(',').map(t => t.trim())
-	return types.some(t =>
-		t.startsWith('.') ? file.name.endsWith(t) : file.type === t
-	)
+const selectedFiles = computed(() => props.modelValue)
+
+const inputAttrs = computed(() => {
+  if (!props.directory) {
+    return {}
+  }
+
+  return {
+    directory: '',
+    webkitdirectory: '',
+    multiple: true
+  }
+})
+
+const dropzoneText = computed(() => {
+  return props.directory
+    ? '拖拽文件夹到此处，或点击选择文件夹'
+    : '拖拽文件到此处，或点击选择'
+})
+
+const selectedFileLabel = computed(() => {
+  if (selectedFiles.value.length === 1) {
+    return selectedFiles.value[0].name
+  }
+
+  return `已选择 ${selectedFiles.value.length} 个文件`
+})
+
+const selectedFileSizeLabel = computed(() => {
+  const totalSize = selectedFiles.value.reduce((sum, file) => sum + file.size, 0)
+  return formatFileSize(totalSize)
+})
+
+function openFileDialog() {
+  inputRef.value?.click()
 }
 
-const selectFile = (file: File) => {
-	if (isAccepted(file)) emit('update:modelValue', file)
+function clearFiles() {
+  emit('update:modelValue', [])
+  resetInput()
 }
 
-const onDrop = (e: DragEvent) => {
-	dragging.value = false
-	selectFile(e.dataTransfer!.files[0])
+async function onDrop(event: DragEvent) {
+  dragging.value = false
+
+  try {
+    const files = await collectFilesFromDrop(event.dataTransfer, {
+      accept: props.accept,
+      directory: props.directory
+    })
+    emit('update:modelValue', files)
+  } catch (error) {
+    console.error('Failed to collect dropped files.', error)
+    emit('update:modelValue', [])
+  }
 }
 
-const onFileChange = (e: Event) => {
-	selectFile((e.target as HTMLInputElement).files![0])
+function onDragLeave() {
+  dragging.value = false
+}
+
+async function onFileChange(event: Event) {
+  const target = event.target as HTMLInputElement
+
+  try {
+    const files = collectFilesFromInput(target.files, {
+      accept: props.accept,
+      directory: props.directory
+    })
+    emit('update:modelValue', files)
+  } finally {
+    resetInput()
+  }
+}
+
+function resetInput() {
+  if (inputRef.value) {
+    inputRef.value.value = ''
+  }
+}
+
+function formatFileSize(size: number): string {
+  if (size < 1024) {
+    return `${size} B`
+  }
+  if (size < 1024 * 1024) {
+    return `${(size / 1024).toFixed(1)} KB`
+  }
+  if (size < 1024 * 1024 * 1024) {
+    return `${(size / (1024 * 1024)).toFixed(1)} MB`
+  }
+
+  return `${(size / (1024 * 1024 * 1024)).toFixed(1)} GB`
 }
 </script>
 
 <style scoped>
+.z-upload {
+	display: grid;
+}
+
 .z-upload-drop {
 	display: flex;
 	flex-direction: column;
@@ -153,6 +238,13 @@ const onFileChange = (e: Event) => {
 	background: var(--bgColor-muted);
 }
 
+.z-upload-file-meta {
+	display: grid;
+	flex: 1 1 0%;
+	gap: 2px;
+	min-width: 0;
+}
+
 .z-upload-file-name {
 	font-size: 0.8rem;
 	color: var(--fgColor-default);
@@ -192,8 +284,6 @@ const onFileChange = (e: Event) => {
 	}
 
 	.z-upload-file-name {
-		flex: 1 1 0%;
-		min-width: 0;
 		overflow: hidden;
 		text-overflow: ellipsis;
 		white-space: nowrap;

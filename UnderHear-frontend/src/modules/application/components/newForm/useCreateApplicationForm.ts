@@ -8,7 +8,7 @@ export type FrameworkValue = 'html' | 'vue' | 'react'
 
 export function useCreateApplicationForm() {
   const selectedFramework = ref<FrameworkValue | null>(null)
-  const file = ref<File | null>(null)
+  const files = ref<File[]>([])
   const htmlSource = ref('<div>hello, world!</div>')
 
   const appName = ref('')
@@ -36,7 +36,7 @@ export function useCreateApplicationForm() {
       return htmlSource.value.trim() ? '' : '请输入 HTML 代码。'
     }
 
-    return file.value ? '' : '请上传文件。'
+    return files.value.length > 0 ? '' : '请上传文件。'
   })
 
   const appNameError = computed(() => {
@@ -125,7 +125,7 @@ export function useCreateApplicationForm() {
     selectedFramework.value = value
 
     if (value === 'html') {
-      file.value = null
+      files.value = []
       touchedFile.value = false
       return
     }
@@ -134,9 +134,9 @@ export function useCreateApplicationForm() {
     touchedHtmlSource.value = false
   }
 
-  function setFile(value: File | null) {
+  function setFiles(value: File[]) {
     touchedFile.value = true
-    file.value = value
+    files.value = value
   }
 
   function setHtmlSource(value: string) {
@@ -167,7 +167,7 @@ export function useCreateApplicationForm() {
     const framework = selectedFramework.value as FrameworkValue
     const appFile = framework === 'html'
       ? new File([htmlSource.value], 'index.html', { type: 'text/html;charset=utf-8' })
-      : (file.value as File)
+      : (files.value[0] as File)
 
     return {
       framework,
@@ -186,7 +186,7 @@ export function useCreateApplicationForm() {
 
   return {
     selectedFramework,
-    file,
+    files,
     htmlSource,
     appName,
     appEnglishName,
@@ -200,7 +200,7 @@ export function useCreateApplicationForm() {
     showFrameworkError,
     showUploadError,
     setFramework,
-    setFile,
+    setFiles,
     setHtmlSource,
     setAppName,
     setAppEnglishName,

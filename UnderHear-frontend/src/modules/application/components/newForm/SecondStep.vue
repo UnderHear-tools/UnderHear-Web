@@ -21,10 +21,10 @@
 
       <zUpload
         v-if="selectedFramework === 'vue' || selectedFramework === 'react'"
-        :model-value="file"
+        :model-value="files"
         accept=".zip,.html"
         hint="支持 .zip 格式的 dist 构建包或 .html 文件"
-        @update:model-value="updateFile"
+        @update:model-value="updateFiles"
       />
     </div>
     <p
@@ -46,7 +46,7 @@ import { zFormControlValidation } from '@/components/z-ui/form-control'
 
 interface Props {
   selectedFramework: FrameworkValue | null
-  file: File | null
+  files: File[]
   htmlSource: string
   invalid?: boolean
   validation?: string
@@ -58,12 +58,12 @@ withDefaults(defineProps<Props>(), {
 })
 
 const emit = defineEmits<{
-  'update:file': [value: File | null]
+  'update:files': [value: File[]]
   'update:html-source': [value: string]
 }>()
 
-function updateFile(value: File | null) {
-  emit('update:file', value)
+function updateFiles(value: File[]) {
+  emit('update:files', value)
 }
 
 function updateHtmlSource(value: string) {

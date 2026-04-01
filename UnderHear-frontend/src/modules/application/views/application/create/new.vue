@@ -40,12 +40,12 @@
             上传应用 & 代码
           </div>
           <SecondStep
-            :file="file"
+            :files="files"
             :html-source="htmlSource"
             :selected-framework="selectedFramework"
             :invalid="showUploadError"
             :validation="uploadError"
-            @update:file="setFile"
+            @update:files="setFiles"
             @update:html-source="setHtmlSource"
           />
         </Timeline.Body>
@@ -99,7 +99,7 @@ import Rocket from '@/components/z-ui/icon/Octicons-vue/icons/rocket.vue'
 
 const {
   selectedFramework,
-  file,
+  files,
   htmlSource,
   appName,
   appEnglishName,
@@ -113,7 +113,7 @@ const {
   showFrameworkError,
   showUploadError,
   setFramework,
-  setFile,
+  setFiles,
   setHtmlSource,
   setAppName,
   setAppEnglishName,
