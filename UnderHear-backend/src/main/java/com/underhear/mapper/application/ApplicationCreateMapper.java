@@ -20,12 +20,12 @@ public interface ApplicationCreateMapper {
     @Insert("""
             insert into `application`
             (`appid`, `owner_uuid`, `creation_method`, `framework`, `app_name`, `app_english_name`,
-             `app_url`, `visibility`, `app_description`, `storage_path`, `original_filename`,
-             `file_type`, `file_size`)
+             `app_url`, `visibility`, `app_description`, `original_filename`,
+             `original_file_type`, `original_file_size`)
             values
             (#{appid}, #{ownerUuid}, #{creationMethod}, #{framework}, #{appName}, #{appEnglishName},
-             #{appUrl}, #{visibility}, #{appDescription}, #{storagePath}, #{originalFilename},
-             #{fileType}, #{fileSize})
+             #{appUrl}, #{visibility}, #{appDescription}, #{originalFilename},
+             #{originalFileType}, #{originalFileSize})
             """)
     int insertApplication(Application application);
 }

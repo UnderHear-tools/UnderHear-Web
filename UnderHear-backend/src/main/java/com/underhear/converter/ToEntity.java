@@ -102,11 +102,10 @@ public final class ToEntity {
     public static Application toApplication(User user, ApplicationCreateNewDort request) {
         Application application = new Application();
         String appid = ApplicationUuidGenerator.next();
-        String ownerUuid = user.getUuid();
         String originalFilename = request.getAppFile().getOriginalFilename();
 
         application.setAppid(appid);
-        application.setOwnerUuid(ownerUuid);
+        application.setOwnerUuid(user.getUuid());
         application.setCreationMethod("new");
         application.setFramework(request.getFramework());
         application.setAppName(request.getAppName());
@@ -114,10 +113,9 @@ public final class ToEntity {
         application.setAppUrl("https://" + request.getAppEnglishName() + ".underhear.cn/");
         application.setVisibility(request.getVisibility());
         application.setAppDescription(request.getAppDescription());
-        application.setStoragePath(ownerUuid + "/" + appid + "/" + originalFilename);
         application.setOriginalFilename(originalFilename);
-        application.setFileType(request.getAppFile().getContentType());
-        application.setFileSize(FileSizeFormatter.format(request.getAppFile().getSize()));
+        application.setOriginalFileType(request.getAppFile().getContentType());
+        application.setOriginalFileSize(FileSizeFormatter.format(request.getAppFile().getSize()));
         return application;
     }
 }

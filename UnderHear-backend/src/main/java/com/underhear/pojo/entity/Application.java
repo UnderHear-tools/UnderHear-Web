@@ -16,10 +16,9 @@ public class Application {
     private String appUrl;
     private String visibility;
     private String appDescription;
-    private String storagePath;
     private String originalFilename;
-    private String fileType;
-    private String fileSize;
+    private String originalFileType;
+    private String originalFileSize;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
 }
