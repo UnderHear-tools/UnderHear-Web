@@ -22,8 +22,8 @@
       <zUpload
         v-if="selectedFramework === 'vue' || selectedFramework === 'react'"
         :model-value="files"
-        accept=".zip,.html"
-        hint="支持 .zip 格式的 dist 构建包或 .html 文件"
+        accept=".zip"
+        hint="支持 .zip 格式的 dist 构建包"
         @update:model-value="updateFiles"
       />
     </div>

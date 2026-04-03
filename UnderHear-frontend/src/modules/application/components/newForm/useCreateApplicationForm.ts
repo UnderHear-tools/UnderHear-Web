@@ -27,9 +27,24 @@ export function useCreateApplicationForm() {
     return selectedFramework.value === null ? '请选择一个前端框架。' : ''
   })
 
+  function isZipFile(file: File | undefined) {
+    return Boolean(file?.name.toLowerCase().endsWith('.zip'))
+  }
+
   const uploadError = computed(() => {
     if (selectedFramework.value === null) {
       return ''
+    }
+
+    if (selectedFramework.value !== 'html') {
+      const selectedFile = files.value[0]
+      if (!selectedFile) {
+        return '请上传文件。'
+      }
+
+      if (!isZipFile(selectedFile)) {
+        return 'Vue 和 React 仅支持上传 .zip 格式的 dist 构建包。'
+      }
     }
 
     if (selectedFramework.value === 'html') {
