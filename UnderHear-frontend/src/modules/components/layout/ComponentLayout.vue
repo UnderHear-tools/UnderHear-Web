@@ -190,7 +190,8 @@ const navSections = ref([
     title: 'Overview 组件总览',
     items: [
       { path: '/component/guide', label: 'Guide 指南' },
-      { path: '/component/overview', label: 'Overview 组件总览' }
+      { path: '/component/overview', label: 'Overview 组件总览' },
+      { path: '/component/color', label: 'Color 颜色设计' }
     ]
   },
   {

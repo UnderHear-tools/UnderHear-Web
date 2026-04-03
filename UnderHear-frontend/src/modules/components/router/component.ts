@@ -20,6 +20,11 @@ export const componentRoutes: Array<RouteRecordRaw> = [
                 name: 'Overview',
                 component: () => import('../views/components/overview.vue')
             },
+            {
+                path: 'color',
+                name: 'Color',
+                component: () => import('../views/components/color.vue')
+            },
             // Icon
             {
                 path: 'octicons-vue',
