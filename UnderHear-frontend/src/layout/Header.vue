@@ -185,6 +185,8 @@ watch(() => route.path, () => {
   gap: 10px;
   font-weight: bold;
   cursor: pointer;
+  font-family: 'Arial Black', sans-serif;
+  font-size: 24px;
 }
 
 .nav-list {
