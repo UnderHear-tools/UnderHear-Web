@@ -31,9 +31,9 @@ public class ApplicationCreateController {
     @PostMapping(value = "/new", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ApiResponse<ApplicationCreateNewDore> applicationCreateNew(
             @CookieValue(value = "auth_token", required = false) String token,
-            @Valid @ModelAttribute ApplicationCreateNewDort request) {
+            @Valid @ModelAttribute ApplicationCreateNewDort applicationCreateNewDort) {
         User user = sessionAuthService.getCurrentUser(token);
-        ApplicationCreateNewDore applicationCreateNewDore = applicationCreateService.applicationCreateNew(user, request);
+        ApplicationCreateNewDore applicationCreateNewDore = applicationCreateService.applicationCreateNew(user, applicationCreateNewDort);
         return ApiResponse.success("应用创建成功！", applicationCreateNewDore);
     }
 }

@@ -24,8 +24,8 @@ public class ApplicationCreateServiceImpl implements ApplicationCreateService {
 
     @Override
     @Transactional
-    public ApplicationCreateNewDore applicationCreateNew(User user, ApplicationCreateNewDort request) {
-        Application application = ToEntity.toApplication(user, request);
+    public ApplicationCreateNewDore applicationCreateNew(User user, ApplicationCreateNewDort applicationCreateNewDort) {
+        Application application = ToEntity.toApplication(user, applicationCreateNewDort);
         if (applicationCreateMapper.countByAppEnglishName(application.getAppEnglishName()) > 0) {
             throw new BizException(ErrorCode.APP_ENGLISH_NAME_ALREADY_EXISTS);
         }
