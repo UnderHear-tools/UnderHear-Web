@@ -60,11 +60,7 @@ public class SessionAuthService {
             // 白名单中没有该 token 视为未登录
             throw new BizException(ErrorCode.NOT_LOGIN);
         }
-        User user = userService.getUserByUuid(uuid);
-        if (user == null) {
-            throw new BizException(ErrorCode.USER_NOT_FOUND);
-        }
-        return user;
+        return userService.getUserByUuid(uuid);
     }
 
     // 退出登录 删除白名单记录 让当前 token 立即失效

@@ -9,6 +9,7 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.multipart.MaxUploadSizeExceededException;
+import org.springframework.web.servlet.resource.NoResourceFoundException;
 
 import com.underhear.pojo.dto.response.common.ApiResponse;
 
@@ -39,6 +40,15 @@ public class GlobalExceptionHandler {
         log.warn("Upload size exceeded: {}", ex.getMessage());
         return ResponseEntity.status(ErrorCode.MAX_UPLOAD_SIZE_EXCEEDED.getStatus())
                 .body(ApiResponse.fail(ErrorCode.MAX_UPLOAD_SIZE_EXCEEDED.getCode(), message));
+    }
+
+    // 处理未命中任何接口或静态资源的请求，统一返回未找到资源。
+    @ExceptionHandler(NoResourceFoundException.class)
+    public ResponseEntity<ApiResponse<Void>> handleNoResourceFoundException(NoResourceFoundException ex) {
+        String message = ErrorCode.NOT_FOUND.getMessage();
+        log.warn("Resource not found: {}", ex.getResourcePath());
+        return ResponseEntity.status(ErrorCode.NOT_FOUND.getStatus())
+                .body(ApiResponse.fail(ErrorCode.NOT_FOUND.getCode(), message));
     }
 
     // 兜底处理未被前面捕获的异常，统一返回服务器内部错误。

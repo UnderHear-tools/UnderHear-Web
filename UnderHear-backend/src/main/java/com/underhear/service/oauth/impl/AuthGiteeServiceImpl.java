@@ -52,6 +52,9 @@ public class AuthGiteeServiceImpl implements AuthGiteeService {
         AuthToken giteeToken = authUser.getToken();
         // 转成UserGiteeDort对象
         UserGiteeDort userGiteeDort = ToDort.toUserGiteeDort(authUser.getRawUserInfo(), giteeToken);
+        if (userGiteeDort.getGiteeId() == null) {
+            throw new BizException(ErrorCode.BAD_AUTHORIZED);
+        }
 
         User user = null;
 

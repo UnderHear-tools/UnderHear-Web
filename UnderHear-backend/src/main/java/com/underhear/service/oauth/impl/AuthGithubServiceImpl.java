@@ -52,6 +52,9 @@ public class AuthGithubServiceImpl implements AuthGithubService {
         AuthToken githubToken = authUser.getToken();
         //转成UserGithubDort对象
         UserGithubDort userGithubDort = ToDort.toUserGithubDort(authUser.getRawUserInfo(), githubToken);
+        if (userGithubDort.getGithubId() == null) {
+            throw new BizException(ErrorCode.BAD_AUTHORIZED);
+        }
         
         User user = null;
 

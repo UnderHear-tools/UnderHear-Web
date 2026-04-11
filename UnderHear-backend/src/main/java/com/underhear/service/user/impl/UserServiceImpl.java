@@ -4,6 +4,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
+import com.underhear.exception.BizException;
+import com.underhear.exception.ErrorCode;
 import com.underhear.mapper.user.UserMapper;
 import com.underhear.pojo.entity.User;
 import com.underhear.service.user.UserService;
@@ -18,42 +20,63 @@ public class UserServiceImpl implements UserService {
     @Cacheable(cacheNames = "user:info", key = "#uuid")
     // 根据 UUID 查询用户信息，命中 Redis 缓存时可减少数据库访问。
     public User getUserByUuid(String uuid) {
-        return userMapper.getUserByUuid(uuid);
+        if (uuid == null || uuid.isBlank()) {
+            throw new BizException(ErrorCode.INTERNAL_ERROR);
+        }
+        User user = userMapper.getUserByUuid(uuid);
+        if (user == null) {
+            throw new BizException(ErrorCode.USER_NOT_FOUND);
+        }
+        return user;
     }
 
     @Override
     // 根据 GitHub ID 查询用户信息。
     public User getUserByGithubId(Long githubId) {
         if (githubId == null) {
-            return null;
+            throw new BizException(ErrorCode.INTERNAL_ERROR);
         }
-        return userMapper.getUserByGithubId(githubId);
+        User user = userMapper.getUserByGithubId(githubId);
+        if (user == null) {
+            throw new BizException(ErrorCode.USER_NOT_FOUND);
+        }
+        return user;
     }
 
     @Override
     // 根据 Gitee ID 查询用户信息。
     public User getUserByGiteeId(Long giteeId) {
         if (giteeId == null) {
-            return null;
+            throw new BizException(ErrorCode.INTERNAL_ERROR);
         }
-        return userMapper.getUserByGiteeId(giteeId);
+        User user = userMapper.getUserByGiteeId(giteeId);
+        if (user == null) {
+            throw new BizException(ErrorCode.USER_NOT_FOUND);
+        }
+        return user;
     }
 
     @Override
     // 更新用户最后登录信息。
-    public int updateUserLastLoginByUuid(String uuid, java.time.LocalDateTime lastLoginAt, String lastLoginSource) {
-        if (uuid == null || uuid.isBlank()) {
-            return 0;
+    public void updateUserLastLoginByUuid(String uuid, java.time.LocalDateTime lastLoginAt, String lastLoginSource) {
+        if (uuid == null || uuid.isBlank() || lastLoginAt == null || lastLoginSource == null || lastLoginSource.isBlank()) {
+            throw new BizException(ErrorCode.INTERNAL_ERROR);
         }
-        return userMapper.updateUserLastLoginByUuid(uuid, lastLoginAt, lastLoginSource);
+        int affectedRows = userMapper.updateUserLastLoginByUuid(uuid, lastLoginAt, lastLoginSource);
+        if (affectedRows != 1) {
+            throw new BizException(ErrorCode.INTERNAL_ERROR);
+        }
     }
 
     @Override
     // 记录一次登录来源。
-    public int insertUserLoginRecord(String uuid, String loginSource) {
+    public void insertUserLoginRecord(String uuid, String loginSource) {
         if (uuid == null || uuid.isBlank() || loginSource == null || loginSource.isBlank()) {
-            return 0;
+            throw new BizException(ErrorCode.INTERNAL_ERROR);
         }
-        return userMapper.insertUserLoginRecord(uuid, loginSource);
+        int affectedRows = userMapper.insertUserLoginRecord(uuid, loginSource);
+        if (affectedRows != 1) {
+            throw new BizException(ErrorCode.INTERNAL_ERROR);
+        }
     }
 }
