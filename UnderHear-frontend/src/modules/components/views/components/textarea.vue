@@ -184,9 +184,9 @@ const descriptionTooLong = computed(() => description.value.length > 80)
 
 const apiCols: ZTableColumn[] = [
   { key: 'name', label: '属性名', rowHeader: true, minWidth: '140px' },
-  { key: 'description', label: '说明', minWidth: '220px', wrap: true },
+  { key: 'default', label: '默认值', minWidth: '120px' },
   { key: 'type', label: '类型', minWidth: '220px', wrap: true },
-  { key: 'default', label: '默认值', minWidth: '120px' }
+  { key: 'description', label: '说明', minWidth: '220px', wrap: true }
 ]
 
 const apiRows = [

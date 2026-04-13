@@ -344,10 +344,10 @@ import { zButton } from '@/components/z-ui/button'
 
 const apiTableColumns: ZTableColumn[] = [
   { key: 'name', label: '属性名', rowHeader: true, minWidth: '140px' },
-  { key: 'description', label: '说明', minWidth: '220px', wrap: true },
+  { key: 'default', label: '默认值', minWidth: '120px' },
   { key: 'type', label: '类型', minWidth: '200px', wrap: true },
   { key: 'options', label: '可选值', minWidth: '240px', wrap: true },
-  { key: 'default', label: '默认值', minWidth: '120px' }
+  { key: 'description', label: '说明', minWidth: '220px', wrap: true }
 ]
 
 const apiTableRows = [

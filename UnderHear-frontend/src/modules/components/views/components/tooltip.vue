@@ -236,9 +236,9 @@ import { zTooltip } from '@/components/z-ui/tooltip'
 
 const apiCols: ZTableColumn[] = [
   { key: 'name', label: '属性名', rowHeader: true, minWidth: '140px' },
-  { key: 'description', label: '说明', minWidth: '200px', wrap: true },
+  { key: 'default', label: '默认值', minWidth: '100px' },
   { key: 'type', label: '类型', minWidth: '240px', wrap: true },
-  { key: 'default', label: '默认值', minWidth: '100px' }
+  { key: 'description', label: '说明', minWidth: '200px', wrap: true }
 ]
 
 const apiRows = [

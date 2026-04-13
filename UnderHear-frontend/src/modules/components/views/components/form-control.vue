@@ -223,10 +223,10 @@ const domainPrefix = ref('podcast-hub')
 <\/script>`
 
 const apiCols: ZTableColumn[] = [
-  { key: 'name', label: '名称', rowHeader: true, minWidth: '180px' },
-  { key: 'description', label: '说明', minWidth: '280px', wrap: true },
+  { key: 'name', label: '属性名', rowHeader: true, minWidth: '180px' },
+  { key: 'default', label: '默认值', minWidth: '120px' },
   { key: 'type', label: '类型', minWidth: '220px', wrap: true },
-  { key: 'default', label: '默认值', minWidth: '120px' }
+  { key: 'description', label: '说明', minWidth: '280px', wrap: true }
 ]
 
 const rootPropRows = [

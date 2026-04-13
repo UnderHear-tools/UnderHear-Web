@@ -201,9 +201,9 @@ const actionListSlotsRows = [
 
 const apiTableColumns: ZTableColumn[] = [
   { key: 'name', label: '属性名', rowHeader: true, minWidth: '140px' },
-  { key: 'description', label: '说明', minWidth: '200px', wrap: true },
+  { key: 'default', label: '默认值', minWidth: '120px' },
   { key: 'type', label: '类型', minWidth: '160px' },
-  { key: 'default', label: '默认值', minWidth: '120px' }
+  { key: 'description', label: '说明', minWidth: '200px', wrap: true }
 ]
 
 const actionListItemPropsRows = [

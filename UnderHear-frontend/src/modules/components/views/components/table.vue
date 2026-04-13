@@ -484,10 +484,10 @@ const rows: Row[] = [
 
 const apiTableColumns: ZTableColumn[] = [
   { key: 'name', label: '属性名', rowHeader: true, minWidth: '160px' },
-  { key: 'description', label: '说明', minWidth: '240px', wrap: true },
+  { key: 'default', label: '默认值', minWidth: '140px' },
   { key: 'type', label: '类型', minWidth: '200px', wrap: true },
   { key: 'options', label: '可选值', minWidth: '200px', wrap: true },
-  { key: 'default', label: '默认值', minWidth: '140px' }
+  { key: 'description', label: '说明', minWidth: '240px', wrap: true }
 ]
 
 const apiTableRows = [
