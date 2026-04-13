@@ -191,7 +191,7 @@ const navSections = ref([
     items: [
       { path: '/component/guide', label: 'Guide 指南' },
       { path: '/component/overview', label: 'Overview 组件总览' },
-      { path: '/component/color', label: 'Color 颜色设计' }
+      { path: '/component/color', label: 'Color 颜色设计' },
     ]
   },
   {
@@ -209,13 +209,13 @@ const navSections = ref([
   {
     title: 'Basic 基础组件',
     items: [
-      { path: '/component/container', label: 'Container 布局容器' },
-      { path: '/component/button', label: 'Button 按钮' },
-      { path: '/component/link', label: 'Link 链接' },
-      { path: '/component/divider', label: 'Divider 分隔线' },
-      { path: '/component/avatar', label: 'Avatar 头像' },
-      { path: '/component/dropdown', label: 'Dropdown 下拉菜单' },
       { path: '/component/action-list', label: 'ActionList 操作列表' },
+      { path: '/component/avatar', label: 'Avatar 头像' },
+      { path: '/component/button', label: 'Button 按钮' },
+      { path: '/component/container', label: 'Container 布局容器' },
+      { path: '/component/divider', label: 'Divider 分隔线' },
+      { path: '/component/dropdown', label: 'Dropdown 下拉菜单' },
+      { path: '/component/link', label: 'Link 链接' },
       { path: '/component/tag', label: 'Tag 标签' }
     ]
   },
@@ -224,8 +224,8 @@ const navSections = ref([
     items: [
       { path: '/component/form-control', label: 'FormControl 表单控件' },
       { path: '/component/input', label: 'Input 输入框' },
-      { path: '/component/textarea', label: 'Textarea 文本域' },
       { path: '/component/select', label: 'Select 选择器' },
+      { path: '/component/textarea', label: 'Textarea 文本域' },
       { path: '/component/upload', label: 'Upload 上传' }
     ]
   },
