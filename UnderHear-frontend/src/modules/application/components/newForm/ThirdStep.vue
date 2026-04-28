@@ -30,7 +30,7 @@
         class="w-full"
         :model-value="appEnglishName"
         placeholder="请输入英文名称"
-        minlength="4"
+        minlength="1"
         maxlength="63"
         @update:model-value="value => emit('update:app-english-name', value)"
       />

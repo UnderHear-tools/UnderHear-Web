@@ -77,10 +77,6 @@ export function useCreateApplicationForm() {
       return '仅支持小写字母、数字和连字符（-），且不能以连字符开头或结尾。'
     }
 
-    if (trimmedAppEnglishName.length < 4) {
-      return '英文名称至少 4 个字符。'
-    }
-
     if (appEnglishName.value.length > 63) {
       return '英文名称不能超过 63 个字符。'
     }
