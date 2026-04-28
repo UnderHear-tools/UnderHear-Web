@@ -62,12 +62,9 @@
                 <Person class="menu-icon" />
                 个人资料
               </ActionList.Item>
-              <ActionList.Item
-                href="https://github.com/underhear"
-                new-tab
-              >
-                <MarkGithub class="menu-icon" />
-                前往 GitHub
+              <ActionList.Item href="/application">
+                <Apps class="menu-icon" />
+                我的应用
               </ActionList.Item>
               <zDivider />
               <ActionList.Item href="/auth/logout">
@@ -90,7 +87,7 @@ import { zDropdown } from '@/components/z-ui/dropdown'
 import { zAvatar } from '@/components/z-ui/avatar'
 import { ActionList } from '@/components/z-ui/action-list'
 import { zDivider } from '@/components/z-ui/divider'
-import { Person, MarkGithub, SignOut, LogoUnderHear } from '@/components/z-ui/icon/Octicons-vue'
+import { Person, Apps, SignOut, LogoUnderHear } from '@/components/z-ui/icon/Octicons-vue'
 
 interface NavigationItem {
   name: string
