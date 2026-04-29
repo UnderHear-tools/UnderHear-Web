@@ -7,6 +7,12 @@ export type UserInfo = {
   nickname: string
   email: string
   avatarUrl: string
+  bio: string | null
+  pronoun: string | null
+  location: string | null
+  socialAccount0: string | null
+  socialAccount1: string | null
+  socialAccount2: string | null
 }
 
 export const useUserStore = defineStore('user', () => {

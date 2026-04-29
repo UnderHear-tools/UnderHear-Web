@@ -18,6 +18,12 @@ public final class ToDore {
         userInfoDore.setNickname(user.getNickName());
         userInfoDore.setEmail(user.getEmail());
         userInfoDore.setAvatarUrl(user.getAvatarUrl());
+        userInfoDore.setBio(user.getBio());
+        userInfoDore.setPronoun(user.getPronoun());
+        userInfoDore.setLocation(user.getLocation());
+        userInfoDore.setSocialAccount0(user.getSocialAccount0());
+        userInfoDore.setSocialAccount1(user.getSocialAccount1());
+        userInfoDore.setSocialAccount2(user.getSocialAccount2());
         return userInfoDore;
     }
 

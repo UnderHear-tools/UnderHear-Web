@@ -25,6 +25,12 @@ class ToDoreTest {
         assertEquals("tester", userInfoDore.getNickname());
         assertEquals("tester@example.com", userInfoDore.getEmail());
         assertEquals("https://avatar/tester.png", userInfoDore.getAvatarUrl());
+        assertEquals("bio text", userInfoDore.getBio());
+        assertEquals("they/them", userInfoDore.getPronoun());
+        assertEquals("Shanghai", userInfoDore.getLocation());
+        assertEquals("https://github.com/tester", userInfoDore.getSocialAccount0());
+        assertEquals("https://gitee.com/tester", userInfoDore.getSocialAccount1());
+        assertEquals("https://example.com/tester", userInfoDore.getSocialAccount2());
     }
 
     @Test
@@ -71,6 +77,12 @@ class ToDoreTest {
         user.setNickName("tester");
         user.setEmail("tester@example.com");
         user.setAvatarUrl("https://avatar/tester.png");
+        user.setBio("bio text");
+        user.setPronoun("they/them");
+        user.setLocation("Shanghai");
+        user.setSocialAccount0("https://github.com/tester");
+        user.setSocialAccount1("https://gitee.com/tester");
+        user.setSocialAccount2("https://example.com/tester");
         user.setLastLoginSource("GITHUB_OAUTH");
         return user;
     }

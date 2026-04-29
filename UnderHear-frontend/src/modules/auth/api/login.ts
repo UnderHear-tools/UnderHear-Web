@@ -1,13 +1,9 @@
 import { API_BASE_URL, get } from '@/api'
+import type { UserInfo } from '@/stores/user'
 
 export type OAuthLoginResponse = {
   loginSource: string
-  userInfo: {
-    uuid: string
-    nickname: string
-    email: string
-    avatarUrl: string
-  }
+  userInfo: UserInfo
 }
 
 export type OAuthCallbackParams = {

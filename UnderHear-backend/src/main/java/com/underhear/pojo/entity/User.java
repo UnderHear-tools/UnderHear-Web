@@ -11,6 +11,12 @@ public class User {
     private String nickName;
     private String email;
     private String avatarUrl;
+    private String bio;
+    private String pronoun;
+    private String location;
+    private String socialAccount0;
+    private String socialAccount1;
+    private String socialAccount2;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
     private LocalDateTime lastLoginAt;
