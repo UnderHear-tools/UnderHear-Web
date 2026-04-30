@@ -87,13 +87,14 @@ const handleLogoutAll = async () => {
 .logout-page {
   min-height: 100vh;
   display: flex;
-  align-items: flex-start;
   justify-content: center;
-  padding: 56px 16px;
 }
 
 .logout-panel {
-  padding: 16px;
+  width: 100%;
+  max-width: 24rem;
+  background: var(--bgColor-default);
+  padding: 32px;
 }
 
 .logout-title {

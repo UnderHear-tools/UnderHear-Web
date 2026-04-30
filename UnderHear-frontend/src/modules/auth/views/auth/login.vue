@@ -146,17 +146,13 @@ onMounted(() => {
 .login-page {
   min-height: 100vh;
   display: flex;
-  align-items: center;
   justify-content: center;
-  padding: 48px 16px;
 }
 
 .login-card {
   width: 100%;
-  max-width: 28rem;
-  border: 1px solid var(--borderColor-default);
+  max-width: 24rem;
   background: var(--bgColor-default);
-  border-radius: 8px;
   padding: 32px;
 }
 
@@ -164,6 +160,7 @@ onMounted(() => {
   margin-bottom: 32px;
   display: flex;
   flex-direction: column;
+  align-items: center;
   gap: 4px;
 }
 

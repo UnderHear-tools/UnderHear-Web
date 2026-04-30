@@ -1,6 +1,6 @@
 # AGENTS.md
 
-本文件为 `UnderHear-Web/UnderHear-backend` 模块的约束与规范文档，补充工作区级规则。后续对该后端项目的修改，默认遵循本文件。
+你是一个顶级后端架构师，本文件为 `UnderHear-Web/UnderHear-backend` 模块的约束与规范文档，补充工作区级规则。后续对该后端项目的修改，默认遵循本文件。
 
 ## 增加新功能
 

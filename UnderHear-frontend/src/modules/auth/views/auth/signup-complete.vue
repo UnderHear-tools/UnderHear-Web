@@ -1,25 +1,34 @@
 <template>
   <div class="signup-page">
     <form
-      class="signup-card"
+      class="signup-panel"
       @submit.prevent="submit"
     >
       <div class="signup-header">
-        <div class="signup-avatar">
-          <img
-            v-if="signupContext?.avatarUrl"
-            :src="signupContext.avatarUrl"
-            alt=""
-          >
-          <span v-else>{{ avatarPlaceholder }}</span>
-        </div>
-        <div>
-          <h1 class="signup-title">
-            完善资料
-          </h1>
-          <p class="signup-subtitle">
-            {{ providerLabel }} 登录
-          </p>
+        <h1 class="signup-title">
+          完善资料
+        </h1>
+        <p class="signup-subtitle">
+          使用 {{ providerLabel }} 账号完成注册
+        </p>
+      </div>
+
+      <div class="account-card">
+        <div class="account-meta">
+          <zAvatar
+            :src="signupContext?.avatarUrl"
+            :placeholder="avatarPlaceholder"
+            :size="32"
+          />
+
+          <div class="account-copy">
+            <p class="account-label">
+              {{ providerLabel }} 账号
+            </p>
+            <p class="account-name">
+              {{ accountName }}
+            </p>
+          </div>
         </div>
       </div>
 
@@ -63,6 +72,7 @@
         <zButton
           type="submit"
           variant="primary"
+          size="large"
           :loading="loading"
           :disabled="!canSubmit"
         >
@@ -76,6 +86,7 @@
 <script setup lang="ts">
 import { computed, onMounted, ref } from 'vue'
 import { useUserStore } from '@/stores/user'
+import { zAvatar } from '@/components/z-ui/avatar'
 import { FormControl } from '@/components/z-ui/form-control'
 import { zInput } from '@/components/z-ui/input'
 import { zButton } from '@/components/z-ui/button'
@@ -104,6 +115,10 @@ const providerLabel = computed(() => {
 })
 
 const avatarPlaceholder = computed(() => providerLabel.value.slice(0, 2).toUpperCase())
+
+const accountName = computed(() => {
+  return signupContext.value?.suggestedNickname || signupContext.value?.email || `${providerLabel.value} 用户`
+})
 
 const nicknameError = computed(() => {
   const value = nickname.value.trim()
@@ -164,59 +179,75 @@ onMounted(() => {
 .signup-page {
   min-height: 100vh;
   display: flex;
-  align-items: center;
   justify-content: center;
-  padding: 48px 16px;
 }
 
-.signup-card {
+.signup-panel {
   width: 100%;
-  max-width: 28rem;
-  border: 1px solid var(--borderColor-default);
+  max-width: 24rem;
   background: var(--bgColor-default);
-  border-radius: 8px;
   padding: 32px;
-  display: grid;
-  gap: 28px;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
 }
 
 .signup-header {
   display: flex;
+  flex-direction: column;
   align-items: center;
-  gap: 12px;
-}
-
-.signup-avatar {
-  width: 48px;
-  height: 48px;
-  border-radius: 50%;
-  overflow: hidden;
-  display: grid;
-  place-items: center;
-  border: 1px solid var(--borderColor-default);
-  background: var(--bgColor-muted);
-  color: var(--fgColor-muted);
-  font-size: 14px;
-  font-weight: 600;
-  flex: 0 0 auto;
-}
-
-.signup-avatar img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
+  gap: 4px;
 }
 
 .signup-title {
+  margin: 0;
   font-size: 24px;
   font-weight: 500;
   color: var(--fgColor-default);
 }
 
 .signup-subtitle {
+  margin: 0;
   color: var(--fgColor-muted);
   font-size: 14px;
-  margin-top: 4px;
+}
+
+.account-card {
+  width: 100%;
+  padding: 16px;
+  border: 1px solid var(--borderColor-default);
+  border-radius: 6px;
+}
+
+.account-meta {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  min-width: 0;
+}
+
+.account-copy {
+  min-width: 0;
+}
+
+.account-label,
+.account-name {
+  margin: 0;
+  line-height: 1.3;
+}
+
+.account-label {
+  font-size: 14px;
+  color: var(--fgColor-muted);
+}
+
+.account-name {
+  overflow: hidden;
+  color: var(--fgColor-default);
+  font-size: 14px;
+  font-weight: 500;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .signup-fields {
@@ -229,17 +260,16 @@ onMounted(() => {
 }
 
 .signup-actions {
-  display: flex;
-  justify-content: flex-end;
+  width: 100%;
+}
+
+.signup-actions :deep(.z-button) {
+  width: 100%;
 }
 
 @media (max-width: 480px) {
-  .signup-card {
+  .signup-panel {
     padding: 24px;
-  }
-
-  .signup-actions :deep(.z-button) {
-    width: 100%;
   }
 }
 </style>
