@@ -58,7 +58,7 @@
             </div>
             <ActionList>
               <zDivider />
-              <ActionList.Item>
+              <ActionList.Item @click="goToProfile">
                 <Person class="menu-icon" />
                 个人资料
               </ActionList.Item>
@@ -119,6 +119,16 @@ const goToLogin = () => {
   void enqueueNavigation(async () => {
     const returnTo = encodeURIComponent(window.location.href)
     window.location.href = `/auth/login?return_to=${returnTo}`
+  })
+}
+
+const goToProfile = () => {
+  void enqueueNavigation(async () => {
+    const nickname = userStore.userInfo?.nickname?.trim()
+    if (!nickname) return
+
+    const profilePath = `/@${encodeURIComponent(nickname)}`
+    window.location.href = profilePath
   })
 }
 
