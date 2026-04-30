@@ -1,7 +1,6 @@
 package com.underhear.service.oauth.impl;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.eq;
@@ -11,7 +10,6 @@ import static org.mockito.Mockito.when;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.ArgumentCaptor;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
@@ -21,11 +19,13 @@ import com.underhear.exception.BizException;
 import com.underhear.exception.ErrorCode;
 import com.underhear.mapper.oauth.AuthGithubMapper;
 import com.underhear.pojo.dto.request.UserGithubDort;
-import com.underhear.pojo.dto.response.UserLoginWithTokenDore;
+import com.underhear.pojo.dto.response.OAuthCallbackWithTokenDore;
+import com.underhear.pojo.dto.response.OAuthPendingSignupDore;
 import com.underhear.pojo.entity.User;
 import com.underhear.pojo.entity.UserGithub;
 import com.underhear.security.JwtTokenService;
 import com.underhear.security.SessionAuthService;
+import com.underhear.service.oauth.OAuthSignupService;
 import com.underhear.service.user.UserService;
 
 import me.zhyd.oauth.model.AuthResponse;
@@ -47,6 +47,9 @@ class AuthGithubServiceImplTest {
     @Mock
     private SessionAuthService sessionAuthService;
 
+    @Mock
+    private OAuthSignupService oauthSignupService;
+
     @InjectMocks
     private AuthGithubServiceImpl authGithubService;
 
@@ -59,29 +62,22 @@ class AuthGithubServiceImplTest {
     }
 
     @Test
-    // 第一次登录时应写入第三方映射、用户记录、token 白名单和登录日志。
-    void loginShouldRegisterUserWhenGithubAccountDoesNotExist() {
+    // 第一次登录时只应创建 pending signup，不应直接创建完整用户。
+    void loginShouldReturnPendingSignupWhenGithubAccountDoesNotExist() {
         AuthResponse<AuthUser> authResponse = successGithubResponse();
         when(authGithubMapper.countByGithubId(1001L)).thenReturn(0);
-        when(jwtTokenService.generateToken(any())).thenReturn("jwt-token");
+        when(oauthSignupService.createGithubPendingSignup(any(UserGithubDort.class))).thenReturn(pendingSignup());
 
-        UserLoginWithTokenDore result = authGithubService.login(authResponse);
+        OAuthCallbackWithTokenDore result = authGithubService.login(authResponse);
 
-        ArgumentCaptor<UserGithub> userGithubCaptor = ArgumentCaptor.forClass(UserGithub.class);
-        ArgumentCaptor<User> userCaptor = ArgumentCaptor.forClass(User.class);
-        verify(authGithubMapper).saveUserGithubAndUser(userGithubCaptor.capture(), userCaptor.capture());
-        verify(sessionAuthService).whitelistToken("jwt-token");
-        verify(userService).insertUserLoginRecord(userCaptor.getValue().getUuid(), "GITHUB_OAUTH");
-
-        UserGithub savedGithubUser = userGithubCaptor.getValue();
-        User savedUser = userCaptor.getValue();
-        assertEquals(savedGithubUser.getUuid(), savedUser.getUuid());
-        assertEquals("github-user", savedGithubUser.getName());
-        assertEquals("github-token", savedGithubUser.getGithubToken());
-        assertEquals("github-user", savedUser.getNickName());
-        assertEquals("GITHUB_OAUTH", result.getLoginSource());
-        assertEquals("jwt-token", result.getToken());
-        assertEquals("github-user", result.getUserInfo().getNickname());
+        verify(oauthSignupService).createGithubPendingSignup(any(UserGithubDort.class));
+        verify(authGithubMapper, never()).saveUserGithubAndUser(any(), any());
+        verify(jwtTokenService, never()).generateToken(any());
+        verify(sessionAuthService, never()).whitelistToken(any());
+        assertEquals(OAuthCallbackWithTokenDore.SIGNUP_REQUIRED, result.getStatus());
+        assertEquals("pending-token", result.getPendingSignupToken());
+        assertEquals("github", result.getProvider());
+        assertEquals("github-user", result.getSuggestedNickname());
     }
 
     @Test
@@ -93,12 +89,13 @@ class AuthGithubServiceImplTest {
         when(userService.getUserByGithubId(1001L)).thenReturn(existingUser);
         when(jwtTokenService.generateToken("user-1")).thenReturn("jwt-token");
 
-        UserLoginWithTokenDore result = authGithubService.login(authResponse);
+        OAuthCallbackWithTokenDore result = authGithubService.login(authResponse);
 
         verify(authGithubMapper).updateUserGithubByGithubId(any(UserGithub.class));
         verify(userService).updateUserLastLoginByUuid(eq("user-1"), any(), eq("GITHUB_OAUTH"));
         verify(sessionAuthService).whitelistToken("jwt-token");
         verify(userService).insertUserLoginRecord("user-1", "GITHUB_OAUTH");
+        assertEquals(OAuthCallbackWithTokenDore.LOGIN_SUCCESS, result.getStatus());
         assertEquals("jwt-token", result.getToken());
         assertEquals("GITHUB_OAUTH", result.getLoginSource());
         assertEquals("existing-user", result.getUserInfo().getNickname());
@@ -114,6 +111,7 @@ class AuthGithubServiceImplTest {
 
         assertEquals(ErrorCode.BAD_AUTHORIZED.getCode(), exception.getCode());
         verify(authGithubMapper, never()).saveUserGithubAndUser(any(), any());
+        verify(oauthSignupService, never()).createGithubPendingSignup(any());
     }
 
     @Test
@@ -161,5 +159,15 @@ class AuthGithubServiceImplTest {
         user.setAvatarUrl("https://avatar/existing.png");
         user.setLastLoginSource("LEGACY");
         return user;
+    }
+
+    private OAuthPendingSignupDore pendingSignup() {
+        OAuthPendingSignupDore pendingSignup = new OAuthPendingSignupDore();
+        pendingSignup.setPendingSignupToken("pending-token");
+        pendingSignup.setProvider("github");
+        pendingSignup.setAvatarUrl("https://avatar/github.png");
+        pendingSignup.setSuggestedNickname("github-user");
+        pendingSignup.setEmail("github@example.com");
+        return pendingSignup;
     }
 }

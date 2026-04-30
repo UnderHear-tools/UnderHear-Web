@@ -11,12 +11,13 @@ import me.zhyd.oauth.utils.AuthStateUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.CookieValue;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.underhear.converter.ToDore;
-import com.underhear.pojo.dto.response.UserLoginDore;
-import com.underhear.pojo.dto.response.UserLoginWithTokenDore;
+import com.underhear.pojo.dto.response.OAuthCallbackDore;
+import com.underhear.pojo.dto.response.OAuthCallbackWithTokenDore;
 import com.underhear.pojo.dto.response.common.ApiResponse;
 import com.underhear.security.AuthCookieService;
 import com.underhear.security.SessionAuthService;
@@ -47,14 +48,14 @@ public class AuthGiteeController {
     @Value("${gitee.oauth.redirect-uri}")
     private String redirectUri;
 
-    @RequestMapping("/render")
+    @GetMapping("/render")
     public void renderAuth(HttpServletResponse response) throws IOException {
         AuthRequest authRequest = getAuthRequest();
         response.sendRedirect(authRequest.authorize(AuthStateUtils.createState()));
     }
 
-    @RequestMapping("/callback")
-    public ApiResponse<UserLoginDore> login(
+    @GetMapping("/callback")
+    public ApiResponse<OAuthCallbackDore> login(
             AuthCallback callback,
             @CookieValue(value = "auth_token", required = false) String oldToken,
             HttpServletResponse response) {
@@ -63,9 +64,11 @@ public class AuthGiteeController {
         
         AuthRequest authRequest = getAuthRequest();
         AuthResponse<AuthUser> authResponse = authRequest.login(callback);
-        UserLoginWithTokenDore userLoginWithTokenDore = authGiteeService.login(authResponse);
-        authCookieService.writeToken(response, userLoginWithTokenDore.getToken());
-        return ApiResponse.success(ToDore.toUserLoginDore(userLoginWithTokenDore));
+        OAuthCallbackWithTokenDore callbackWithToken = authGiteeService.login(authResponse);
+        if (OAuthCallbackWithTokenDore.LOGIN_SUCCESS.equals(callbackWithToken.getStatus())) {
+            authCookieService.writeToken(response, callbackWithToken.getToken());
+        }
+        return ApiResponse.success(ToDore.toOAuthCallbackDore(callbackWithToken));
     }
 
     private AuthRequest getAuthRequest() {

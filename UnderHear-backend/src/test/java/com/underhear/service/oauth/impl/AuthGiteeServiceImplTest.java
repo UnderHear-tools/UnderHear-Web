@@ -10,7 +10,6 @@ import static org.mockito.Mockito.when;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.ArgumentCaptor;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
@@ -20,11 +19,13 @@ import com.underhear.exception.BizException;
 import com.underhear.exception.ErrorCode;
 import com.underhear.mapper.oauth.AuthGiteeMapper;
 import com.underhear.pojo.dto.request.UserGiteeDort;
-import com.underhear.pojo.dto.response.UserLoginWithTokenDore;
+import com.underhear.pojo.dto.response.OAuthCallbackWithTokenDore;
+import com.underhear.pojo.dto.response.OAuthPendingSignupDore;
 import com.underhear.pojo.entity.User;
 import com.underhear.pojo.entity.UserGitee;
 import com.underhear.security.JwtTokenService;
 import com.underhear.security.SessionAuthService;
+import com.underhear.service.oauth.OAuthSignupService;
 import com.underhear.service.user.UserService;
 
 import me.zhyd.oauth.model.AuthResponse;
@@ -46,6 +47,9 @@ class AuthGiteeServiceImplTest {
     @Mock
     private SessionAuthService sessionAuthService;
 
+    @Mock
+    private OAuthSignupService oauthSignupService;
+
     @InjectMocks
     private AuthGiteeServiceImpl authGiteeService;
 
@@ -58,29 +62,22 @@ class AuthGiteeServiceImplTest {
     }
 
     @Test
-    // 第一次登录时应写入第三方映射、用户记录、token 白名单和登录日志。
-    void loginShouldRegisterUserWhenGiteeAccountDoesNotExist() {
+    // 第一次登录时只应创建 pending signup，不应直接创建完整用户。
+    void loginShouldReturnPendingSignupWhenGiteeAccountDoesNotExist() {
         AuthResponse<AuthUser> authResponse = successGiteeResponse();
         when(authGiteeMapper.countByGiteeId(2002L)).thenReturn(0);
-        when(jwtTokenService.generateToken(any())).thenReturn("jwt-token");
+        when(oauthSignupService.createGiteePendingSignup(any(UserGiteeDort.class))).thenReturn(pendingSignup());
 
-        UserLoginWithTokenDore result = authGiteeService.login(authResponse);
+        OAuthCallbackWithTokenDore result = authGiteeService.login(authResponse);
 
-        ArgumentCaptor<UserGitee> userGiteeCaptor = ArgumentCaptor.forClass(UserGitee.class);
-        ArgumentCaptor<User> userCaptor = ArgumentCaptor.forClass(User.class);
-        verify(authGiteeMapper).saveUserGiteeAndUser(userGiteeCaptor.capture(), userCaptor.capture());
-        verify(sessionAuthService).whitelistToken("jwt-token");
-        verify(userService).insertUserLoginRecord(userCaptor.getValue().getUuid(), "GITEE_OAUTH");
-
-        UserGitee savedGiteeUser = userGiteeCaptor.getValue();
-        User savedUser = userCaptor.getValue();
-        assertEquals(savedGiteeUser.getUuid(), savedUser.getUuid());
-        assertEquals("gitee-user", savedGiteeUser.getName());
-        assertEquals("gitee-token", savedGiteeUser.getGiteeToken());
-        assertEquals("gitee-user", savedUser.getNickName());
-        assertEquals("GITEE_OAUTH", result.getLoginSource());
-        assertEquals("jwt-token", result.getToken());
-        assertEquals("gitee-user", result.getUserInfo().getNickname());
+        verify(oauthSignupService).createGiteePendingSignup(any(UserGiteeDort.class));
+        verify(authGiteeMapper, never()).saveUserGiteeAndUser(any(), any());
+        verify(jwtTokenService, never()).generateToken(any());
+        verify(sessionAuthService, never()).whitelistToken(any());
+        assertEquals(OAuthCallbackWithTokenDore.SIGNUP_REQUIRED, result.getStatus());
+        assertEquals("pending-token", result.getPendingSignupToken());
+        assertEquals("gitee", result.getProvider());
+        assertEquals("gitee-user", result.getSuggestedNickname());
     }
 
     @Test
@@ -92,12 +89,13 @@ class AuthGiteeServiceImplTest {
         when(userService.getUserByGiteeId(2002L)).thenReturn(existingUser);
         when(jwtTokenService.generateToken("user-1")).thenReturn("jwt-token");
 
-        UserLoginWithTokenDore result = authGiteeService.login(authResponse);
+        OAuthCallbackWithTokenDore result = authGiteeService.login(authResponse);
 
         verify(authGiteeMapper).updateUserGiteeByGiteeId(any(UserGitee.class));
         verify(userService).updateUserLastLoginByUuid(eq("user-1"), any(), eq("GITEE_OAUTH"));
         verify(sessionAuthService).whitelistToken("jwt-token");
         verify(userService).insertUserLoginRecord("user-1", "GITEE_OAUTH");
+        assertEquals(OAuthCallbackWithTokenDore.LOGIN_SUCCESS, result.getStatus());
         assertEquals("jwt-token", result.getToken());
         assertEquals("GITEE_OAUTH", result.getLoginSource());
         assertEquals("existing-user", result.getUserInfo().getNickname());
@@ -113,6 +111,7 @@ class AuthGiteeServiceImplTest {
 
         assertEquals(ErrorCode.BAD_AUTHORIZED.getCode(), exception.getCode());
         verify(authGiteeMapper, never()).saveUserGiteeAndUser(any(), any());
+        verify(oauthSignupService, never()).createGiteePendingSignup(any());
     }
 
     @Test
@@ -160,5 +159,15 @@ class AuthGiteeServiceImplTest {
         user.setAvatarUrl("https://avatar/existing.png");
         user.setLastLoginSource("LEGACY");
         return user;
+    }
+
+    private OAuthPendingSignupDore pendingSignup() {
+        OAuthPendingSignupDore pendingSignup = new OAuthPendingSignupDore();
+        pendingSignup.setPendingSignupToken("pending-token");
+        pendingSignup.setProvider("gitee");
+        pendingSignup.setAvatarUrl("https://avatar/gitee.png");
+        pendingSignup.setSuggestedNickname("gitee-user");
+        pendingSignup.setEmail("gitee@example.com");
+        return pendingSignup;
     }
 }

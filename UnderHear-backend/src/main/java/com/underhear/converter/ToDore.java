@@ -1,6 +1,8 @@
 package com.underhear.converter;
 
 import com.underhear.pojo.dto.response.ApplicationCreateNewDore;
+import com.underhear.pojo.dto.response.OAuthCallbackDore;
+import com.underhear.pojo.dto.response.OAuthCallbackWithTokenDore;
 import com.underhear.pojo.dto.response.UserInfoDore;
 import com.underhear.pojo.dto.response.UserLoginDore;
 import com.underhear.pojo.dto.response.UserLoginWithTokenDore;
@@ -41,6 +43,19 @@ public final class ToDore {
         userLoginDore.setLoginSource(userLoginWithTokenDore.getLoginSource());
         userLoginDore.setUserInfo(userLoginWithTokenDore.getUserInfo());
         return userLoginDore;
+    }
+
+    public static OAuthCallbackDore toOAuthCallbackDore(OAuthCallbackWithTokenDore callbackWithToken) {
+        OAuthCallbackDore callback = new OAuthCallbackDore();
+        callback.setStatus(callbackWithToken.getStatus());
+        callback.setLoginSource(callbackWithToken.getLoginSource());
+        callback.setUserInfo(callbackWithToken.getUserInfo());
+        callback.setPendingSignupToken(callbackWithToken.getPendingSignupToken());
+        callback.setProvider(callbackWithToken.getProvider());
+        callback.setAvatarUrl(callbackWithToken.getAvatarUrl());
+        callback.setSuggestedNickname(callbackWithToken.getSuggestedNickname());
+        callback.setEmail(callbackWithToken.getEmail());
+        return callback;
     }
 
     public static ApplicationCreateNewDore toApplicationCreateNewDore(Application application) {

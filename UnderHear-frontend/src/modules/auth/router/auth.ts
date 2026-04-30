@@ -20,6 +20,12 @@ export const authRoutes: Array<RouteRecordRaw> = [
     component: () => import('../views/auth/login.vue')
   },
   {
+    path: '/auth/signup-complete',
+    name: 'OAuthSignupComplete',
+    beforeEnter: AuthStateGuard(false),
+    component: () => import('../views/auth/signup-complete.vue')
+  },
+  {
     path: '/auth/logout',
     name: 'Logout',
     beforeEnter: AuthStateGuard(true),

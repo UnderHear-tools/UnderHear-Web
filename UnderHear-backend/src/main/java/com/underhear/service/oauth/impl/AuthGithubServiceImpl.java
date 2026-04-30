@@ -13,13 +13,15 @@ import com.underhear.exception.BizException;
 import com.underhear.exception.ErrorCode;
 import com.underhear.mapper.oauth.AuthGithubMapper;
 import com.underhear.pojo.dto.request.UserGithubDort;
-import com.underhear.pojo.dto.response.UserLoginWithTokenDore;
+import com.underhear.pojo.dto.response.OAuthCallbackWithTokenDore;
+import com.underhear.pojo.dto.response.OAuthPendingSignupDore;
 import com.underhear.pojo.entity.UserGithub;
 import com.underhear.pojo.entity.User;
 import com.underhear.security.JwtTokenService;
 import com.underhear.security.SessionAuthService;
 import com.underhear.service.user.UserService;
 import com.underhear.service.oauth.AuthGithubService;
+import com.underhear.service.oauth.OAuthSignupService;
 
 import me.zhyd.oauth.model.AuthResponse;
 import me.zhyd.oauth.model.AuthToken;
@@ -40,10 +42,13 @@ public class AuthGithubServiceImpl implements AuthGithubService {
     @Autowired
     private SessionAuthService sessionAuthService;
 
+    @Autowired
+    private OAuthSignupService oauthSignupService;
+
     @Override
     @Transactional
     //github oauth登录/注册
-    public UserLoginWithTokenDore login(AuthResponse<AuthUser> authResponse) {
+    public OAuthCallbackWithTokenDore login(AuthResponse<AuthUser> authResponse) {
         //校验授权结果是否成功
         if (authResponse == null || !authResponse.ok() || authResponse.getData() == null) {
             throw new BizException(ErrorCode.BAD_AUTHORIZED);
@@ -60,19 +65,9 @@ public class AuthGithubServiceImpl implements AuthGithubService {
 
         //如果第一次登录：注册+登录
         if (!exists(userGithubDort)) {
-            //转成UserGithub对象
-            UserGithub userGithub = ToEntity.toUserGithub(userGithubDort);
-            //转成User对象
-            user = ToEntity.toUser(userGithub);
-            //分别保存到user_github表和user表，并建立关联
-            authGithubMapper.saveUserGithubAndUser(userGithub, user);
-            //生成token
-            String token = jwtTokenService.generateToken(user.getUuid());
-            //将token加入白名单
-            sessionAuthService.whitelistToken(token);
-            //记录登录日志
-            userService.insertUserLoginRecord(user.getUuid(), "GITHUB_OAUTH");
-            return ToDore.toUserLoginWithTokenDore(user, token);
+            // 首次 OAuth 只创建短期注册会话，昵称和邮箱由用户在完善资料页确认。
+            OAuthPendingSignupDore pendingSignup = oauthSignupService.createGithubPendingSignup(userGithubDort);
+            return OAuthCallbackWithTokenDore.signupRequired(pendingSignup);
         }
 
         //登录+更新用户信息
@@ -92,7 +87,7 @@ public class AuthGithubServiceImpl implements AuthGithubService {
         sessionAuthService.whitelistToken(token);
         //记录登录日志
         userService.insertUserLoginRecord(user.getUuid(), "GITHUB_OAUTH");
-        return ToDore.toUserLoginWithTokenDore(user, token);
+        return OAuthCallbackWithTokenDore.loginSuccess(ToDore.toUserLoginWithTokenDore(user, token));
     }
 
     @Override

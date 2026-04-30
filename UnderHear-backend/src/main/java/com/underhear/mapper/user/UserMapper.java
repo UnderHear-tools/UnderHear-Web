@@ -15,7 +15,7 @@ public interface UserMapper {
 
     @Select("""
             select *
-            from user
+            from `user`
             where uuid = #{uuid}
             """)
     User getUserByUuid(@Param("uuid") String uuid);
@@ -35,6 +35,28 @@ public interface UserMapper {
             where ug.gitee_id = #{giteeId}
             """)
     User getUserByGiteeId(@Param("giteeId") Long giteeId);
+
+    @Select("""
+            select count(1)
+            from `user`
+            where `nickname` = #{nickname}
+            """)
+    int countByNickname(@Param("nickname") String nickname);
+
+    @Select("""
+            select count(1)
+            from `user`
+            where `email` = #{email}
+            """)
+    int countByEmail(@Param("email") String email);
+
+    @Insert("""
+            insert into `user`
+            (`uuid`, `nickname`, `email`, `avatar_url`, `last_login_source`)
+            values
+            (#{uuid}, #{nickName}, #{email}, #{avatarUrl}, #{lastLoginSource})
+            """)
+    int insertUser(User user);
 
     @Update("""
             update `user`

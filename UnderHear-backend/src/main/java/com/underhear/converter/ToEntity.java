@@ -3,6 +3,7 @@ package com.underhear.converter;
 import java.time.LocalDateTime;
 
 import com.underhear.pojo.dto.request.ApplicationCreateNewDort;
+import com.underhear.pojo.dto.request.OAuthPendingSignupDort;
 import com.underhear.pojo.dto.request.UserGiteeDort;
 import com.underhear.pojo.dto.request.UserGithubDort;
 import com.underhear.pojo.entity.Application;
@@ -50,6 +51,7 @@ public final class ToEntity {
         User user = new User();
         user.setUuid(userGithub.getUuid());
         user.setNickName(userGithub.getName());
+        user.setEmail(userGithub.getEmail());
         user.setAvatarUrl(userGithub.getAvatarUrl());
         user.setLastLoginSource("GITHUB_OAUTH");
         return user;
@@ -87,6 +89,7 @@ public final class ToEntity {
         User user = new User();
         user.setUuid(userGitee.getUuid());
         user.setNickName(userGitee.getName());
+        user.setEmail(userGitee.getEmail());
         user.setAvatarUrl(userGitee.getAvatarUrl());
         user.setLastLoginSource("GITEE_OAUTH");
         return user;
@@ -97,6 +100,52 @@ public final class ToEntity {
         user.setLastLoginAt(lastLoginAt);
         user.setLastLoginSource(lastLoginSource);
         return user;
+    }
+
+    public static User toOAuthSignupUser(OAuthPendingSignupDort pendingSignup, String uuid, String nickname, String email) {
+        User user = new User();
+        user.setUuid(uuid);
+        user.setNickName(nickname);
+        user.setEmail(email);
+        user.setAvatarUrl(pendingSignup.getAvatarUrl());
+        user.setLastLoginSource(toLoginSource(pendingSignup.getProvider()));
+        return user;
+    }
+
+    public static UserGithub toUserGithub(OAuthPendingSignupDort pendingSignup, String uuid) {
+        UserGithub userGithub = new UserGithub();
+        userGithub.setUuid(uuid);
+        userGithub.setGithubId(pendingSignup.getProviderUserId());
+        userGithub.setName(pendingSignup.getName());
+        userGithub.setAvatarUrl(pendingSignup.getAvatarUrl());
+        userGithub.setEmail(pendingSignup.getEmail());
+        userGithub.setBio(pendingSignup.getBio());
+        userGithub.setHtmlUrl(pendingSignup.getHtmlUrl());
+        userGithub.setGithubToken(pendingSignup.getProviderToken());
+        return userGithub;
+    }
+
+    public static UserGitee toUserGitee(OAuthPendingSignupDort pendingSignup, String uuid) {
+        UserGitee userGitee = new UserGitee();
+        userGitee.setUuid(uuid);
+        userGitee.setGiteeId(pendingSignup.getProviderUserId());
+        userGitee.setName(pendingSignup.getName());
+        userGitee.setAvatarUrl(pendingSignup.getAvatarUrl());
+        userGitee.setEmail(pendingSignup.getEmail());
+        userGitee.setBio(pendingSignup.getBio());
+        userGitee.setHtmlUrl(pendingSignup.getHtmlUrl());
+        userGitee.setGiteeToken(pendingSignup.getProviderToken());
+        return userGitee;
+    }
+
+    public static String toLoginSource(String provider) {
+        if ("github".equals(provider)) {
+            return "GITHUB_OAUTH";
+        }
+        if ("gitee".equals(provider)) {
+            return "GITEE_OAUTH";
+        }
+        return "OAUTH";
     }
 
     public static Application toApplication(User user, ApplicationCreateNewDort request) {

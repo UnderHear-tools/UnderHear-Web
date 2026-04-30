@@ -91,12 +91,14 @@ class ToEntityTest {
         UserGithub userGithub = new UserGithub();
         userGithub.setUuid("12345678901");
         userGithub.setName("github-user");
+        userGithub.setEmail("github@example.com");
         userGithub.setAvatarUrl("https://avatar/github.png");
 
         User user = ToEntity.toUser(userGithub);
 
         assertEquals("12345678901", user.getUuid());
         assertEquals("github-user", user.getNickName());
+        assertEquals("github@example.com", user.getEmail());
         assertEquals("https://avatar/github.png", user.getAvatarUrl());
         assertEquals("GITHUB_OAUTH", user.getLastLoginSource());
     }
@@ -107,12 +109,14 @@ class ToEntityTest {
         UserGitee userGitee = new UserGitee();
         userGitee.setUuid("12345678901");
         userGitee.setName("gitee-user");
+        userGitee.setEmail("gitee@example.com");
         userGitee.setAvatarUrl("https://avatar/gitee.png");
 
         User user = ToEntity.toUser(userGitee);
 
         assertEquals("12345678901", user.getUuid());
         assertEquals("gitee-user", user.getNickName());
+        assertEquals("gitee@example.com", user.getEmail());
         assertEquals("https://avatar/gitee.png", user.getAvatarUrl());
         assertEquals("GITEE_OAUTH", user.getLastLoginSource());
     }

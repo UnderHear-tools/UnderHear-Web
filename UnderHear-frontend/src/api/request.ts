@@ -12,7 +12,21 @@ const request = axios.create({
 request.interceptors.response.use((response) => {
   response.data = unwrapApiResponse(response.data as ApiResponse<unknown>)
   return response
+}, (error) => {
+  if (axios.isAxiosError(error)) {
+    const payload = error.response?.data
+    if (isApiResponse(payload) && payload.message) {
+      return Promise.reject(new Error(payload.message))
+    }
+  }
+  return Promise.reject(error)
 })
+
+const isApiResponse = (payload: unknown): payload is ApiResponse<unknown> => {
+  if (!payload || typeof payload !== 'object') return false
+  const maybeApiResponse = payload as Partial<ApiResponse<unknown>>
+  return typeof maybeApiResponse.code === 'string' && typeof maybeApiResponse.message === 'string'
+}
 
 export const get = async <T>(url: string, config?: AxiosRequestConfig) => {
   const response = await request.get<T>(url, config)

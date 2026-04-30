@@ -55,19 +55,22 @@ import { useUserStore } from '@/stores/user'
 import { zBanner } from '@/components/z-ui/banner'
 import { LogoGitee, MarkGithub } from '@/components/z-ui/icon/Octicons-vue'
 import { getOAuthRenderUrl, loginWithOAuthCallback } from '../../api/login'
+import {
+  loginReturnToKey,
+  oauthProviderKey,
+  saveOAuthSignupContext
+} from '../../utils/session'
 
 const userStore = useUserStore()
 const route = useRoute()
 
 const loading = ref(false)
 const currentProvider = ref<string | null>(null)
-const oauthProviderKey = 'oauth_provider'
-const LoginReturnToKey = 'login_return_to'
 // 从登录页 query 中读取登录成功后的回跳地址
 const getReturnTo = () => {
   const returnTo = (route.query.return_to as string)
   if (route.query.return_to) {
-    sessionStorage.setItem(LoginReturnToKey, returnTo)
+    sessionStorage.setItem(loginReturnToKey, returnTo)
   }
   return returnTo
 }
@@ -111,11 +114,19 @@ const login = async () => {
   try {
     // 用回调参数换取登录态
     const response = await loginWithOAuthCallback(provider, { code, state })
+    if (response.status === 'SIGNUP_REQUIRED') {
+      saveOAuthSignupContext(response)
+      window.location.href = '/auth/signup-complete'
+      return
+    }
+    if (!response.userInfo) {
+      throw new Error('登录响应无效，请稍后重试。')
+    }
     userStore.setUserInfo(response.userInfo)
     // 登录成功后跳回登录前页面
-    const returnTo = sessionStorage.getItem(LoginReturnToKey) || '/'
+    const returnTo = sessionStorage.getItem(loginReturnToKey) || '/'
     window.location.href = returnTo
-    sessionStorage.removeItem(LoginReturnToKey)
+    sessionStorage.removeItem(loginReturnToKey)
   } catch (error) {
     zBanner.error(error instanceof Error ? error.message : '登录失败，请稍后重试。')
   } finally {

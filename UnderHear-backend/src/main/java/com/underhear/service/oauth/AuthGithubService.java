@@ -1,14 +1,14 @@
 package com.underhear.service.oauth;
 
 import com.underhear.pojo.dto.request.UserGithubDort;
-import com.underhear.pojo.dto.response.UserLoginWithTokenDore;
+import com.underhear.pojo.dto.response.OAuthCallbackWithTokenDore;
 
 import me.zhyd.oauth.model.AuthResponse;
 import me.zhyd.oauth.model.AuthUser;
 
 public interface AuthGithubService {
 
-    UserLoginWithTokenDore login(AuthResponse<AuthUser> authResponse);
+    OAuthCallbackWithTokenDore login(AuthResponse<AuthUser> authResponse);
 
     //在oauth_github表中检测该用户是否存在
     boolean exists(UserGithubDort userGithubDort);
