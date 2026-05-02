@@ -71,8 +71,6 @@
       <div class="signup-actions">
         <zButton
           type="submit"
-          variant="primary"
-          size="large"
           :loading="loading"
           :disabled="!canSubmit"
         >
@@ -256,10 +254,6 @@ onMounted(() => {
 }
 
 .signup-fields :deep(.z-input) {
-  width: 100%;
-}
-
-.signup-actions {
   width: 100%;
 }
 
