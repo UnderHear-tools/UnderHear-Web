@@ -34,7 +34,7 @@ public class ApplicationCreateServiceImpl implements ApplicationCreateService {
         }
 
         // 先发布站点并拿到回滚信息；后续任一步落库失败都要补偿清理已发布内容。
-        lightOssPublishService.ensureBucketExists(user.getUuid());
+        lightOssPublishService.ensureBucketExists(user.getNickName());
         LightOssPublishedSiteDort publishedSite = publishApplicationSite(user, application, applicationCreateNewDort);
 
         int rows;
@@ -61,13 +61,13 @@ public class ApplicationCreateServiceImpl implements ApplicationCreateService {
             ApplicationCreateNewDort applicationCreateNewDort) {
         if ("html".equalsIgnoreCase(application.getFramework())) {
             return lightOssPublishService.publishHtml(
-                    user.getUuid(),
+                    user.getNickName(),
                     application.getAppEnglishName(),
                     applicationCreateNewDort.getAppFile());
         }
 
         return lightOssPublishService.publishZipSite(
-                user.getUuid(),
+                user.getNickName(),
                 application.getAppEnglishName(),
                 applicationCreateNewDort.getAppFile());
     }

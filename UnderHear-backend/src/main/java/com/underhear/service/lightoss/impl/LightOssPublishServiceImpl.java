@@ -58,7 +58,7 @@ public class LightOssPublishServiceImpl implements LightOssPublishService {
     }
 
     @Override
-    // bucket 以用户 uuid 为粒度。Light OSS 若返回 bucket_exists，按幂等成功处理。
+    // bucket 以用户昵称为粒度。Light OSS 若返回 bucket_exists，按幂等成功处理。
     public void ensureBucketExists(String bucketName) {
         try {
             lightOssRestClient.post()
