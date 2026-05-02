@@ -12,6 +12,11 @@ export const applicationRoutes: Array<RouteRecordRaw> = [
         component: () => import('../views/application/create/new.vue')
     },
     {
+        path: '/application/create/success',
+        name: 'ApplicationCreateSuccess',
+        component: () => import('../views/application/create/success.vue')
+    },
+    {
         path: '/application/create/connect',
         name: 'ApplicationCreateConnect',
         component: () => import('../views/application/create/connect.vue')

@@ -89,6 +89,7 @@
 
 <script setup lang="ts">
 import { ref } from 'vue'
+import { useRouter } from 'vue-router'
 import { zContainer } from '@/components/z-ui/container'
 import { zButton } from '@/components/z-ui/button'
 import { Timeline } from '@/components/z-ui/timeline'
@@ -98,6 +99,8 @@ import SecondStep from '@/modules/application/components/newForm/SecondStep.vue'
 import ThirdStep from '@/modules/application/components/newForm/ThirdStep.vue'
 import { useCreateApplicationForm } from '@/modules/application/components/newForm/useCreateApplicationForm'
 import Rocket from '@/components/z-ui/icon/Octicons-vue/icons/rocket.vue'
+
+const router = useRouter()
 
 const {
   selectedFramework,
@@ -139,6 +142,7 @@ async function submit() {
   isUploading.value = true
   try {
     await applicationCreateNew(buildRequest())
+    await router.push('/application/create/success')
   } finally {
     isUploading.value = false
   }
