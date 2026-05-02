@@ -75,6 +75,7 @@
     <div class="mt-6 flex justify-end">
       <zButton
         variant="primary"
+        :loading="isUploading"
         @click="submit"
       >
         <template #leadingVisual>
@@ -87,6 +88,7 @@
 </template>
 
 <script setup lang="ts">
+import { ref } from 'vue'
 import { zContainer } from '@/components/z-ui/container'
 import { zButton } from '@/components/z-ui/button'
 import { Timeline } from '@/components/z-ui/timeline'
@@ -123,12 +125,23 @@ const {
   buildRequest
 } = useCreateApplicationForm()
 
+const isUploading = ref(false)
+
 async function submit() {
+  if (isUploading.value) {
+    return
+  }
+
   if (!prepareSubmit()) {
     return
   }
 
-  await applicationCreateNew(buildRequest())
+  isUploading.value = true
+  try {
+    await applicationCreateNew(buildRequest())
+  } finally {
+    isUploading.value = false
+  }
 }
 </script>
 
