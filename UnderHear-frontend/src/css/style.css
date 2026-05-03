@@ -7,6 +7,7 @@
 @layer base {
   html, body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color: var(--fgColor-default, #1f2328);
   }
   h1 {
     font-size: 2em;

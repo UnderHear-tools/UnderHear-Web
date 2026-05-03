@@ -1,21 +1,39 @@
 <template>
-  <zContainer
-    style="max-width: 720px;"
-  >
+  <zContainer>
     <div class="success-message">
-      <CheckCircle :size="24" />
-      <h2>
-        应用创建成功！
-      </h2>
+      <div class="success-info">
+        <CheckCircle :size="32" />
+        <h2>
+          应用创建成功
+        </h2>
+      </div>
+      <zLink :href="appUrl" :link-text="appUrl" target="_blank" />
     </div>
   </zContainer>
 </template>
 
 <script setup lang="ts">
 import confetti from 'canvas-confetti'
-import { onMounted } from 'vue'
+import { ref, onMounted } from 'vue'
 import { zContainer } from '@/components/z-ui/container'
 import { CheckCircle } from '@/components/z-ui/icon/Octicons-vue'
+import { zLink } from '@/components/z-ui/link'
+import { useRoute } from 'vue-router'
+
+const route = useRoute()
+const appUrl = ref('')
+
+function getAppUrlQuery() {
+  const value = route.query.appUrl
+
+  if (typeof value === 'string') {
+    appUrl.value = value
+  } else if (Array.isArray(value) && typeof value[0] === 'string') {
+    appUrl.value = value[0]
+  } else {
+    appUrl.value = ''
+  }
+}
 
 function fireSuccessConfetti() {
   const sharedOptions = {
@@ -42,6 +60,7 @@ function fireSuccessConfetti() {
 }
 
 onMounted(() => {
+  getAppUrlQuery()
   fireSuccessConfetti()
 })
 </script>
@@ -49,9 +68,15 @@ onMounted(() => {
 <style scoped>
 .success-message {
   display: flex;
-  justify-content: center;
+  flex-direction: column;
   align-items: center;
-  gap: 0.5rem;
+  margin-top: 64px;
+}
+
+.success-info {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   color: var(--success-fgColor, #1a7f37);
 }
 </style>

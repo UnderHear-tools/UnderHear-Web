@@ -9,6 +9,10 @@ export interface CreateApplicationRequest {
 	appDescription: string
 }
 
+export interface CreateApplicationResponse {
+	appUrl: string
+}
+
 function buildCreateApplicationFormData(request: CreateApplicationRequest): FormData {
 	const payload = new FormData()
 
@@ -25,7 +29,7 @@ function buildCreateApplicationFormData(request: CreateApplicationRequest): Form
 export const applicationCreateNew = (request: CreateApplicationRequest) => {
 	const data = buildCreateApplicationFormData(request)
 
-	return post<void>('/application/create/new', data, {
+	return post<CreateApplicationResponse>('/application/create/new', data, {
 		withCredentials: true
 	})
 }

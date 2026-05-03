@@ -141,8 +141,13 @@ async function submit() {
 
   isUploading.value = true
   try {
-    await applicationCreateNew(buildRequest())
-    await router.push('/application/create/success')
+    const response = await applicationCreateNew(buildRequest())
+    await router.push({
+      path: '/application/create/success',
+      query: {
+        appUrl: response.appUrl
+      }
+    })
   } finally {
     isUploading.value = false
   }
