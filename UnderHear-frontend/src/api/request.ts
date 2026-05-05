@@ -1,8 +1,11 @@
 import axios, { type AxiosRequestConfig } from 'axios'
 
+import { zBanner } from '@/components/z-ui/banner'
 import { API_BASE_URL } from './config'
 import { unwrapApiResponse } from './response'
 import type { ApiResponse } from './types'
+
+const NETWORK_ERROR_MESSAGE = '网络连接失败，请确认服务已启动或网络连接正常。'
 
 const request = axios.create({
   baseURL: API_BASE_URL,
@@ -14,6 +17,11 @@ request.interceptors.response.use((response) => {
   return response
 }, (error) => {
   if (axios.isAxiosError(error)) {
+    if (isNetworkError(error)) {
+      zBanner.error(NETWORK_ERROR_MESSAGE)
+      return Promise.reject(new Error(NETWORK_ERROR_MESSAGE))
+    }
+
     const payload = error.response?.data
     if (isApiResponse(payload) && payload.message) {
       return Promise.reject(new Error(payload.message))
@@ -26,6 +34,10 @@ const isApiResponse = (payload: unknown): payload is ApiResponse<unknown> => {
   if (!payload || typeof payload !== 'object') return false
   const maybeApiResponse = payload as Partial<ApiResponse<unknown>>
   return typeof maybeApiResponse.code === 'string' && typeof maybeApiResponse.message === 'string'
+}
+
+const isNetworkError = (error: unknown) => {
+  return axios.isAxiosError(error) && error.code !== 'ERR_CANCELED' && !error.response && Boolean(error.request)
 }
 
 export const get = async <T>(url: string, config?: AxiosRequestConfig) => {
