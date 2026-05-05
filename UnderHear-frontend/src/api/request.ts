@@ -5,7 +5,7 @@ import { API_BASE_URL } from './config'
 import { unwrapApiResponse } from './response'
 import type { ApiResponse } from './types'
 
-const NETWORK_ERROR_MESSAGE = '网络连接失败，请确认服务已启动或网络连接正常。'
+const NETWORK_ERROR_MESSAGE = '网络连接失败，请确认网络连接正常。'
 
 const request = axios.create({
   baseURL: API_BASE_URL,
