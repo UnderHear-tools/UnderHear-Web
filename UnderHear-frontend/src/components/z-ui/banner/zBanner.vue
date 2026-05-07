@@ -30,6 +30,7 @@ export interface zBannerExposed {
 }
 
 interface BannerState {
+  id: number
   type: zBannerType
   title: string
   description: string
@@ -40,6 +41,7 @@ interface BannerState {
   secondaryAction?: zBannerAction
   actionsLayout: zBannerActionsLayout
   flush: boolean
+  duration?: number
 }
 
 const LABEL_BY_TYPE: Record<zBannerType, string> = {
@@ -58,29 +60,38 @@ const ICON_PATH: Record<zBannerType, string> = {
   warning: 'M6.457 1.047c.659-1.234 2.427-1.234 3.086 0l6.082 11.378A1.75 1.75 0 0 1 14.082 15H1.918a1.75 1.75 0 0 1-1.543-2.575Zm1.763.707a.25.25 0 0 0-.44 0L1.698 13.132a.25.25 0 0 0 .22.368h12.164a.25.25 0 0 0 .22-.368Zm.53 3.996v2.5a.75.75 0 0 1-1.5 0v-2.5a.75.75 0 0 1 1.5 0ZM9 11a1 1 0 1 1-2 0 1 1 0 0 1 2 0Z'
 }
 
-const banner = ref<BannerState | null>(null)
-let closeTimer: ReturnType<typeof setTimeout> | null = null
+const banners = ref<BannerState[]>([])
+const closeTimers = new Map<number, ReturnType<typeof setTimeout>>()
+let nextBannerId = 1
 
-function clearCloseTimer() {
-  if (closeTimer) {
-    clearTimeout(closeTimer)
-    closeTimer = null
+function clearCloseTimer(id: number) {
+  const timer = closeTimers.get(id)
+  if (timer) {
+    clearTimeout(timer)
+    closeTimers.delete(id)
   }
 }
 
 function close() {
-  clearCloseTimer()
-  banner.value = null
+  const latestBanner = banners.value[0]
+  if (latestBanner) {
+    closeBanner(latestBanner.id)
+  }
 }
 
 function runAction(action: zBannerAction) {
   action.onClick?.()
 }
 
-function show(message: string, type: zBannerType = 'info', options: zBannerOptions = {}): zBannerResult {
-  clearCloseTimer()
+function startCloseTimer(nextBanner: BannerState) {
+  if (nextBanner.duration && nextBanner.duration > 0) {
+    closeTimers.set(nextBanner.id, setTimeout(() => closeBanner(nextBanner.id), nextBanner.duration))
+  }
+}
 
-  banner.value = {
+function createBanner(message: string, type: zBannerType, options: zBannerOptions): BannerState {
+  return {
+    id: nextBannerId++,
     type,
     title: options.title ?? LABEL_BY_TYPE[type],
     description: options.description ?? message,
@@ -90,14 +101,26 @@ function show(message: string, type: zBannerType = 'info', options: zBannerOptio
     primaryAction: options.primaryAction,
     secondaryAction: options.secondaryAction,
     actionsLayout: options.actionsLayout ?? 'default',
-    flush: options.flush ?? false
+    flush: options.flush ?? false,
+    duration: options.duration
   }
+}
 
-  if (options.duration && options.duration > 0) {
-    closeTimer = setTimeout(close, options.duration)
+function closeBanner(id: number) {
+  clearCloseTimer(id)
+  const index = banners.value.findIndex((currentBanner) => currentBanner.id === id)
+  if (index !== -1) {
+    banners.value.splice(index, 1)
   }
+}
 
-  return { close }
+function show(message: string, type: zBannerType = 'info', options: zBannerOptions = {}): zBannerResult {
+  const nextBanner = createBanner(message, type, options)
+
+  banners.value.unshift(nextBanner)
+  startCloseTimer(nextBanner)
+
+  return { close: () => closeBanner(nextBanner.id) }
 }
 
 defineExpose<zBannerExposed>({
@@ -108,10 +131,12 @@ defineExpose<zBannerExposed>({
 
 <template>
   <div
-    v-if="banner"
+    v-if="banners.length"
     class="z-banner-layer"
   >
     <section
+      v-for="banner in banners"
+      :key="banner.id"
       class="z-banner"
       :class="[
         `z-banner--${banner.type}`,
@@ -241,7 +266,7 @@ defineExpose<zBannerExposed>({
         type="button"
         class="z-banner__dismiss"
         aria-label="Dismiss banner"
-        @click="close"
+        @click="closeBanner(banner.id)"
       >
         <svg
           width="16"
@@ -263,6 +288,9 @@ defineExpose<zBannerExposed>({
   width: min(92vw, 760px);
   z-index: 9999;
   pointer-events: none;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
 }
 
 .z-banner {
