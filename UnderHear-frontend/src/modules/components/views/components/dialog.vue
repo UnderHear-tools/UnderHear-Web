@@ -60,50 +60,6 @@
       </ComponentDocsDemoBlock>
     </ComponentDocsSection>
 
-    <ComponentDocsSection title="侧边 Sheet">
-      <template #description>
-        设置 <code>position=&quot;right&quot;</code> 可以从右侧打开，适合展示设置、筛选或详情。窄屏下会自动转为底部 sheet。
-      </template>
-
-      <ComponentDocsDemoBlock :code="sideSheetDemoCode">
-        <Button @click="sideSheetOpen = true">
-          打开侧边 Sheet
-        </Button>
-
-        <Dialog
-          v-model:open="sideSheetOpen"
-          title="仓库设置"
-          subtitle="调整协作、分支保护和自动化规则。"
-          position="right"
-          size="large"
-        >
-          <Dialog.Body>
-            <div class="dialog-settings-list">
-              <label class="dialog-setting">
-                <span class="dialog-setting__title">启用分支保护</span>
-                <span class="dialog-setting__description">限制直接推送到主分支，并要求通过检查后合并。</span>
-              </label>
-              <label class="dialog-setting">
-                <span class="dialog-setting__title">允许自动合并</span>
-                <span class="dialog-setting__description">当检查全部通过后自动完成合并流程。</span>
-              </label>
-            </div>
-          </Dialog.Body>
-          <Dialog.Footer>
-            <Button @click="sideSheetOpen = false">
-              取消
-            </Button>
-            <Button
-              variant="primary"
-              @click="sideSheetOpen = false"
-            >
-              保存设置
-            </Button>
-          </Dialog.Footer>
-        </Dialog>
-      </ComponentDocsDemoBlock>
-    </ComponentDocsSection>
-
     <ComponentDocsSection title="尺寸">
       <template #description>
         使用 <code>size</code> 控制宽度，使用 <code>height</code> 控制最大内容高度。大尺寸适合表单、评论框或需要更多横向空间的内容。
@@ -156,48 +112,6 @@
       </ComponentDocsDemoBlock>
     </ComponentDocsSection>
 
-    <ComponentDocsSection title="底部 Sheet">
-      <template #description>
-        设置 <code>position=&quot;bottom&quot;</code> 可将 Dialog 固定在视口底部，适合窄屏或移动端的临时选择。
-      </template>
-
-      <ComponentDocsDemoBlock :code="bottomSheetDemoCode">
-        <Button @click="bottomSheetOpen = true">
-          打开底部 Sheet
-        </Button>
-
-        <Dialog
-          v-model:open="bottomSheetOpen"
-          title="选择通知方式"
-          position="bottom"
-          size="large"
-        >
-          <Dialog.Body>
-            <div class="dialog-option-list">
-              <button
-                class="dialog-option"
-                type="button"
-              >
-                站内通知
-              </button>
-              <button
-                class="dialog-option"
-                type="button"
-              >
-                邮件通知
-              </button>
-              <button
-                class="dialog-option"
-                type="button"
-              >
-                不再提醒
-              </button>
-            </div>
-          </Dialog.Body>
-        </Dialog>
-      </ComponentDocsDemoBlock>
-    </ComponentDocsSection>
-
     <ComponentDocsSection
       title="API"
       variant="api"
@@ -244,10 +158,8 @@ import ComponentDocsSection from '@/modules/components/components/ComponentDocsP
 
 const basicDialogOpen = ref(false)
 const footerDialogOpen = ref(false)
-const sideSheetOpen = ref(false)
 const smallDialogOpen = ref(false)
 const largeDialogOpen = ref(false)
-const bottomSheetOpen = ref(false)
 
 const largeDialogItems = [
   '对话框内容超过可用高度时，主体区域会独立滚动，页背景保持锁定。',
@@ -300,32 +212,6 @@ const open = ref(false)
   </Dialog>
 </template>`
 
-const sideSheetDemoCode = `<script setup lang="ts">
-import { ref } from 'vue'
-import { Button } from '@/components/z-ui/button'
-import { Dialog } from '@/components/z-ui/dialog'
-
-const open = ref(false)
-<\/script>
-
-<template>
-  <Button @click="open = true">打开侧边 Sheet</Button>
-
-  <Dialog
-    v-model:open="open"
-    title="仓库设置"
-    subtitle="调整协作、分支保护和自动化规则。"
-    position="right"
-    size="large"
-  >
-    <Dialog.Body>设置内容</Dialog.Body>
-    <Dialog.Footer>
-      <Button @click="open = false">取消</Button>
-      <Button variant="primary" @click="open = false">保存设置</Button>
-    </Dialog.Footer>
-  </Dialog>
-</template>`
-
 const sizeDemoCode = `<script setup lang="ts">
 import { ref } from 'vue'
 import { Button } from '@/components/z-ui/button'
@@ -345,26 +231,6 @@ const largeOpen = ref(false)
 
   <Dialog v-model:open="largeOpen" title="大型 Dialog" size="xlarge" height="large">
     <Dialog.Body>大型内容区域会独立滚动。</Dialog.Body>
-  </Dialog>
-</template>`
-
-const bottomSheetDemoCode = `<script setup lang="ts">
-import { ref } from 'vue'
-import { Button } from '@/components/z-ui/button'
-import { Dialog } from '@/components/z-ui/dialog'
-
-const open = ref(false)
-<\/script>
-
-<template>
-  <Button @click="open = true">打开底部 Sheet</Button>
-
-  <Dialog v-model:open="open" title="选择通知方式" position="bottom" size="large">
-    <Dialog.Body>
-      <button type="button">站内通知</button>
-      <button type="button">邮件通知</button>
-      <button type="button">不再提醒</button>
-    </Dialog.Body>
   </Dialog>
 </template>`
 
@@ -393,18 +259,6 @@ const dialogPropsRows = [
     default: "''",
     type: 'string',
     description: '标题下方的辅助说明，同时作为 aria-describedby 的来源。'
-  },
-  {
-    name: 'position',
-    default: "'center'",
-    type: "'center' | 'left' | 'right' | 'bottom' | 'fullscreen'",
-    description: '控制 Dialog 在视口中的位置。'
-  },
-  {
-    name: 'align',
-    default: "'center'",
-    type: "'top' | 'center' | 'bottom'",
-    description: 'position 为 center 时控制垂直对齐方式。'
   },
   {
     name: 'size',
@@ -476,57 +330,8 @@ const eventTableRows = [
   gap: 0.75rem;
 }
 
-.dialog-settings-list {
-  display: grid;
-  gap: 0.75rem;
-}
-
-.dialog-setting {
-  border: 1px solid var(--borderColor-default, #d1d9e0);
-  border-radius: 0.375rem;
-  display: grid;
-  gap: 0.25rem;
-  padding: 0.75rem;
-}
-
-.dialog-setting__title {
-  color: var(--fgColor-default, #1f2328);
-  font-weight: 600;
-}
-
-.dialog-setting__description {
-  color: var(--fgColor-muted, #59636e);
-  font-size: 0.875rem;
-  line-height: 1.5;
-}
-
 .dialog-large-content {
   display: grid;
   gap: 0.75rem;
-}
-
-.dialog-option-list {
-  display: grid;
-  gap: 0.5rem;
-}
-
-.dialog-option {
-  background: var(--bgColor-default, #ffffff);
-  border: 1px solid var(--borderColor-default, #d1d9e0);
-  border-radius: 0.375rem;
-  color: var(--fgColor-default, #1f2328);
-  cursor: pointer;
-  font: inherit;
-  padding: 0.75rem;
-  text-align: left;
-}
-
-.dialog-option:hover {
-  background: var(--control-bgColor-hover, #eff2f5);
-}
-
-.dialog-option:focus-visible {
-  outline: 2px solid var(--focus-outlineColor, #0969da);
-  outline-offset: 2px;
 }
 </style>

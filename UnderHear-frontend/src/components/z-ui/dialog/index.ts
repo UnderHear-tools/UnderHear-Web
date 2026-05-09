@@ -11,9 +11,7 @@ export const zDialog = Dialog
 
 export { DialogBody, DialogFooter }
 export type {
-  DialogAlign,
   DialogCloseGesture,
   DialogHeight,
-  DialogPosition,
   DialogSize
 } from './Dialog.vue'

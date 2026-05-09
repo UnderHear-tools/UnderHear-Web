@@ -7,8 +7,7 @@
 <style scoped>
 .dialog-footer {
   align-items: center;
-  background: var(--bgColor-muted, #f6f8fa);
-  border-top: 1px solid var(--borderColor-default, #d1d9e0);
+  background: var(--bgColor-default, #ffffff);
   display: flex;
   flex-wrap: wrap;
   gap: 0.5rem;

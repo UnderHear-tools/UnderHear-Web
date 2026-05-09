@@ -21,8 +21,6 @@ import { computed, nextTick, onBeforeUnmount, ref, watch } from 'vue'
 import { X } from '@/components/z-ui/icon/Octicons-vue'
 
 export type DialogCloseGesture = 'close-button' | 'escape' | 'backdrop'
-export type DialogPosition = 'center' | 'left' | 'right' | 'bottom' | 'fullscreen'
-export type DialogAlign = 'top' | 'center' | 'bottom'
 export type DialogSize = 'small' | 'medium' | 'large' | 'xlarge'
 export type DialogHeight = 'auto' | 'small' | 'large'
 
@@ -31,8 +29,6 @@ const props = withDefaults(
     open?: boolean
     title: string
     subtitle?: string
-    position?: DialogPosition
-    align?: DialogAlign
     size?: DialogSize
     height?: DialogHeight
     role?: 'dialog' | 'alertdialog'
@@ -42,8 +38,6 @@ const props = withDefaults(
   {
     open: false,
     subtitle: '',
-    position: 'center',
-    align: 'center',
     size: 'medium',
     height: 'auto',
     role: 'dialog',
@@ -189,14 +183,11 @@ onBeforeUnmount(unlockPageScroll)
       <div
         v-if="open"
         class="dialog-layer"
-        :data-position="position"
-        :data-align="align"
         @click.self="handleBackdropClick"
       >
         <section
           ref="dialogRef"
           class="dialog"
-          :data-position="position"
           :data-size="size"
           :data-height="height"
           :role="role"
@@ -208,12 +199,12 @@ onBeforeUnmount(unlockPageScroll)
         >
           <header class="dialog__header">
             <div class="dialog__header-content">
-              <h1
+              <div
                 :id="titleId"
                 class="dialog__title"
               >
                 {{ title }}
-              </h1>
+              </div>
               <p
                 v-if="subtitle"
                 :id="subtitleId"
@@ -246,10 +237,6 @@ onBeforeUnmount(unlockPageScroll)
   overscroll-behavior: contain;
 }
 
-:global(html[data-dialog-scroll-locked='true'] body) {
-  padding-right: 15px;
-}
-
 .dialog-layer {
   align-items: center;
   background: var(--overlay-backdrop-bgColor, rgba(140, 149, 159, 0.32));
@@ -261,42 +248,11 @@ onBeforeUnmount(unlockPageScroll)
   z-index: 10000;
 }
 
-.dialog-layer[data-align='top'] {
-  align-items: flex-start;
-  padding-top: 4rem;
-}
-
-.dialog-layer[data-align='bottom'] {
-  align-items: flex-end;
-  padding-bottom: 4rem;
-}
-
-.dialog-layer[data-position='left'],
-.dialog-layer[data-position='right'],
-.dialog-layer[data-position='fullscreen'] {
-  align-items: stretch;
-  padding: 0;
-}
-
-.dialog-layer[data-position='left'] {
-  justify-content: flex-start;
-}
-
-.dialog-layer[data-position='right'] {
-  justify-content: flex-end;
-}
-
-.dialog-layer[data-position='bottom'] {
-  align-items: flex-end;
-  padding: 0 1rem;
-}
-
 .dialog {
   --dialog-width: 20rem;
-
   background: var(--overlay-bgColor, var(--bgColor-default, #ffffff));
   border-radius: var(--borderRadius-large, 0.75rem);
-  box-shadow: var(--shadow-floating-large, 0 0 0 1px #d1d9e0, 0 40px 80px 0 #25292e3d);
+  box-shadow: var(--shadow-floating-small, 0 0 0 1px #d1d9e080,0 6px 12px -3px #25292e0a,0 6px 18px 0 #25292e1f);
   color: var(--fgColor-default, #1f2328);
   display: flex;
   flex-direction: column;
@@ -304,6 +260,7 @@ onBeforeUnmount(unlockPageScroll)
   min-height: 0;
   outline: none;
   overflow: hidden;
+  transform-origin: center;
   width: min(var(--dialog-width), calc(100vw - 2rem));
 }
 
@@ -327,54 +284,33 @@ onBeforeUnmount(unlockPageScroll)
   height: min(40rem, calc(100dvh - 2rem));
 }
 
-.dialog[data-position='left'],
-.dialog[data-position='right'] {
-  border-radius: 0;
-  height: 100dvh;
-  max-height: 100dvh;
-  width: min(var(--dialog-width), 100vw);
-}
-
-.dialog[data-position='bottom'] {
-  border-radius: var(--borderRadius-large, 0.75rem) var(--borderRadius-large, 0.75rem) 0 0;
-  max-height: calc(100dvh - 1rem);
-  width: min(40rem, 100vw);
-}
-
-.dialog[data-position='fullscreen'] {
-  border-radius: 0;
-  height: 100dvh;
-  max-height: 100dvh;
-  width: 100vw;
-}
-
 .dialog__header {
   align-items: start;
   border-bottom: 1px solid var(--borderColor-default, #d1d9e0);
   display: grid;
   gap: 0.75rem;
   grid-template-columns: minmax(0, 1fr) auto;
-  padding: 1rem;
+  padding: 0.5rem;
 }
 
 .dialog__header-content {
   display: grid;
   gap: 0.25rem;
+  padding: 6px 8px;
   min-width: 0;
 }
 
 .dialog__title {
   color: var(--fgColor-default, #1f2328);
-  font-size: 1rem;
+  font-size: 14px;
   font-weight: 600;
   line-height: 1.5;
-  margin: 0;
   overflow-wrap: anywhere;
 }
 
 .dialog__subtitle {
   color: var(--fgColor-muted, #59636e);
-  font-size: 0.875rem;
+  font-size: 12px;
   line-height: 1.5;
   margin: 0;
   overflow-wrap: anywhere;
@@ -409,53 +345,25 @@ onBeforeUnmount(unlockPageScroll)
   outline-offset: -2px;
 }
 
-.dialog-fade-enter-active,
-.dialog-fade-leave-active {
+.dialog-fade-enter-active {
   transition: opacity 160ms cubic-bezier(0.65, 0, 0.35, 1);
 }
 
-.dialog-fade-enter-active .dialog,
-.dialog-fade-leave-active .dialog {
+.dialog-fade-enter-active .dialog {
   transition: transform 160ms cubic-bezier(0.65, 0, 0.35, 1);
 }
 
-.dialog-fade-enter-from,
-.dialog-fade-leave-to {
+.dialog-fade-enter-from {
   opacity: 0;
 }
 
-.dialog-fade-enter-from .dialog,
-.dialog-fade-leave-to .dialog {
-  transform: translateY(0.5rem) scale(0.98);
+.dialog-fade-enter-from .dialog {
+  transform: scale(0.96);
 }
 
-.dialog-layer[data-position='left'].dialog-fade-enter-from .dialog,
-.dialog-layer[data-position='left'].dialog-fade-leave-to .dialog {
-  transform: translateX(-1rem);
-}
-
-.dialog-layer[data-position='right'].dialog-fade-enter-from .dialog,
-.dialog-layer[data-position='right'].dialog-fade-leave-to .dialog {
-  transform: translateX(1rem);
-}
-
-.dialog-layer[data-position='bottom'].dialog-fade-enter-from .dialog,
-.dialog-layer[data-position='bottom'].dialog-fade-leave-to .dialog {
-  transform: translateY(1rem);
-}
-
-@media (max-width: 640px) {
-  .dialog-layer:not([data-position='fullscreen']) {
-    align-items: flex-end;
-    justify-content: center;
-    padding: 0;
-  }
-
-  .dialog-layer:not([data-position='fullscreen']) .dialog {
-    border-radius: var(--borderRadius-large, 0.75rem) var(--borderRadius-large, 0.75rem) 0 0;
-    height: auto;
-    max-height: calc(100dvh - 1.5rem);
-    width: 100vw;
+@media (pointer: fine) {
+  :global(html[data-dialog-scroll-locked='true'] body) {
+    padding-right: 15px;
   }
 }
 </style>
