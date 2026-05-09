@@ -7,7 +7,7 @@
       <FormControl.Label>
         应用名称
       </FormControl.Label>
-      <zInput
+      <Input
         class="w-full"
         :model-value="appName"
         placeholder="请输入应用名称"
@@ -26,7 +26,7 @@
       <FormControl.Label>
         英文名称
       </FormControl.Label>
-      <zInput
+      <Input
         class="w-full"
         :model-value="appEnglishName"
         placeholder="请输入英文名称"
@@ -56,9 +56,9 @@
       </div>
 
       <div class="visibility-select-wrap">
-        <zDropdown>
+        <Dropdown>
           <template #trigger>
-            <zButton>
+            <Button>
               <template #leadingVisual>
                 <component
                   :is="selectedVisibilityOption.icon"
@@ -69,7 +69,7 @@
               <template #trailingVisual>
                 <TriangleDown color="var(--fgColor-muted)" />
               </template>
-            </zButton>
+            </Button>
           </template>
           <template #content>
             <ActionList
@@ -94,7 +94,7 @@
               </ActionList.Item>
             </ActionList>
           </template>
-        </zDropdown>
+        </Dropdown>
       </div>
     </section>
 
@@ -102,7 +102,7 @@
       <FormControl.Label>
         应用描述
       </FormControl.Label>
-      <zTextarea
+      <Textarea
         class="w-full"
         :model-value="appDescription"
         placeholder="请输入应用描述"
@@ -126,10 +126,10 @@
 <script setup lang="ts">
 import { computed } from 'vue'
 import { FormControl } from '@/components/z-ui/form-control'
-import { zInput } from '@/components/z-ui/input'
-import { zTextarea } from '@/components/z-ui/textarea'
-import { zButton } from '@/components/z-ui/button'
-import { zDropdown } from '@/components/z-ui/dropdown'
+import { Input } from '@/components/z-ui/input'
+import { Textarea } from '@/components/z-ui/textarea'
+import { Button } from '@/components/z-ui/button'
+import { Dropdown } from '@/components/z-ui/dropdown'
 import { ActionList } from '@/components/z-ui/action-list'
 import Repo from '@/components/z-ui/icon/Octicons-vue/icons/repo.vue'
 import TriangleDown from '@/components/z-ui/icon/Octicons-vue/icons/triangle-down.vue'

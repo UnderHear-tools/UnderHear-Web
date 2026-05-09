@@ -10,7 +10,7 @@
         通过 <code>v-model</code> 绑定选中值，<code>options</code> 传入选项数组。
       </template>
       <ComponentDocsDemoBlock :code="demo1Code">
-        <zSelect
+        <Select
           v-model="val1"
           :options="fruitOptions"
           placeholder="请选择水果"
@@ -26,7 +26,7 @@
         设置 <code>disabled</code> 属性禁用选择器。
       </template>
       <ComponentDocsDemoBlock :code="demo2Code">
-        <zSelect
+        <Select
           v-model="val2"
           :options="fruitOptions"
           placeholder="禁用状态"
@@ -37,21 +37,21 @@
 
     <ComponentDocsSection title="多个选择器">
       <template #description>
-        多个 <code>zSelect</code> 并列时，展开一个会自动关闭其他已展开的实例。
+        多个 <code>Select</code> 并列时，展开一个会自动关闭其他已展开的实例。
       </template>
       <ComponentDocsDemoBlock :code="demo3Code">
         <div class="demo-row">
-          <zSelect
+          <Select
             v-model="val3a"
             :options="fruitOptions"
             placeholder="选择水果"
           />
-          <zSelect
+          <Select
             v-model="val3b"
             :options="colorOptions"
             placeholder="选择颜色"
           />
-          <zSelect
+          <Select
             v-model="val3c"
             :options="sizeOptions"
             placeholder="选择尺寸"
@@ -65,7 +65,7 @@
         聚焦后支持键盘操作：<code>↑</code> <code>↓</code> 移动高亮、<code>Enter</code> / <code>Space</code> 选中、<code>Esc</code> 关闭。
       </template>
       <ComponentDocsDemoBlock :code="demo4Code">
-        <zSelect
+        <Select
           v-model="val4"
           :options="fruitOptions"
           placeholder="试试键盘操作"
@@ -78,7 +78,7 @@
       variant="api"
     >
       <h3>属性</h3>
-      <zTable
+      <Table
         :columns="apiCols"
         :data="apiRows"
         row-key="name"
@@ -86,7 +86,7 @@
         :hoverable="false"
       />
       <h3>Option</h3>
-      <zTable
+      <Table
         :columns="apiCols"
         :data="optionRows"
         row-key="name"
@@ -94,7 +94,7 @@
         :hoverable="false"
       />
       <h3>事件</h3>
-      <zTable
+      <Table
         :columns="eventCols"
         :data="eventRows"
         row-key="name"
@@ -107,8 +107,8 @@
 
 <script setup lang="ts">
 import { ref } from 'vue'
-import { zSelect } from '@/components/z-ui/select'
-import { zTable, type ZTableColumn } from '@/components/z-ui/table'
+import { Select } from '@/components/z-ui/select'
+import { Table, type TableColumn } from '@/components/z-ui/table'
 import ComponentDocsDemoBlock from '@/modules/components/components/ComponentDocsPage/ComponentDocsDemoBlock.vue'
 import ComponentDocsHeader from '@/modules/components/components/ComponentDocsPage/ComponentDocsHeader.vue'
 import ComponentDocsPage from '@/modules/components/components/ComponentDocsPage/ComponentDocsPage.vue'
@@ -142,13 +142,13 @@ const sizeOptions = [
 ]
 
 const demo1Code = `<template>
-  <zSelect v-model="val" :options="options" placeholder="请选择水果" />
+  <Select v-model="val" :options="options" placeholder="请选择水果" />
   <p>当前值：{{ val || '未选择' }}</p>
 </template>
 
 <script setup lang="ts">
 import { ref } from 'vue'
-import { zSelect } from '@/components/z-ui/select'
+import { Select } from '@/components/z-ui/select'
 
 const val = ref('')
 const options = [
@@ -161,12 +161,12 @@ const options = [
 <\/script>`
 
 const demo2Code = `<template>
-  <zSelect v-model="val" :options="options" placeholder="禁用状态" disabled />
+  <Select v-model="val" :options="options" placeholder="禁用状态" disabled />
 </template>
 
 <script setup lang="ts">
 import { ref } from 'vue'
-import { zSelect } from '@/components/z-ui/select'
+import { Select } from '@/components/z-ui/select'
 
 const val = ref('apple')
 const options = [
@@ -177,15 +177,15 @@ const options = [
 
 const demo3Code = `<template>
   <div style="display: flex; gap: 12px; flex-wrap: wrap;">
-    <zSelect v-model="a" :options="fruits" placeholder="选择水果" />
-    <zSelect v-model="b" :options="colors" placeholder="选择颜色" />
-    <zSelect v-model="c" :options="sizes" placeholder="选择尺寸" />
+    <Select v-model="a" :options="fruits" placeholder="选择水果" />
+    <Select v-model="b" :options="colors" placeholder="选择颜色" />
+    <Select v-model="c" :options="sizes" placeholder="选择尺寸" />
   </div>
 </template>
 
 <script setup lang="ts">
 import { ref } from 'vue'
-import { zSelect } from '@/components/z-ui/select'
+import { Select } from '@/components/z-ui/select'
 
 const a = ref('')
 const b = ref('')
@@ -207,12 +207,12 @@ const sizes = [
 
 const demo4Code = `<!-- 聚焦后使用 ↑ ↓ Enter Space Esc 进行键盘操作 -->
 <template>
-  <zSelect v-model="val" :options="options" placeholder="试试键盘操作" />
+  <Select v-model="val" :options="options" placeholder="试试键盘操作" />
 </template>
 
 <script setup lang="ts">
 import { ref } from 'vue'
-import { zSelect } from '@/components/z-ui/select'
+import { Select } from '@/components/z-ui/select'
 
 const val = ref('')
 const options = [
@@ -222,7 +222,7 @@ const options = [
 ]
 <\/script>`
 
-const apiCols: ZTableColumn[] = [
+const apiCols: TableColumn[] = [
   { key: 'name', label: '属性名', rowHeader: true, minWidth: '140px' },
   { key: 'default', label: '默认值', minWidth: '100px' },
   { key: 'type', label: '类型', minWidth: '200px', wrap: true },
@@ -241,7 +241,7 @@ const optionRows = [
   { name: 'label', description: '选项显示文本', type: 'string', default: '—' }
 ]
 
-const eventCols: ZTableColumn[] = [
+const eventCols: TableColumn[] = [
   { key: 'name', label: '事件名', rowHeader: true, minWidth: '180px' },
   { key: 'description', label: '说明', minWidth: '200px', wrap: true },
   { key: 'type', label: '回调参数', minWidth: '200px', wrap: true }

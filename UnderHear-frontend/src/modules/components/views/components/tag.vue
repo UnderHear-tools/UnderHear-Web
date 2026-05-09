@@ -7,11 +7,11 @@
 
     <ComponentDocsSection title="基础用法">
       <template #description>
-        直接使用 <code>zTag</code> 组件即可。
+        直接使用 <code>Tag</code> 组件即可。
       </template>
       <ComponentDocsDemoBlock :code="demo1Code">
         <div class="tag-row">
-          <zTag>Tag</zTag>
+          <Tag>Tag</Tag>
         </div>
       </ComponentDocsDemoBlock>
     </ComponentDocsSection>
@@ -22,18 +22,18 @@
       </template>
       <ComponentDocsDemoBlock :code="demo2Code">
         <div class="tag-row">
-          <zTag size="small">
+          <Tag size="small">
             Small
-          </zTag>
-          <zTag size="medium">
+          </Tag>
+          <Tag size="medium">
             Medium
-          </zTag>
-          <zTag size="large">
+          </Tag>
+          <Tag size="large">
             Large
-          </zTag>
-          <zTag size="xlarge">
+          </Tag>
+          <Tag size="xlarge">
             X-Large
-          </zTag>
+          </Tag>
         </div>
       </ComponentDocsDemoBlock>
     </ComponentDocsSection>
@@ -44,31 +44,31 @@
       </template>
       <ComponentDocsDemoBlock :code="demo3Code">
         <div class="tag-row">
-          <zTag>默认</zTag>
-          <zTag
+          <Tag>默认</Tag>
+          <Tag
             color="#1a7f37"
             bg-color="#dafbe1"
           >
             成功
-          </zTag>
-          <zTag
+          </Tag>
+          <Tag
             color="#9a6700"
             bg-color="#fff8c5"
           >
             警告
-          </zTag>
-          <zTag
+          </Tag>
+          <Tag
             color="#cf222e"
             bg-color="#ffebe9"
           >
             危险
-          </zTag>
-          <zTag
+          </Tag>
+          <Tag
             color="#6639ba"
             bg-color="#fbefff"
           >
             紫色
-          </zTag>
+          </Tag>
         </div>
       </ComponentDocsDemoBlock>
     </ComponentDocsSection>
@@ -79,13 +79,13 @@
       </template>
       <ComponentDocsDemoBlock :code="demo4Code">
         <div class="tag-row">
-          <zTag>
+          <Tag>
             <template #visual>
               <Star />
             </template>
             Star
-          </zTag>
-          <zTag
+          </Tag>
+          <Tag
             color="#1a7f37"
             bg-color="#dafbe1"
           >
@@ -93,8 +93,8 @@
               <Check />
             </template>
             已完成
-          </zTag>
-          <zTag
+          </Tag>
+          <Tag
             color="#cf222e"
             bg-color="#ffebe9"
           >
@@ -102,7 +102,7 @@
               <Alert />
             </template>
             错误
-          </zTag>
+          </Tag>
         </div>
       </ComponentDocsDemoBlock>
     </ComponentDocsSection>
@@ -113,13 +113,13 @@
       </template>
       <ComponentDocsDemoBlock :code="demo5Code">
         <div class="tag-row">
-          <zTag>
+          <Tag>
             Vue
             <template #action>
               <Trash />
             </template>
-          </zTag>
-          <zTag>
+          </Tag>
+          <Tag>
             <template #visual>
               <Star />
             </template>
@@ -127,8 +127,8 @@
             <template #action>
               <X />
             </template>
-          </zTag>
-          <zTag
+          </Tag>
+          <Tag
             color="#1a7f37"
             bg-color="#dafbe1"
           >
@@ -139,7 +139,7 @@
             <template #action>
               <X />
             </template>
-          </zTag>
+          </Tag>
         </div>
       </ComponentDocsDemoBlock>
     </ComponentDocsSection>
@@ -149,7 +149,7 @@
       variant="api"
     >
       <h3>属性</h3>
-      <zTable
+      <Table
         :columns="apiTableColumns"
         :data="apiTableRows"
         row-key="name"
@@ -157,7 +157,7 @@
         :hoverable="false"
       />
       <h3>插槽</h3>
-      <zTable
+      <Table
         :columns="slotTableColumns"
         :data="slotTableRows"
         row-key="name"
@@ -169,8 +169,8 @@
 </template>
 
 <script setup lang="ts">
-import { zTag } from '@/components/z-ui/tag'
-import { zTable, type ZTableColumn } from '@/components/z-ui/table'
+import { Tag } from '@/components/z-ui/tag'
+import { Table, type TableColumn } from '@/components/z-ui/table'
 import { Star, Check, Alert, X, Trash } from '@/components/z-ui/icon/Octicons-vue'
 import ComponentDocsDemoBlock from '@/modules/components/components/ComponentDocsPage/ComponentDocsDemoBlock.vue'
 import ComponentDocsHeader from '@/modules/components/components/ComponentDocsPage/ComponentDocsHeader.vue'
@@ -179,7 +179,7 @@ import ComponentDocsSection from '@/modules/components/components/ComponentDocsP
 
 const demo1Code = `<template>
   <div class="tag-row">
-    <zTag>Tag</zTag>
+    <Tag>Tag</Tag>
   </div>
 </template>
 
@@ -192,10 +192,10 @@ const demo1Code = `<template>
 
 const demo2Code = `<template>
   <div class="tag-row">
-    <zTag size="small">Small</zTag>
-    <zTag size="medium">Medium</zTag>
-    <zTag size="large">Large</zTag>
-    <zTag size="xlarge">X-Large</zTag>
+    <Tag size="small">Small</Tag>
+    <Tag size="medium">Medium</Tag>
+    <Tag size="large">Large</Tag>
+    <Tag size="xlarge">X-Large</Tag>
   </div>
 </template>
 
@@ -209,11 +209,11 @@ const demo2Code = `<template>
 
 const demo3Code = `<template>
   <div class="tag-row">
-    <zTag>默认</zTag>
-    <zTag color="#1a7f37" bgColor="#dafbe1">成功</zTag>
-    <zTag color="#9a6700" bgColor="#fff8c5">警告</zTag>
-    <zTag color="#cf222e" bgColor="#ffebe9">危险</zTag>
-    <zTag color="#6639ba" bgColor="#fbefff">紫色</zTag>
+    <Tag>默认</Tag>
+    <Tag color="#1a7f37" bgColor="#dafbe1">成功</Tag>
+    <Tag color="#9a6700" bgColor="#fff8c5">警告</Tag>
+    <Tag color="#cf222e" bgColor="#ffebe9">危险</Tag>
+    <Tag color="#6639ba" bgColor="#fbefff">紫色</Tag>
   </div>
 </template>
 
@@ -226,24 +226,24 @@ const demo3Code = `<template>
 </style>`
 
 const demo4Code = `<script setup lang="ts">
-import { zTag } from '@/components/z-ui/tag'
+import { Tag } from '@/components/z-ui/tag'
 import { Star, Check, Alert } from '@/components/z-ui/icon/Octicons-vue'
 <\/script>
 
 <template>
   <div class="tag-row">
-    <zTag>
+    <Tag>
       <template #visual><Star /></template>
       Star
-    </zTag>
-    <zTag color="#1a7f37" bgColor="#dafbe1">
+    </Tag>
+    <Tag color="#1a7f37" bgColor="#dafbe1">
       <template #visual><Check /></template>
       已完成
-    </zTag>
-    <zTag color="#cf222e" bgColor="#ffebe9">
+    </Tag>
+    <Tag color="#cf222e" bgColor="#ffebe9">
       <template #visual><Alert /></template>
       错误
-    </zTag>
+    </Tag>
   </div>
 </template>
 
@@ -256,26 +256,26 @@ import { Star, Check, Alert } from '@/components/z-ui/icon/Octicons-vue'
 </style>`
 
 const demo5Code = `<script setup lang="ts">
-import { zTag } from '@/components/z-ui/tag'
+import { Tag } from '@/components/z-ui/tag'
 import { Star, Check, X, Trash } from '@/components/z-ui/icon/Octicons-vue'
 <\/script>
 
 <template>
   <div class="tag-row">
-    <zTag>
+    <Tag>
       Vue
       <template #action><Trash /></template>
-    </zTag>
-    <zTag>
+    </Tag>
+    <Tag>
       <template #visual><Star /></template>
       收藏
       <template #action><X /></template>
-    </zTag>
-    <zTag color="#1a7f37" bgColor="#dafbe1">
+    </Tag>
+    <Tag color="#1a7f37" bgColor="#dafbe1">
       <template #visual><Check /></template>
       已完成
       <template #action><X /></template>
-    </zTag>
+    </Tag>
   </div>
 </template>
 
@@ -287,7 +287,7 @@ import { Star, Check, X, Trash } from '@/components/z-ui/icon/Octicons-vue'
 }
 </style>`
 
-const apiTableColumns: ZTableColumn[] = [
+const apiTableColumns: TableColumn[] = [
   { key: 'name', label: '属性名', rowHeader: true, minWidth: '140px' },
   { key: 'default', label: '默认值', minWidth: '100px' },
   { key: 'type', label: '类型', minWidth: '200px', wrap: true },
@@ -315,7 +315,7 @@ const apiTableRows = [
   }
 ]
 
-const slotTableColumns: ZTableColumn[] = [
+const slotTableColumns: TableColumn[] = [
   { key: 'name', label: '插槽名', rowHeader: true, minWidth: '140px' },
   { key: 'description', label: '说明', minWidth: '300px', wrap: true }
 ]

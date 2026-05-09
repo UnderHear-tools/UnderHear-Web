@@ -15,7 +15,7 @@
 
       <div class="account-card">
         <div class="account-meta">
-          <zAvatar
+          <Avatar
             :src="signupContext?.avatarUrl"
             :placeholder="avatarPlaceholder"
             :size="32"
@@ -35,7 +35,7 @@
       <div class="signup-fields">
         <FormControl required>
           <FormControl.Label>用户名</FormControl.Label>
-          <zInput
+          <Input
             v-model="nickname"
             autocomplete="username"
             placeholder="underhear"
@@ -53,7 +53,7 @@
 
         <FormControl required>
           <FormControl.Label>邮箱</FormControl.Label>
-          <zInput
+          <Input
             v-model="email"
             type="email"
             autocomplete="email"
@@ -69,13 +69,13 @@
       </div>
 
       <div class="signup-actions">
-        <zButton
+        <Button
           type="submit"
           :loading="loading"
           :disabled="!canSubmit"
         >
           完成注册
-        </zButton>
+        </Button>
       </div>
     </form>
   </div>
@@ -84,11 +84,11 @@
 <script setup lang="ts">
 import { computed, onMounted, ref } from 'vue'
 import { useUserStore } from '@/stores/user'
-import { zAvatar } from '@/components/z-ui/avatar'
+import { Avatar } from '@/components/z-ui/avatar'
 import { FormControl } from '@/components/z-ui/form-control'
-import { zInput } from '@/components/z-ui/input'
-import { zButton } from '@/components/z-ui/button'
-import { zBanner } from '@/components/z-ui/banner'
+import { Input } from '@/components/z-ui/input'
+import { Button } from '@/components/z-ui/button'
+import { Banner } from '@/components/z-ui/banner'
 import { completeOAuthSignup } from '../../api/login'
 import {
   clearOAuthSignupContext,
@@ -138,7 +138,7 @@ const canSubmit = computed(() => {
 
 const submit = async () => {
   if (!canSubmit.value || !signupContext.value) {
-    zBanner.warning('请检查资料后再提交。')
+    Banner.warning('请检查资料后再提交。')
     return
   }
   loading.value = true
@@ -154,7 +154,7 @@ const submit = async () => {
     clearOAuthSignupContext()
     window.location.href = returnTo
   } catch (error) {
-    zBanner.error(error instanceof Error ? error.message : '注册失败，请稍后重试。')
+    Banner.error(error instanceof Error ? error.message : '注册失败，请稍后重试。')
   } finally {
     loading.value = false
   }
@@ -163,7 +163,7 @@ const submit = async () => {
 onMounted(() => {
   const context = readOAuthSignupContext()
   if (!context) {
-    zBanner.warning('注册会话已失效，请重新登录。')
+    Banner.warning('注册会话已失效，请重新登录。')
     window.location.href = '/auth/login'
     return
   }
@@ -253,11 +253,11 @@ onMounted(() => {
   gap: 18px;
 }
 
-.signup-fields :deep(.z-input) {
+.signup-fields :deep(.input) {
   width: 100%;
 }
 
-.signup-actions :deep(.z-button) {
+.signup-actions :deep(.button) {
   width: 100%;
 }
 

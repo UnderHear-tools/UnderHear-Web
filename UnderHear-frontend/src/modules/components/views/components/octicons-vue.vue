@@ -3,7 +3,7 @@
     <ComponentDocsHeader title="Octicons Vue 图标">
       <template #description>
         该图标库基于开源的
-        <zLink
+        <Link
           href="https://primer.style/octicons/"
           link-text="Octicons"
           variant="primary"
@@ -84,7 +84,7 @@
       title="API"
       variant="api"
     >
-      <zTable
+      <Table
         :columns="apiTableColumns"
         :data="apiTableRows"
         row-key="name"
@@ -99,13 +99,13 @@
 import { computed, ref } from 'vue'
 import type { Component } from 'vue'
 import * as octicons from '@/components/z-ui/icon/Octicons-vue/index.ts'
-import { zLink } from '@/components/z-ui/link'
-import { zTable, type ZTableColumn } from '@/components/z-ui/table'
+import { Link } from '@/components/z-ui/link'
+import { Table, type TableColumn } from '@/components/z-ui/table'
 import ComponentDocsDemoBlock from '@/modules/components/components/ComponentDocsPage/ComponentDocsDemoBlock.vue'
 import ComponentDocsHeader from '@/modules/components/components/ComponentDocsPage/ComponentDocsHeader.vue'
 import ComponentDocsPage from '@/modules/components/components/ComponentDocsPage/ComponentDocsPage.vue'
 import ComponentDocsSection from '@/modules/components/components/ComponentDocsPage/ComponentDocsSection.vue'
-import { zBanner } from '@/components/z-ui/banner'
+import { Banner } from '@/components/z-ui/banner'
 
 type IconEntry = {
   name: string
@@ -214,10 +214,10 @@ const copySVG = (iconName: string, event: MouseEvent) => {
   const svgMarkup = svgElement.outerHTML
   // 将 SVG 文本写入剪贴板，便于直接粘贴到设计稿或代码中。
   navigator.clipboard.writeText(svgMarkup)
-  zBanner.success(`${iconName} SVG 已复制到剪贴板！`, { duration: 3000 })
+  Banner.success(`${iconName} SVG 已复制到剪贴板！`, { duration: 3000 })
 }
 
-const apiTableColumns: ZTableColumn[] = [
+const apiTableColumns: TableColumn[] = [
   { key: 'name', label: '属性名', rowHeader: true, minWidth: '140px' },
   { key: 'default', label: '默认值', minWidth: '100px' },
   { key: 'type', label: '类型', minWidth: '160px', wrap: true },

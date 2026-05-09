@@ -52,7 +52,7 @@
 import { onMounted, ref } from 'vue'
 import { useRoute } from 'vue-router'
 import { useUserStore } from '@/stores/user'
-import { zBanner } from '@/components/z-ui/banner'
+import { Banner } from '@/components/z-ui/banner'
 import { LogoGitee, MarkGithub } from '@/components/z-ui/icon/Octicons-vue'
 import { getOAuthRenderUrl, loginWithOAuthCallback } from '../../api/login'
 import {
@@ -95,7 +95,7 @@ const login = async () => {
 
   // 第三方授权失败，提示后结束
   if (url.searchParams.get('error')) {
-    zBanner.warning('第三方授权失败')
+    Banner.warning('第三方授权失败')
     sessionStorage.removeItem(oauthProviderKey)
     return
   }
@@ -128,7 +128,7 @@ const login = async () => {
     window.location.href = returnTo
     sessionStorage.removeItem(loginReturnToKey)
   } catch (error) {
-    zBanner.error(error instanceof Error ? error.message : '登录失败，请稍后重试。')
+    Banner.error(error instanceof Error ? error.message : '登录失败，请稍后重试。')
   } finally {
     sessionStorage.removeItem(oauthProviderKey)
     loading.value = false

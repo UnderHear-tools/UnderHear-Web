@@ -1,1 +1,1 @@
-export { default as zUpload } from './zUpload.vue'
+export { default as Upload } from './Upload.vue'

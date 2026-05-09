@@ -1,7 +1,7 @@
-import TimelineRoot from './zTimeline.vue'
-import TimelineItem from './zTimelineItem.vue'
-import TimelineBadge from './zTimelineBadge.vue'
-import TimelineBody from './zTimelineBody.vue'
+import TimelineRoot from './Timeline.vue'
+import TimelineItem from './TimelineItem.vue'
+import TimelineBadge from './TimelineBadge.vue'
+import TimelineBody from './TimelineBody.vue'
 
 export const Timeline = Object.assign(TimelineRoot, {
   Item: TimelineItem,
@@ -9,7 +9,8 @@ export const Timeline = Object.assign(TimelineRoot, {
   Body: TimelineBody
 })
 
-export const zTimeline = Timeline
-export const zTimelineItem = TimelineItem
-export const zTimelineBadge = TimelineBadge
-export const zTimelineBody = TimelineBody
+export {
+  TimelineItem,
+  TimelineBadge,
+  TimelineBody
+}

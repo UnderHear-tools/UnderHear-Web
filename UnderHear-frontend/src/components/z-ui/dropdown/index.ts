@@ -1,1 +1,1 @@
-export { default as zDropdown } from './zDropdown.vue'
+export { default as Dropdown } from './Dropdown.vue'

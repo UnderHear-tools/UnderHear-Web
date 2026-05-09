@@ -1,8 +1,8 @@
 <template>
-  <zContainer>
+  <Container>
     <div class="components-header">
       <h1 class="title">
-        UI 组件库 zLight
+        UI 组件库 Light
       </h1>
       <p class="subtitle">
         这里展示本站自研的 UI 组件库，提供现代化、美观且易用的组件。
@@ -22,11 +22,11 @@
         class="components-preview"
       >
     </div>
-  </zContainer>
+  </Container>
 </template>
 
 <script setup lang="ts">
-import { zContainer } from '@/components/z-ui/container'
+import { Container } from '@/components/z-ui/container'
 </script>
 
 <style scoped>

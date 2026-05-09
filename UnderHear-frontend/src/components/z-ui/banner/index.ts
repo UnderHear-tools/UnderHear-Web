@@ -1,1 +1,1 @@
-export { default as zBanner } from './zBanner'
+export { default as Banner } from './Banner'

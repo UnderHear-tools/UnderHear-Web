@@ -12,7 +12,7 @@
 
       <ComponentDocsDemoBlock :code="demo1Code">
         <div class="dropdown-demo">
-          <zDropdown>
+          <Dropdown>
             <template #trigger>
               <button class="demo-trigger">
                 点击展开
@@ -31,7 +31,7 @@
                 </div>
               </div>
             </template>
-          </zDropdown>
+          </Dropdown>
         </div>
       </ComponentDocsDemoBlock>
     </ComponentDocsSection>
@@ -43,7 +43,7 @@
 
       <ComponentDocsDemoBlock :code="demoPlacementCode">
         <div class="dropdown-placement-demo">
-          <zDropdown side="inside-top">
+          <Dropdown side="inside-top">
             <template #trigger>
               <button class="demo-trigger">
                 内侧上方
@@ -54,8 +54,8 @@
                 内侧上方内容
               </div>
             </template>
-          </zDropdown>
-          <zDropdown side="inside-bottom">
+          </Dropdown>
+          <Dropdown side="inside-bottom">
             <template #trigger>
               <button class="demo-trigger">
                 内侧下方
@@ -66,8 +66,8 @@
                 内侧下方内容
               </div>
             </template>
-          </zDropdown>
-          <zDropdown side="inside-left">
+          </Dropdown>
+          <Dropdown side="inside-left">
             <template #trigger>
               <button class="demo-trigger">
                 内侧左边
@@ -78,8 +78,8 @@
                 内侧左边内容
               </div>
             </template>
-          </zDropdown>
-          <zDropdown side="inside-right">
+          </Dropdown>
+          <Dropdown side="inside-right">
             <template #trigger>
               <button class="demo-trigger">
                 内侧右边
@@ -90,8 +90,8 @@
                 内侧右边内容
               </div>
             </template>
-          </zDropdown>
-          <zDropdown side="inside-center">
+          </Dropdown>
+          <Dropdown side="inside-center">
             <template #trigger>
               <button class="demo-trigger">
                 内侧居中
@@ -102,8 +102,8 @@
                 内侧居中内容
               </div>
             </template>
-          </zDropdown>
-          <zDropdown side="outside-top">
+          </Dropdown>
+          <Dropdown side="outside-top">
             <template #trigger>
               <button class="demo-trigger">
                 外侧上方
@@ -114,8 +114,8 @@
                 外侧上方内容
               </div>
             </template>
-          </zDropdown>
-          <zDropdown side="outside-bottom">
+          </Dropdown>
+          <Dropdown side="outside-bottom">
             <template #trigger>
               <button class="demo-trigger">
                 外侧下方
@@ -126,8 +126,8 @@
                 外侧下方内容
               </div>
             </template>
-          </zDropdown>
-          <zDropdown side="outside-left">
+          </Dropdown>
+          <Dropdown side="outside-left">
             <template #trigger>
               <button class="demo-trigger">
                 外侧左边
@@ -138,8 +138,8 @@
                 外侧左边内容
               </div>
             </template>
-          </zDropdown>
-          <zDropdown side="outside-right">
+          </Dropdown>
+          <Dropdown side="outside-right">
             <template #trigger>
               <button class="demo-trigger">
                 外侧右边
@@ -150,7 +150,7 @@
                 外侧右边内容
               </div>
             </template>
-          </zDropdown>
+          </Dropdown>
         </div>
       </ComponentDocsDemoBlock>
     </ComponentDocsSection>
@@ -162,7 +162,7 @@
 
       <ComponentDocsDemoBlock :code="demoKeepOpenCode">
         <div class="dropdown-demo">
-          <zDropdown>
+          <Dropdown>
             <template #trigger>
               <button class="demo-trigger">
                 点击展开
@@ -178,7 +178,7 @@
                 </div>
               </div>
             </template>
-          </zDropdown>
+          </Dropdown>
         </div>
       </ComponentDocsDemoBlock>
     </ComponentDocsSection>
@@ -190,7 +190,7 @@
 
       <ComponentDocsDemoBlock :code="demoExposeCode">
         <div class="dropdown-demo">
-          <zDropdown ref="exposeDropdownRef">
+          <Dropdown ref="exposeDropdownRef">
             <template #trigger>
               <button class="demo-trigger">
                 点击展开
@@ -206,7 +206,7 @@
                 </div>
               </div>
             </template>
-          </zDropdown>
+          </Dropdown>
         </div>
       </ComponentDocsDemoBlock>
     </ComponentDocsSection>
@@ -216,7 +216,7 @@
       variant="api"
     >
       <h4>Props 属性</h4>
-      <zTable
+      <Table
         :columns="propsTableColumns"
         :data="propsTableRows"
         row-key="name"
@@ -226,7 +226,7 @@
       <h4 style="margin-top: 24px;">
         Slots 插槽
       </h4>
-      <zTable
+      <Table
         :columns="slotsTableColumns"
         :data="slotsTableRows"
         row-key="name"
@@ -236,7 +236,7 @@
       <h4 style="margin-top: 24px;">
         Expose 方法
       </h4>
-      <zTable
+      <Table
         :columns="exposeTableColumns"
         :data="exposeTableRows"
         row-key="name"
@@ -249,18 +249,18 @@
 
 <script setup lang="ts">
 import { ref } from 'vue'
-import { zDropdown } from '@/components/z-ui/dropdown'
-import { zTable, type ZTableColumn } from '@/components/z-ui/table'
+import { Dropdown } from '@/components/z-ui/dropdown'
+import { Table, type TableColumn } from '@/components/z-ui/table'
 import ComponentDocsDemoBlock from '@/modules/components/components/ComponentDocsPage/ComponentDocsDemoBlock.vue'
 import ComponentDocsHeader from '@/modules/components/components/ComponentDocsPage/ComponentDocsHeader.vue'
 import ComponentDocsPage from '@/modules/components/components/ComponentDocsPage/ComponentDocsPage.vue'
 import ComponentDocsSection from '@/modules/components/components/ComponentDocsPage/ComponentDocsSection.vue'
 
-const exposeDropdownRef = ref<InstanceType<typeof zDropdown>>()
+const exposeDropdownRef = ref<InstanceType<typeof Dropdown>>()
 
 const demo1Code = `<template>
   <div class="dropdown-demo">
-    <zDropdown>
+    <Dropdown>
       <template #trigger>
         <button class="demo-trigger">点击展开</button>
       </template>
@@ -271,12 +271,12 @@ const demo1Code = `<template>
           <div class="demo-item">选项三</div>
         </div>
       </template>
-    </zDropdown>
+    </Dropdown>
   </div>
 </template>
 
 <script setup lang="ts">
-import { zDropdown } from '@/components/z-ui/dropdown'
+import { Dropdown } from '@/components/z-ui/dropdown'
 <\/script>
 
 <style scoped>
@@ -316,83 +316,83 @@ import { zDropdown } from '@/components/z-ui/dropdown'
 
 const demoPlacementCode = `<template>
   <div class="dropdown-placement-demo">
-    <zDropdown side="inside-top">
+    <Dropdown side="inside-top">
       <template #trigger>
         <button class="demo-trigger">内侧上方</button>
       </template>
       <template #content>
         <div class="demo-content">内侧上方内容</div>
       </template>
-    </zDropdown>
-    <zDropdown side="inside-bottom">
+    </Dropdown>
+    <Dropdown side="inside-bottom">
       <template #trigger>
         <button class="demo-trigger">内侧下方</button>
       </template>
       <template #content>
         <div class="demo-content">内侧下方内容</div>
       </template>
-    </zDropdown>
-    <zDropdown side="inside-left">
+    </Dropdown>
+    <Dropdown side="inside-left">
       <template #trigger>
         <button class="demo-trigger">内侧左边</button>
       </template>
       <template #content>
         <div class="demo-content">内侧左边内容</div>
       </template>
-    </zDropdown>
-    <zDropdown side="inside-right">
+    </Dropdown>
+    <Dropdown side="inside-right">
       <template #trigger>
         <button class="demo-trigger">内侧右边</button>
       </template>
       <template #content>
         <div class="demo-content">内侧右边内容</div>
       </template>
-    </zDropdown>
-    <zDropdown side="inside-center">
+    </Dropdown>
+    <Dropdown side="inside-center">
       <template #trigger>
         <button class="demo-trigger">内侧居中</button>
       </template>
       <template #content>
         <div class="demo-content">内侧居中内容</div>
       </template>
-    </zDropdown>
-    <zDropdown side="outside-top">
+    </Dropdown>
+    <Dropdown side="outside-top">
       <template #trigger>
         <button class="demo-trigger">外侧上方</button>
       </template>
       <template #content>
         <div class="demo-content">外侧上方内容</div>
       </template>
-    </zDropdown>
-    <zDropdown side="outside-bottom">
+    </Dropdown>
+    <Dropdown side="outside-bottom">
       <template #trigger>
         <button class="demo-trigger">外侧下方</button>
       </template>
       <template #content>
         <div class="demo-content">外侧下方内容</div>
       </template>
-    </zDropdown>
-    <zDropdown side="outside-left">
+    </Dropdown>
+    <Dropdown side="outside-left">
       <template #trigger>
         <button class="demo-trigger">外侧左边</button>
       </template>
       <template #content>
         <div class="demo-content">外侧左边内容</div>
       </template>
-    </zDropdown>
-    <zDropdown side="outside-right">
+    </Dropdown>
+    <Dropdown side="outside-right">
       <template #trigger>
         <button class="demo-trigger">外侧右边</button>
       </template>
       <template #content>
         <div class="demo-content">外侧右边内容</div>
       </template>
-    </zDropdown>
+    </Dropdown>
   </div>
 </template>
 
 <script setup lang="ts">
-import { zDropdown } from '@/components/z-ui/dropdown'
+import { Dropdown } from '@/components/z-ui/dropdown'
 <\/script>
 
 <style scoped>
@@ -421,7 +421,7 @@ import { zDropdown } from '@/components/z-ui/dropdown'
 }
 <\/style>`
 
-const propsTableColumns: ZTableColumn[] = [
+const propsTableColumns: TableColumn[] = [
   { key: 'name', label: '属性名', rowHeader: true, minWidth: '140px' },
   { key: 'default', label: '默认值', minWidth: '120px' },
   { key: 'type', label: '类型', minWidth: '220px', wrap: true },
@@ -437,7 +437,7 @@ const propsTableRows = [
   }
 ]
 
-const slotsTableColumns: ZTableColumn[] = [
+const slotsTableColumns: TableColumn[] = [
   { key: 'name', label: '插槽名', rowHeader: true, minWidth: '140px' },
   { key: 'description', label: '说明', minWidth: '300px', wrap: true }
 ]
@@ -453,7 +453,7 @@ const slotsTableRows = [
   }
 ]
 
-const exposeTableColumns: ZTableColumn[] = [
+const exposeTableColumns: TableColumn[] = [
   { key: 'name', label: '方法名', rowHeader: true, minWidth: '140px' },
   { key: 'description', label: '说明', minWidth: '300px', wrap: true }
 ]
@@ -466,7 +466,7 @@ const exposeTableRows = [
 ]
 
 const demoKeepOpenCode = `<template>
-  <zDropdown>
+  <Dropdown>
     <template #trigger>
       <button>点击展开</button>
     </template>
@@ -474,29 +474,29 @@ const demoKeepOpenCode = `<template>
       <div class="demo-item">选项一（点击后保持展开）</div>
       <div class="demo-item">选项二（点击后保持展开）</div>
     </template>
-  </zDropdown>
+  </Dropdown>
 </template>
 
 <script setup lang="ts">
-import { zDropdown } from '@/components/z-ui/dropdown'
+import { Dropdown } from '@/components/z-ui/dropdown'
 <\/script>`
 
 const demoExposeCode = `<template>
-  <zDropdown ref="dropdownRef">
+  <Dropdown ref="dropdownRef">
     <template #trigger>
       <button>点击展开</button>
     </template>
     <template #content>
       <div @click="dropdownRef?.close()">点击关闭</div>
     </template>
-  </zDropdown>
+  </Dropdown>
 </template>
 
 <script setup lang="ts">
 import { ref } from 'vue'
-import { zDropdown } from '@/components/z-ui/dropdown'
+import { Dropdown } from '@/components/z-ui/dropdown'
 
-const dropdownRef = ref<InstanceType<typeof zDropdown>>()
+const dropdownRef = ref<InstanceType<typeof Dropdown>>()
 <\/script>`
 </script>
 

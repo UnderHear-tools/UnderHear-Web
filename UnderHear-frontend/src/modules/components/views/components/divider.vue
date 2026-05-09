@@ -13,7 +13,7 @@
       <ComponentDocsDemoBlock :code="demo1Code">
         <div class="demo-container">
           <p>上方内容</p>
-          <zDivider />
+          <Divider />
           <p>下方内容</p>
         </div>
       </ComponentDocsDemoBlock>
@@ -27,9 +27,9 @@
       <ComponentDocsDemoBlock :code="demo2Code">
         <div class="demo-container">
           <p>第一段内容</p>
-          <zDivider />
+          <Divider />
           <p>第二段内容</p>
-          <zDivider />
+          <Divider />
           <p>第三段内容</p>
         </div>
       </ComponentDocsDemoBlock>
@@ -43,9 +43,9 @@
       <ComponentDocsDemoBlock :code="demo3Code">
         <div class="demo-inline">
           <span>首页</span>
-          <zDivider direction="vertical" />
+          <Divider direction="vertical" />
           <span>文档</span>
-          <zDivider direction="vertical" />
+          <Divider direction="vertical" />
           <span>关于</span>
         </div>
       </ComponentDocsDemoBlock>
@@ -59,7 +59,7 @@
       <ComponentDocsDemoBlock :code="demo4Code">
         <div class="demo-container">
           <p>短分割线（50%）</p>
-          <zDivider width="50%" />
+          <Divider width="50%" />
           <p>下方内容</p>
         </div>
         <div
@@ -67,7 +67,7 @@
           style="margin-top: 16px;"
         >
           <span>左</span>
-          <zDivider
+          <Divider
             direction="vertical"
             height="2rem"
           />
@@ -80,7 +80,7 @@
       title="API"
       variant="api"
     >
-      <zTable
+      <Table
         :columns="apiTableColumns"
         :data="apiTableRows"
         row-key="name"
@@ -92,8 +92,8 @@
 </template>
 
 <script setup lang="ts">
-import { zDivider } from '@/components/z-ui/divider'
-import { zTable, type ZTableColumn } from '@/components/z-ui/table'
+import { Divider } from '@/components/z-ui/divider'
+import { Table, type TableColumn } from '@/components/z-ui/table'
 import ComponentDocsDemoBlock from '@/modules/components/components/ComponentDocsPage/ComponentDocsDemoBlock.vue'
 import ComponentDocsHeader from '@/modules/components/components/ComponentDocsPage/ComponentDocsHeader.vue'
 import ComponentDocsPage from '@/modules/components/components/ComponentDocsPage/ComponentDocsPage.vue'
@@ -101,55 +101,55 @@ import ComponentDocsSection from '@/modules/components/components/ComponentDocsP
 
 const demo1Code = `<template>
   <p>上方内容</p>
-  <zDivider />
+  <Divider />
   <p>下方内容</p>
 </template>
 
 <script setup lang="ts">
-import { zDivider } from '@/components/z-ui/divider'
+import { Divider } from '@/components/z-ui/divider'
 <\/script>`
 
 const demo2Code = `<template>
   <p>第一段内容</p>
-  <zDivider />
+  <Divider />
   <p>第二段内容</p>
-  <zDivider />
+  <Divider />
   <p>第三段内容</p>
 </template>
 
 <script setup lang="ts">
-import { zDivider } from '@/components/z-ui/divider'
+import { Divider } from '@/components/z-ui/divider'
 <\/script>`
 
 const demo3Code = `<template>
   <div style="display: flex; align-items: center; gap: 0;">
     <span>首页</span>
-    <zDivider direction="vertical" />
+    <Divider direction="vertical" />
     <span>文档</span>
-    <zDivider direction="vertical" />
+    <Divider direction="vertical" />
     <span>关于</span>
   </div>
 </template>
 
 <script setup lang="ts">
-import { zDivider } from '@/components/z-ui/divider'
+import { Divider } from '@/components/z-ui/divider'
 <\/script>`
 
 const demo4Code = `<template>
   <!-- 水平模式自定义宽度 -->
-  <zDivider width="50%" />
+  <Divider width="50%" />
 
   <!-- 纵向模式自定义高度 -->
   <span>左</span>
-  <zDivider direction="vertical" height="2rem" />
+  <Divider direction="vertical" height="2rem" />
   <span>右</span>
 </template>
 
 <script setup lang="ts">
-import { zDivider } from '@/components/z-ui/divider'
+import { Divider } from '@/components/z-ui/divider'
 <\/script>`
 
-const apiTableColumns: ZTableColumn[] = [
+const apiTableColumns: TableColumn[] = [
   { key: 'name', label: '属性名', rowHeader: true, minWidth: '140px' },
   { key: 'default', label: '默认值', minWidth: '120px' },
   { key: 'type', label: '类型', minWidth: '160px', wrap: true },

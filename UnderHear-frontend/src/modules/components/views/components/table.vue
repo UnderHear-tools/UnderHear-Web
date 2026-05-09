@@ -12,7 +12,7 @@
 
       <ComponentDocsDemoBlock :code="basicDemoCode">
         <div class="table-demo">
-          <zTable
+          <Table
             caption="Repository metadata"
             :columns="columns"
             :data="repoRows"
@@ -33,7 +33,7 @@
             <div class="table-demo__label">
               默认
             </div>
-            <zTable
+            <Table
               caption="Default table"
               :columns="columns"
               :data="repoRows"
@@ -44,7 +44,7 @@
             <div class="table-demo__label">
               紧凑 / 无边框 / 关闭悬浮
             </div>
-            <zTable
+            <Table
               caption="Compact table"
               :columns="columns"
               :data="repoRows"
@@ -71,7 +71,7 @@
           >
             最近点击：<strong>{{ selectedName }}</strong>
           </div>
-          <zTable
+          <Table
             caption="Clickable rows"
             :columns="columns"
             :data="repoRows"
@@ -94,7 +94,7 @@
             <div class="table-demo__label">
               空状态
             </div>
-            <zTable
+            <Table
               caption="Empty table"
               :columns="columns"
               :data="emptyRows"
@@ -105,7 +105,7 @@
             <div class="table-demo__label">
               空值占位符
             </div>
-            <zTable
+            <Table
               caption="Placeholder table"
               :columns="columns"
               :data="placeholderRows"
@@ -124,7 +124,7 @@
 
       <ComponentDocsDemoBlock :code="wrapDemoCode">
         <div class="table-demo">
-          <zTable
+          <Table
             caption="Wrapped content"
             :columns="wrapColumns"
             :data="wrapRows"
@@ -138,7 +138,7 @@
       title="API"
       variant="api"
     >
-      <zTable
+      <Table
         :columns="apiTableColumns"
         :data="apiTableRows"
         row-key="name"
@@ -151,7 +151,7 @@
 
 <script setup lang="ts">
 import { ref } from 'vue'
-import { zTable, type RowData, type ZTableColumn } from '@/components/z-ui/table'
+import { Table, type RowData, type TableColumn } from '@/components/z-ui/table'
 import ComponentDocsDemoBlock from '@/modules/components/components/ComponentDocsPage/ComponentDocsDemoBlock.vue'
 import ComponentDocsHeader from '@/modules/components/components/ComponentDocsPage/ComponentDocsHeader.vue'
 import ComponentDocsPage from '@/modules/components/components/ComponentDocsPage/ComponentDocsPage.vue'
@@ -183,7 +183,7 @@ const placeholderRows: RepoRow[] = repoRows.map((row, index) => ({
   owner: index % 3 === 0 ? '' : row.owner
 }))
 
-const columns: ZTableColumn[] = [
+const columns: TableColumn[] = [
   {
     key: 'name',
     label: 'Repository',
@@ -213,7 +213,7 @@ const columns: ZTableColumn[] = [
   }
 ]
 
-const wrapColumns: ZTableColumn[] = [
+const wrapColumns: TableColumn[] = [
   {
     key: 'name',
     label: 'Repository',
@@ -280,7 +280,7 @@ function handleRowClick(payload: { row: RowData; rowIndex: number }) {
 }
 
 const basicDemoCode = `<template>
-  <zTable
+  <Table
     :columns="columns"
     :data="rows"
     row-key="id"
@@ -288,7 +288,7 @@ const basicDemoCode = `<template>
 </template>
 
 <script setup lang="ts">
-import { type ZTableColumn } from '@/components/z-ui/table/zTable'
+import { type TableColumn } from '@/components/z-ui/table/Table'
 
 interface Row {
   id: number
@@ -299,7 +299,7 @@ interface Row {
   owner: string
 }
 
-const columns: ZTableColumn[] = [
+const columns: TableColumn[] = [
   { key: 'name', label: 'Repository', rowHeader: true, minWidth: '240px' },
   { key: 'visibility', label: 'Visibility', width: '120px' },
   { key: 'updatedAt', label: 'Updated', width: '150px' },
@@ -315,8 +315,8 @@ const rows: Row[] = [
 
 const compactDemoCode = `<template>
   <div class="table-demo table-demo--split">
-    <zTable :columns="columns" :data="rows" row-key="id" />
-    <zTable
+    <Table :columns="columns" :data="rows" row-key="id" />
+    <Table
       :columns="columns"
       :data="rows"
       row-key="id"
@@ -328,7 +328,7 @@ const compactDemoCode = `<template>
 </template>
 
 <script setup lang="ts">
-import { type ZTableColumn } from '@/components/z-ui/table/zTable'
+import { type TableColumn } from '@/components/z-ui/table/Table'
 
 interface Row {
   id: number
@@ -339,7 +339,7 @@ interface Row {
   owner: string
 }
 
-const columns: ZTableColumn[] = [
+const columns: TableColumn[] = [
   { key: 'name', label: 'Repository', rowHeader: true, minWidth: '240px' },
   { key: 'visibility', label: 'Visibility', width: '120px' },
   { key: 'updatedAt', label: 'Updated', width: '150px' },
@@ -357,7 +357,7 @@ const clickableDemoCode = `<template>
   <div class="status-bar" v-if="selectedName">
     最近点击：<strong>{{ selectedName }}</strong>
   </div>
-  <zTable
+  <Table
     :columns="columns"
     :data="rows"
     row-clickable
@@ -367,7 +367,7 @@ const clickableDemoCode = `<template>
 
 <script setup lang="ts">
 import { ref } from 'vue'
-import { type RowData, type ZTableColumn } from '@/components/z-ui/table/zTable'
+import { type RowData, type TableColumn } from '@/components/z-ui/table/Table'
 
 interface Row {
   id: number
@@ -380,7 +380,7 @@ interface Row {
 
 const selectedName = ref('')
 
-const columns: ZTableColumn[] = [
+const columns: TableColumn[] = [
   { key: 'name', label: 'Repository', rowHeader: true, minWidth: '240px' },
   { key: 'visibility', label: 'Visibility', width: '120px' },
   { key: 'updatedAt', label: 'Updated', width: '150px' },
@@ -401,13 +401,13 @@ function handleRowClick(payload: { row: RowData; rowIndex: number }) {
 
 const emptyDemoCode = `<template>
   <div class="table-demo table-demo--split">
-    <zTable :columns="columns" :data="emptyRows" empty-text="暂无记录" />
-    <zTable :columns="columns" :data="placeholderRows" placeholder-text="—" />
+    <Table :columns="columns" :data="emptyRows" empty-text="暂无记录" />
+    <Table :columns="columns" :data="placeholderRows" placeholder-text="—" />
   </div>
 </template>
 
 <script setup lang="ts">
-import { type ZTableColumn } from '@/components/z-ui/table/zTable'
+import { type TableColumn } from '@/components/z-ui/table/Table'
 
 interface Row {
   id: number
@@ -418,7 +418,7 @@ interface Row {
   owner: string
 }
 
-const columns: ZTableColumn[] = [
+const columns: TableColumn[] = [
   { key: 'name', label: 'Repository', rowHeader: true, minWidth: '240px' },
   { key: 'visibility', label: 'Visibility', width: '120px' },
   { key: 'updatedAt', label: 'Updated', width: '150px' },
@@ -435,7 +435,7 @@ const emptyRows: Row[] = []
 <\/script>`
 
 const wrapDemoCode = `<template>
-  <zTable
+  <Table
     :columns="wrapColumns"
     :data="rows"
     row-key="id"
@@ -443,7 +443,7 @@ const wrapDemoCode = `<template>
 </template>
 
 <script setup lang="ts">
-import { type ZTableColumn } from '@/components/z-ui/table/zTable'
+import { type TableColumn } from '@/components/z-ui/table/Table'
 
 interface Row {
   id: number
@@ -454,7 +454,7 @@ interface Row {
   owner: string
 }
 
-const wrapColumns: ZTableColumn[] = [
+const wrapColumns: TableColumn[] = [
   { key: 'name', label: 'Repository', rowHeader: true, minWidth: '240px', wrap: true },
   { key: 'visibility', label: 'Visibility', width: '120px' },
   { key: 'updatedAt', label: 'Updated', width: '150px' },
@@ -482,7 +482,7 @@ const rows: Row[] = [
 ]
 <\/script>`
 
-const apiTableColumns: ZTableColumn[] = [
+const apiTableColumns: TableColumn[] = [
   { key: 'name', label: '属性名', rowHeader: true, minWidth: '160px' },
   { key: 'default', label: '默认值', minWidth: '140px' },
   { key: 'type', label: '类型', minWidth: '200px', wrap: true },
@@ -494,7 +494,7 @@ const apiTableRows = [
   {
     name: 'columns',
     description: '列配置数组',
-    type: 'ZTableColumn[]',
+    type: 'TableColumn[]',
     options: '—',
     default: '[]'
   },

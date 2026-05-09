@@ -13,7 +13,7 @@
       <ComponentDocsDemoBlock :code="basicDemoCode">
         <FormControl>
           <FormControl.Label>应用名称</FormControl.Label>
-          <zInput
+          <Input
             v-model="appName"
             placeholder="请输入应用名称"
           />
@@ -32,7 +32,7 @@
       <ComponentDocsDemoBlock :code="requiredDemoCode">
         <FormControl required>
           <FormControl.Label>英文名称</FormControl.Label>
-          <zInput
+          <Input
             v-model="appEnglishName"
             placeholder="underhear-app"
           />
@@ -47,13 +47,13 @@
       <template #description>
         <code>FormControl.Validation</code> 支持 <code>error</code> 和 <code>success</code>
         两种状态；它会显示对应图标，并把状态同步到根容器，从而联动内部
-        <code>.z-input</code> 与 <code>.z-textarea</code> 的边框样式。使用时建议放在
+        <code>.input</code> 与 <code>.textarea</code> 的边框样式。使用时建议放在
         <code>FormControl.Caption</code> 上方。
       </template>
       <ComponentDocsDemoBlock :code="validationDemoCode">
         <FormControl>
           <FormControl.Label>发布地址</FormControl.Label>
-          <zInput
+          <Input
             v-model="releaseSlug"
             placeholder="underhear-app"
           />
@@ -80,7 +80,7 @@
           <FormControl.Label>应用域名前缀</FormControl.Label>
           <div class="domain-row">
             <span class="domain-affix">https://</span>
-            <zInput
+            <Input
               v-model="domainPrefix"
               placeholder="my-app"
             />
@@ -101,7 +101,7 @@
       variant="api"
     >
       <h3>FormControl Props</h3>
-      <zTable
+      <Table
         :columns="apiCols"
         :data="rootPropRows"
         row-key="name"
@@ -110,7 +110,7 @@
       />
 
       <h3>子组件</h3>
-      <zTable
+      <Table
         :columns="subComponentCols"
         :data="subComponentRows"
         row-key="name"
@@ -119,7 +119,7 @@
       />
 
       <h3>Validation Props</h3>
-      <zTable
+      <Table
         :columns="apiCols"
         :data="validationPropRows"
         row-key="name"
@@ -133,8 +133,8 @@
 <script setup lang="ts">
 import { computed, ref } from 'vue'
 import { FormControl } from '@/components/z-ui/form-control'
-import { zInput } from '@/components/z-ui/input'
-import { zTable, type ZTableColumn } from '@/components/z-ui/table'
+import { Input } from '@/components/z-ui/input'
+import { Table, type TableColumn } from '@/components/z-ui/table'
 import ComponentDocsDemoBlock from '@/modules/components/components/ComponentDocsPage/ComponentDocsDemoBlock.vue'
 import ComponentDocsHeader from '@/modules/components/components/ComponentDocsPage/ComponentDocsHeader.vue'
 import ComponentDocsPage from '@/modules/components/components/ComponentDocsPage/ComponentDocsPage.vue'
@@ -152,7 +152,7 @@ const isReleaseSlugValid = computed(() => {
 const basicDemoCode = `<template>
   <FormControl>
     <FormControl.Label>应用名称</FormControl.Label>
-    <zInput v-model="appName" placeholder="请输入应用名称" />
+    <Input v-model="appName" placeholder="请输入应用名称" />
     <FormControl.Caption>将显示在应用卡片和页面标题中。</FormControl.Caption>
   </FormControl>
 </template>
@@ -160,7 +160,7 @@ const basicDemoCode = `<template>
 <script setup lang="ts">
 import { ref } from 'vue'
 import { FormControl } from '@/components/z-ui/form-control'
-import { zInput } from '@/components/z-ui/input'
+import { Input } from '@/components/z-ui/input'
 
 const appName = ref('')
 <\/script>`
@@ -168,7 +168,7 @@ const appName = ref('')
 const requiredDemoCode = `<template>
   <FormControl required>
     <FormControl.Label>英文名称</FormControl.Label>
-    <zInput v-model="appEnglishName" placeholder="underhear-app" />
+    <Input v-model="appEnglishName" placeholder="underhear-app" />
     <FormControl.Caption>Label 会自动显示必填标记。</FormControl.Caption>
   </FormControl>
 </template>
@@ -176,7 +176,7 @@ const requiredDemoCode = `<template>
 <script setup lang="ts">
 import { ref } from 'vue'
 import { FormControl } from '@/components/z-ui/form-control'
-import { zInput } from '@/components/z-ui/input'
+import { Input } from '@/components/z-ui/input'
 
 const appEnglishName = ref('underhear-app')
 <\/script>`
@@ -184,7 +184,7 @@ const appEnglishName = ref('underhear-app')
 const validationDemoCode = `<template>
   <FormControl>
     <FormControl.Label>发布地址</FormControl.Label>
-    <zInput v-model="releaseSlug" placeholder="underhear-app" />
+    <Input v-model="releaseSlug" placeholder="underhear-app" />
     <FormControl.Validation :variant="isReleaseSlugValid ? 'success' : 'error'">
       {{ isReleaseSlugValid ? '格式正确，根容器已同步 success 状态。' : '仅支持小写字母、数字和连字符，且至少 4 个字符。' }}
     </FormControl.Validation>
@@ -195,7 +195,7 @@ const validationDemoCode = `<template>
 <script setup lang="ts">
 import { computed, ref } from 'vue'
 import { FormControl } from '@/components/z-ui/form-control'
-import { zInput } from '@/components/z-ui/input'
+import { Input } from '@/components/z-ui/input'
 
 const releaseSlug = ref('underhear-app')
 const isReleaseSlugValid = computed(() => /^[a-z0-9-]+$/.test(releaseSlug.value) && releaseSlug.value.length >= 4)
@@ -206,7 +206,7 @@ const compositionDemoCode = `<template>
     <FormControl.Label>应用域名前缀</FormControl.Label>
     <div class="domain-row">
       <span class="domain-affix">https://</span>
-      <zInput v-model="domainPrefix" placeholder="my-app" />
+      <Input v-model="domainPrefix" placeholder="my-app" />
       <span class="domain-affix">.underhear.cn</span>
     </div>
     <FormControl.Caption>你可以在结构块之间插入任意自定义内容。</FormControl.Caption>
@@ -217,12 +217,12 @@ const compositionDemoCode = `<template>
 <script setup lang="ts">
 import { ref } from 'vue'
 import { FormControl } from '@/components/z-ui/form-control'
-import { zInput } from '@/components/z-ui/input'
+import { Input } from '@/components/z-ui/input'
 
 const domainPrefix = ref('podcast-hub')
 <\/script>`
 
-const apiCols: ZTableColumn[] = [
+const apiCols: TableColumn[] = [
   { key: 'name', label: '属性名', rowHeader: true, minWidth: '180px' },
   { key: 'default', label: '默认值', minWidth: '120px' },
   { key: 'type', label: '类型', minWidth: '220px', wrap: true },
@@ -238,7 +238,7 @@ const rootPropRows = [
   }
 ]
 
-const subComponentCols: ZTableColumn[] = [
+const subComponentCols: TableColumn[] = [
   { key: 'name', label: '子组件', rowHeader: true, minWidth: '200px' },
   { key: 'description', label: '说明', minWidth: '320px', wrap: true },
   { key: 'publicProps', label: '公开 Props', minWidth: '220px', wrap: true }
@@ -286,7 +286,7 @@ const validationPropRows = [
   color: var(--fgColor-muted, #656d76);
 }
 
-.domain-row :deep(.z-input) {
+.domain-row :deep(.input) {
   flex: 1 1 220px;
   min-width: 0;
 }

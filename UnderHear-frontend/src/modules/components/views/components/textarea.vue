@@ -10,7 +10,7 @@
         通过 <code>v-model</code> 双向绑定多行文本内容。
       </template>
       <ComponentDocsDemoBlock :code="demo1Code">
-        <zTextarea
+        <Textarea
           v-model="val1"
           class="demo-textarea"
           rows="4"
@@ -24,7 +24,7 @@
         可通过透传原生属性设置 <code>rows</code>、<code>maxlength</code>、<code>placeholder</code> 等参数。
       </template>
       <ComponentDocsDemoBlock :code="demo2Code">
-        <zTextarea
+        <Textarea
           v-model="val2"
           class="demo-textarea"
           rows="6"
@@ -39,7 +39,7 @@
         设置原生属性 <code>disabled</code> 后文本域不可编辑。
       </template>
       <ComponentDocsDemoBlock :code="demo3Code">
-        <zTextarea
+        <Textarea
           v-model="val3"
           class="demo-textarea"
           rows="4"
@@ -55,7 +55,7 @@
       <ComponentDocsDemoBlock :code="demo4Code">
         <FormControl>
           <FormControl.Label>Project Description</FormControl.Label>
-          <zTextarea
+          <Textarea
             v-model="description"
             class="demo-textarea"
             rows="5"
@@ -79,7 +79,7 @@
       variant="api"
     >
       <h3>属性</h3>
-      <zTable
+      <Table
         :columns="apiCols"
         :data="apiRows"
         row-key="name"
@@ -87,7 +87,7 @@
         :hoverable="false"
       />
       <h3>原生属性透传（常用）</h3>
-      <zTable
+      <Table
         :columns="apiCols"
         :data="nativeRows"
         row-key="name"
@@ -95,7 +95,7 @@
         :hoverable="false"
       />
       <h3>事件</h3>
-      <zTable
+      <Table
         :columns="eventCols"
         :data="eventRows"
         row-key="name"
@@ -109,8 +109,8 @@
 <script setup lang="ts">
 import { computed, ref } from 'vue'
 import { FormControl } from '@/components/z-ui/form-control'
-import { zTable, type ZTableColumn } from '@/components/z-ui/table'
-import { zTextarea } from '@/components/z-ui/textarea'
+import { Table, type TableColumn } from '@/components/z-ui/table'
+import { Textarea } from '@/components/z-ui/textarea'
 import ComponentDocsDemoBlock from '@/modules/components/components/ComponentDocsPage/ComponentDocsDemoBlock.vue'
 import ComponentDocsHeader from '@/modules/components/components/ComponentDocsPage/ComponentDocsHeader.vue'
 import ComponentDocsPage from '@/modules/components/components/ComponentDocsPage/ComponentDocsPage.vue'
@@ -124,18 +124,18 @@ const description = ref('Build a collaborative audio workspace for distributed t
 const descriptionTooLong = computed(() => description.value.length > 80)
 
 const demo1Code = `<template>
-  <zTextarea v-model="val" rows="4" placeholder="请输入详细描述" />
+  <Textarea v-model="val" rows="4" placeholder="请输入详细描述" />
 </template>
 
 <script setup lang="ts">
 import { ref } from 'vue'
-import { zTextarea } from '@/components/z-ui/textarea'
+import { Textarea } from '@/components/z-ui/textarea'
 
 const val = ref('')
 <\/script>`
 
 const demo2Code = `<template>
-  <zTextarea
+  <Textarea
     v-model="val"
     rows="6"
     maxlength="120"
@@ -146,18 +146,18 @@ const demo2Code = `<template>
 
 <script setup lang="ts">
 import { ref } from 'vue'
-import { zTextarea } from '@/components/z-ui/textarea'
+import { Textarea } from '@/components/z-ui/textarea'
 
 const val = ref('支持多行文本输入，适合描述、备注和说明等场景。')
 <\/script>`
 
 const demo3Code = `<template>
-  <zTextarea v-model="val" rows="4" disabled />
+  <Textarea v-model="val" rows="4" disabled />
 </template>
 
 <script setup lang="ts">
 import { ref } from 'vue'
-import { zTextarea } from '@/components/z-ui/textarea'
+import { Textarea } from '@/components/z-ui/textarea'
 
 const val = ref('Disabled textarea value')
 <\/script>`
@@ -165,7 +165,7 @@ const val = ref('Disabled textarea value')
 const demo4Code = `<template>
   <FormControl>
     <FormControl.Label>Project Description</FormControl.Label>
-    <zTextarea v-model="description" rows="5" maxlength="120" />
+    <Textarea v-model="description" rows="5" maxlength="120" />
     <FormControl.Validation v-if="descriptionTooLong" variant="error">
       Keep the description under 80 characters
     </FormControl.Validation>
@@ -176,13 +176,13 @@ const demo4Code = `<template>
 <script setup lang="ts">
 import { computed, ref } from 'vue'
 import { FormControl } from '@/components/z-ui/form-control'
-import { zTextarea } from '@/components/z-ui/textarea'
+import { Textarea } from '@/components/z-ui/textarea'
 
 const description = ref('Build a collaborative audio workspace for distributed teams.')
 const descriptionTooLong = computed(() => description.value.length > 80)
 <\/script>`
 
-const apiCols: ZTableColumn[] = [
+const apiCols: TableColumn[] = [
   { key: 'name', label: '属性名', rowHeader: true, minWidth: '140px' },
   { key: 'default', label: '默认值', minWidth: '120px' },
   { key: 'type', label: '类型', minWidth: '220px', wrap: true },
@@ -201,7 +201,7 @@ const nativeRows = [
   { name: 'id / name / aria-*', description: '其他原生属性会透传到 textarea 元素', type: 'string', default: '-' }
 ]
 
-const eventCols: ZTableColumn[] = [
+const eventCols: TableColumn[] = [
   { key: 'name', label: '事件名', rowHeader: true, minWidth: '180px' },
   { key: 'description', label: '说明', minWidth: '240px', wrap: true },
   { key: 'type', label: '回调参数', minWidth: '200px', wrap: true }

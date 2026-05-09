@@ -31,7 +31,7 @@
 | `src/main.ts` | 创建 Vue app，注册 Pinia、Router，加载全局样式，初始化用户态后挂载。 |
 | `src/App.vue` | 应用根组件，控制全局 Header 与 `router-view`。 |
 | `src/api` | 全局请求层：环境配置、Axios 实例、响应解包、通用请求类型。 |
-| `src/components/z-ui` | 通用 UI 组件库，组件目录内通常有 `index.ts` 和 `zXxx.vue`，复合组件可有 `context.ts` 与子组件。 |
+| `src/components/z-ui` | 通用 UI 组件库，组件目录内通常有 `index.ts` 和 `Xxx.vue`，复合组件可有 `context.ts` 与子组件。 |
 | `src/components/monaco-editor` | Monaco 编辑器初始化与相关配置。 |
 | `src/css` | 全局样式入口、亮色/暗色主题 token。 |
 | `src/layout` | 全局布局组件，例如 `Header.vue`。 |
@@ -75,21 +75,21 @@ src/modules/<domain>/
 - 优先使用 `@/...` 别名导入 `src` 内文件；同目录内部文件可使用相对路径。
 - 组合函数使用 `useXxx` 命名。局部表单状态、校验、请求参数构造优先放到相邻 `useXxx`，例如 `useCreateApplicationForm.ts`。
 - 页面层只负责拼装页面、触发动作、消费状态和组织布局；不要把大量校验、请求体构造、流程状态机写进单个页面。
-- 组件名、类型名使用 `PascalCase`；组件库文件和目录遵循现有 `z-ui/<kebab-case>/zXxx.vue` 风格；URL path 使用小写或 kebab-case。
+- 组件名、类型名使用 `PascalCase`；组件库文件和目录遵循现有 `z-ui/<kebab-case>/Xxx.vue` 风格；URL path 使用小写或 kebab-case。
 - 代码注释、用户可见文案、错误提示语言跟随所在模块现状，不要擅自全局切换语言。
 - 不要引入宽泛 `try/catch`、静默 fallback 或防御性分支，除非这是当前失败路径真实需要且符合现有模式。
 
 ## UI and Styling Guidelines
 
-- 页面和业务组件优先复用 `src/components/z-ui` 中已有组件，例如 `zButton`、`zInput`、`zDropdown`、`zTable`、`zBanner`、`FormControl`、`ActionList`。
+- 页面和业务组件优先复用 `src/components/z-ui` 中已有组件，例如 `Button`、`Input`、`Dropdown`、`Table`、`Banner`、`FormControl`、`ActionList`。
 - 样式可使用 Tailwind 工具类，但必须与现有 GitHub Primer 风格的 CSS 变量体系兼容。
 - 颜色、背景、边框、阴影、圆角、字号等优先使用 `src/css/themes/light.css`、`src/css/themes/dark.css` 中的 `var(--...)` token，并提供合理 fallback。
 - 全局样式入口是 `src/css/style.css`，不要在业务改动中随意重写全局基础样式。
 - 组件库组件默认使用 `scoped` 样式；只有在受控组件体系内部需要联动时才使用 `:deep`。
 - 视觉状态优先通过 `data-*` 表达，例如 `data-variant`、`data-size`、`data-loading`、`data-open`。
 - 交互组件必须同步考虑默认、hover、active、focus-visible、disabled、loading 等状态；loading 状态应同时处理禁用、`aria-busy` 和视觉反馈。
-- Dropdown / 弹层沿用 `zDropdown` 现有模型：`trigger`、`content` 插槽，`side` 控制方向，外部点击关闭，内容区点击默认不关闭；二级菜单需要调用方显式传入 `side="outside-right"`。
-- 组件介绍页位于 `src/modules/components/views/components` 时，遵循既有文档页骨架：`ComponentDocsPage`、`ComponentDocsHeader`、`ComponentDocsSection`、`ComponentDocsDemoBlock`、`zTable` API 表格。
+- Dropdown / 弹层沿用 `Dropdown` 现有模型：`trigger`、`content` 插槽，`side` 控制方向，外部点击关闭，内容区点击默认不关闭；二级菜单需要调用方显式传入 `side="outside-right"`。
+- 组件介绍页位于 `src/modules/components/views/components` 时，遵循既有文档页骨架：`ComponentDocsPage`、`ComponentDocsHeader`、`ComponentDocsSection`、`ComponentDocsDemoBlock`、`Table` API 表格。
 
 ## State Management
 

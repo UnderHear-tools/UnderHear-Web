@@ -1,1 +1,1 @@
-export { default as zTooltip } from './zTooltip.vue'
+export { default as Tooltip } from './Tooltip.vue'

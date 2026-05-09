@@ -13,9 +13,9 @@
         组合而成的操作面板。点击按钮弹出操作列表。
       </template>
       <ComponentDocsDemoBlock :code="demo1Code">
-        <zDropdown>
+        <Dropdown>
           <template #trigger>
-            <zButton>
+            <Button>
               <template #leadingVisual>
                 <Plus />
               </template>
@@ -23,7 +23,7 @@
               <template #trailingVisual>
                 <TriangleDown />
               </template>
-            </zButton>
+            </Button>
           </template>
           <template #content>
             <ActionList>
@@ -35,14 +35,14 @@
                 <Repo class="action-icon" />
                 新建文件夹
               </ActionList.Item>
-              <zDivider />
+              <Divider />
               <ActionList.Item @click="handleClick('从模板创建')">
                 <Copy class="action-icon" />
                 从模板创建
               </ActionList.Item>
             </ActionList>
           </template>
-        </zDropdown>
+        </Dropdown>
       </ComponentDocsDemoBlock>
     </ComponentDocsSection>
 
@@ -51,13 +51,13 @@
         使用图标按钮作为触发器，适用于表格行尾的操作菜单。
       </template>
       <ComponentDocsDemoBlock :code="demo2Code">
-        <zDropdown side="outside-bottom">
+        <Dropdown side="outside-bottom">
           <template #trigger>
-            <zButton variant="invisible">
+            <Button variant="invisible">
               <template #leadingVisual>
                 <KebabHorizontal />
               </template>
-            </zButton>
+            </Button>
           </template>
           <template #content>
             <ActionList>
@@ -69,14 +69,14 @@
                 <Copy class="action-icon" />
                 复制
               </ActionList.Item>
-              <zDivider />
+              <Divider />
               <ActionList.Item>
                 <Trash class="action-icon danger" />
                 <span class="danger">删除</span>
               </ActionList.Item>
             </ActionList>
           </template>
-        </zDropdown>
+        </Dropdown>
       </ComponentDocsDemoBlock>
     </ComponentDocsSection>
 
@@ -85,14 +85,14 @@
         通过 <code>href</code> 属性将操作项渲染为链接。
       </template>
       <ComponentDocsDemoBlock :code="demo3Code">
-        <zDropdown>
+        <Dropdown>
           <template #trigger>
-            <zButton>
+            <Button>
               导航
               <template #trailingVisual>
                 <TriangleDown />
               </template>
-            </zButton>
+            </Button>
           </template>
           <template #content>
             <ActionList>
@@ -116,7 +116,7 @@
               </ActionList.Item>
             </ActionList>
           </template>
-        </zDropdown>
+        </Dropdown>
       </ComponentDocsDemoBlock>
     </ComponentDocsSection>
     <ComponentDocsSection title="选中状态同步">
@@ -124,9 +124,9 @@
         通过 <code>@click</code> 更新响应式变量，将选中项的文字同步显示到触发按钮上。
       </template>
       <ComponentDocsDemoBlock :code="demo4Code">
-        <zDropdown>
+        <Dropdown>
           <template #trigger>
-            <zButton>
+            <Button>
               <template #leadingVisual>
                 <Repo class="action-icon" />
               </template>
@@ -134,7 +134,7 @@
               <template #trailingVisual>
                 <TriangleDown />
               </template>
-            </zButton>
+            </Button>
           </template>
           <template #content>
             <ActionList>
@@ -149,29 +149,29 @@
               </ActionList.Item>
             </ActionList>
           </template>
-        </zDropdown>
+        </Dropdown>
       </ComponentDocsDemoBlock>
     </ComponentDocsSection>
 
     <ComponentDocsSection title="嵌套二级菜单">
       <template #description>
-        直接将某个 <code>ActionList.Item</code> 作为嵌套 <code>zDropdown</code> 的触发器，实现多级菜单效果。
+        直接将某个 <code>ActionList.Item</code> 作为嵌套 <code>Dropdown</code> 的触发器，实现多级菜单效果。
       </template>
       <ComponentDocsDemoBlock :code="demo5Code">
-        <zDropdown>
+        <Dropdown>
           <template #trigger>
-            <zButton>
+            <Button>
               打开菜单
               <template #trailingVisual>
                 <TriangleDown />
               </template>
-            </zButton>
+            </Button>
           </template>
           <template #content>
             <ActionList>
               <ActionList.Item>选项1</ActionList.Item>
               <ActionList.Item>选项2</ActionList.Item>
-              <zDropdown side="outside-right">
+              <Dropdown side="outside-right">
                 <template #trigger>
                   <ActionList.Item class="submenu-trigger">
                     选项3 <ChevronRight color="#59636e" />
@@ -184,10 +184,10 @@
                     <ActionList.Item>子选项3</ActionList.Item>
                   </ActionList>
                 </template>
-              </zDropdown>
+              </Dropdown>
             </ActionList>
           </template>
-        </zDropdown>
+        </Dropdown>
       </ComponentDocsDemoBlock>
     </ComponentDocsSection>
   </ComponentDocsPage>
@@ -199,10 +199,10 @@ import ComponentDocsDemoBlock from '@/modules/components/components/ComponentDoc
 import ComponentDocsHeader from '@/modules/components/components/ComponentDocsPage/ComponentDocsHeader.vue'
 import ComponentDocsPage from '@/modules/components/components/ComponentDocsPage/ComponentDocsPage.vue'
 import ComponentDocsSection from '@/modules/components/components/ComponentDocsPage/ComponentDocsSection.vue'
-import { zDropdown } from '@/components/z-ui/dropdown'
-import { zButton } from '@/components/z-ui/button'
+import { Dropdown } from '@/components/z-ui/dropdown'
+import { Button } from '@/components/z-ui/button'
 import { ActionList } from '@/components/z-ui/action-list'
-import { zDivider } from '@/components/z-ui/divider'
+import { Divider } from '@/components/z-ui/divider'
 import {
   Plus,
   TriangleDown,
@@ -222,13 +222,13 @@ const handleClick = (action: string) => {
 const selectedLabel = ref('新建文件')
 
 const demo1Code = `<template>
-  <zDropdown>
+  <Dropdown>
     <template #trigger>
-      <zButton>
+      <Button>
         <template #leadingVisual><Plus /></template>
         新建
         <template #trailingVisual><TriangleDown /></template>
-      </zButton>
+      </Button>
     </template>
     <template #content>
       <ActionList>
@@ -240,21 +240,21 @@ const demo1Code = `<template>
           <Repo class="action-icon" />
           新建文件夹
         </ActionList.Item>
-        <zDivider />
+        <Divider />
         <ActionList.Item @click="handleClick('从模板创建')">
           <Copy class="action-icon" />
           从模板创建
         </ActionList.Item>
       </ActionList>
     </template>
-  </zDropdown>
+  </Dropdown>
 </template>
 
 <script setup lang="ts">
-import { zDropdown } from '@/components/z-ui/dropdown'
-import { zButton } from '@/components/z-ui/button'
+import { Dropdown } from '@/components/z-ui/dropdown'
+import { Button } from '@/components/z-ui/button'
 import { ActionList } from '@/components/z-ui/action-list'
-import { zDivider } from '@/components/z-ui/divider'
+import { Divider } from '@/components/z-ui/divider'
 import { Plus, TriangleDown, File, Repo, Copy } from '@/components/z-ui/icon/Octicons-vue'
 
 const handleClick = (action: string) => {
@@ -263,11 +263,11 @@ const handleClick = (action: string) => {
 <\/script>`
 
 const demo2Code = `<template>
-  <zDropdown side="outside-bottom">
+  <Dropdown side="outside-bottom">
     <template #trigger>
-      <zButton variant="invisible">
+      <Button variant="invisible">
         <template #leadingVisual><KebabHorizontal /></template>
-      </zButton>
+      </Button>
     </template>
     <template #content>
       <ActionList>
@@ -279,31 +279,31 @@ const demo2Code = `<template>
           <Copy class="action-icon" />
           复制
         </ActionList.Item>
-        <zDivider />
+        <Divider />
         <ActionList.Item>
           <Trash class="action-icon danger" />
           <span class="danger">删除</span>
         </ActionList.Item>
       </ActionList>
     </template>
-  </zDropdown>
+  </Dropdown>
 </template>
 
 <script setup lang="ts">
-import { zDropdown } from '@/components/z-ui/dropdown'
-import { zButton } from '@/components/z-ui/button'
+import { Dropdown } from '@/components/z-ui/dropdown'
+import { Button } from '@/components/z-ui/button'
 import { ActionList } from '@/components/z-ui/action-list'
-import { zDivider } from '@/components/z-ui/divider'
+import { Divider } from '@/components/z-ui/divider'
 import { KebabHorizontal, Pencil, Copy, Trash } from '@/components/z-ui/icon/Octicons-vue'
 <\/script>`
 
 const demo3Code = `<template>
-  <zDropdown>
+  <Dropdown>
     <template #trigger>
-      <zButton>
+      <Button>
         导航
         <template #trailingVisual><TriangleDown /></template>
-      </zButton>
+      </Button>
     </template>
     <template #content>
       <ActionList>
@@ -312,24 +312,24 @@ const demo3Code = `<template>
         <ActionList.Item href="https://vitejs.dev" new-tab>Vite</ActionList.Item>
       </ActionList>
     </template>
-  </zDropdown>
+  </Dropdown>
 </template>
 
 <script setup lang="ts">
-import { zDropdown } from '@/components/z-ui/dropdown'
-import { zButton } from '@/components/z-ui/button'
+import { Dropdown } from '@/components/z-ui/dropdown'
+import { Button } from '@/components/z-ui/button'
 import { ActionList } from '@/components/z-ui/action-list'
 import { TriangleDown } from '@/components/z-ui/icon/Octicons-vue'
 <\/script>`
 
 const demo4Code = `<template>
-  <zDropdown>
+  <Dropdown>
     <template #trigger>
-      <zButton>
+      <Button>
         <template #leadingVisual><Repo /></template>
         {{ label }}
         <template #trailingVisual><TriangleDown /></template>
-      </zButton>
+      </Button>
     </template>
     <template #content>
       <ActionList>
@@ -338,13 +338,13 @@ const demo4Code = `<template>
         <ActionList.Item @click="label = '保存文件'">保存文件</ActionList.Item>
       </ActionList>
     </template>
-  </zDropdown>
+  </Dropdown>
 </template>
 
 <script setup lang="ts">
 import { ref } from 'vue'
-import { zDropdown } from '@/components/z-ui/dropdown'
-import { zButton } from '@/components/z-ui/button'
+import { Dropdown } from '@/components/z-ui/dropdown'
+import { Button } from '@/components/z-ui/button'
 import { ActionList } from '@/components/z-ui/action-list'
 import { Repo, TriangleDown } from '@/components/z-ui/icon/Octicons-vue'
 
@@ -352,18 +352,18 @@ const label = ref('新建文件')
 <\/script>`
 
 const demo5Code = `<template>
-  <zDropdown>
+  <Dropdown>
     <template #trigger>
-      <zButton>
+      <Button>
         打开菜单
         <template #trailingVisual><TriangleDown /></template>
-      </zButton>
+      </Button>
     </template>
     <template #content>
       <ActionList>
         <ActionList.Item>选项1</ActionList.Item>
         <ActionList.Item>选项2</ActionList.Item>
-        <zDropdown side="outside-right">
+        <Dropdown side="outside-right">
           <template #trigger>
             <ActionList.Item class="submenu-trigger">
               选项3 <ChevronRight color="#59636e" />
@@ -376,15 +376,15 @@ const demo5Code = `<template>
               <ActionList.Item>子选项3</ActionList.Item>
             </ActionList>
           </template>
-        </zDropdown>
+        </Dropdown>
       </ActionList>
     </template>
-  </zDropdown>
+  </Dropdown>
 </template>
 
 <script setup lang="ts">
-import { zDropdown } from '@/components/z-ui/dropdown'
-import { zButton } from '@/components/z-ui/button'
+import { Dropdown } from '@/components/z-ui/dropdown'
+import { Button } from '@/components/z-ui/button'
 import { ActionList } from '@/components/z-ui/action-list'
 import { TriangleDown, ChevronRight } from '@/components/z-ui/icon/Octicons-vue'
 <\/script>

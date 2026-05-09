@@ -1,12 +1,12 @@
 <template>
-  <zContainer 
+  <Container
     v-if="profile !== null && profile !== undefined"
-    class="zContainer"
+    class="Container"
   >
     <div class="left-column">
       <div class="profile">
         <div class="profile-header">
-          <zAvatar
+          <Avatar
             class="avatar"
             :src="profile?.avatarUrl"
             :alt="profile?.nickname"
@@ -102,16 +102,16 @@
         </div>
       </div>
     </div>
-  </zContainer>
+  </Container>
   <UserNotFound v-else-if="profile === null" />
 </template>
 
 <script setup lang="ts">
 import { computed, onMounted, ref } from 'vue'
 import { useRoute } from 'vue-router'
-import { zAvatar } from '@/components/z-ui/avatar'
+import { Avatar } from '@/components/z-ui/avatar'
 import { Blankslate } from '@/components/z-ui/blankslate'
-import { zContainer } from '@/components/z-ui/container'
+import { Container } from '@/components/z-ui/container'
 import {
   Location,
   Mail,
@@ -140,7 +140,7 @@ onMounted(async () => {
 </script>
 
 <style scoped>
-.zContainer {
+.Container {
   display: flex;
   gap: 30px;
   min-height: calc(100vh - var(--header-height));
@@ -246,7 +246,7 @@ onMounted(async () => {
 }
 
 @media (max-width: 768px) {
-  .zContainer {
+  .Container {
       flex-direction: column;
       gap: 10px;
   }

@@ -31,19 +31,19 @@
         >
           登录
         </div>
-        <zDropdown
+        <Dropdown
           v-else
           side="outside-bottom"
         >
           <template #trigger>
-            <zAvatar
+            <Avatar
               :src="userStore.userInfo?.avatarUrl"
               :size="32"
             />
           </template>
           <template #content>
             <div class="user-header">
-              <zAvatar
+              <Avatar
                 :src="userStore.userInfo?.avatarUrl"
                 :size="36"
               />
@@ -57,7 +57,7 @@
               </div>
             </div>
             <ActionList>
-              <zDivider />
+              <Divider />
               <ActionList.Item @click="goToProfile">
                 <Person class="menu-icon" />
                 个人资料
@@ -66,14 +66,14 @@
                 <Apps class="menu-icon" />
                 我的应用
               </ActionList.Item>
-              <zDivider />
+              <Divider />
               <ActionList.Item href="/auth/logout">
                 <SignOut class="menu-icon" />
                 退出登录
               </ActionList.Item>
             </ActionList>
           </template>
-        </zDropdown>
+        </Dropdown>
       </div>
     </div>
   </header>
@@ -83,10 +83,10 @@
 import { onMounted, ref, watch } from 'vue'
 import { useRouter, useRoute } from 'vue-router'
 import { useUserStore } from '@/stores/user'
-import { zDropdown } from '@/components/z-ui/dropdown'
-import { zAvatar } from '@/components/z-ui/avatar'
+import { Dropdown } from '@/components/z-ui/dropdown'
+import { Avatar } from '@/components/z-ui/avatar'
 import { ActionList } from '@/components/z-ui/action-list'
-import { zDivider } from '@/components/z-ui/divider'
+import { Divider } from '@/components/z-ui/divider'
 import { Person, Apps, SignOut, LogoUnderHear } from '@/components/z-ui/icon/Octicons-vue'
 
 interface NavigationItem {

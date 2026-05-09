@@ -1,5 +1,5 @@
 <template>
-  <zContainer>
+  <Container>
     <div class="publish-method-header">
       <h1 class="title">
         选择发布方式
@@ -8,7 +8,7 @@
         进入发布页面前，请先选择发布来源
       </p>
       <p class="subtitle">
-        返回列表：<zLink
+        返回列表：<Link
           href="/application"
           link-text="应用广场"
         />
@@ -76,14 +76,14 @@
         >
       </button>
     </div>
-  </zContainer>
+  </Container>
 </template>
 
 <script setup lang="ts">
 import { useRouter } from 'vue-router'
 
-import { zContainer } from '@/components/z-ui/container'
-import { zLink } from '@/components/z-ui/link'
+import { Container } from '@/components/z-ui/container'
+import { Link } from '@/components/z-ui/link'
 
 const router = useRouter()
 

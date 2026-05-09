@@ -1,1 +1,1 @@
-export { default as zTextarea } from './zTextarea.vue'
+export { default as Textarea } from './Textarea.vue'

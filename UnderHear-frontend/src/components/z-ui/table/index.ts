@@ -1,6 +1,6 @@
-export { default as zTable } from './zTable.vue'
+export { default as Table } from './Table.vue'
 export type {
   RowData,
-  ZTableAlign,
-  ZTableColumn
-} from './zTable.vue'
+  TableAlign,
+  TableColumn
+} from './Table.vue'

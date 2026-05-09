@@ -17,16 +17,16 @@
       </template>
       <ComponentDocsDemoBlock :code="demo1Code">
         <div class="user-menu">
-          <zDropdown>
+          <Dropdown>
             <template #trigger>
-              <zAvatar
+              <Avatar
                 src="https://avatars.githubusercontent.com/u/131276691?v=4"
                 :size="42"
               />
             </template>
             <template #content>
               <div class="user-header">
-                <zAvatar
+                <Avatar
                   src="https://avatars.githubusercontent.com/u/131276691?v=4"
                   :size="36"
                 />
@@ -40,7 +40,7 @@
                 </div>
               </div>
               <ActionList>
-                <zDivider />
+                <Divider />
                 <ActionList.Item>
                   <Person class="menu-icon" />
                   个人资料
@@ -49,19 +49,19 @@
                   <MarkGithub class="menu-icon" />
                   前往 GitHub
                 </ActionList.Item>
-                <zDivider />
+                <Divider />
                 <ActionList.Item>
                   <Gear class="menu-icon" />
                   设置
                 </ActionList.Item>
-                <zDivider />
+                <Divider />
                 <ActionList.Item>
                   <SignOut class="menu-icon" />
                   退出登录
                 </ActionList.Item>
               </ActionList>
             </template>
-          </zDropdown>
+          </Dropdown>
         </div>
       </ComponentDocsDemoBlock>
     </ComponentDocsSection>
@@ -73,28 +73,28 @@ import ComponentDocsDemoBlock from '@/modules/components/components/ComponentDoc
 import ComponentDocsHeader from '@/modules/components/components/ComponentDocsPage/ComponentDocsHeader.vue'
 import ComponentDocsPage from '@/modules/components/components/ComponentDocsPage/ComponentDocsPage.vue'
 import ComponentDocsSection from '@/modules/components/components/ComponentDocsPage/ComponentDocsSection.vue'
-import { zDropdown } from '@/components/z-ui/dropdown'
-import { zAvatar } from '@/components/z-ui/avatar'
+import { Dropdown } from '@/components/z-ui/dropdown'
+import { Avatar } from '@/components/z-ui/avatar'
 import { ActionList } from '@/components/z-ui/action-list'
-import { zDivider } from '@/components/z-ui/divider'
+import { Divider } from '@/components/z-ui/divider'
 import { Person, MarkGithub, SignOut, Gear } from '@/components/z-ui/icon/Octicons-vue'
 
 const demo1Code = `<template>
   <div class="user-menu">
-    <zDropdown>
+    <Dropdown>
       <template #trigger>
-        <zAvatar src="https://avatars.githubusercontent.com/u/131276691?v=4" :size="42" />
+        <Avatar src="https://avatars.githubusercontent.com/u/131276691?v=4" :size="42" />
       </template>
       <template #content>
         <div class="user-header">
-          <zAvatar src="https://avatars.githubusercontent.com/u/131276691?v=4" :size="36" />
+          <Avatar src="https://avatars.githubusercontent.com/u/131276691?v=4" :size="36" />
           <div class="user-info">
             <div class="user-name">UnderHear Studio</div>
             <div class="user-email">hello@underhear.audio</div>
           </div>
         </div>
         <ActionList>
-          <zDivider />
+          <Divider />
           <ActionList.Item>
             <Person class="menu-icon" />
             个人资料
@@ -103,27 +103,27 @@ const demo1Code = `<template>
             <MarkGithub class="menu-icon" />
             前往 GitHub
           </ActionList.Item>
-          <zDivider />
+          <Divider />
           <ActionList.Item>
             <Gear class="menu-icon" />
             设置
           </ActionList.Item>
-          <zDivider />
+          <Divider />
           <ActionList.Item>
             <SignOut class="menu-icon" />
             退出登录
           </ActionList.Item>
         </ActionList>
       </template>
-    </zDropdown>
+    </Dropdown>
   </div>
 </template>
 
 <script setup lang="ts">
-import { zDropdown } from '@/components/z-ui/dropdown'
-import { zAvatar } from '@/components/z-ui/avatar'
+import { Dropdown } from '@/components/z-ui/dropdown'
+import { Avatar } from '@/components/z-ui/avatar'
 import { ActionList } from '@/components/z-ui/action-list'
-import { zDivider } from '@/components/z-ui/divider'
+import { Divider } from '@/components/z-ui/divider'
 import { Person, MarkGithub, SignOut, Gear } from '@/components/z-ui/icon/Octicons-vue'
 <\/script>
 

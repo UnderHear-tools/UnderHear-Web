@@ -1,1 +1,1 @@
-export { default as zLink } from './zLink.vue'
+export { default as Link } from './Link.vue'

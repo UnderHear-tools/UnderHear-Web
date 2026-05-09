@@ -19,7 +19,7 @@
         @update:model-value="updateHtmlSource"
       />
 
-      <zUpload
+      <Upload
         v-if="selectedFramework === 'vue' || selectedFramework === 'react'"
         :model-value="files"
         accept=".zip"
@@ -30,9 +30,9 @@
     <p
       v-if="invalid && validation"
     >
-      <zFormControlValidation variant="error">
+      <FormControlValidation variant="error">
         {{ validation }}
-      </zFormControlValidation>
+      </FormControlValidation>
     </p>
   </div>
 </template>
@@ -40,9 +40,9 @@
 <script setup lang="ts">
 import { HtmlMonacoEditor } from '@/components/monaco-editor'
 import LightBulb from '@/components/z-ui/icon/Octicons-vue/icons/light-bulb.vue'
-import { zUpload } from '@/components/z-ui/upload'
+import { Upload } from '@/components/z-ui/upload'
 import type { FrameworkValue } from './useCreateApplicationForm'
-import { zFormControlValidation } from '@/components/z-ui/form-control'
+import { FormControlValidation } from '@/components/z-ui/form-control'
 
 interface Props {
   selectedFramework: FrameworkValue | null
@@ -78,7 +78,7 @@ function updateHtmlSource(value: string) {
 }
 
 .step-panel--invalid :deep(.html-editor-wrapper),
-.step-panel--invalid :deep(.z-upload-drop) {
+.step-panel--invalid :deep(.upload-drop) {
   border-color: var(--borderColor-danger-emphasis, #cf222e);
 }
 

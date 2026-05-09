@@ -1,7 +1,7 @@
-import FormControlRoot from './zFormControl.vue'
-import FormControlLabel from './zFormControlLabel.vue'
-import FormControlValidation from './zFormControlValidation.vue'
-import FormControlCaption from './zFormControlCaption.vue'
+import FormControlRoot from './FormControl.vue'
+import FormControlLabel from './FormControlLabel.vue'
+import FormControlValidation from './FormControlValidation.vue'
+import FormControlCaption from './FormControlCaption.vue'
 
 export const FormControl = Object.assign(FormControlRoot, {
   Label: FormControlLabel,
@@ -9,7 +9,8 @@ export const FormControl = Object.assign(FormControlRoot, {
   Caption: FormControlCaption
 })
 
-export const zFormControl = FormControl
-export const zFormControlLabel = FormControlLabel
-export const zFormControlValidation = FormControlValidation
-export const zFormControlCaption = FormControlCaption
+export {
+  FormControlLabel,
+  FormControlValidation,
+  FormControlCaption
+}

@@ -1,5 +1,5 @@
 <template>
-  <zContainer>
+  <Container>
     <div class="application-header">
       <h1 class="application-title">
         Web应用
@@ -8,7 +8,7 @@
         从一个小创意开始🐱。
       </p>
       <p class="application-subtitle">
-        想上传自己的Web应用吗？请<zLink
+        想上传自己的Web应用吗？请<Link
           href="/application/create"
           link-text="点击这里！"
         />欢迎大家上传！
@@ -77,14 +77,14 @@
         </div>
       </div>
     </div>
-  </zContainer>
+  </Container>
 </template>
 
 <script setup lang="ts">
 import { ref, onMounted } from 'vue'
 
-import { zContainer } from '@/components/z-ui/container'
-import { zLink } from '@/components/z-ui/link'
+import { Container } from '@/components/z-ui/container'
+import { Link } from '@/components/z-ui/link'
 
 // 引入数据
 import applicationData from '../views/application/Applicationcard.json'

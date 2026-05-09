@@ -117,7 +117,7 @@
             <div class="group-l">
               <label>算法选择</label>
               <div class="inline">
-                <zSelect
+                <Select
                   v-model="category"
                   :options="categoryOptions"
                   placeholder="选择类别"
@@ -125,7 +125,7 @@
                   style="min-width:120px"
                 />
 
-                <zSelect
+                <Select
                   v-model="algorithm"
                   :options="algorithmOptions"
                   placeholder="选择算法"
@@ -235,7 +235,7 @@
 
 <script setup lang="ts">
 import { computed, reactive, ref, watch } from 'vue'
-import {zSelect} from '@/components/z-ui/select'
+import {Select} from '@/components/z-ui/select'
 
 type CellType = 'empty' | 'wall' | 'start' | 'end'
 type Pos = { row: number; col: number }

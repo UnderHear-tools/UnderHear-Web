@@ -4,7 +4,7 @@
       <template #description>
         为了避免视觉传达差异，使用一套特定的调色板来规定颜色，为组件们提供一致的外观视觉感受。
         感谢
-        <zLink
+        <Link
           href="https://primer.style/brand/primitives/color/"
           link-text="primer style primitives"
           variant="primary"
@@ -107,7 +107,7 @@
 
 <script lang="ts" setup>
 import { ref } from 'vue'
-import { zLink } from '@/components/z-ui/link'
+import { Link } from '@/components/z-ui/link'
 import ComponentDocsHeader from '@/modules/components/components/ComponentDocsPage/ComponentDocsHeader.vue'
 import ComponentDocsPage from '@/modules/components/components/ComponentDocsPage/ComponentDocsPage.vue'
 import ComponentDocsSection from '@/modules/components/components/ComponentDocsPage/ComponentDocsSection.vue'

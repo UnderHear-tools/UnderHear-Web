@@ -1,5 +1,5 @@
 <template>
-  <zContainer>
+  <Container>
     <div class="project-header">
       <h1 class="project-title">
         我的项目
@@ -29,12 +29,12 @@
           <p>{{ project.description.en }}</p>
         </div>
         <div class="project-tech">
-          <zTag
+          <Tag
             v-for="tech in project.technologies"
             :key="tech"
           >
             {{ tech }}
-          </zTag>
+          </Tag>
         </div>
         <div class="project-items">
           <div class="project-badges">
@@ -51,15 +51,15 @@
         </div>
       </div>
     </div>
-  </zContainer>
+  </Container>
 </template>
 
 <script setup lang="ts">
 import { ref, onMounted } from 'vue'
 
-import { zContainer } from '@/components/z-ui/container'
+import { Container } from '@/components/z-ui/container'
 // 引入图标
-import {zTag} from '@/components/z-ui/tag'
+import {Tag} from '@/components/z-ui/tag'
 
 // 引入数据
 import projectData from '../UnderHear/data/Projectcard.json'

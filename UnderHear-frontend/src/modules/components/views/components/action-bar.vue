@@ -16,70 +16,70 @@
       </template>
       <ComponentDocsDemoBlock :code="demo1Code">
         <div class="demo-actions">
-          <zTooltip
+          <Tooltip
             content="Bold"
             placement="bottom"
           >
-            <zButton variant="invisible">
+            <Button variant="invisible">
               <template #leadingVisual>
                 <Bold />
               </template>
-            </zButton>
-          </zTooltip>
-          <zTooltip
+            </Button>
+          </Tooltip>
+          <Tooltip
             content="Italic"
             placement="bottom"
           >
-            <zButton variant="invisible">
+            <Button variant="invisible">
               <template #leadingVisual>
                 <Italic />
               </template>
-            </zButton>
-          </zTooltip>
-          <zTooltip
+            </Button>
+          </Tooltip>
+          <Tooltip
             content="Code"
             placement="bottom"
           >
-            <zButton variant="invisible">
+            <Button variant="invisible">
               <template #leadingVisual>
                 <Code />
               </template>
-            </zButton>
-          </zTooltip>
-          <zTooltip
+            </Button>
+          </Tooltip>
+          <Tooltip
             content="Link"
             placement="bottom"
           >
-            <zButton variant="invisible">
+            <Button variant="invisible">
               <template #leadingVisual>
                 <Link />
               </template>
-            </zButton>
-          </zTooltip>
-          <zDivider
+            </Button>
+          </Tooltip>
+          <Divider
             direction="vertical"
             height="20px"
           />
-          <zTooltip
+          <Tooltip
             content="File Added"
             placement="bottom"
           >
-            <zButton variant="invisible">
+            <Button variant="invisible">
               <template #leadingVisual>
                 <FileAdded />
               </template>
-            </zButton>
-          </zTooltip>
-          <zTooltip
+            </Button>
+          </Tooltip>
+          <Tooltip
             content="Search"
             placement="bottom"
           >
-            <zButton variant="invisible">
+            <Button variant="invisible">
               <template #leadingVisual>
                 <Search />
               </template>
-            </zButton>
-          </zTooltip>
+            </Button>
+          </Tooltip>
         </div>
       </ComponentDocsDemoBlock>
     </ComponentDocsSection>
@@ -91,53 +91,53 @@ import ComponentDocsDemoBlock from '@/modules/components/components/ComponentDoc
 import ComponentDocsHeader from '@/modules/components/components/ComponentDocsPage/ComponentDocsHeader.vue'
 import ComponentDocsPage from '@/modules/components/components/ComponentDocsPage/ComponentDocsPage.vue'
 import ComponentDocsSection from '@/modules/components/components/ComponentDocsPage/ComponentDocsSection.vue'
-import { zTooltip } from '@/components/z-ui/tooltip'
-import { zDivider } from '@/components/z-ui/divider'
+import { Tooltip } from '@/components/z-ui/tooltip'
+import { Divider } from '@/components/z-ui/divider'
 import { Bold, Italic, Code, Link, FileAdded, Search } from '@/components/z-ui/icon/Octicons-vue'
-import { zButton } from '@/components/z-ui/button'
+import { Button } from '@/components/z-ui/button'
 
 const demo1Code = `<template>
   <div class="demo-actions">
-    <zTooltip content="Bold" placement="bottom">
-      <zButton variant="invisible">
+    <Tooltip content="Bold" placement="bottom">
+      <Button variant="invisible">
         <template #leadingVisual><Bold /></template>
-      </zButton>
-    </zTooltip>
-    <zTooltip content="Italic" placement="bottom">
-      <zButton variant="invisible">
+      </Button>
+    </Tooltip>
+    <Tooltip content="Italic" placement="bottom">
+      <Button variant="invisible">
         <template #leadingVisual><Italic /></template>
-      </zButton>
-    </zTooltip>
-    <zTooltip content="Code" placement="bottom">
-      <zButton variant="invisible">
+      </Button>
+    </Tooltip>
+    <Tooltip content="Code" placement="bottom">
+      <Button variant="invisible">
         <template #leadingVisual><Code /></template>
-      </zButton>
-    </zTooltip>
-    <zTooltip content="Link" placement="bottom">
-      <zButton variant="invisible">
+      </Button>
+    </Tooltip>
+    <Tooltip content="Link" placement="bottom">
+      <Button variant="invisible">
         <template #leadingVisual><Link /></template>
-      </zButton>
-    </zTooltip>
+      </Button>
+    </Tooltip>
 
-    <zDivider direction="vertical" height="20px" />
+    <Divider direction="vertical" height="20px" />
 
-    <zTooltip content="File Added" placement="bottom">
-      <zButton variant="invisible">
+    <Tooltip content="File Added" placement="bottom">
+      <Button variant="invisible">
         <template #leadingVisual><FileAdded /></template>
-      </zButton>
-    </zTooltip>
-    <zTooltip content="Search" placement="bottom">
-      <zButton variant="invisible">
+      </Button>
+    </Tooltip>
+    <Tooltip content="Search" placement="bottom">
+      <Button variant="invisible">
         <template #leadingVisual><Search /></template>
-      </zButton>
-    </zTooltip>
+      </Button>
+    </Tooltip>
   </div>
 </template>
 
 <script setup lang="ts">
-import { zButton } from '@/components/z-ui/button'
-import { zTooltip } from '@/components/z-ui/tooltip'
-import { zDivider } from '@/components/z-ui/divider'
+import { Button } from '@/components/z-ui/button'
+import { Tooltip } from '@/components/z-ui/tooltip'
+import { Divider } from '@/components/z-ui/divider'
 import { Bold, Italic, Code, Link, FileAdded, Search } from '@/components/z-ui/icon/Octicons-vue'
 <\/script>
 

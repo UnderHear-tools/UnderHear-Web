@@ -10,7 +10,7 @@
         通过 <code>v-model</code> 绑定选中的文件数组，默认保持单文件交互。
       </template>
       <ComponentDocsDemoBlock :code="demo1Code">
-        <zUpload v-model="files1" />
+        <Upload v-model="files1" />
         <p
           v-if="files1.length"
           class="demo-info"
@@ -25,7 +25,7 @@
         通过 <code>accept</code> 属性限制可选文件类型，格式与原生 <code>&lt;input accept&gt;</code> 一致。
       </template>
       <ComponentDocsDemoBlock :code="demo2Code">
-        <zUpload
+        <Upload
           v-model="files2"
           accept=".zip,.html"
           hint="仅支持 .zip 和 .html 文件"
@@ -44,7 +44,7 @@
         设置 <code>directory</code> 后启用文件夹上传。组件会返回扁平化后的文件数组。
       </template>
       <ComponentDocsDemoBlock :code="demo3Code">
-        <zUpload
+        <Upload
           v-model="files3"
           directory
           hint="点击选择文件夹，或拖拽文件夹到此处"
@@ -63,7 +63,7 @@
         通过 <code>hint</code> 属性在上传区域底部展示辅助说明。
       </template>
       <ComponentDocsDemoBlock :code="demo4Code">
-        <zUpload
+        <Upload
           v-model="files4"
           hint="支持 .zip 格式的 dist 构建包或 .html 文件"
         />
@@ -75,9 +75,9 @@
         使用默认插槽替换上传区域的内部内容。
       </template>
       <ComponentDocsDemoBlock :code="demo5Code">
-        <zUpload v-model="files5">
+        <Upload v-model="files5">
           <div class="custom-upload-content">
-            <Upload />
+            <UploadIcon />
             <p class="custom-upload-text">
               点击或拖拽文件到这里
             </p>
@@ -85,7 +85,7 @@
               最大支持 10 MB
             </p>
           </div>
-        </zUpload>
+        </Upload>
       </ComponentDocsDemoBlock>
     </ComponentDocsSection>
 
@@ -94,7 +94,7 @@
       variant="api"
     >
       <h3>属性</h3>
-      <zTable
+      <Table
         :columns="apiCols"
         :data="apiRows"
         row-key="name"
@@ -102,7 +102,7 @@
         :hoverable="false"
       />
       <h3>事件</h3>
-      <zTable
+      <Table
         :columns="eventCols"
         :data="eventRows"
         row-key="name"
@@ -110,7 +110,7 @@
         :hoverable="false"
       />
       <h3>插槽</h3>
-      <zTable
+      <Table
         :columns="slotCols"
         :data="slotRows"
         row-key="name"
@@ -123,9 +123,9 @@
 
 <script setup lang="ts">
 import { ref } from 'vue'
-import { zUpload } from '@/components/z-ui/upload'
-import { zTable, type ZTableColumn } from '@/components/z-ui/table'
-import { Upload } from '@/components/z-ui/icon/Octicons-vue'
+import { Upload } from '@/components/z-ui/upload'
+import { Table, type TableColumn } from '@/components/z-ui/table'
+import { Upload as UploadIcon } from '@/components/z-ui/icon/Octicons-vue'
 import ComponentDocsDemoBlock from '@/modules/components/components/ComponentDocsPage/ComponentDocsDemoBlock.vue'
 import ComponentDocsHeader from '@/modules/components/components/ComponentDocsPage/ComponentDocsHeader.vue'
 import ComponentDocsPage from '@/modules/components/components/ComponentDocsPage/ComponentDocsPage.vue'
@@ -138,19 +138,19 @@ const files4 = ref<File[]>([])
 const files5 = ref<File[]>([])
 
 const demo1Code = `<template>
-  <zUpload v-model="files" />
+  <Upload v-model="files" />
   <p v-if="files.length">{{ files[0].name }}</p>
 </template>
 
 <script setup lang="ts">
 import { ref } from 'vue'
-import { zUpload } from '@/components/z-ui/upload'
+import { Upload } from '@/components/z-ui/upload'
 
 const files = ref<File[]>([])
 <\/script>`
 
 const demo2Code = `<template>
-  <zUpload
+  <Upload
     v-model="files"
     accept=".zip,.html"
     hint="仅支持 .zip 和 .html 文件"
@@ -159,13 +159,13 @@ const demo2Code = `<template>
 
 <script setup lang="ts">
 import { ref } from 'vue'
-import { zUpload } from '@/components/z-ui/upload'
+import { Upload } from '@/components/z-ui/upload'
 
 const files = ref<File[]>([])
 <\/script>`
 
 const demo3Code = `<template>
-  <zUpload
+  <Upload
     v-model="files"
     directory
     hint="点击选择文件夹，或拖拽文件夹到此处"
@@ -174,41 +174,41 @@ const demo3Code = `<template>
 
 <script setup lang="ts">
 import { ref } from 'vue'
-import { zUpload } from '@/components/z-ui/upload'
+import { Upload } from '@/components/z-ui/upload'
 
 const files = ref<File[]>([])
 <\/script>`
 
 const demo4Code = `<template>
-  <zUpload v-model="files" hint="支持 .zip 格式的 dist 构建包或 .html 文件" />
+  <Upload v-model="files" hint="支持 .zip 格式的 dist 构建包或 .html 文件" />
 </template>
 
 <script setup lang="ts">
 import { ref } from 'vue'
-import { zUpload } from '@/components/z-ui/upload'
+import { Upload } from '@/components/z-ui/upload'
 
 const files = ref<File[]>([])
 <\/script>`
 
 const demo5Code = `<template>
-  <zUpload v-model="files">
+  <Upload v-model="files">
     <div class="custom-upload-content">
-      <Upload />
+      <UploadIcon />
       <p>点击或拖拽文件到这里</p>
       <p>最大支持 10 MB</p>
     </div>
-  </zUpload>
+  </Upload>
 </template>
 
 <script setup lang="ts">
 import { ref } from 'vue'
-import { zUpload } from '@/components/z-ui/upload'
-import { Upload } from '@/components/z-ui/icon/Octicons-vue'
+import { Upload } from '@/components/z-ui/upload'
+import { Upload as UploadIcon } from '@/components/z-ui/icon/Octicons-vue'
 
 const files = ref<File[]>([])
 <\/script>`
 
-const apiCols: ZTableColumn[] = [
+const apiCols: TableColumn[] = [
   { key: 'name', label: '属性名', rowHeader: true, minWidth: '140px' },
   { key: 'default', label: '默认值', minWidth: '100px' },
   { key: 'type', label: '类型', minWidth: '200px', wrap: true },
@@ -222,7 +222,7 @@ const apiRows = [
   { name: 'directory', description: '启用文件夹上传模式，并返回扁平化后的文件数组', type: 'boolean', default: 'false' }
 ]
 
-const eventCols: ZTableColumn[] = [
+const eventCols: TableColumn[] = [
   { key: 'name', label: '事件名', rowHeader: true, minWidth: '180px' },
   { key: 'description', label: '说明', minWidth: '200px', wrap: true },
   { key: 'type', label: '回调参数', minWidth: '200px', wrap: true }
@@ -232,7 +232,7 @@ const eventRows = [
   { name: 'update:modelValue', description: '选择文件、文件夹或移除文件时触发', type: 'File[]' }
 ]
 
-const slotCols: ZTableColumn[] = [
+const slotCols: TableColumn[] = [
   { key: 'name', label: '插槽名', rowHeader: true, minWidth: '140px' },
   { key: 'description', label: '说明', minWidth: '300px', wrap: true }
 ]

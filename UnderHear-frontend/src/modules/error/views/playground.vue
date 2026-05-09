@@ -1,8 +1,8 @@
 <template>
   <div class="hero">
-    <zDropdown side="outside-right">
+    <Dropdown side="outside-right">
       <template #trigger>
-        <zButton>
+        <Button>
           <template #leadingVisual>
             <Repo />
           </template>
@@ -10,7 +10,7 @@
           <template #trailingVisual>
             <TriangleDown />
           </template>
-        </zButton>
+        </Button>
       </template>
       <template #content>
         <ActionList
@@ -37,12 +37,12 @@
           </ActionList.Item>
         </ActionList>
       </template>
-    </zDropdown>
+    </Dropdown>
 
 
-    <zDropdown>
+    <Dropdown>
       <template #trigger>
-        <zButton>
+        <Button>
           <template #leadingVisual>
             <Repo />
           </template>
@@ -50,13 +50,13 @@
           <template #trailingVisual>
             <TriangleDown />
           </template>
-        </zButton>
+        </Button>
       </template>
       <template #content>
         <ActionList>
           <ActionList.Item>选项1</ActionList.Item>
           <ActionList.Item>选项2</ActionList.Item>
-          <zDropdown side="outside-right">
+          <Dropdown side="outside-right">
             <template #trigger>
               <ActionList.Item class="select">
                 选项3 <ChevronRight color="#59636e" />
@@ -69,16 +69,16 @@
                 <ActionList.Item>选项3</ActionList.Item>
               </ActionList>
             </template>
-          </zDropdown>
+          </Dropdown>
         </ActionList>
       </template>
-    </zDropdown>
+    </Dropdown>
   </div>
 </template>
 <script setup lang="ts">
 import { ref } from 'vue'
-import { zButton } from "@/components/z-ui/button";
-import { zDropdown } from "@/components/z-ui/dropdown";
+import { Button } from "@/components/z-ui/button";
+import { Dropdown } from "@/components/z-ui/dropdown";
 import { ActionList } from "@/components/z-ui/action-list";
 import Repo from "@/components/z-ui/icon/Octicons-vue/icons/repo.vue";
 import TriangleDown from "@/components/z-ui/icon/Octicons-vue/icons/triangle-down.vue";

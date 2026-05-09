@@ -4,7 +4,7 @@
       <slot />
     </div>
     <div class="demo-actions">
-      <zTooltip
+      <Tooltip
         :content="codeCopied ? copiedLabel : copyLabel"
         placement="bottom"
       >
@@ -14,8 +14,8 @@
         >
           <Copy />
         </button>
-      </zTooltip>
-      <zTooltip
+      </Tooltip>
+      <Tooltip
         :content="codeVisible ? hideCodeLabel : showCodeLabel"
         placement="bottom"
       >
@@ -25,7 +25,7 @@
         >
           <Code />
         </button>
-      </zTooltip>
+      </Tooltip>
     </div>
     <transition name="code-expand">
       <div
@@ -53,7 +53,7 @@
 
 <script setup lang="ts">
 import { ref, onMounted } from 'vue'
-import { zTooltip } from '@/components/z-ui/tooltip'
+import { Tooltip } from '@/components/z-ui/tooltip'
 import { Copy, Code } from '@/components/z-ui/icon/Octicons-vue/index.ts'
 
 const props = defineProps<{ code: string }>()

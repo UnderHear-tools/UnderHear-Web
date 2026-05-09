@@ -7,15 +7,15 @@
 
     <ComponentDocsSection title="基础用法">
       <template #description>
-        使用 <code>zContainer</code> 包裹内容，自动居中且限制最大宽度为 1150px。
+        使用 <code>Container</code> 包裹内容，自动居中且限制最大宽度为 1150px。
       </template>
       <ComponentDocsDemoBlock :code="demo1Code">
         <div class="demo-wrapper">
-          <zContainer>
+          <Container>
             <div class="demo-block">
               这是容器内的内容，宽度被限制并居中显示。
             </div>
-          </zContainer>
+          </Container>
         </div>
       </ComponentDocsDemoBlock>
     </ComponentDocsSection>
@@ -26,7 +26,7 @@
       </template>
       <ComponentDocsDemoBlock :code="demo2Code">
         <div class="demo-wrapper">
-          <zContainer>
+          <Container>
             <div class="demo-title">
               页面标题
             </div>
@@ -44,7 +44,7 @@
                 卡片 C
               </div>
             </div>
-          </zContainer>
+          </Container>
         </div>
       </ComponentDocsDemoBlock>
     </ComponentDocsSection>
@@ -55,11 +55,11 @@
       </template>
       <ComponentDocsDemoBlock :code="demo3Code">
         <div class="demo-wrapper">
-          <zContainer>
+          <Container>
             <div class="demo-block">
               缩小浏览器窗口至 768px 以下，观察内边距的变化。
             </div>
-          </zContainer>
+          </Container>
         </div>
       </ComponentDocsDemoBlock>
     </ComponentDocsSection>
@@ -69,7 +69,7 @@
       variant="api"
     >
       <h3>属性</h3>
-      <zTable
+      <Table
         :columns="apiCols"
         :data="apiRows"
         row-key="name"
@@ -77,7 +77,7 @@
         :hoverable="false"
       />
       <h3>插槽</h3>
-      <zTable
+      <Table
         :columns="slotCols"
         :data="slotRows"
         row-key="name"
@@ -89,25 +89,25 @@
 </template>
 
 <script setup lang="ts">
-import { zContainer } from '@/components/z-ui/container'
-import { zTable, type ZTableColumn } from '@/components/z-ui/table'
+import { Container } from '@/components/z-ui/container'
+import { Table, type TableColumn } from '@/components/z-ui/table'
 import ComponentDocsDemoBlock from '@/modules/components/components/ComponentDocsPage/ComponentDocsDemoBlock.vue'
 import ComponentDocsHeader from '@/modules/components/components/ComponentDocsPage/ComponentDocsHeader.vue'
 import ComponentDocsPage from '@/modules/components/components/ComponentDocsPage/ComponentDocsPage.vue'
 import ComponentDocsSection from '@/modules/components/components/ComponentDocsPage/ComponentDocsSection.vue'
 
 const demo1Code = `<template>
-  <zContainer>
+  <Container>
     <div>这是容器内的内容，宽度被限制并居中显示。</div>
-  </zContainer>
+  </Container>
 </template>
 
 <script setup lang="ts">
-import { zContainer } from '@/components/z-ui/container'
+import { Container } from '@/components/z-ui/container'
 <\/script>`
 
 const demo2Code = `<template>
-  <zContainer>
+  <Container>
     <div class="demo-title">页面标题</div>
     <p class="demo-text">这是一段页面描述文字，容器会自动处理内边距和居中对齐。</p>
     <div class="demo-cards">
@@ -115,25 +115,25 @@ const demo2Code = `<template>
       <div class="demo-card">卡片 B</div>
       <div class="demo-card">卡片 C</div>
     </div>
-  </zContainer>
+  </Container>
 </template>
 
 <script setup lang="ts">
-import { zContainer } from '@/components/z-ui/container'
+import { Container } from '@/components/z-ui/container'
 <\/script>`
 
 const demo3Code = `<!-- 在小屏设备（≤768px）下内边距自动缩小为 1rem -->
 <template>
-  <zContainer>
+  <Container>
     <div>缩小浏览器窗口至 768px 以下，观察内边距的变化。</div>
-  </zContainer>
+  </Container>
 </template>
 
 <script setup lang="ts">
-import { zContainer } from '@/components/z-ui/container'
+import { Container } from '@/components/z-ui/container'
 <\/script>`
 
-const apiCols: ZTableColumn[] = [
+const apiCols: TableColumn[] = [
   { key: 'name', label: '属性名', rowHeader: true, minWidth: '140px' },
   { key: 'default', label: '默认值', minWidth: '100px' },
   { key: 'type', label: '类型', minWidth: '200px', wrap: true },
@@ -144,7 +144,7 @@ const apiRows = [
   { name: '—', description: '该组件无额外属性，仅作为布局容器使用', type: '—', default: '—' }
 ]
 
-const slotCols: ZTableColumn[] = [
+const slotCols: TableColumn[] = [
   { key: 'name', label: '插槽名', rowHeader: true, minWidth: '140px' },
   { key: 'description', label: '说明', minWidth: '300px', wrap: true }
 ]

@@ -1,1 +1,1 @@
-export { default as zAvatar } from './zAvatar.vue'
+export { default as Avatar } from './Avatar.vue'

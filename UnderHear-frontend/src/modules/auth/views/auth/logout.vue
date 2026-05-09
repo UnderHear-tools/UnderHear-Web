@@ -7,7 +7,7 @@
 
       <div class="account-card">
         <div class="account-meta">
-          <zAvatar
+          <Avatar
             :src="userStore.userInfo?.avatarUrl"
             :size="32"
           />
@@ -46,8 +46,8 @@
 
 <script setup lang="ts">
 import { ref } from 'vue'
-import { zAvatar } from '@/components/z-ui/avatar'
-import { zBanner } from '@/components/z-ui/banner'
+import { Avatar } from '@/components/z-ui/avatar'
+import { Banner } from '@/components/z-ui/banner'
 import { useUserStore } from '@/stores/user'
 import { logout, logoutAll } from '../../api/logout'
 
@@ -62,7 +62,7 @@ const handleLogout = async () => {
     await logout()
     window.location.href = '/'
   } catch (error) {
-    zBanner.error(error instanceof Error ? error.message : '退出失败，请稍后重试。')
+    Banner.error(error instanceof Error ? error.message : '退出失败，请稍后重试。')
   } finally {
     isSubmitting.value = false
   }
@@ -76,7 +76,7 @@ const handleLogoutAll = async () => {
     await logoutAll()
     window.location.href = '/'
   } catch (error) {
-    zBanner.error(error instanceof Error ? error.message : '退出失败，请稍后重试。')
+    Banner.error(error instanceof Error ? error.message : '退出失败，请稍后重试。')
   } finally {
     isSubmitting.value = false
   }

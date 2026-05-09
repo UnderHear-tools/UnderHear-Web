@@ -12,9 +12,9 @@
 
       <ComponentDocsDemoBlock :code="demo1Code">
         <div class="avatar-row">
-          <zAvatar src="https://avatars.githubusercontent.com/u/131276691?v=4" />
-          <zAvatar placeholder="U" />
-          <zAvatar placeholder="AB" />
+          <Avatar src="https://avatars.githubusercontent.com/u/131276691?v=4" />
+          <Avatar placeholder="U" />
+          <Avatar placeholder="AB" />
         </div>
       </ComponentDocsDemoBlock>
     </ComponentDocsSection>
@@ -26,23 +26,23 @@
 
       <ComponentDocsDemoBlock :code="demo2Code">
         <div class="avatar-row">
-          <zAvatar
+          <Avatar
             src="https://avatars.githubusercontent.com/u/131276691?v=4"
             :size="24"
           />
-          <zAvatar
+          <Avatar
             src="https://avatars.githubusercontent.com/u/131276691?v=4"
             :size="32"
           />
-          <zAvatar
+          <Avatar
             src="https://avatars.githubusercontent.com/u/131276691?v=4"
             :size="40"
           />
-          <zAvatar
+          <Avatar
             src="https://avatars.githubusercontent.com/u/131276691?v=4"
             :size="56"
           />
-          <zAvatar
+          <Avatar
             src="https://avatars.githubusercontent.com/u/131276691?v=4"
             :size="72"
           />
@@ -57,23 +57,23 @@
 
       <ComponentDocsDemoBlock :code="demo3Code">
         <div class="avatar-row">
-          <zAvatar
+          <Avatar
             placeholder="S"
             :size="24"
           />
-          <zAvatar
+          <Avatar
             placeholder="M"
             :size="32"
           />
-          <zAvatar
+          <Avatar
             placeholder="L"
             :size="40"
           />
-          <zAvatar
+          <Avatar
             placeholder="XL"
             :size="56"
           />
-          <zAvatar
+          <Avatar
             placeholder="XXL"
             :size="72"
           />
@@ -85,7 +85,7 @@
       title="API"
       variant="api"
     >
-      <zTable
+      <Table
         :columns="apiTableColumns"
         :data="apiTableRows"
         row-key="name"
@@ -97,48 +97,48 @@
 </template>
 
 <script setup lang="ts">
-import { zAvatar } from '@/components/z-ui/avatar'
-import { zTable, type ZTableColumn } from '@/components/z-ui/table'
+import { Avatar } from '@/components/z-ui/avatar'
+import { Table, type TableColumn } from '@/components/z-ui/table'
 import ComponentDocsDemoBlock from '@/modules/components/components/ComponentDocsPage/ComponentDocsDemoBlock.vue'
 import ComponentDocsHeader from '@/modules/components/components/ComponentDocsPage/ComponentDocsHeader.vue'
 import ComponentDocsPage from '@/modules/components/components/ComponentDocsPage/ComponentDocsPage.vue'
 import ComponentDocsSection from '@/modules/components/components/ComponentDocsPage/ComponentDocsSection.vue'
 
 const demo1Code = `<template>
-  <zAvatar src="https://avatars.githubusercontent.com/u/131276691?v=4" />
-  <zAvatar placeholder="U" />
-  <zAvatar placeholder="AB" />
+  <Avatar src="https://avatars.githubusercontent.com/u/131276691?v=4" />
+  <Avatar placeholder="U" />
+  <Avatar placeholder="AB" />
 </template>
 
 <script setup lang="ts">
-import { zAvatar } from '@/components/z-ui/avatar'
+import { Avatar } from '@/components/z-ui/avatar'
 <\/script>`
 
 const demo2Code = `<template>
-  <zAvatar src="https://avatars.githubusercontent.com/u/131276691?v=4" :size="24" />
-  <zAvatar src="https://avatars.githubusercontent.com/u/131276691?v=4" :size="32" />
-  <zAvatar src="https://avatars.githubusercontent.com/u/131276691?v=4" :size="40" />
-  <zAvatar src="https://avatars.githubusercontent.com/u/131276691?v=4" :size="56" />
-  <zAvatar src="https://avatars.githubusercontent.com/u/131276691?v=4" :size="72" />
+  <Avatar src="https://avatars.githubusercontent.com/u/131276691?v=4" :size="24" />
+  <Avatar src="https://avatars.githubusercontent.com/u/131276691?v=4" :size="32" />
+  <Avatar src="https://avatars.githubusercontent.com/u/131276691?v=4" :size="40" />
+  <Avatar src="https://avatars.githubusercontent.com/u/131276691?v=4" :size="56" />
+  <Avatar src="https://avatars.githubusercontent.com/u/131276691?v=4" :size="72" />
 </template>
 
 <script setup lang="ts">
-import { zAvatar } from '@/components/z-ui/avatar'
+import { Avatar } from '@/components/z-ui/avatar'
 <\/script>`
 
 const demo3Code = `<template>
-  <zAvatar placeholder="S" :size="24" />
-  <zAvatar placeholder="M" :size="32" />
-  <zAvatar placeholder="L" :size="40" />
-  <zAvatar placeholder="XL" :size="56" />
-  <zAvatar placeholder="XXL" :size="72" />
+  <Avatar placeholder="S" :size="24" />
+  <Avatar placeholder="M" :size="32" />
+  <Avatar placeholder="L" :size="40" />
+  <Avatar placeholder="XL" :size="56" />
+  <Avatar placeholder="XXL" :size="72" />
 </template>
 
 <script setup lang="ts">
-import { zAvatar } from '@/components/z-ui/avatar'
+import { Avatar } from '@/components/z-ui/avatar'
 <\/script>`
 
-const apiTableColumns: ZTableColumn[] = [
+const apiTableColumns: TableColumn[] = [
   { key: 'name', label: '属性名', rowHeader: true, minWidth: '140px' },
   { key: 'default', label: '默认值', minWidth: '120px' },
   { key: 'type', label: '类型', minWidth: '160px', wrap: true },

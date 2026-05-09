@@ -11,11 +11,11 @@
       </template>
       <ComponentDocsDemoBlock :code="demo1Code">
         <div class="demo-row">
-          <zTooltip content="这是一条提示信息">
+          <Tooltip content="这是一条提示信息">
             <button class="demo-btn">
               悬停查看
             </button>
-          </zTooltip>
+          </Tooltip>
         </div>
       </ComponentDocsDemoBlock>
     </ComponentDocsSection>
@@ -26,70 +26,70 @@
       </template>
       <ComponentDocsDemoBlock :code="demo2Code">
         <div class="demo-placement">
-          <zTooltip
+          <Tooltip
             content="Top 提示"
             placement="top"
           >
             <button class="demo-btn">
               Top
             </button>
-          </zTooltip>
-          <zTooltip
+          </Tooltip>
+          <Tooltip
             content="Left 提示"
             placement="left"
           >
             <button class="demo-btn">
               Left
             </button>
-          </zTooltip>
-          <zTooltip
+          </Tooltip>
+          <Tooltip
             content="Right 提示"
             placement="right"
           >
             <button class="demo-btn">
               Right
             </button>
-          </zTooltip>
-          <zTooltip
+          </Tooltip>
+          <Tooltip
             content="Bottom 提示"
             placement="bottom"
           >
             <button class="demo-btn">
               Bottom
             </button>
-          </zTooltip>
-          <zTooltip
+          </Tooltip>
+          <Tooltip
             content="Left Top 提示"
             placement="left-top"
           >
             <button class="demo-btn">
               Left Top
             </button>
-          </zTooltip>
-          <zTooltip
+          </Tooltip>
+          <Tooltip
             content="Left Bottom 提示"
             placement="left-bottom"
           >
             <button class="demo-btn">
               Left Bottom
             </button>
-          </zTooltip>
-          <zTooltip
+          </Tooltip>
+          <Tooltip
             content="Right Top 提示"
             placement="right-top"
           >
             <button class="demo-btn">
               Right Top
             </button>
-          </zTooltip>
-          <zTooltip
+          </Tooltip>
+          <Tooltip
             content="Right Bottom 提示"
             placement="right-bottom"
           >
             <button class="demo-btn">
               Right Bottom
             </button>
-          </zTooltip>
+          </Tooltip>
         </div>
       </ComponentDocsDemoBlock>
     </ComponentDocsSection>
@@ -100,22 +100,22 @@
       </template>
       <ComponentDocsDemoBlock :code="demo3Code">
         <div class="demo-row">
-          <zTooltip
+          <Tooltip
             content="延迟 500ms 显示"
             :show-delay="500"
           >
             <button class="demo-btn">
               延迟显示
             </button>
-          </zTooltip>
-          <zTooltip
+          </Tooltip>
+          <Tooltip
             content="延迟 300ms 隐藏"
             :hide-delay="300"
           >
             <button class="demo-btn">
               延迟隐藏
             </button>
-          </zTooltip>
+          </Tooltip>
         </div>
       </ComponentDocsDemoBlock>
     </ComponentDocsSection>
@@ -126,14 +126,14 @@
       </template>
       <ComponentDocsDemoBlock :code="demo4Code">
         <div class="demo-row">
-          <zTooltip
+          <Tooltip
             content="你看不到我"
             disabled
           >
             <button class="demo-btn">
               禁用 Tooltip
             </button>
-          </zTooltip>
+          </Tooltip>
         </div>
       </ComponentDocsDemoBlock>
     </ComponentDocsSection>
@@ -143,7 +143,7 @@
       variant="api"
     >
       <h3>属性</h3>
-      <zTable
+      <Table
         :columns="apiCols"
         :data="apiRows"
         row-key="name"
@@ -151,7 +151,7 @@
         :hoverable="false"
       />
       <h3>插槽</h3>
-      <zTable
+      <Table
         :columns="slotCols"
         :data="slotRows"
         row-key="name"
@@ -163,78 +163,78 @@
 </template>
 
 <script setup lang="ts">
-import { zTooltip } from '@/components/z-ui/tooltip'
-import { zTable, type ZTableColumn } from '@/components/z-ui/table'
+import { Tooltip } from '@/components/z-ui/tooltip'
+import { Table, type TableColumn } from '@/components/z-ui/table'
 import ComponentDocsDemoBlock from '@/modules/components/components/ComponentDocsPage/ComponentDocsDemoBlock.vue'
 import ComponentDocsHeader from '@/modules/components/components/ComponentDocsPage/ComponentDocsHeader.vue'
 import ComponentDocsPage from '@/modules/components/components/ComponentDocsPage/ComponentDocsPage.vue'
 import ComponentDocsSection from '@/modules/components/components/ComponentDocsPage/ComponentDocsSection.vue'
 
 const demo1Code = `<template>
-  <zTooltip content="这是一条提示信息">
+  <Tooltip content="这是一条提示信息">
     <button>悬停查看</button>
-  </zTooltip>
+  </Tooltip>
 </template>
 
 <script setup lang="ts">
-import { zTooltip } from '@/components/z-ui/tooltip'
+import { Tooltip } from '@/components/z-ui/tooltip'
 <\/script>`
 
 const demo2Code = `<template>
-  <zTooltip content="Top 提示" placement="top">
+  <Tooltip content="Top 提示" placement="top">
     <button>Top</button>
-  </zTooltip>
-  <zTooltip content="Bottom 提示" placement="bottom">
+  </Tooltip>
+  <Tooltip content="Bottom 提示" placement="bottom">
     <button>Bottom</button>
-  </zTooltip>
-  <zTooltip content="Left 提示" placement="left">
+  </Tooltip>
+  <Tooltip content="Left 提示" placement="left">
     <button>Left</button>
-  </zTooltip>
-  <zTooltip content="Right 提示" placement="right">
+  </Tooltip>
+  <Tooltip content="Right 提示" placement="right">
     <button>Right</button>
-  </zTooltip>
-  <zTooltip content="Left Top 提示" placement="left-top">
+  </Tooltip>
+  <Tooltip content="Left Top 提示" placement="left-top">
     <button>Left Top</button>
-  </zTooltip>
-  <zTooltip content="Left Bottom 提示" placement="left-bottom">
+  </Tooltip>
+  <Tooltip content="Left Bottom 提示" placement="left-bottom">
     <button>Left Bottom</button>
-  </zTooltip>
-  <zTooltip content="Right Top 提示" placement="right-top">
+  </Tooltip>
+  <Tooltip content="Right Top 提示" placement="right-top">
     <button>Right Top</button>
-  </zTooltip>
-  <zTooltip content="Right Bottom 提示" placement="right-bottom">
+  </Tooltip>
+  <Tooltip content="Right Bottom 提示" placement="right-bottom">
     <button>Right Bottom</button>
-  </zTooltip>
+  </Tooltip>
 </template>
 
 <script setup lang="ts">
-import { zTooltip } from '@/components/z-ui/tooltip'
+import { Tooltip } from '@/components/z-ui/tooltip'
 <\/script>`
 
 const demo3Code = `<template>
-  <zTooltip content="延迟 500ms 显示" :showDelay="500">
+  <Tooltip content="延迟 500ms 显示" :showDelay="500">
     <button>延迟显示</button>
-  </zTooltip>
-  <zTooltip content="延迟 300ms 隐藏" :hideDelay="300">
+  </Tooltip>
+  <Tooltip content="延迟 300ms 隐藏" :hideDelay="300">
     <button>延迟隐藏</button>
-  </zTooltip>
+  </Tooltip>
 </template>
 
 <script setup lang="ts">
-import { zTooltip } from '@/components/z-ui/tooltip'
+import { Tooltip } from '@/components/z-ui/tooltip'
 <\/script>`
 
 const demo4Code = `<template>
-  <zTooltip content="你看不到我" disabled>
+  <Tooltip content="你看不到我" disabled>
     <button>禁用 Tooltip</button>
-  </zTooltip>
+  </Tooltip>
 </template>
 
 <script setup lang="ts">
-import { zTooltip } from '@/components/z-ui/tooltip'
+import { Tooltip } from '@/components/z-ui/tooltip'
 <\/script>`
 
-const apiCols: ZTableColumn[] = [
+const apiCols: TableColumn[] = [
   { key: 'name', label: '属性名', rowHeader: true, minWidth: '140px' },
   { key: 'default', label: '默认值', minWidth: '100px' },
   { key: 'type', label: '类型', minWidth: '240px', wrap: true },
@@ -249,7 +249,7 @@ const apiRows = [
   { name: 'disabled', description: '是否禁用', type: 'boolean', default: 'false' }
 ]
 
-const slotCols: ZTableColumn[] = [
+const slotCols: TableColumn[] = [
   { key: 'name', label: '插槽名', rowHeader: true, minWidth: '140px' },
   { key: 'description', label: '说明', minWidth: '300px', wrap: true }
 ]

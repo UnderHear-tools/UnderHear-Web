@@ -1,2 +1,2 @@
-export { default as zSteps } from './zSteps.vue'
-export type { StepItem } from './zSteps.vue'
+export { default as Steps } from './Steps.vue'
+export type { StepItem } from './Steps.vue'

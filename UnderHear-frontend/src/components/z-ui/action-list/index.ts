@@ -1,9 +1,8 @@
-import ActionListRoot from './zActionList.vue'
-import ActionListItem from './zActionListItem.vue'
+import ActionListRoot from './ActionList.vue'
+import ActionListItem from './ActionListItem.vue'
 
 export const ActionList = Object.assign(ActionListRoot, {
   Item: ActionListItem
 })
 
-export const zActionList = ActionList
-export const zActionListItem = ActionListItem
+export { ActionListItem }

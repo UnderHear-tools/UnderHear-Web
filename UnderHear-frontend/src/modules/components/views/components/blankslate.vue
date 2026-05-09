@@ -130,7 +130,7 @@
       variant="api"
     >
       <h3>Blankslate Props</h3>
-      <zTable
+      <Table
         :columns="apiTableColumns"
         :data="rootPropsRows"
         row-key="name"
@@ -139,7 +139,7 @@
       />
 
       <h3>Blankslate.Heading Props</h3>
-      <zTable
+      <Table
         :columns="apiTableColumns"
         :data="headingPropsRows"
         row-key="name"
@@ -148,7 +148,7 @@
       />
 
       <h3>Action Props</h3>
-      <zTable
+      <Table
         :columns="apiTableColumns"
         :data="actionPropsRows"
         row-key="name"
@@ -157,7 +157,7 @@
       />
 
       <h3>插槽</h3>
-      <zTable
+      <Table
         :columns="slotTableColumns"
         :data="slotTableRows"
         row-key="name"
@@ -166,7 +166,7 @@
       />
 
       <h3>事件</h3>
-      <zTable
+      <Table
         :columns="eventTableColumns"
         :data="eventTableRows"
         row-key="name"
@@ -180,7 +180,7 @@
 <script setup lang="ts">
 import { Blankslate } from '@/components/z-ui/blankslate'
 import { Book, Checklist, CodeOfConduct, Inbox, Repo } from '@/components/z-ui/icon/Octicons-vue'
-import { zTable, type ZTableColumn } from '@/components/z-ui/table'
+import { Table, type TableColumn } from '@/components/z-ui/table'
 import ComponentDocsDemoBlock from '@/modules/components/components/ComponentDocsPage/ComponentDocsDemoBlock.vue'
 import ComponentDocsHeader from '@/modules/components/components/ComponentDocsPage/ComponentDocsHeader.vue'
 import ComponentDocsPage from '@/modules/components/components/ComponentDocsPage/ComponentDocsPage.vue'
@@ -289,7 +289,7 @@ import { Inbox } from '@/components/z-ui/icon/Octicons-vue'
   </Blankslate>
 </template>`
 
-const apiTableColumns: ZTableColumn[] = [
+const apiTableColumns: TableColumn[] = [
   { key: 'name', label: '属性名', rowHeader: true, minWidth: '150px' },
   { key: 'default', label: '默认值', minWidth: '120px' },
   { key: 'type', label: '类型', minWidth: '260px', wrap: true },
@@ -359,7 +359,7 @@ const actionPropsRows = [
   }
 ]
 
-const slotTableColumns: ZTableColumn[] = [
+const slotTableColumns: TableColumn[] = [
   { key: 'name', label: '插槽名', rowHeader: true, minWidth: '180px' },
   { key: 'description', label: '说明', minWidth: '320px', wrap: true }
 ]
@@ -373,7 +373,7 @@ const slotTableRows = [
   { name: 'SecondaryAction default', description: '次要操作文案。' }
 ]
 
-const eventTableColumns: ZTableColumn[] = [
+const eventTableColumns: TableColumn[] = [
   { key: 'name', label: '事件名', rowHeader: true, minWidth: '160px' },
   { key: 'description', label: '说明', minWidth: '300px', wrap: true }
 ]

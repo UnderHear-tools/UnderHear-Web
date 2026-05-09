@@ -1,5 +1,5 @@
 <template>
-  <zContainer class="zContainer">
+  <Container class="Container">
     <div class="left-column">
       <div class="profile">
         <div class="profile-header">
@@ -235,12 +235,12 @@
               <p>{{ project.description.en }}</p>
             </div>
             <div class="project-tech">
-              <zTag
+              <Tag
                 v-for="tech in project.technologies"
                 :key="tech"
               >
                 {{ tech }}
-              </zTag>
+              </Tag>
             </div>
           </div>
           <RouterLink
@@ -252,15 +252,15 @@
         </div>
       </div>
     </div>
-  </zContainer>
+  </Container>
 </template>
 
 <script setup lang="ts">
 import { ref, onMounted } from 'vue'
 
-import { zContainer } from '@/components/z-ui/container'
+import { Container } from '@/components/z-ui/container'
 // 引入图标
-import { zTag } from '@/components/z-ui/tag'
+import { Tag } from '@/components/z-ui/tag'
 import { IconPark } from '@icon-park/vue-next/es/all';
 
 
@@ -298,7 +298,7 @@ onMounted(() => {
     box-sizing: border-box;
 }
 
-.zContainer {
+.Container {
     display: flex;
     gap: 30px;
 }
@@ -584,7 +584,7 @@ onMounted(() => {
 
 
 @media (max-width: 768px) {
-    .zContainer {
+    .Container {
         flex-direction: column;
         gap: 10px;
     }

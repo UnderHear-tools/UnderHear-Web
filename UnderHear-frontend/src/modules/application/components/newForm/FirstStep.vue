@@ -13,7 +13,7 @@
       >
         <div class="option-header">
           <div class="option-title">
-            HTML<zTag>推荐</zTag>
+            HTML<Tag>推荐</Tag>
           </div>
           <p class="option-desc">
             从一段HTML代码开始！
@@ -73,17 +73,17 @@
     <p
       v-if="invalid && validation"
     >
-      <zFormControlValidation variant="error">
+      <FormControlValidation variant="error">
         {{ validation }}
-      </zFormControlValidation>
+      </FormControlValidation>
     </p>
   </div>
 </template>
 
 <script setup lang="ts">
-import { zTag } from '@/components/z-ui/tag'
+import { Tag } from '@/components/z-ui/tag'
 import type { FrameworkValue } from './useCreateApplicationForm'
-import { zFormControlValidation } from '@/components/z-ui/form-control'
+import { FormControlValidation } from '@/components/z-ui/form-control'
 
 interface Props {
   selectedFramework: FrameworkValue | null

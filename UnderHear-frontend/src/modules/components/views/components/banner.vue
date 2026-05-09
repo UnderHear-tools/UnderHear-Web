@@ -7,7 +7,7 @@
 
     <ComponentDocsSection title="基础用法（服务调用）">
       <template #description>
-        通过 <code>zBanner</code> 直接触发横幅提示，基础教学中每个按钮都对应独立函数。
+        通过 <code>Banner</code> 直接触发横幅提示，基础教学中每个按钮都对应独立函数。
       </template>
 
       <ComponentDocsDemoBlock :code="serviceDemoCode">
@@ -117,12 +117,12 @@
 
     <ComponentDocsSection title="组件实例调用（ref）">
       <template #description>
-        直接挂载 <code>zBanner.vue</code>，通过组件实例暴露的 <code>show()</code> / <code>close()</code> 方法控制展示。
+        直接挂载 <code>Banner.vue</code>，通过组件实例暴露的 <code>show()</code> / <code>close()</code> 方法控制展示。
       </template>
 
       <ComponentDocsDemoBlock :code="instanceDemoCode">
         <div class="banner-demo-instance">
-          <ZBannerView ref="bannerRef" />
+          <BannerView ref="bannerRef" />
           <div class="banner-demo-actions">
             <button
               class="demo-btn"
@@ -147,8 +147,8 @@
       title="API"
       variant="api"
     >
-      <h4>zBanner 方法</h4>
-      <zTable
+      <h4>Banner 方法</h4>
+      <Table
         :columns="methodTableColumns"
         :data="methodTableRows"
         row-key="name"
@@ -157,9 +157,9 @@
       />
 
       <h4 style="margin-top: 24px;">
-        zBannerOptions
+        BannerOptions
       </h4>
-      <zTable
+      <Table
         :columns="optionsTableColumns"
         :data="optionsTableRows"
         row-key="name"
@@ -168,9 +168,9 @@
       />
 
       <h4 style="margin-top: 24px;">
-        zBannerAction
+        BannerAction
       </h4>
-      <zTable
+      <Table
         :columns="actionTableColumns"
         :data="actionTableRows"
         row-key="name"
@@ -179,9 +179,9 @@
       />
 
       <h4 style="margin-top: 24px;">
-        zBannerExposed
+        BannerExposed
       </h4>
-      <zTable
+      <Table
         :columns="exposedTableColumns"
         :data="exposedTableRows"
         row-key="name"
@@ -194,61 +194,61 @@
 
 <script setup lang="ts">
 import { ref } from 'vue'
-import { zBanner } from '@/components/z-ui/banner'
-import ZBannerView, { type zBannerExposed } from '@/components/z-ui/banner/zBanner.vue'
-import { zTable, type ZTableColumn } from '@/components/z-ui/table'
+import { Banner } from '@/components/z-ui/banner'
+import BannerView, { type BannerExposed } from '@/components/z-ui/banner/Banner.vue'
+import { Table, type TableColumn } from '@/components/z-ui/table'
 import ComponentDocsDemoBlock from '@/modules/components/components/ComponentDocsPage/ComponentDocsDemoBlock.vue'
 import ComponentDocsHeader from '@/modules/components/components/ComponentDocsPage/ComponentDocsHeader.vue'
 import ComponentDocsPage from '@/modules/components/components/ComponentDocsPage/ComponentDocsPage.vue'
 import ComponentDocsSection from '@/modules/components/components/ComponentDocsPage/ComponentDocsSection.vue'
 
-const bannerRef = ref<zBannerExposed | null>(null)
+const bannerRef = ref<BannerExposed | null>(null)
 
 const showInfoBanner = () => {
-  zBanner.info('这是一条信息提示，请根据说明继续操作。')
+  Banner.info('这是一条信息提示，请根据说明继续操作。')
 }
 
 const showSuccessBanner = () => {
-  zBanner.success('保存成功，配置已经生效。')
+  Banner.success('保存成功，配置已经生效。')
 }
 
 const showTimedBanner = () => {
-  zBanner.success('3 秒后自动关闭。', { duration: 3000 })
+  Banner.success('3 秒后自动关闭。', { duration: 3000 })
 }
 
 const showWarningBanner = () => {
-  zBanner.warning('存在潜在风险，请检查关键配置后再继续。')
+  Banner.warning('存在潜在风险，请检查关键配置后再继续。')
 }
 
 const showCriticalBanner = () => {
-  zBanner.critical('操作失败，请修复问题后重试。')
+  Banner.critical('操作失败，请修复问题后重试。')
 }
 
 const showUpsellBanner = () => {
-  zBanner.upsell('你可以升级到专业版解锁更多能力。')
+  Banner.upsell('你可以升级到专业版解锁更多能力。')
 }
 
 const closeBanner = () => {
-  zBanner.close()
+  Banner.close()
 }
 
 const showDefaultActionsBanner = () => {
-  zBanner.warning('检测到新版本，建议尽快升级。', {
+  Banner.warning('检测到新版本，建议尽快升级。', {
     title: '版本更新提醒',
     primaryAction: {
       label: '立即更新',
-      onClick: () => zBanner.success('更新任务已加入队列。')
+      onClick: () => Banner.success('更新任务已加入队列。')
     },
     secondaryAction: {
       label: '稍后提醒',
-      onClick: () => zBanner.info('已记录你的提醒偏好。')
+      onClick: () => Banner.info('已记录你的提醒偏好。')
     },
     actionsLayout: 'default'
   })
 }
 
 const showInlineActionsBanner = () => {
-  zBanner.info('你的存储空间即将用尽。', {
+  Banner.info('你的存储空间即将用尽。', {
     title: '容量提醒',
     primaryAction: {
       label: '查看套餐',
@@ -256,22 +256,22 @@ const showInlineActionsBanner = () => {
     },
     secondaryAction: {
       label: '稍后处理',
-      onClick: () => zBanner.info('你可以在设置页随时处理。')
+      onClick: () => Banner.info('你可以在设置页随时处理。')
     },
     actionsLayout: 'inline'
   })
 }
 
 const showStackedActionsBanner = () => {
-  zBanner.critical('部署失败，请检查构建日志后重试。', {
+  Banner.critical('部署失败，请检查构建日志后重试。', {
     title: '部署失败',
     primaryAction: {
       label: '重试部署',
-      onClick: () => zBanner.info('已发起重试部署。')
+      onClick: () => Banner.info('已发起重试部署。')
     },
     secondaryAction: {
       label: '查看日志',
-      onClick: () => zBanner.info('正在打开日志面板。')
+      onClick: () => Banner.info('正在打开日志面板。')
     },
     actionsLayout: 'stacked'
   })
@@ -282,7 +282,7 @@ const showBannerWithRef = () => {
     title: 'Ref 调用成功',
     primaryAction: {
       label: '继续',
-      onClick: () => zBanner.info('继续下一步。')
+      onClick: () => Banner.info('继续下一步。')
     }
   })
 }
@@ -304,15 +304,15 @@ const serviceDemoCode = `<template>
 </template>
 
 <script setup lang="ts">
-import { zBanner } from '@/components/z-ui/banner'
+import { Banner } from '@/components/z-ui/banner'
 
-const showInfoBanner = () => zBanner.info('这是一条信息提示，请根据说明继续操作。')
-const showSuccessBanner = () => zBanner.success('保存成功，配置已经生效。')
-const showWarningBanner = () => zBanner.warning('存在潜在风险，请检查关键配置后再继续。')
-const showCriticalBanner = () => zBanner.critical('操作失败，请修复问题后重试。')
-const showUpsellBanner = () => zBanner.upsell('你可以升级到专业版解锁更多能力。')
-const showTimedBanner = () => zBanner.success('3 秒后自动关闭。', { duration: 3000 })
-const closeBanner = () => zBanner.close()
+const showInfoBanner = () => Banner.info('这是一条信息提示，请根据说明继续操作。')
+const showSuccessBanner = () => Banner.success('保存成功，配置已经生效。')
+const showWarningBanner = () => Banner.warning('存在潜在风险，请检查关键配置后再继续。')
+const showCriticalBanner = () => Banner.critical('操作失败，请修复问题后重试。')
+const showUpsellBanner = () => Banner.upsell('你可以升级到专业版解锁更多能力。')
+const showTimedBanner = () => Banner.success('3 秒后自动关闭。', { duration: 3000 })
+const closeBanner = () => Banner.close()
 <\/script>
 
 <style scoped>
@@ -342,10 +342,10 @@ const durationDemoCode = `<template>
 </template>
 
 <script setup lang="ts">
-import { zBanner } from '@/components/z-ui/banner'
+import { Banner } from '@/components/z-ui/banner'
 
 const showDurationBanner = () => {
-  zBanner.success('3 秒后自动关闭。', { duration: 3000 })
+  Banner.success('3 秒后自动关闭。', { duration: 3000 })
 }
 <\/script>`
 
@@ -358,31 +358,31 @@ const actionsDemoCode = `<template>
 </template>
 
 <script setup lang="ts">
-import { zBanner } from '@/components/z-ui/banner'
+import { Banner } from '@/components/z-ui/banner'
 
 const showDefaultActionsBanner = () => {
-  zBanner.warning('检测到新版本，建议尽快升级。', {
+  Banner.warning('检测到新版本，建议尽快升级。', {
     title: '版本更新提醒',
-    primaryAction: { label: '立即更新', onClick: () => zBanner.success('更新任务已加入队列。') },
-    secondaryAction: { label: '稍后提醒', onClick: () => zBanner.info('已记录你的提醒偏好。') },
+    primaryAction: { label: '立即更新', onClick: () => Banner.success('更新任务已加入队列。') },
+    secondaryAction: { label: '稍后提醒', onClick: () => Banner.info('已记录你的提醒偏好。') },
     actionsLayout: 'default'
   })
 }
 
 const showInlineActionsBanner = () => {
-  zBanner.info('你的存储空间即将用尽。', {
+  Banner.info('你的存储空间即将用尽。', {
     title: '容量提醒',
     primaryAction: { label: '查看套餐', href: 'https://github.com/underhear' },
-    secondaryAction: { label: '稍后处理', onClick: () => zBanner.info('你可以在设置页随时处理。') },
+    secondaryAction: { label: '稍后处理', onClick: () => Banner.info('你可以在设置页随时处理。') },
     actionsLayout: 'inline'
   })
 }
 
 const showStackedActionsBanner = () => {
-  zBanner.critical('部署失败，请检查构建日志后重试。', {
+  Banner.critical('部署失败，请检查构建日志后重试。', {
     title: '部署失败',
-    primaryAction: { label: '重试部署', onClick: () => zBanner.info('已发起重试部署。') },
-    secondaryAction: { label: '查看日志', onClick: () => zBanner.info('正在打开日志面板。') },
+    primaryAction: { label: '重试部署', onClick: () => Banner.info('已发起重试部署。') },
+    secondaryAction: { label: '查看日志', onClick: () => Banner.info('正在打开日志面板。') },
     actionsLayout: 'stacked'
   })
 }
@@ -406,7 +406,7 @@ const showStackedActionsBanner = () => {
 
 const instanceDemoCode = `<template>
   <div class="banner-demo-instance">
-    <ZBannerView ref="bannerRef" />
+    <BannerView ref="bannerRef" />
     <div class="banner-demo-actions">
       <button class="demo-btn" type="button" @click="showBannerWithRef">Call show()</button>
       <button class="demo-btn demo-btn--ghost" type="button" @click="closeBannerWithRef">Call close()</button>
@@ -416,17 +416,17 @@ const instanceDemoCode = `<template>
 
 <script setup lang="ts">
 import { ref } from 'vue'
-import { zBanner } from '@/components/z-ui/banner'
-import ZBannerView, { type zBannerExposed } from '@/components/z-ui/banner/zBanner.vue'
+import { Banner } from '@/components/z-ui/banner'
+import BannerView, { type BannerExposed } from '@/components/z-ui/banner/Banner.vue'
 
-const bannerRef = ref<zBannerExposed | null>(null)
+const bannerRef = ref<BannerExposed | null>(null)
 
 const showBannerWithRef = () => {
   bannerRef.value?.show('这是通过组件实例触发的 Banner。', 'success', {
     title: 'Ref 调用成功',
     primaryAction: {
       label: '继续',
-      onClick: () => zBanner.info('继续下一步。')
+      onClick: () => Banner.info('继续下一步。')
     }
   })
 }
@@ -458,7 +458,7 @@ const closeBannerWithRef = () => bannerRef.value?.close()
 }
 <\/style>`
 
-const methodTableColumns: ZTableColumn[] = [
+const methodTableColumns: TableColumn[] = [
   { key: 'name', label: '方法', rowHeader: true, minWidth: '220px', wrap: true },
   { key: 'description', label: '说明', minWidth: '240px', wrap: true },
   { key: 'signature', label: '签名', minWidth: '360px', wrap: true }
@@ -466,28 +466,28 @@ const methodTableColumns: ZTableColumn[] = [
 
 const methodTableRows = [
   {
-    name: 'zBanner(message, type?, options?)',
+    name: 'Banner(message, type?, options?)',
     description: '按类型展示横幅提示，并返回 close 句柄。',
-    signature: '(message: string, type?: zBannerType, options?: zBannerOptions) => zBannerResult'
+    signature: '(message: string, type?: BannerType, options?: BannerOptions) => BannerResult'
   },
   {
-    name: 'zBanner.info/success/warning/critical/upsell',
+    name: 'Banner.info/success/warning/critical/upsell',
     description: '语义化快捷方法。',
-    signature: '(message: string, options?: zBannerOptions) => zBannerResult'
+    signature: '(message: string, options?: BannerOptions) => BannerResult'
   },
   {
-    name: 'zBanner.error',
-    description: 'critical 的别名，等同 zBanner.critical。',
-    signature: '(message: string, options?: zBannerOptions) => zBannerResult'
+    name: 'Banner.error',
+    description: 'critical 的别名，等同 Banner.critical。',
+    signature: '(message: string, options?: BannerOptions) => BannerResult'
   },
   {
-    name: 'zBanner.close',
+    name: 'Banner.close',
     description: '关闭当前横幅。',
     signature: '() => void'
   }
 ]
 
-const optionsTableColumns: ZTableColumn[] = [
+const optionsTableColumns: TableColumn[] = [
   { key: 'name', label: '字段', rowHeader: true, minWidth: '170px' },
   { key: 'description', label: '说明', minWidth: '220px', wrap: true },
   { key: 'type', label: '类型', minWidth: '240px', wrap: true },
@@ -500,8 +500,8 @@ const optionsTableRows = [
   { name: 'ariaLabel', description: '无障碍标签', type: 'string', default: "'undefined'" },
   { name: 'hideTitle', description: '是否隐藏可见标题', type: 'boolean', default: 'false' },
   { name: 'dismissible', description: '是否显示关闭按钮', type: 'boolean', default: 'true' },
-  { name: 'primaryAction', description: '主操作按钮配置', type: 'zBannerAction', default: "'undefined'" },
-  { name: 'secondaryAction', description: '次操作按钮配置', type: 'zBannerAction', default: "'undefined'" },
+  { name: 'primaryAction', description: '主操作按钮配置', type: 'BannerAction', default: "'undefined'" },
+  { name: 'secondaryAction', description: '次操作按钮配置', type: 'BannerAction', default: "'undefined'" },
   {
     name: 'actionsLayout',
     description: '操作按钮布局',
@@ -512,7 +512,7 @@ const optionsTableRows = [
   { name: 'duration', description: '自动关闭时长（毫秒）', type: 'number', default: "'undefined'" }
 ]
 
-const actionTableColumns: ZTableColumn[] = [
+const actionTableColumns: TableColumn[] = [
   { key: 'name', label: '字段', rowHeader: true, minWidth: '160px' },
   { key: 'description', label: '说明', minWidth: '260px', wrap: true },
   { key: 'type', label: '类型', minWidth: '260px', wrap: true }
@@ -524,7 +524,7 @@ const actionTableRows = [
   { name: 'onClick', description: '点击回调（无 href 时常用）', type: '(() => void) | undefined' }
 ]
 
-const exposedTableColumns: ZTableColumn[] = [
+const exposedTableColumns: TableColumn[] = [
   { key: 'name', label: '方法', rowHeader: true, minWidth: '220px', wrap: true },
   { key: 'description', label: '说明', minWidth: '220px', wrap: true },
   { key: 'signature', label: '签名', minWidth: '360px', wrap: true }
@@ -534,7 +534,7 @@ const exposedTableRows = [
   {
     name: 'show',
     description: '显示 Banner。',
-    signature: '(message: string, type?: zBannerType, options?: zBannerOptions) => zBannerResult'
+    signature: '(message: string, type?: BannerType, options?: BannerOptions) => BannerResult'
   },
   {
     name: 'close',

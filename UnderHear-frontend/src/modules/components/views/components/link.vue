@@ -12,17 +12,17 @@
 
       <ComponentDocsDemoBlock :code="demo1Code">
         <div class="link-row">
-          <zLink
+          <Link
             href="#"
             link-text="Primary Link"
             variant="primary"
           />
-          <zLink
+          <Link
             href="#"
             link-text="Secondary Link"
             variant="secondary"
           />
-          <zLink
+          <Link
             href="#"
             link-text="Danger Link"
             variant="danger"
@@ -38,13 +38,13 @@
 
       <ComponentDocsDemoBlock :code="demo2Code">
         <div class="link-row">
-          <zLink
+          <Link
             href="https://github.com"
             link-text="GitHub"
             :external="true"
             target="_blank"
           />
-          <zLink
+          <Link
             href="https://vuejs.org"
             link-text="Vue.js"
             :external="true"
@@ -62,17 +62,17 @@
 
       <ComponentDocsDemoBlock :code="demo3Code">
         <div class="link-column">
-          <zLink
+          <Link
             href="/component"
             link-text="组件文档"
             prefix-text="查看"
           />
-          <zLink
+          <Link
             href="/component"
             link-text="组件文档"
             suffix-text="了解更多"
           />
-          <zLink
+          <Link
             href="/component"
             link-text="组件文档"
             prefix-text="前往"
@@ -86,7 +86,7 @@
       title="API"
       variant="api"
     >
-      <zTable
+      <Table
         :columns="apiTableColumns"
         :data="apiTableRows"
         row-key="name"
@@ -98,8 +98,8 @@
 </template>
 
 <script setup lang="ts">
-import { zLink } from '@/components/z-ui/link'
-import { zTable, type ZTableColumn } from '@/components/z-ui/table'
+import { Link } from '@/components/z-ui/link'
+import { Table, type TableColumn } from '@/components/z-ui/table'
 import ComponentDocsDemoBlock from '@/modules/components/components/ComponentDocsPage/ComponentDocsDemoBlock.vue'
 import ComponentDocsHeader from '@/modules/components/components/ComponentDocsPage/ComponentDocsHeader.vue'
 import ComponentDocsPage from '@/modules/components/components/ComponentDocsPage/ComponentDocsPage.vue'
@@ -107,9 +107,9 @@ import ComponentDocsSection from '@/modules/components/components/ComponentDocsP
 
 const demo1Code = `<template>
   <div style="max-width: 600px">
-    <zLink href="#" link-text="Primary Link" variant="primary" />
-    <zLink href="#" link-text="Secondary Link" variant="secondary" />
-    <zLink href="#" link-text="Danger Link" variant="danger" />
+    <Link href="#" link-text="Primary Link" variant="primary" />
+    <Link href="#" link-text="Secondary Link" variant="secondary" />
+    <Link href="#" link-text="Danger Link" variant="danger" />
   </div>
 </template>
 
@@ -123,8 +123,8 @@ const demo1Code = `<template>
 
 const demo2Code = `<template>
   <div style="max-width: 600px">
-    <zLink href="https://github.com" link-text="GitHub" :external="true" target="_blank" />
-    <zLink href="https://vuejs.org" link-text="Vue.js" :external="true" target="_blank" variant="secondary" />
+    <Link href="https://github.com" link-text="GitHub" :external="true" target="_blank" />
+    <Link href="https://vuejs.org" link-text="Vue.js" :external="true" target="_blank" variant="secondary" />
   </div>
 </template>
 
@@ -138,9 +138,9 @@ const demo2Code = `<template>
 
 const demo3Code = `<template>
   <div style="max-width: 600px">
-    <zLink href="/component" link-text="组件文档" prefix-text="查看" />
-    <zLink href="/component" link-text="组件文档" suffix-text="了解更多" />
-    <zLink href="/component" link-text="组件文档" prefix-text="前往" suffix-text="查看详情" />
+    <Link href="/component" link-text="组件文档" prefix-text="查看" />
+    <Link href="/component" link-text="组件文档" suffix-text="了解更多" />
+    <Link href="/component" link-text="组件文档" prefix-text="前往" suffix-text="查看详情" />
   </div>
 </template>
 
@@ -152,7 +152,7 @@ const demo3Code = `<template>
 }
 </style>`
 
-const apiTableColumns: ZTableColumn[] = [
+const apiTableColumns: TableColumn[] = [
   { key: 'name', label: '属性名', rowHeader: true, minWidth: '140px' },
   { key: 'default', label: '默认值', minWidth: '120px' },
   { key: 'type', label: '类型', minWidth: '160px', wrap: true },

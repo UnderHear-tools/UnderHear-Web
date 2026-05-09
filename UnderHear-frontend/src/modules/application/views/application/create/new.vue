@@ -1,5 +1,5 @@
 <template>
-  <zContainer
+  <Container
     style="max-width: 768px;"
   >
     <div class="ad-placeholder">
@@ -73,7 +73,7 @@
       </Timeline.Item>
     </Timeline>
     <div class="mt-6 flex justify-end">
-      <zButton
+      <Button
         variant="primary"
         :loading="isUploading"
         @click="submit"
@@ -82,16 +82,16 @@
           <Rocket />
         </template>
         创建应用
-      </zButton>
+      </Button>
     </div>
-  </zContainer>
+  </Container>
 </template>
 
 <script setup lang="ts">
 import { ref } from 'vue'
 import { useRouter } from 'vue-router'
-import { zContainer } from '@/components/z-ui/container'
-import { zButton } from '@/components/z-ui/button'
+import { Container } from '@/components/z-ui/container'
+import { Button } from '@/components/z-ui/button'
 import { Timeline } from '@/components/z-ui/timeline'
 import { applicationCreateNew } from '@/modules/application/api/create-new'
 import FirstStep from '@/modules/application/components/newForm/FirstStep.vue'

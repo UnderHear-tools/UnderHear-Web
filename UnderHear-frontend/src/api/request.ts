@@ -1,6 +1,6 @@
 import axios, { type AxiosRequestConfig } from 'axios'
 
-import { zBanner } from '@/components/z-ui/banner'
+import { Banner } from '@/components/z-ui/banner'
 import { API_BASE_URL } from './config'
 import { unwrapApiResponse } from './response'
 import type { ApiResponse } from './types'
@@ -18,7 +18,7 @@ request.interceptors.response.use((response) => {
 }, (error) => {
   if (axios.isAxiosError(error)) {
     if (isNetworkError(error)) {
-      zBanner.error(NETWORK_ERROR_MESSAGE)
+      Banner.error(NETWORK_ERROR_MESSAGE)
       return Promise.reject(new Error(NETWORK_ERROR_MESSAGE))
     }
 

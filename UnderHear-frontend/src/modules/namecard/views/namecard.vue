@@ -1,5 +1,5 @@
 <template>
-  <zContainer>
+  <Container>
     <div class="namecard-header">
       <h1 class="title">
         创作者名片
@@ -9,7 +9,7 @@
       </p>
       <p class="subtitle">
         你也想加入？前往
-        <zLink
+        <Link
           href="https://github.com/UnderHear/toolsWeb"
           link-text="本项目的GitHub"
           target="_blank"
@@ -52,12 +52,12 @@
         </div>
       </RouterLink>
     </div>
-  </zContainer>
+  </Container>
 </template>
 
 <script setup lang="ts">
-import { zContainer } from '@/components/z-ui/container'
-import { zLink } from '@/components/z-ui/link'
+import { Container } from '@/components/z-ui/container'
+import { Link } from '@/components/z-ui/link'
 </script>
 
 <style scoped>

@@ -1,9 +1,9 @@
-import BlankslateRoot from './zBlankslate.vue'
-import BlankslateVisual from './zBlankslateVisual.vue'
-import BlankslateHeading from './zBlankslateHeading.vue'
-import BlankslateDescription from './zBlankslateDescription.vue'
-import BlankslatePrimaryAction from './zBlankslatePrimaryAction.vue'
-import BlankslateSecondaryAction from './zBlankslateSecondaryAction.vue'
+import BlankslateRoot from './Blankslate.vue'
+import BlankslateVisual from './BlankslateVisual.vue'
+import BlankslateHeading from './BlankslateHeading.vue'
+import BlankslateDescription from './BlankslateDescription.vue'
+import BlankslatePrimaryAction from './BlankslatePrimaryAction.vue'
+import BlankslateSecondaryAction from './BlankslateSecondaryAction.vue'
 
 export const Blankslate = Object.assign(BlankslateRoot, {
   Visual: BlankslateVisual,
@@ -13,4 +13,10 @@ export const Blankslate = Object.assign(BlankslateRoot, {
   SecondaryAction: BlankslateSecondaryAction
 })
 
-export const zBlankslate = Blankslate
+export {
+  BlankslateVisual,
+  BlankslateHeading,
+  BlankslateDescription,
+  BlankslatePrimaryAction,
+  BlankslateSecondaryAction
+}

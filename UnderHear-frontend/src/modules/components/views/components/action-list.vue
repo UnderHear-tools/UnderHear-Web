@@ -47,14 +47,14 @@
 
     <ComponentDocsSection title="配合分割线">
       <template #description>
-        使用 <code>zDivider</code> 分隔不同类别的列表项。
+        使用 <code>Divider</code> 分隔不同类别的列表项。
       </template>
 
       <ComponentDocsDemoBlock :code="demo3Code">
         <ActionList>
           <ActionList.Item>个人资料</ActionList.Item>
           <ActionList.Item>账户设置</ActionList.Item>
-          <zDivider />
+          <Divider />
           <ActionList.Item>退出登录</ActionList.Item>
         </ActionList>
       </ComponentDocsDemoBlock>
@@ -62,11 +62,11 @@
 
     <ComponentDocsSection title="配合 Dropdown 使用">
       <template #description>
-        在 <code>zDropdown</code> 内使用时，点击列表项会保持展开；只有点击组件外部区域时，下拉菜单才会关闭。
+        在 <code>Dropdown</code> 内使用时，点击列表项会保持展开；只有点击组件外部区域时，下拉菜单才会关闭。
       </template>
 
       <ComponentDocsDemoBlock :code="demo4Code">
-        <zDropdown>
+        <Dropdown>
           <template #trigger>
             <button class="demo-trigger">
               点击展开
@@ -78,7 +78,7 @@
               <ActionList.Item>点击其他列表项也保持展开</ActionList.Item>
             </ActionList>
           </template>
-        </zDropdown>
+        </Dropdown>
       </ComponentDocsDemoBlock>
     </ComponentDocsSection>
 
@@ -87,7 +87,7 @@
       variant="api"
     >
       <h4>ActionList</h4>
-      <zTable
+      <Table
         :columns="slotsTableColumns"
         :data="actionListSlotsRows"
         row-key="name"
@@ -98,7 +98,7 @@
       <h4 style="margin-top: 24px;">
         ActionList.Item Props
       </h4>
-      <zTable
+      <Table
         :columns="apiTableColumns"
         :data="actionListItemPropsRows"
         row-key="name"
@@ -109,7 +109,7 @@
       <h4 style="margin-top: 24px;">
         ActionList.Item Events
       </h4>
-      <zTable
+      <Table
         :columns="eventsTableColumns"
         :data="actionListItemEventsRows"
         row-key="name"
@@ -121,10 +121,10 @@
 </template>
 
 <script setup lang="ts">
-import { zDivider } from '@/components/z-ui/divider'
+import { Divider } from '@/components/z-ui/divider'
 import { ActionList } from '@/components/z-ui/action-list'
-import { zDropdown } from '@/components/z-ui/dropdown'
-import { zTable, type ZTableColumn } from '@/components/z-ui/table'
+import { Dropdown } from '@/components/z-ui/dropdown'
+import { Table, type TableColumn } from '@/components/z-ui/table'
 import ComponentDocsDemoBlock from '@/modules/components/components/ComponentDocsPage/ComponentDocsDemoBlock.vue'
 import ComponentDocsHeader from '@/modules/components/components/ComponentDocsPage/ComponentDocsHeader.vue'
 import ComponentDocsPage from '@/modules/components/components/ComponentDocsPage/ComponentDocsPage.vue'
@@ -158,18 +158,18 @@ const demo3Code = `<template>
   <ActionList>
     <ActionList.Item>个人资料</ActionList.Item>
     <ActionList.Item>账户设置</ActionList.Item>
-    <zDivider />
+    <Divider />
     <ActionList.Item>退出登录</ActionList.Item>
   </ActionList>
 </template>
 
 <script setup lang="ts">
-import { zDivider } from '@/components/z-ui/divider'
+import { Divider } from '@/components/z-ui/divider'
 import { ActionList } from '@/components/z-ui/action-list'
 <\/script>`
 
 const demo4Code = `<template>
-  <zDropdown>
+  <Dropdown>
     <template #trigger>
       <button>点击展开</button>
     </template>
@@ -179,15 +179,15 @@ const demo4Code = `<template>
         <ActionList.Item>点击其他列表项也保持展开</ActionList.Item>
       </ActionList>
     </template>
-  </zDropdown>
+  </Dropdown>
 </template>
 
 <script setup lang="ts">
-import { zDropdown } from '@/components/z-ui/dropdown'
+import { Dropdown } from '@/components/z-ui/dropdown'
 import { ActionList } from '@/components/z-ui/action-list'
 <\/script>`
 
-const slotsTableColumns: ZTableColumn[] = [
+const slotsTableColumns: TableColumn[] = [
   { key: 'name', label: '插槽名', rowHeader: true, minWidth: '140px' },
   { key: 'description', label: '说明', minWidth: '300px', wrap: true }
 ]
@@ -199,7 +199,7 @@ const actionListSlotsRows = [
   }
 ]
 
-const apiTableColumns: ZTableColumn[] = [
+const apiTableColumns: TableColumn[] = [
   { key: 'name', label: '属性名', rowHeader: true, minWidth: '140px' },
   { key: 'default', label: '默认值', minWidth: '120px' },
   { key: 'type', label: '类型', minWidth: '160px' },
@@ -221,7 +221,7 @@ const actionListItemPropsRows = [
   }
 ]
 
-const eventsTableColumns: ZTableColumn[] = [
+const eventsTableColumns: TableColumn[] = [
   { key: 'name', label: '事件名', rowHeader: true, minWidth: '140px' },
   { key: 'description', label: '说明', minWidth: '300px', wrap: true }
 ]

@@ -1,5 +1,5 @@
 <template>
-  <zContainer>
+  <Container>
     <div class="success-message">
       <div class="success-info">
         <CheckCircle :size="32" />
@@ -7,17 +7,17 @@
           应用创建成功
         </h2>
       </div>
-      <zLink :href="appUrl" :link-text="appUrl" target="_blank" />
+      <Link :href="appUrl" :link-text="appUrl" target="_blank" />
     </div>
-  </zContainer>
+  </Container>
 </template>
 
 <script setup lang="ts">
 import confetti from 'canvas-confetti'
 import { ref, onMounted } from 'vue'
-import { zContainer } from '@/components/z-ui/container'
+import { Container } from '@/components/z-ui/container'
 import { CheckCircle } from '@/components/z-ui/icon/Octicons-vue'
-import { zLink } from '@/components/z-ui/link'
+import { Link } from '@/components/z-ui/link'
 import { useRoute } from 'vue-router'
 
 const route = useRoute()
