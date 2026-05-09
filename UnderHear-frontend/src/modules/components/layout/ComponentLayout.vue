@@ -243,6 +243,7 @@ const navSections = ref([
   {
     title: 'Feedback 反馈组件',
     items: [
+      { path: '/component/blankslate', label: 'Blankslate 空状态' },
       { path: '/component/banner', label: 'Banner 横幅提示' },
       { path: '/component/tooltip', label: 'Tooltip 文字提示' }
     ]

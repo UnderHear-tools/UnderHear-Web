@@ -133,6 +133,11 @@ export const componentRoutes: Array<RouteRecordRaw> = [
             },
             // Feedback 反馈组件
             {
+                path: 'blankslate',
+                name: 'Blankslate',
+                component: () => import('../views/components/blankslate.vue')
+            },
+            {
                 path: 'banner',
                 name: 'Banner',
                 component: () => import('../views/components/banner.vue')
