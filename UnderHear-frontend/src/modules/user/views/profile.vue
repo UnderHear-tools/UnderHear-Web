@@ -77,28 +77,55 @@
         <div class="markdown-header">
           {{ profile?.nickname }} / README.md
         </div>
+
+        <div class="markdown-content">
+          <Blankslate
+            v-if="profile?.markdown === null"
+            narrow
+          >
+            <Blankslate.Visual>
+              <RepoTemplate />
+            </Blankslate.Visual>
+            <Blankslate.Heading>
+              {{ isOwnProfile ? '编写你的 README' : '' }}
+            </Blankslate.Heading>
+            <Blankslate.Description>
+              {{ isOwnProfile ? '用 Markdown 介绍你自己、项目和正在做的事情。让所有人认识你。' : '空空如也' }}
+            </Blankslate.Description>
+            <Blankslate.PrimaryAction v-if="isOwnProfile">
+              现在开始
+            </Blankslate.PrimaryAction>
+          </Blankslate>
+        </div>
       </div>
     </div>
   </zContainer>
 </template>
 
 <script setup lang="ts">
-import { onMounted, ref } from 'vue'
+import { computed, onMounted, ref } from 'vue'
 import { useRoute } from 'vue-router'
 import { zAvatar } from '@/components/z-ui/avatar'
+import { Blankslate } from '@/components/z-ui/blankslate'
 import { zContainer } from '@/components/z-ui/container'
 import {
   Location,
   Mail,
   Person,
-  Link
+  Link,
+  RepoTemplate
 } from '@/components/z-ui/icon/Octicons-vue'
-import type { UserInfo } from '@/stores/user'
-import { getPublicUserProfile } from '../api/profile'
+import { useUserStore } from '@/stores/user'
+import { getPublicUserProfile, type PublicUserProfile } from '../api/profile'
 
 const route = useRoute()
+const userStore = useUserStore()
 const nickname = String(route.params.nickname ?? '')
-const profile = ref<UserInfo | null>(null)
+const profile = ref<PublicUserProfile | null>(null)
+
+const isOwnProfile = computed(() => {
+  return Boolean(profile.value?.uuid && userStore.userInfo?.uuid && profile.value.uuid === userStore.userInfo.uuid)
+})
 
 onMounted(async () => {
   profile.value = await getPublicUserProfile(nickname)
@@ -190,6 +217,8 @@ onMounted(async () => {
 }
 
 .profile-markdown {
+  display: flex;
+  flex-direction: column;
   padding: 24px;
   border: 1px solid var(--borderColor-default);
   border-radius: 6px;
@@ -198,9 +227,16 @@ onMounted(async () => {
 }
 
 .markdown-header {
+  display: flex;
   margin-bottom: 16px;
   color: var(--fgColor-default);
   font-size: 12px;
+}
+
+.markdown-content {
+  display: flex;
+  align-items: center;
+  flex: 1;
 }
 
 @media (max-width: 768px) {

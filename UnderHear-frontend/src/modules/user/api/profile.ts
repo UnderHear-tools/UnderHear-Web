@@ -1,5 +1,18 @@
 import { get } from '@/api'
-import type { UserInfo } from '@/stores/user'
+
+export type PublicUserProfile = {
+  uuid: string
+  nickname: string
+  email: string
+  avatarUrl: string
+  bio: string | null
+  pronoun: string | null
+  location: string | null
+  socialAccount0: string | null
+  socialAccount1: string | null
+  socialAccount2: string | null
+  markdown: string | null
+}
 
 export const getPublicUserProfile = (nickname: string) =>
-  get<UserInfo>(`/users/${encodeURIComponent(nickname)}`)
+  get<PublicUserProfile>(`/users/${encodeURIComponent(nickname)}`)
