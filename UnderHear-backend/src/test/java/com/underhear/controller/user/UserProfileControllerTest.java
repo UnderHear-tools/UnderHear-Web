@@ -1,10 +1,12 @@
 package com.underhear.controller.user;
 
 import static org.hamcrest.Matchers.nullValue;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -13,15 +15,20 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.CacheManager;
 import org.springframework.boot.webmvc.test.autoconfigure.WebMvcTest;
 import org.springframework.context.annotation.Import;
+import org.springframework.http.MediaType;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
 
 import com.underhear.exception.BizException;
 import com.underhear.exception.ErrorCode;
 import com.underhear.exception.GlobalExceptionHandler;
+import com.underhear.pojo.dto.request.UserProfileMarkdownDort;
 import com.underhear.pojo.entity.User;
+import com.underhear.pojo.entity.UserProfileMarkdown;
 import com.underhear.security.SessionAuthService;
 import com.underhear.service.user.UserProfileService;
+
+import jakarta.servlet.http.Cookie;
 
 @WebMvcTest(UserProfileController.class)
 @Import(GlobalExceptionHandler.class)
@@ -44,6 +51,7 @@ class UserProfileControllerTest {
     void profileShouldReturnPublicUserInfo() throws Exception {
         User user = user();
         when(userProfileService.getUserByNickname("tester")).thenReturn(user);
+        when(userProfileService.getMarkdownByUuid("user-1")).thenReturn(markdown("# Hello"));
 
         mockMvc.perform(get("/users/tester"))
                 .andExpect(status().isOk())
@@ -52,13 +60,28 @@ class UserProfileControllerTest {
                 .andExpect(jsonPath("$.data.uuid").value("user-1"))
                 .andExpect(jsonPath("$.data.nickname").value("tester"))
                 .andExpect(jsonPath("$.data.email").value("tester@example.com"))
-                .andExpect(jsonPath("$.data.avatarUrl").value("https://avatar/tester.png"));
+                .andExpect(jsonPath("$.data.avatarUrl").value("https://avatar/tester.png"))
+                .andExpect(jsonPath("$.data.markdown").value("# Hello"));
+    }
+
+    @Test
+    // 未保存 Markdown 时仍返回公开资料，只把 markdown 字段置为空。
+    void profileShouldReturnNullMarkdownWhenMissing() throws Exception {
+        User user = user();
+        when(userProfileService.getUserByNickname("tester")).thenReturn(user);
+        when(userProfileService.getMarkdownByUuid("user-1")).thenReturn(null);
+
+        mockMvc.perform(get("/users/tester"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.data.nickname").value("tester"))
+                .andExpect(jsonPath("$.data.markdown").value(nullValue()));
     }
 
     @Test
     // 未携带 cookie 时也应走公开查询链路，不触发登录态解析。
     void profileShouldNotRequireAuthenticationCookie() throws Exception {
         when(userProfileService.getUserByNickname("tester")).thenReturn(user());
+        when(userProfileService.getMarkdownByUuid("user-1")).thenReturn(null);
 
         mockMvc.perform(get("/users/tester"))
                 .andExpect(status().isOk())
@@ -79,6 +102,47 @@ class UserProfileControllerTest {
                 .andExpect(jsonPath("$.data").value(nullValue()));
     }
 
+    @Test
+    // 保存 Markdown 时通过 cookie 登录态定位当前用户，不接受请求体传入 uuid。
+    void saveMarkdownShouldUseCurrentUserFromCookie() throws Exception {
+        User user = user();
+        when(sessionAuthService.getCurrentUser("token")).thenReturn(user);
+
+        mockMvc.perform(post("/users/me/markdown")
+                .cookie(new Cookie("auth_token", "token"))
+                .contentType(MediaType.APPLICATION_JSON)
+                .content("""
+                        {
+                          "content": "# Hello"
+                        }
+                        """))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.code").value("OK"))
+                .andExpect(jsonPath("$.message").value("请求成功"))
+                .andExpect(jsonPath("$.data").value(nullValue()));
+
+        verify(userProfileService).saveCurrentUserMarkdown(any(User.class), any(UserProfileMarkdownDort.class));
+    }
+
+    @Test
+    // 保存接口沿用当前未登录契约：业务码 NOT_LOGIN，HTTP 仍为 200。
+    void saveMarkdownShouldReturnNotLoginWhenCookieInvalid() throws Exception {
+        when(sessionAuthService.getCurrentUser("expired")).thenThrow(new BizException(ErrorCode.NOT_LOGIN));
+
+        mockMvc.perform(post("/users/me/markdown")
+                .cookie(new Cookie("auth_token", "expired"))
+                .contentType(MediaType.APPLICATION_JSON)
+                .content("""
+                        {
+                          "content": "# Hello"
+                        }
+                        """))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.code").value("NOT_LOGIN"))
+                .andExpect(jsonPath("$.message").value("未登录或登录已过期"))
+                .andExpect(jsonPath("$.data").value(nullValue()));
+    }
+
     private User user() {
         User user = new User();
         user.setUuid("user-1");
@@ -86,5 +150,12 @@ class UserProfileControllerTest {
         user.setEmail("tester@example.com");
         user.setAvatarUrl("https://avatar/tester.png");
         return user;
+    }
+
+    private UserProfileMarkdown markdown(String content) {
+        UserProfileMarkdown markdown = new UserProfileMarkdown();
+        markdown.setUuid("user-1");
+        markdown.setContent(content);
+        return markdown;
     }
 }

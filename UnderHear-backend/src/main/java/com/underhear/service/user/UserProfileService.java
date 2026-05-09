@@ -1,9 +1,17 @@
 package com.underhear.service.user;
 
+import com.underhear.pojo.dto.request.UserProfileMarkdownDort;
 import com.underhear.pojo.entity.User;
+import com.underhear.pojo.entity.UserProfileMarkdown;
 
 public interface UserProfileService {
 
     // 根据昵称查询公开用户资料。
     User getUserByNickname(String nickname);
+
+    // 根据用户 uuid 查询公开资料页 Markdown 内容。
+    UserProfileMarkdown getMarkdownByUuid(String uuid);
+
+    // 保存当前用户的 Markdown 资料页，uuid 只能来自登录态用户。
+    void saveCurrentUserMarkdown(User user, UserProfileMarkdownDort request);
 }

@@ -9,8 +9,10 @@ import com.underhear.pojo.dto.response.ApplicationCreateNewDore;
 import com.underhear.pojo.dto.response.UserInfoDore;
 import com.underhear.pojo.dto.response.UserLoginDore;
 import com.underhear.pojo.dto.response.UserLoginWithTokenDore;
+import com.underhear.pojo.dto.response.UserProfileDore;
 import com.underhear.pojo.entity.Application;
 import com.underhear.pojo.entity.User;
+import com.underhear.pojo.entity.UserProfileMarkdown;
 
 class ToDoreTest {
 
@@ -31,6 +33,32 @@ class ToDoreTest {
         assertEquals("https://github.com/tester", userInfoDore.getSocialAccount0());
         assertEquals("https://gitee.com/tester", userInfoDore.getSocialAccount1());
         assertEquals("https://example.com/tester", userInfoDore.getSocialAccount2());
+    }
+
+    @Test
+    // 公开资料响应在基础用户信息之外，还要带上 Markdown 资料页内容。
+    void toUserProfileDoreShouldCopyUserInfoAndMarkdown() {
+        User user = user();
+        UserProfileMarkdown markdown = new UserProfileMarkdown();
+        markdown.setContent("# Hello");
+
+        UserProfileDore userProfileDore = ToDore.toUserProfileDore(user, markdown);
+
+        assertEquals("user-1", userProfileDore.getUuid());
+        assertEquals("tester", userProfileDore.getNickname());
+        assertEquals("tester@example.com", userProfileDore.getEmail());
+        assertEquals("https://avatar/tester.png", userProfileDore.getAvatarUrl());
+        assertEquals("bio text", userProfileDore.getBio());
+        assertEquals("# Hello", userProfileDore.getMarkdown());
+    }
+
+    @Test
+    // 没有 Markdown 记录时公开资料响应仍保留用户信息，markdown 字段为空。
+    void toUserProfileDoreShouldUseNullMarkdownWhenMissing() {
+        UserProfileDore userProfileDore = ToDore.toUserProfileDore(user(), null);
+
+        assertEquals("tester", userProfileDore.getNickname());
+        assertEquals(null, userProfileDore.getMarkdown());
     }
 
     @Test
