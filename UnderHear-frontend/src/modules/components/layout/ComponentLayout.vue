@@ -259,8 +259,8 @@ const navSections = ref([
 
 .sidebar {
   width: 300px;
-  position: fixed;
-  left: 0;
+  position: sticky;
+  top: var(--header-height);
   height: calc(100vh - var(--header-height));
   display: flex;
   flex-direction: column;
@@ -322,8 +322,6 @@ const navSections = ref([
 
 .main-content {
   flex: 1;
-  margin-left: 300px;
-  margin-right: 300px;
   padding: 2rem;
   min-height: calc(100vh - var(--header-height));
   min-width: 0;
@@ -332,8 +330,8 @@ const navSections = ref([
 /* 右侧目录区 */
 .toc-sidebar {
   width: 300px;
-  position: fixed;
-  right: 0;
+  position: sticky;
+  top: var(--header-height);
   height: calc(100vh - var(--header-height));
   display: flex;
   flex-direction: column;
@@ -420,10 +418,11 @@ const navSections = ref([
   }
 
   .sidebar {
+    position: fixed;
     top: 0;
     transform: translateX(-100%);
     transition: transform 0.3s ease;
-    z-index: 1000;
+    z-index: 10000;
     height: 100vh;
   }
 
@@ -459,7 +458,7 @@ const navSections = ref([
     height: 100vh;
     width: 100vw;
     background: color-mix(in srgb, var(--fgColor-default) 50%, var(--bgColor-transparent));
-    z-index: 999;
+    z-index: 9999;
     animation: fadeIn 0.3s ease;
   }
 
