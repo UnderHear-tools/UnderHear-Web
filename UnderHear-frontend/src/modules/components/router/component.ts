@@ -138,6 +138,11 @@ export const componentRoutes: Array<RouteRecordRaw> = [
                 component: () => import('../views/components/blankslate.vue')
             },
             {
+                path: 'dialog',
+                name: 'Dialog',
+                component: () => import('../views/components/dialog.vue')
+            },
+            {
                 path: 'banner',
                 name: 'Banner',
                 component: () => import('../views/components/banner.vue')

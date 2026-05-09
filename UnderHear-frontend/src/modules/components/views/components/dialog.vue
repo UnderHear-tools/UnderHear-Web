@@ -1,0 +1,532 @@
+<template>
+  <ComponentDocsPage>
+    <ComponentDocsHeader
+      title="Dialog 对话框"
+      description="用于在当前页面上方展示短期任务、确认操作或辅助选择。"
+    />
+
+    <ComponentDocsSection title="基础用法">
+      <template #description>
+        使用 <code>v-model:open</code> 控制展示状态。对话框打开后会自动聚焦关闭按钮，按 <code>Esc</code> 或点击背板可关闭。
+      </template>
+
+      <ComponentDocsDemoBlock :code="basicDemoCode">
+        <Button @click="basicDialogOpen = true">
+          打开 Dialog
+        </Button>
+
+        <Dialog
+          v-model:open="basicDialogOpen"
+          title="创建新项目"
+        >
+          <Dialog.Body>
+            <p>Dialog 用于承载短期任务，不应替代完整页面。保持内容集中，并提供明确的退出方式。</p>
+          </Dialog.Body>
+        </Dialog>
+      </ComponentDocsDemoBlock>
+    </ComponentDocsSection>
+
+    <ComponentDocsSection title="副标题与底部操作">
+      <template #description>
+        使用 <code>subtitle</code> 补充上下文，使用 <code>Dialog.Footer</code> 放置取消、危险或主操作按钮。
+      </template>
+
+      <ComponentDocsDemoBlock :code="footerDemoCode">
+        <Button @click="footerDialogOpen = true">
+          打开带操作的 Dialog
+        </Button>
+
+        <Dialog
+          v-model:open="footerDialogOpen"
+          title="删除部署环境"
+          subtitle="此操作会停止当前环境中的所有运行实例。"
+          role="alertdialog"
+        >
+          <Dialog.Body>
+            <p>删除后无法从当前页面恢复。请确认团队成员已经完成必要的数据备份。</p>
+          </Dialog.Body>
+          <Dialog.Footer>
+            <Button @click="footerDialogOpen = false">
+              取消
+            </Button>
+            <Button
+              variant="danger"
+              @click="footerDialogOpen = false"
+            >
+              删除环境
+            </Button>
+          </Dialog.Footer>
+        </Dialog>
+      </ComponentDocsDemoBlock>
+    </ComponentDocsSection>
+
+    <ComponentDocsSection title="侧边 Sheet">
+      <template #description>
+        设置 <code>position=&quot;right&quot;</code> 可以从右侧打开，适合展示设置、筛选或详情。窄屏下会自动转为底部 sheet。
+      </template>
+
+      <ComponentDocsDemoBlock :code="sideSheetDemoCode">
+        <Button @click="sideSheetOpen = true">
+          打开侧边 Sheet
+        </Button>
+
+        <Dialog
+          v-model:open="sideSheetOpen"
+          title="仓库设置"
+          subtitle="调整协作、分支保护和自动化规则。"
+          position="right"
+          size="large"
+        >
+          <Dialog.Body>
+            <div class="dialog-settings-list">
+              <label class="dialog-setting">
+                <span class="dialog-setting__title">启用分支保护</span>
+                <span class="dialog-setting__description">限制直接推送到主分支，并要求通过检查后合并。</span>
+              </label>
+              <label class="dialog-setting">
+                <span class="dialog-setting__title">允许自动合并</span>
+                <span class="dialog-setting__description">当检查全部通过后自动完成合并流程。</span>
+              </label>
+            </div>
+          </Dialog.Body>
+          <Dialog.Footer>
+            <Button @click="sideSheetOpen = false">
+              取消
+            </Button>
+            <Button
+              variant="primary"
+              @click="sideSheetOpen = false"
+            >
+              保存设置
+            </Button>
+          </Dialog.Footer>
+        </Dialog>
+      </ComponentDocsDemoBlock>
+    </ComponentDocsSection>
+
+    <ComponentDocsSection title="尺寸">
+      <template #description>
+        使用 <code>size</code> 控制宽度，使用 <code>height</code> 控制最大内容高度。大尺寸适合表单、评论框或需要更多横向空间的内容。
+      </template>
+
+      <ComponentDocsDemoBlock :code="sizeDemoCode">
+        <div class="dialog-demo-actions">
+          <Button @click="smallDialogOpen = true">
+            Small
+          </Button>
+          <Button @click="largeDialogOpen = true">
+            Large
+          </Button>
+        </div>
+
+        <Dialog
+          v-model:open="smallDialogOpen"
+          title="小型 Dialog"
+          size="small"
+          height="small"
+        >
+          <Dialog.Body>
+            <p>小尺寸适合非常短的确认或说明内容。</p>
+          </Dialog.Body>
+        </Dialog>
+
+        <Dialog
+          v-model:open="largeDialogOpen"
+          title="大型 Dialog"
+          subtitle="用于需要更多空间的编辑或选择任务。"
+          size="xlarge"
+          height="large"
+        >
+          <Dialog.Body>
+            <div class="dialog-large-content">
+              <p
+                v-for="item in largeDialogItems"
+                :key="item"
+              >
+                {{ item }}
+              </p>
+            </div>
+          </Dialog.Body>
+          <Dialog.Footer>
+            <Button @click="largeDialogOpen = false">
+              关闭
+            </Button>
+          </Dialog.Footer>
+        </Dialog>
+      </ComponentDocsDemoBlock>
+    </ComponentDocsSection>
+
+    <ComponentDocsSection title="底部 Sheet">
+      <template #description>
+        设置 <code>position=&quot;bottom&quot;</code> 可将 Dialog 固定在视口底部，适合窄屏或移动端的临时选择。
+      </template>
+
+      <ComponentDocsDemoBlock :code="bottomSheetDemoCode">
+        <Button @click="bottomSheetOpen = true">
+          打开底部 Sheet
+        </Button>
+
+        <Dialog
+          v-model:open="bottomSheetOpen"
+          title="选择通知方式"
+          position="bottom"
+          size="large"
+        >
+          <Dialog.Body>
+            <div class="dialog-option-list">
+              <button
+                class="dialog-option"
+                type="button"
+              >
+                站内通知
+              </button>
+              <button
+                class="dialog-option"
+                type="button"
+              >
+                邮件通知
+              </button>
+              <button
+                class="dialog-option"
+                type="button"
+              >
+                不再提醒
+              </button>
+            </div>
+          </Dialog.Body>
+        </Dialog>
+      </ComponentDocsDemoBlock>
+    </ComponentDocsSection>
+
+    <ComponentDocsSection
+      title="API"
+      variant="api"
+    >
+      <h3>Dialog Props</h3>
+      <Table
+        :columns="apiTableColumns"
+        :data="dialogPropsRows"
+        row-key="name"
+        compact
+        :hoverable="false"
+      />
+
+      <h3>插槽</h3>
+      <Table
+        :columns="slotTableColumns"
+        :data="slotTableRows"
+        row-key="name"
+        compact
+        :hoverable="false"
+      />
+
+      <h3>事件</h3>
+      <Table
+        :columns="eventTableColumns"
+        :data="eventTableRows"
+        row-key="name"
+        compact
+        :hoverable="false"
+      />
+    </ComponentDocsSection>
+  </ComponentDocsPage>
+</template>
+
+<script setup lang="ts">
+import { ref } from 'vue'
+import { Button } from '@/components/z-ui/button'
+import { Dialog } from '@/components/z-ui/dialog'
+import { Table, type TableColumn } from '@/components/z-ui/table'
+import ComponentDocsDemoBlock from '@/modules/components/components/ComponentDocsPage/ComponentDocsDemoBlock.vue'
+import ComponentDocsHeader from '@/modules/components/components/ComponentDocsPage/ComponentDocsHeader.vue'
+import ComponentDocsPage from '@/modules/components/components/ComponentDocsPage/ComponentDocsPage.vue'
+import ComponentDocsSection from '@/modules/components/components/ComponentDocsPage/ComponentDocsSection.vue'
+
+const basicDialogOpen = ref(false)
+const footerDialogOpen = ref(false)
+const sideSheetOpen = ref(false)
+const smallDialogOpen = ref(false)
+const largeDialogOpen = ref(false)
+const bottomSheetOpen = ref(false)
+
+const largeDialogItems = [
+  '对话框内容超过可用高度时，主体区域会独立滚动，页背景保持锁定。',
+  '标题和关闭按钮保持在顶部，底部操作保持在尾部，用户可以稳定完成任务。',
+  '如果内容复杂到需要多步导航，应该优先考虑使用独立页面。'
+]
+
+const basicDemoCode = `<script setup lang="ts">
+import { ref } from 'vue'
+import { Button } from '@/components/z-ui/button'
+import { Dialog } from '@/components/z-ui/dialog'
+
+const open = ref(false)
+<\/script>
+
+<template>
+  <Button @click="open = true">打开 Dialog</Button>
+
+  <Dialog v-model:open="open" title="创建新项目">
+    <Dialog.Body>
+      <p>Dialog 用于承载短期任务，不应替代完整页面。</p>
+    </Dialog.Body>
+  </Dialog>
+</template>`
+
+const footerDemoCode = `<script setup lang="ts">
+import { ref } from 'vue'
+import { Button } from '@/components/z-ui/button'
+import { Dialog } from '@/components/z-ui/dialog'
+
+const open = ref(false)
+<\/script>
+
+<template>
+  <Button @click="open = true">打开带操作的 Dialog</Button>
+
+  <Dialog
+    v-model:open="open"
+    title="删除部署环境"
+    subtitle="此操作会停止当前环境中的所有运行实例。"
+    role="alertdialog"
+  >
+    <Dialog.Body>
+      <p>删除后无法从当前页面恢复。请确认团队成员已经完成必要的数据备份。</p>
+    </Dialog.Body>
+    <Dialog.Footer>
+      <Button @click="open = false">取消</Button>
+      <Button variant="danger" @click="open = false">删除环境</Button>
+    </Dialog.Footer>
+  </Dialog>
+</template>`
+
+const sideSheetDemoCode = `<script setup lang="ts">
+import { ref } from 'vue'
+import { Button } from '@/components/z-ui/button'
+import { Dialog } from '@/components/z-ui/dialog'
+
+const open = ref(false)
+<\/script>
+
+<template>
+  <Button @click="open = true">打开侧边 Sheet</Button>
+
+  <Dialog
+    v-model:open="open"
+    title="仓库设置"
+    subtitle="调整协作、分支保护和自动化规则。"
+    position="right"
+    size="large"
+  >
+    <Dialog.Body>设置内容</Dialog.Body>
+    <Dialog.Footer>
+      <Button @click="open = false">取消</Button>
+      <Button variant="primary" @click="open = false">保存设置</Button>
+    </Dialog.Footer>
+  </Dialog>
+</template>`
+
+const sizeDemoCode = `<script setup lang="ts">
+import { ref } from 'vue'
+import { Button } from '@/components/z-ui/button'
+import { Dialog } from '@/components/z-ui/dialog'
+
+const smallOpen = ref(false)
+const largeOpen = ref(false)
+<\/script>
+
+<template>
+  <Button @click="smallOpen = true">Small</Button>
+  <Button @click="largeOpen = true">Large</Button>
+
+  <Dialog v-model:open="smallOpen" title="小型 Dialog" size="small" height="small">
+    <Dialog.Body>小尺寸适合非常短的确认或说明内容。</Dialog.Body>
+  </Dialog>
+
+  <Dialog v-model:open="largeOpen" title="大型 Dialog" size="xlarge" height="large">
+    <Dialog.Body>大型内容区域会独立滚动。</Dialog.Body>
+  </Dialog>
+</template>`
+
+const bottomSheetDemoCode = `<script setup lang="ts">
+import { ref } from 'vue'
+import { Button } from '@/components/z-ui/button'
+import { Dialog } from '@/components/z-ui/dialog'
+
+const open = ref(false)
+<\/script>
+
+<template>
+  <Button @click="open = true">打开底部 Sheet</Button>
+
+  <Dialog v-model:open="open" title="选择通知方式" position="bottom" size="large">
+    <Dialog.Body>
+      <button type="button">站内通知</button>
+      <button type="button">邮件通知</button>
+      <button type="button">不再提醒</button>
+    </Dialog.Body>
+  </Dialog>
+</template>`
+
+const apiTableColumns: TableColumn[] = [
+  { key: 'name', label: '属性名', rowHeader: true, minWidth: '150px' },
+  { key: 'default', label: '默认值', minWidth: '120px' },
+  { key: 'type', label: '类型', minWidth: '260px', wrap: true },
+  { key: 'description', label: '说明', minWidth: '280px', wrap: true }
+]
+
+const dialogPropsRows = [
+  {
+    name: 'open',
+    default: 'false',
+    type: 'boolean',
+    description: '控制 Dialog 是否展示，支持 v-model:open。'
+  },
+  {
+    name: 'title',
+    default: '-',
+    type: 'string',
+    description: 'Dialog 的可见标题，同时作为 aria-labelledby 的来源。'
+  },
+  {
+    name: 'subtitle',
+    default: "''",
+    type: 'string',
+    description: '标题下方的辅助说明，同时作为 aria-describedby 的来源。'
+  },
+  {
+    name: 'position',
+    default: "'center'",
+    type: "'center' | 'left' | 'right' | 'bottom' | 'fullscreen'",
+    description: '控制 Dialog 在视口中的位置。'
+  },
+  {
+    name: 'align',
+    default: "'center'",
+    type: "'top' | 'center' | 'bottom'",
+    description: 'position 为 center 时控制垂直对齐方式。'
+  },
+  {
+    name: 'size',
+    default: "'medium'",
+    type: "'small' | 'medium' | 'large' | 'xlarge'",
+    description: '控制 Dialog 宽度。'
+  },
+  {
+    name: 'height',
+    default: "'auto'",
+    type: "'auto' | 'small' | 'large'",
+    description: '控制 Dialog 高度。内容超出时 Body 区域滚动。'
+  },
+  {
+    name: 'role',
+    default: "'dialog'",
+    type: "'dialog' | 'alertdialog'",
+    description: '设置 ARIA role，危险确认可使用 alertdialog。'
+  },
+  {
+    name: 'closeOnEscape',
+    default: 'true',
+    type: 'boolean',
+    description: '是否允许按 Esc 关闭。'
+  },
+  {
+    name: 'closeOnBackdrop',
+    default: 'true',
+    type: 'boolean',
+    description: '是否允许点击背板关闭。'
+  }
+]
+
+const slotTableColumns: TableColumn[] = [
+  { key: 'name', label: '插槽名', rowHeader: true, minWidth: '180px' },
+  { key: 'description', label: '说明', minWidth: '320px', wrap: true }
+]
+
+const slotTableRows = [
+  { name: 'Dialog default', description: '放置 Dialog.Body、Dialog.Footer 或自定义内容。' },
+  { name: 'Dialog.Body default', description: '主体内容区域，超出可用高度时独立滚动。' },
+  { name: 'Dialog.Footer default', description: '底部操作区域，通常放置 Button。' }
+]
+
+const eventTableColumns: TableColumn[] = [
+  { key: 'name', label: '事件名', rowHeader: true, minWidth: '160px' },
+  { key: 'payload', label: '载荷', minWidth: '240px', wrap: true },
+  { key: 'description', label: '说明', minWidth: '320px', wrap: true }
+]
+
+const eventTableRows = [
+  {
+    name: 'update:open',
+    payload: 'boolean',
+    description: 'open 状态变更事件，用于 v-model:open。'
+  },
+  {
+    name: 'close',
+    payload: "'close-button' | 'escape' | 'backdrop'",
+    description: '用户通过关闭按钮、Esc 或背板请求关闭时触发。'
+  }
+]
+</script>
+
+<style scoped>
+.dialog-demo-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+}
+
+.dialog-settings-list {
+  display: grid;
+  gap: 0.75rem;
+}
+
+.dialog-setting {
+  border: 1px solid var(--borderColor-default, #d1d9e0);
+  border-radius: 0.375rem;
+  display: grid;
+  gap: 0.25rem;
+  padding: 0.75rem;
+}
+
+.dialog-setting__title {
+  color: var(--fgColor-default, #1f2328);
+  font-weight: 600;
+}
+
+.dialog-setting__description {
+  color: var(--fgColor-muted, #59636e);
+  font-size: 0.875rem;
+  line-height: 1.5;
+}
+
+.dialog-large-content {
+  display: grid;
+  gap: 0.75rem;
+}
+
+.dialog-option-list {
+  display: grid;
+  gap: 0.5rem;
+}
+
+.dialog-option {
+  background: var(--bgColor-default, #ffffff);
+  border: 1px solid var(--borderColor-default, #d1d9e0);
+  border-radius: 0.375rem;
+  color: var(--fgColor-default, #1f2328);
+  cursor: pointer;
+  font: inherit;
+  padding: 0.75rem;
+  text-align: left;
+}
+
+.dialog-option:hover {
+  background: var(--control-bgColor-hover, #eff2f5);
+}
+
+.dialog-option:focus-visible {
+  outline: 2px solid var(--focus-outlineColor, #0969da);
+  outline-offset: 2px;
+}
+</style>
