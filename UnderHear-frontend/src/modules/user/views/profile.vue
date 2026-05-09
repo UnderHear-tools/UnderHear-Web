@@ -103,7 +103,7 @@
       </div>
     </div>
   </Container>
-  <UserNotFound v-else-if="profile === null" />
+  <UserNotFound v-if="profile === null" />
 </template>
 
 <script setup lang="ts">
@@ -133,8 +133,16 @@ const isOwnProfile = computed(() => {
   return Boolean(profile.value?.uuid && userStore.userInfo?.uuid && profile.value.uuid === userStore.userInfo.uuid)
 })
 
+const fetchProfile = async () => {
+  try {
+    profile.value = await getPublicUserProfile(nickname)
+  } catch {
+    profile.value = null
+  }
+}
+
 onMounted(async () => {
-  profile.value = await getPublicUserProfile(nickname)
+  await fetchProfile()
 })
 
 </script>
