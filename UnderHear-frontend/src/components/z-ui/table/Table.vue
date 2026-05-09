@@ -207,6 +207,10 @@ function columnStyle(column: TableColumn) {
 
 <style scoped>
 .table {
+  display: block;
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
   outline: 1px solid var(--borderColor-default, #d1d9e0);
   border-radius: 6px;
   background: var(--bgColor-default, #ffffff);
