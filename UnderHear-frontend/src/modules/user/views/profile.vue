@@ -72,7 +72,13 @@
       </div>
     </div>
 
-    <div class="right-column" />
+    <div class="right-column">
+      <div class="profile-markdown">
+        <div class="markdown-header">
+          {{ profile?.nickname }} / README.md
+        </div>
+      </div>
+    </div>
   </zContainer>
 </template>
 
@@ -115,10 +121,6 @@ onMounted(async () => {
 .right-column {
   width: 78%;
   min-width: 0;
-  padding: 24px;
-  border: 1px solid var(--borderColor-default);
-  border-radius: 6px;
-  background: var(--bgColor-default);
 }
 
 .profile .avatar {
@@ -185,6 +187,20 @@ onMounted(async () => {
 .links li span {
   min-width: 0;
   overflow-wrap: anywhere;
+}
+
+.profile-markdown {
+  padding: 24px;
+  border: 1px solid var(--borderColor-default);
+  border-radius: 6px;
+  background: var(--bgColor-default);
+  min-height: 360px;
+}
+
+.markdown-header {
+  margin-bottom: 16px;
+  color: var(--fgColor-default);
+  font-size: 12px;
 }
 
 @media (max-width: 768px) {
