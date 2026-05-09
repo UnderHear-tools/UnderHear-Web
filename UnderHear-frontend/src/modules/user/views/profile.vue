@@ -1,5 +1,8 @@
 <template>
-  <zContainer class="zContainer">
+  <zContainer 
+    v-if="profile !== null && profile !== undefined"
+    class="zContainer"
+  >
     <div class="left-column">
       <div class="profile">
         <div class="profile-header">
@@ -100,6 +103,7 @@
       </div>
     </div>
   </zContainer>
+  <UserNotFound v-else-if="profile === null" />
 </template>
 
 <script setup lang="ts">
@@ -118,10 +122,12 @@ import {
 import { useUserStore } from '@/stores/user'
 import { getPublicUserProfile, type PublicUserProfile } from '../api/profile'
 
+import UserNotFound from '@/modules/error/views/404-user.vue'
+
 const route = useRoute()
 const userStore = useUserStore()
 const nickname = String(route.params.nickname ?? '')
-const profile = ref<PublicUserProfile | null>(null)
+const profile = ref<PublicUserProfile | null | undefined>(undefined)
 
 const isOwnProfile = computed(() => {
   return Boolean(profile.value?.uuid && userStore.userInfo?.uuid && profile.value.uuid === userStore.userInfo.uuid)
@@ -223,7 +229,7 @@ onMounted(async () => {
   border: 1px solid var(--borderColor-default);
   border-radius: 6px;
   background: var(--bgColor-default);
-  min-height: 360px;
+  min-height: 480px;
 }
 
 .markdown-header {
