@@ -1,7 +1,13 @@
 <script lang="ts">
 let activeDialogScrollLocks = 0
+const DIALOG_SCROLLBAR_COMPENSATION_PROPERTY = '--dialog-scrollbar-compensation'
 
 function lockDocumentScroll() {
+  if (activeDialogScrollLocks === 0) {
+    const scrollbarWidth = Math.max(window.innerWidth - document.documentElement.clientWidth, 0)
+    document.documentElement.style.setProperty(DIALOG_SCROLLBAR_COMPENSATION_PROPERTY, `${scrollbarWidth}px`)
+  }
+
   activeDialogScrollLocks += 1
   document.documentElement.dataset.dialogScrollLocked = 'true'
 }
@@ -12,13 +18,13 @@ function unlockDocumentScroll() {
   activeDialogScrollLocks -= 1
   if (activeDialogScrollLocks === 0) {
     delete document.documentElement.dataset.dialogScrollLocked
+    document.documentElement.style.removeProperty(DIALOG_SCROLLBAR_COMPENSATION_PROPERTY)
   }
 }
 </script>
 
 <script setup lang="ts">
 import { computed, nextTick, onBeforeUnmount, ref, watch } from 'vue'
-import { X } from '@/components/z-ui/icon/Octicons-vue'
 
 export type DialogCloseGesture = 'close-button' | 'escape' | 'backdrop'
 export type DialogSize = 'small' | 'medium' | 'large' | 'xlarge'
@@ -114,13 +120,16 @@ async function handleOpenChange(open: boolean) {
     focusInitialElement()
     return
   }
+}
 
-  unlockPageScroll()
+function handleAfterLeave() {
+  if (props.open) return
 
   if (previousFocus?.isConnected) {
     previousFocus.focus()
   }
   previousFocus = null
+  unlockPageScroll()
 }
 
 function requestClose(gesture: DialogCloseGesture) {
@@ -179,7 +188,10 @@ onBeforeUnmount(unlockPageScroll)
 
 <template>
   <Teleport to="body">
-    <Transition name="dialog-fade">
+    <Transition
+      name="dialog-fade"
+      @after-leave="handleAfterLeave"
+    >
       <div
         v-if="open"
         class="dialog-layer"
@@ -220,7 +232,17 @@ onBeforeUnmount(unlockPageScroll)
               aria-label="关闭对话框"
               @click="requestClose('close-button')"
             >
-              <X />
+              <svg
+                aria-hidden="true"
+                height="16"
+                viewBox="0 0 16 16"
+                width="16"
+              >
+                <path
+                  d="M3.72 3.72a.75.75 0 0 1 1.06 0L8 6.94l3.22-3.22a.75.75 0 1 1 1.06 1.06L9.06 8l3.22 3.22a.75.75 0 1 1-1.06 1.06L8 9.06l-3.22 3.22a.75.75 0 0 1-1.06-1.06L6.94 8 3.72 4.78a.75.75 0 0 1 0-1.06Z"
+                  fill="currentColor"
+                />
+              </svg>
             </button>
           </header>
 
@@ -363,7 +385,7 @@ onBeforeUnmount(unlockPageScroll)
 
 @media (pointer: fine) {
   :global(html[data-dialog-scroll-locked='true'] body) {
-    padding-right: 15px;
+    padding-right: var(--dialog-scrollbar-compensation, 0px);
   }
 }
 </style>
