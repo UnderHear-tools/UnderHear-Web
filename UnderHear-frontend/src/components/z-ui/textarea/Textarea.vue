@@ -54,6 +54,7 @@ function onInput(event: Event) {
   font-size: 14px;
   line-height: 20px;
   resize: vertical;
+  overflow: hidden;
 }
 
 .textarea:focus {
