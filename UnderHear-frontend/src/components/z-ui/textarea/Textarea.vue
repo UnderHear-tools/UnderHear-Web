@@ -54,7 +54,8 @@ function onInput(event: Event) {
   font-size: 14px;
   line-height: 20px;
   resize: vertical;
-  overflow: hidden;
+  overflow: auto;
+  scrollbar-color: var(--fgColor-muted, #59636e) transparent;
 }
 
 .textarea:focus {

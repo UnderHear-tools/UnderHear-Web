@@ -118,7 +118,6 @@
     title="编辑 README"
     subtitle="使用 Markdown 编写你的个人资料内容。"
     size="xlarge"
-    height="large"
   >
     <Dialog.Body>
       <div class="markdown-editor">
@@ -166,6 +165,16 @@
         </div>
       </div>
     </Dialog.Body>
+    <Dialog.Footer>
+      <Button>
+        取消
+      </Button>
+      <Button
+        :variant="'primary'"
+      >
+        保存
+      </Button>
+    </Dialog.Footer>
   </Dialog>
   <UserNotFound v-if="profile === null" />
 </template>
@@ -375,11 +384,16 @@ onMounted(async () => {
 }
 
 .markdown-editor__preview {
-  min-height: 360px;
-  padding: 16px;
+  box-sizing: border-box;
+  height: 360px;
+  min-height: 0;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  padding: 12px;
   border: 1px solid var(--borderColor-default);
   border-radius: 6px;
   background: var(--bgColor-default);
+  scrollbar-color: var(--fgColor-muted, #59636e) transparent;
 }
 
 .markdown-editor__preview-body {
