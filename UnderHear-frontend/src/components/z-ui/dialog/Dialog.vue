@@ -28,7 +28,6 @@ import { computed, nextTick, onBeforeUnmount, ref, watch } from 'vue'
 
 export type DialogCloseGesture = 'close-button' | 'escape' | 'backdrop'
 export type DialogSize = 'small' | 'medium' | 'large' | 'xlarge'
-export type DialogHeight = 'auto' | 'small' | 'large'
 
 const props = withDefaults(
   defineProps<{
@@ -36,7 +35,6 @@ const props = withDefaults(
     title: string
     subtitle?: string
     size?: DialogSize
-    height?: DialogHeight
     role?: 'dialog' | 'alertdialog'
     closeOnEscape?: boolean
     closeOnBackdrop?: boolean
@@ -45,7 +43,6 @@ const props = withDefaults(
     open: false,
     subtitle: '',
     size: 'medium',
-    height: 'auto',
     role: 'dialog',
     closeOnEscape: true,
     closeOnBackdrop: true
@@ -201,7 +198,6 @@ onBeforeUnmount(unlockPageScroll)
           ref="dialogRef"
           class="dialog"
           :data-size="size"
-          :data-height="height"
           :role="role"
           aria-modal="true"
           :aria-labelledby="titleId"
@@ -296,14 +292,6 @@ onBeforeUnmount(unlockPageScroll)
 
 .dialog[data-size='xlarge'] {
   --dialog-width: 40rem;
-}
-
-.dialog[data-height='small'] {
-  height: min(30rem, calc(100dvh - 2rem));
-}
-
-.dialog[data-height='large'] {
-  height: min(40rem, calc(100dvh - 2rem));
 }
 
 .dialog__header {

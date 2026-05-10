@@ -62,7 +62,7 @@
 
     <ComponentDocsSection title="尺寸">
       <template #description>
-        使用 <code>size</code> 控制宽度，使用 <code>height</code> 控制最大内容高度。大尺寸适合表单、评论框或需要更多横向空间的内容。
+        使用 <code>size</code> 控制宽度。Dialog 会限制在当前视口内，内容过长时主体区域独立滚动。
       </template>
 
       <ComponentDocsDemoBlock :code="sizeDemoCode">
@@ -79,7 +79,6 @@
           v-model:open="smallDialogOpen"
           title="小型 Dialog"
           size="small"
-          height="small"
         >
           <Dialog.Body>
             <p>小尺寸适合非常短的确认或说明内容。</p>
@@ -91,7 +90,6 @@
           title="大型 Dialog"
           subtitle="用于需要更多空间的编辑或选择任务。"
           size="xlarge"
-          height="large"
         >
           <Dialog.Body>
             <div class="dialog-large-content">
@@ -225,11 +223,11 @@ const largeOpen = ref(false)
   <Button @click="smallOpen = true">Small</Button>
   <Button @click="largeOpen = true">Large</Button>
 
-  <Dialog v-model:open="smallOpen" title="小型 Dialog" size="small" height="small">
+  <Dialog v-model:open="smallOpen" title="小型 Dialog" size="small">
     <Dialog.Body>小尺寸适合非常短的确认或说明内容。</Dialog.Body>
   </Dialog>
 
-  <Dialog v-model:open="largeOpen" title="大型 Dialog" size="xlarge" height="large">
+  <Dialog v-model:open="largeOpen" title="大型 Dialog" size="xlarge">
     <Dialog.Body>大型内容区域会独立滚动。</Dialog.Body>
   </Dialog>
 </template>`
@@ -265,12 +263,6 @@ const dialogPropsRows = [
     default: "'medium'",
     type: "'small' | 'medium' | 'large' | 'xlarge'",
     description: '控制 Dialog 宽度。'
-  },
-  {
-    name: 'height',
-    default: "'auto'",
-    type: "'auto' | 'small' | 'large'",
-    description: '控制 Dialog 高度。内容超出时 Body 区域滚动。'
   },
   {
     name: 'role',
