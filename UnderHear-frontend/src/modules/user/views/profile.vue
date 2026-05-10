@@ -82,8 +82,15 @@
         </div>
 
         <div class="markdown-content">
+          <!-- eslint-disable vue/no-v-html -->
+          <div
+            v-if="profile?.markdown !== null"
+            class="markdown-body profile-readme"
+            v-html="renderedProfileMarkdown"
+          />
+          <!-- eslint-enable vue/no-v-html -->
           <Blankslate
-            v-if="profile?.markdown === null"
+            v-else
             narrow
           >
             <Blankslate.Visual>
@@ -95,7 +102,10 @@
             <Blankslate.Description>
               {{ isOwnProfile ? '用 Markdown 介绍你自己、项目和正在做的事情。让所有人认识你。' : '空空如也' }}
             </Blankslate.Description>
-            <Blankslate.PrimaryAction v-if="isOwnProfile">
+            <Blankslate.PrimaryAction
+              v-if="isOwnProfile"
+              @click="openMarkdownDialog"
+            >
               现在开始
             </Blankslate.PrimaryAction>
           </Blankslate>
@@ -103,15 +113,75 @@
       </div>
     </div>
   </Container>
+  <Dialog
+    v-model:open="markdownDialogOpen"
+    title="编辑 README"
+    subtitle="使用 Markdown 编写你的个人资料内容。"
+    size="xlarge"
+    height="large"
+  >
+    <Dialog.Body>
+      <div class="markdown-editor">
+        <div class="markdown-editor__toolbar">
+          <Button
+            :variant="markdownMode === 'edit' ? 'primary' : 'default'"
+            size="small"
+            @click="markdownMode = 'edit'"
+          >
+            编辑
+          </Button>
+          <Button
+            :variant="markdownMode === 'preview' ? 'primary' : 'default'"
+            size="small"
+            @click="markdownMode = 'preview'"
+          >
+            预览
+          </Button>
+        </div>
+        <Textarea
+          v-if="markdownMode === 'edit'"
+          v-model="markdownDraft"
+          class="markdown-editor__textarea"
+          rows="16"
+          placeholder="用 Markdown 介绍你自己、项目和正在做的事情。"
+          autofocus
+        />
+        <div
+          v-else
+          class="markdown-editor__preview"
+        >
+          <!-- eslint-disable vue/no-v-html -->
+          <div
+            v-if="markdownDraft"
+            class="markdown-body markdown-editor__preview-body"
+            v-html="renderedDraftMarkdown"
+          />
+          <!-- eslint-enable vue/no-v-html -->
+          <div
+            v-else
+            class="markdown-editor__empty"
+          >
+            暂无可预览内容。
+          </div>
+        </div>
+      </div>
+    </Dialog.Body>
+  </Dialog>
   <UserNotFound v-if="profile === null" />
 </template>
 
 <script setup lang="ts">
+import DOMPurify from 'dompurify'
+import { marked } from 'marked'
 import { computed, onMounted, ref } from 'vue'
 import { useRoute } from 'vue-router'
+import 'github-markdown-css/github-markdown-light.css'
 import { Avatar } from '@/components/z-ui/avatar'
 import { Blankslate } from '@/components/z-ui/blankslate'
+import { Button } from '@/components/z-ui/button'
 import { Container } from '@/components/z-ui/container'
+import { Dialog } from '@/components/z-ui/dialog'
+import { Textarea } from '@/components/z-ui/textarea'
 import {
   Location,
   Mail,
@@ -128,10 +198,36 @@ const route = useRoute()
 const userStore = useUserStore()
 const nickname = String(route.params.nickname ?? '')
 const profile = ref<PublicUserProfile | null | undefined>(undefined)
+const markdownDialogOpen = ref(false)
+const markdownDraft = ref('')
+const markdownMode = ref<'edit' | 'preview'>('edit')
+
+const renderMarkdown = (content: string) => {
+  const html = marked.parse(content, {
+    gfm: true,
+    breaks: false,
+    async: false
+  })
+  return DOMPurify.sanitize(html)
+}
 
 const isOwnProfile = computed(() => {
   return Boolean(profile.value?.uuid && userStore.userInfo?.uuid && profile.value.uuid === userStore.userInfo.uuid)
 })
+
+const renderedProfileMarkdown = computed(() => {
+  return renderMarkdown(profile.value?.markdown ?? '')
+})
+
+const renderedDraftMarkdown = computed(() => {
+  return renderMarkdown(markdownDraft.value)
+})
+
+const openMarkdownDialog = () => {
+  markdownDraft.value = profile.value?.markdown ?? ''
+  markdownMode.value = 'edit'
+  markdownDialogOpen.value = true
+}
 
 const fetchProfile = async () => {
   try {
@@ -251,6 +347,52 @@ onMounted(async () => {
   display: flex;
   align-items: center;
   flex: 1;
+}
+
+.profile-readme {
+  align-self: stretch;
+  min-width: 0;
+  width: 100%;
+}
+
+.markdown-editor {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  min-height: 0;
+}
+
+.markdown-editor__toolbar {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+}
+
+.markdown-editor__textarea {
+  width: 100%;
+  min-height: 360px;
+  resize: vertical;
+}
+
+.markdown-editor__preview {
+  min-height: 360px;
+  padding: 16px;
+  border: 1px solid var(--borderColor-default);
+  border-radius: 6px;
+  background: var(--bgColor-default);
+}
+
+.markdown-editor__preview-body {
+  min-width: 0;
+}
+
+.markdown-editor__empty {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 320px;
+  color: var(--fgColor-muted);
+  font-size: 14px;
 }
 
 @media (max-width: 768px) {
