@@ -62,6 +62,7 @@ const subtitleId = computed(() => (props.subtitle ? `${dialogId}-subtitle` : und
 
 let previousFocus: HTMLElement | null = null
 let hasScrollLock = false
+let isBackdropPointerDown = false
 
 const FOCUSABLE_SELECTOR = [
   'a[href]',
@@ -134,10 +135,16 @@ function requestClose(gesture: DialogCloseGesture) {
   emit('update:open', false)
 }
 
-function handleBackdropClick() {
-  if (props.closeOnBackdrop) {
+function handleBackdropPointerDown(event: PointerEvent) {
+  isBackdropPointerDown = event.button === 0 && event.target === event.currentTarget
+}
+
+function handleBackdropPointerUp(event: PointerEvent) {
+  if (event.button === 0 && props.closeOnBackdrop && isBackdropPointerDown) {
     requestClose('backdrop')
   }
+
+  isBackdropPointerDown = false
 }
 
 function handleKeydown(event: KeyboardEvent) {
@@ -192,7 +199,8 @@ onBeforeUnmount(unlockPageScroll)
       <div
         v-if="open"
         class="dialog-layer"
-        @click.self="handleBackdropClick"
+        @pointerdown="handleBackdropPointerDown"
+        @pointerup="handleBackdropPointerUp"
       >
         <section
           ref="dialogRef"
