@@ -166,7 +166,9 @@
       </div>
     </Dialog.Body>
     <Dialog.Footer>
-      <Button>
+      <Button
+        @click="markdownDialogOpen = false"
+      >
         取消
       </Button>
       <Button
