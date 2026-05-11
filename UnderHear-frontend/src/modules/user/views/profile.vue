@@ -78,9 +78,15 @@
     <div class="right-column">
       <div class="profile-markdown">
         <div class="markdown-header">
-          {{ profile?.nickname }} / README.md
+          <div>{{ profile?.nickname }} / README.md</div>
+          <Button
+            v-if="profile?.markdown !== null"
+            variant="link"
+            @click="openMarkdownDialog"
+          >
+            编辑
+          </Button>
         </div>
-
         <div class="markdown-content">
           <!-- eslint-disable vue/no-v-html -->
           <div
@@ -173,6 +179,8 @@
       </Button>
       <Button
         :variant="'primary'"
+        :loading="markdownSaving"
+        @click="saveMarkdown"
       >
         保存
       </Button>
@@ -190,6 +198,7 @@ import 'github-markdown-css/github-markdown-light.css'
 import { Avatar } from '@/components/z-ui/avatar'
 import { Blankslate } from '@/components/z-ui/blankslate'
 import { Button } from '@/components/z-ui/button'
+import { Banner } from '@/components/z-ui/banner'
 import { Container } from '@/components/z-ui/container'
 import { Dialog } from '@/components/z-ui/dialog'
 import { Textarea } from '@/components/z-ui/textarea'
@@ -201,7 +210,7 @@ import {
   RepoTemplate
 } from '@/components/z-ui/icon/Octicons-vue'
 import { useUserStore } from '@/stores/user'
-import { getPublicUserProfile, type PublicUserProfile } from '../api/profile'
+import { getPublicUserProfile, saveCurrentUserMarkdown, type PublicUserProfile } from '../api/profile'
 
 import UserNotFound from '@/modules/error/views/404-user.vue'
 
@@ -212,6 +221,7 @@ const profile = ref<PublicUserProfile | null | undefined>(undefined)
 const markdownDialogOpen = ref(false)
 const markdownDraft = ref('')
 const markdownMode = ref<'edit' | 'preview'>('edit')
+const markdownSaving = ref(false)
 
 const renderMarkdown = (content: string) => {
   const html = marked.parse(content, {
@@ -238,6 +248,27 @@ const openMarkdownDialog = () => {
   markdownDraft.value = profile.value?.markdown ?? ''
   markdownMode.value = 'edit'
   markdownDialogOpen.value = true
+}
+
+const saveMarkdown = async () => {
+  if (!profile.value || markdownSaving.value) {
+    return
+  }
+
+  markdownSaving.value = true
+  try {
+    await saveCurrentUserMarkdown({ content: markdownDraft.value })
+    profile.value = {
+      ...profile.value,
+      markdown: markdownDraft.value
+    }
+    markdownDialogOpen.value = false
+    Banner.success('保存成功。')
+  } catch (error) {
+    Banner.error(error instanceof Error ? error.message : '保存失败，请稍后重试。')
+  } finally {
+    markdownSaving.value = false
+  }
 }
 
 const fetchProfile = async () => {
@@ -352,6 +383,8 @@ onMounted(async () => {
   margin-bottom: 16px;
   color: var(--fgColor-default);
   font-size: 12px;
+  justify-content: space-between;
+  align-items: center;
 }
 
 .markdown-content {
