@@ -24,6 +24,7 @@
           height="16"
           viewBox="0 0 16 16"
           width="16"
+          fill="currentColor"
         >
           <path
             d="m4.427 7.427 3.396 3.396a.25.25 0 0 0 .354 0l3.396-3.396A.25.25 0 0 0 11.396 7H4.604a.25.25 0 0 0-.177.427Z"
@@ -293,16 +294,16 @@ function handleOtherOpen(e: Event) {
     font-size: 14px;
 }
 
-.select.open .select-trigger,
-.select-trigger:hover {
+.select.open:not(.disabled) .select-trigger,
+.select-trigger:hover:not(:disabled) {
   outline: 2px solid var(--focus-outlineColor, #0969da);
   outline-offset: -1px;
 }
 
 
 .select-trigger:disabled {
-    opacity: 0.55;
     cursor: not-allowed;
+    background: var(--bgColor-muted, #f6f8fa);
 }
 
 .select-value {
@@ -313,7 +314,6 @@ function handleOtherOpen(e: Event) {
 
 .select-arrow {
     margin-left: auto;
-    font-size: 0.9em;
     color: var(--fgColor-muted, #59636e);
     display: inline-flex;
 }
@@ -352,7 +352,7 @@ function handleOtherOpen(e: Event) {
     position: relative;
     padding: 0.5em 1em;
     cursor: pointer;
-    font-size: 0.9rem;
+    font-size: 14px;
     color: var(--fgColor-default, #1f2328);
     display: flex;
     align-items: center;
@@ -360,6 +360,14 @@ function handleOtherOpen(e: Event) {
     transition: background .12s, color .12s;
     white-space: nowrap;
     border-radius: 4px;
+}
+
+.select[data-size='small'] .select-option {
+    font-size: 12px;
+}
+
+.select[data-size='large'] .select-option {
+    font-size: 14px;
 }
 
 .select-option.active:not(.selected) {
@@ -386,8 +394,8 @@ function handleOtherOpen(e: Event) {
 }
 
 .select.disabled .select-trigger {
-    opacity: 0.55;
     cursor: not-allowed;
+    background: var(--bgColor-muted, #f6f8fa);
 }
 
 /* 过渡 */
