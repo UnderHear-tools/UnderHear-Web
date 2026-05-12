@@ -26,6 +26,10 @@
           {{ profile?.bio || '这个用户还没有填写简介。' }}
         </p>
 
+        <Button v-if="isOwnProfile" class="edit-profile-button">
+          编辑资料
+        </Button>
+
         <div class="links">
           <ul>
             <li v-if="profile?.pronoun">
@@ -80,7 +84,7 @@
         <div class="markdown-header">
           <div>{{ profile?.nickname }} / README.md</div>
           <Button
-            v-if="profile?.markdown !== null"
+            v-if="isOwnProfile && profile?.markdown !== null"
             variant="link"
             @click="openMarkdownDialog"
           >
@@ -336,6 +340,11 @@ onMounted(async () => {
   font-weight: 400;
   line-height: 20px;
   overflow-wrap: anywhere;
+}
+
+.edit-profile-button {
+  margin-bottom: 16px;
+  width: 100%;
 }
 
 .links ul {
