@@ -56,7 +56,7 @@
       </div>
 
       <div class="visibility-select-wrap">
-        <Dropdown>
+        <Dropdown ref="visibilityDropdownRef">
           <template #trigger>
             <Button>
               <template #leadingVisual>
@@ -81,6 +81,7 @@
                 :key="item.value"
                 class="visibility-action-item"
                 :value="item.value"
+                @click="visibilityDropdownRef?.close()"
               >
                 <component
                   :is="item.icon"
@@ -124,7 +125,7 @@
 </template>
 
 <script setup lang="ts">
-import { computed } from 'vue'
+import { computed, ref } from 'vue'
 import { FormControl } from '@/components/z-ui/form-control'
 import { Input } from '@/components/z-ui/input'
 import { Textarea } from '@/components/z-ui/textarea'
@@ -176,6 +177,8 @@ const visibilityOptions: VisibilityOption[] = [
     icon: Lock
   }
 ]
+
+const visibilityDropdownRef = ref<InstanceType<typeof Dropdown>>()
 
 const selectedVisibilityOption = computed(() => {
   return visibilityOptions.find(item => item.value === props.visibility) ?? visibilityOptions[0]
