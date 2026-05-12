@@ -64,6 +64,21 @@
       </ComponentDocsDemoBlock>
     </ComponentDocsSection>
 
+    <ComponentDocsSection title="自定义最大宽度">
+      <template #description>
+        通过 <code>max-width</code> 调整容器最大宽度。
+      </template>
+      <ComponentDocsDemoBlock :code="demo4Code">
+        <div class="demo-wrapper">
+          <Container max-width="640px">
+            <div class="demo-block">
+              这个容器的最大宽度被限制为 640px。
+            </div>
+          </Container>
+        </div>
+      </ComponentDocsDemoBlock>
+    </ComponentDocsSection>
+
     <ComponentDocsSection
       title="API"
       variant="api"
@@ -133,6 +148,16 @@ const demo3Code = `<!-- 在小屏设备（≤768px）下内边距自动缩小为
 import { Container } from '@/components/z-ui/container'
 <\/script>`
 
+const demo4Code = `<template>
+  <Container max-width="640px">
+    <div>这个容器的最大宽度被限制为 640px。</div>
+  </Container>
+</template>
+
+<script setup lang="ts">
+import { Container } from '@/components/z-ui/container'
+<\/script>`
+
 const apiCols: TableColumn[] = [
   { key: 'name', label: '属性名', rowHeader: true, minWidth: '140px' },
   { key: 'default', label: '默认值', minWidth: '100px' },
@@ -141,7 +166,7 @@ const apiCols: TableColumn[] = [
 ]
 
 const apiRows = [
-  { name: '—', description: '该组件无额外属性，仅作为布局容器使用', type: '—', default: '—' }
+  { name: 'maxWidth', description: '容器最大宽度，模板中可写为 max-width', type: 'string', default: "'1150px'" }
 ]
 
 const slotCols: TableColumn[] = [

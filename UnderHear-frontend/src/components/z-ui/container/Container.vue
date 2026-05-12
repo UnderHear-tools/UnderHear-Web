@@ -1,17 +1,27 @@
 <template>
-  <div class="container">
+  <div
+    class="container"
+    :style="{ '--container-max-width': maxWidth }"
+  >
     <slot />
   </div>
 </template>
 
 
 <script setup lang="ts">
-
+withDefaults(
+  defineProps<{
+    maxWidth?: string
+  }>(),
+  {
+    maxWidth: '1150px'
+  }
+)
 </script>
 
 <style scoped>
 .container {
-  max-width: 1150px;
+  max-width: var(--container-max-width);
   margin: 0 auto;
   padding: 2rem;
   background-color: var(--bgColor-default, #ffffff);

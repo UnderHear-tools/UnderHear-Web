@@ -1,6 +1,6 @@
 <template>
   <Container
-    style="max-width: 768px;"
+    max-width="768px"
   >
     <div class="ad-placeholder">
       <img
