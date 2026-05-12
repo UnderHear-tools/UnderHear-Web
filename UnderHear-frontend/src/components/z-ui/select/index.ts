@@ -1,1 +1,8 @@
-export { default as Select } from './Select.vue'
+import SelectRoot from './Select.vue'
+import SelectOption from './SelectOption.vue'
+
+export const Select = Object.assign(SelectRoot, {
+  Option: SelectOption
+})
+
+export { SelectOption }

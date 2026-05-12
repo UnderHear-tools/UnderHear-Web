@@ -2,6 +2,7 @@
   <div
     class="select"
     :class="{ disabled, open }"
+    :data-size="size"
     tabindex="0"
     @keydown.stop.prevent="onKeydown"
   >
@@ -42,7 +43,7 @@
           class="select-options"
         >
           <div
-            v-for="(option, idx) in options"
+            v-for="(option, idx) in selectOptions"
             :id="idBase + '-' + option.value"
             :key="option.value"
             class="select-option"
@@ -74,39 +75,78 @@
         </div>
       </div>
     </transition>
+    <div
+      class="select-option-registry"
+      aria-hidden="true"
+    >
+      <slot />
+    </div>
   </div>
 </template>
 
 <script setup lang="ts">
 import { ref, computed, watch, onMounted, onBeforeUnmount, nextTick } from 'vue'
+import { provideSelectContext, type SelectOptionData } from './context'
 
-interface Option {
-    value: string
-    label: string
-}
+type Option = SelectOptionData
 
-const props = defineProps<{
-    modelValue: string
-    options: Option[]
+type SelectSize = 'small' | 'medium' | 'large'
+
+const props = withDefaults(defineProps<{
+    modelValue?: string
+    options?: Option[]
     placeholder?: string
     disabled?: boolean
+    size?: SelectSize
+}>(), {
+    modelValue: '',
+    options: () => [],
+    placeholder: '',
+    disabled: false,
+    size: 'medium'
+})
+const emit = defineEmits<{
+    'update:modelValue': [value: string]
+    open: []
+    close: []
 }>()
-const emit = defineEmits(['update:modelValue', 'open', 'close'])
 
 const open = ref(false)
 const highlightedIndex = ref(-1)
 const listEl = ref<HTMLDivElement | null>(null)
+const slotOptions = ref<Option[]>([])
+const optionMap = new Map<symbol, Option>()
 const idBase = `select-${Math.random().toString(36).slice(2)}`
 // 用于区分不同实例，实现互斥展开
 const instanceId = `select-inst-${Math.random().toString(36).slice(2)}`
+const selectOptions = computed(() => slotOptions.value.length ? slotOptions.value : props.options)
+
+function syncSlotOptions() {
+    slotOptions.value = Array.from(optionMap.values())
+}
+
+provideSelectContext({
+    registerOption(id, option) {
+        optionMap.set(id, option)
+        syncSlotOptions()
+    },
+    updateOption(id, option) {
+        optionMap.set(id, option)
+        syncSlotOptions()
+    },
+    unregisterOption(id) {
+        optionMap.delete(id)
+        syncSlotOptions()
+    }
+})
 
 const activeId = computed(() => {
     if (highlightedIndex.value < 0) return undefined
-    const opt = props.options[highlightedIndex.value]
+    const opt = selectOptions.value[highlightedIndex.value]
     return opt ? idBase + '-' + opt.value : undefined
 })
 const selectedLabel = computed(() => {
-    const found = props.options.find(opt => opt.value === props.modelValue)
+    const found = selectOptions.value.find(opt => opt.value === props.modelValue)
     return found ? found.label : ''
 })
 
@@ -127,7 +167,7 @@ function select(val: string) {
     emit('close')
 }
 function initHighlight() {
-    const idx = props.options.findIndex(o => o.value === props.modelValue)
+    const idx = selectOptions.value.findIndex(o => o.value === props.modelValue)
     highlightedIndex.value = idx >= 0 ? idx : 0
 }
 function setHighlight(i: number) {
@@ -138,7 +178,7 @@ function move(delta: number) {
         toggle();
         return
     }
-    const len = props.options.length
+    const len = selectOptions.value.length
     if (!len) return
     highlightedIndex.value = ((highlightedIndex.value + delta) + len) % len
     nextTick(() => scrollHighlightedIntoView())
@@ -161,7 +201,12 @@ function onKeydown(e: KeyboardEvent) {
         case 'ArrowUp': move(-1); break
         case 'Enter':
         case ' ': // space
-            if (!open.value) { toggle() } else if (highlightedIndex.value >= 0) select(props.options[highlightedIndex.value].value)
+            if (!open.value) {
+                toggle()
+            } else if (highlightedIndex.value >= 0) {
+                const option = selectOptions.value[highlightedIndex.value]
+                if (option) select(option.value)
+            }
             break
         case 'Escape':
             if (open.value) { open.value = false; emit('close') }
@@ -208,15 +253,22 @@ function handleOtherOpen(e: Event) {
     outline: none;
 }
 
+.select-option-registry {
+    display: none;
+}
+
 .select-trigger {
-    width: auto;
+    width: 100%;
+    height: 32px;
+    box-sizing: border-box;
     /* 由内容撑开 */
     padding: 0.42rem 0.75rem;
-    border: 1px solid var(--borderColor-default, #d1d9e0);
+    border: 1px solid var(--control-borderColor-rest, #d0d7de);
     border-radius: 6px;
-    background: var(--bgColor-default, #ffffff);
+    background: var(--bgColor-default, #fff);
     color: var(--fgColor-default, #1f2328);
-    font-size: 0.95rem;
+    box-shadow: var(--shadow-inset, inset 0px 1px 0px 0px #1f23280a);
+    font-size: 14px;
     text-align: left;
     cursor: pointer;
     display: inline-flex;
@@ -229,9 +281,22 @@ function handleOtherOpen(e: Event) {
     /* 不换行 */
 }
 
+.select[data-size='small'] .select-trigger {
+    height: 29.6px;
+    padding: 0.3rem 0.5rem;
+    font-size: 12px;
+}
+
+.select[data-size='large'] .select-trigger {
+    height: 40px;
+    padding: 0.55rem 1rem;
+    font-size: 14px;
+}
+
 .select.open .select-trigger,
 .select-trigger:hover {
-    border-color: var(--borderColor-accent-emphasis, #0969da);
+  outline: 2px solid var(--focus-outlineColor, #0969da);
+  outline-offset: -1px;
 }
 
 
@@ -265,7 +330,7 @@ function handleOtherOpen(e: Event) {
     /* 与触发器一致 */
     width: max-content;
     /* 允许宽度跟随最长选项，但不小于触发器 */
-    background: var(--bgColor-default, #ffffff);
+    background: var(--bgColor-default, #fff);
     border: 1px solid var(--borderColor-default, #d1d9e0);
     border-radius: 8px;
     box-shadow: 0 6px 18px color-mix(in srgb, var(--fgColor-default, #1f2328) 8%, var(--bgColor-transparent, #ffffff00));

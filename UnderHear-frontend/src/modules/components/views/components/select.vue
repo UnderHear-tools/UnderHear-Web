@@ -7,17 +7,86 @@
 
     <ComponentDocsSection title="基础用法">
       <template #description>
-        通过 <code>v-model</code> 绑定选中值，<code>options</code> 传入选项数组。
+        通过 <code>v-model</code> 绑定选中值，使用 <code>Select.Option</code> 声明选项。
       </template>
       <ComponentDocsDemoBlock :code="demo1Code">
         <Select
           v-model="val1"
-          :options="fruitOptions"
           placeholder="请选择水果"
-        />
+        >
+          <Select.Option value="apple">
+            苹果
+          </Select.Option>
+          <Select.Option value="banana">
+            香蕉
+          </Select.Option>
+          <Select.Option value="cherry">
+            樱桃
+          </Select.Option>
+          <Select.Option value="grape">
+            葡萄
+          </Select.Option>
+          <Select.Option value="mango">
+            芒果
+          </Select.Option>
+        </Select>
         <p class="demo-info">
           当前值：{{ val1 || '未选择' }}
         </p>
+      </ComponentDocsDemoBlock>
+    </ComponentDocsSection>
+
+    <ComponentDocsSection title="尺寸">
+      <template #description>
+        通过 <code>size</code> 控制选择器尺寸，默认是 <code>medium</code>。
+      </template>
+      <ComponentDocsDemoBlock :code="demo2Code">
+        <div class="demo-row">
+          <Select
+            v-model="val2a"
+            size="small"
+            placeholder="Small"
+          >
+            <Select.Option value="one">
+              Choice one
+            </Select.Option>
+            <Select.Option value="two">
+              Choice two
+            </Select.Option>
+            <Select.Option value="three">
+              Choice three
+            </Select.Option>
+          </Select>
+          <Select
+            v-model="val2b"
+            placeholder="Medium"
+          >
+            <Select.Option value="one">
+              Choice one
+            </Select.Option>
+            <Select.Option value="two">
+              Choice two
+            </Select.Option>
+            <Select.Option value="three">
+              Choice three
+            </Select.Option>
+          </Select>
+          <Select
+            v-model="val2c"
+            size="large"
+            placeholder="Large"
+          >
+            <Select.Option value="one">
+              Choice one
+            </Select.Option>
+            <Select.Option value="two">
+              Choice two
+            </Select.Option>
+            <Select.Option value="three">
+              Choice three
+            </Select.Option>
+          </Select>
+        </div>
       </ComponentDocsDemoBlock>
     </ComponentDocsSection>
 
@@ -25,9 +94,9 @@
       <template #description>
         设置 <code>disabled</code> 属性禁用选择器。
       </template>
-      <ComponentDocsDemoBlock :code="demo2Code">
+      <ComponentDocsDemoBlock :code="demo3Code">
         <Select
-          v-model="val2"
+          v-model="val3"
           :options="fruitOptions"
           placeholder="禁用状态"
           disabled
@@ -39,20 +108,20 @@
       <template #description>
         多个 <code>Select</code> 并列时，展开一个会自动关闭其他已展开的实例。
       </template>
-      <ComponentDocsDemoBlock :code="demo3Code">
+      <ComponentDocsDemoBlock :code="demo4Code">
         <div class="demo-row">
           <Select
-            v-model="val3a"
+            v-model="val4a"
             :options="fruitOptions"
             placeholder="选择水果"
           />
           <Select
-            v-model="val3b"
+            v-model="val4b"
             :options="colorOptions"
             placeholder="选择颜色"
           />
           <Select
-            v-model="val3c"
+            v-model="val4c"
             :options="sizeOptions"
             placeholder="选择尺寸"
           />
@@ -64,9 +133,9 @@
       <template #description>
         聚焦后支持键盘操作：<code>↑</code> <code>↓</code> 移动高亮、<code>Enter</code> / <code>Space</code> 选中、<code>Esc</code> 关闭。
       </template>
-      <ComponentDocsDemoBlock :code="demo4Code">
+      <ComponentDocsDemoBlock :code="demo5Code">
         <Select
-          v-model="val4"
+          v-model="val5"
           :options="fruitOptions"
           placeholder="试试键盘操作"
         />
@@ -115,11 +184,14 @@ import ComponentDocsPage from '@/modules/components/components/ComponentDocsPage
 import ComponentDocsSection from '@/modules/components/components/ComponentDocsPage/ComponentDocsSection.vue'
 
 const val1 = ref('')
-const val2 = ref('apple')
-const val3a = ref('')
-const val3b = ref('')
-const val3c = ref('')
-const val4 = ref('')
+const val2a = ref('')
+const val2b = ref('')
+const val2c = ref('')
+const val3 = ref('apple')
+const val4a = ref('')
+const val4b = ref('')
+const val4c = ref('')
+const val5 = ref('')
 
 const fruitOptions = [
   { value: 'apple', label: '苹果' },
@@ -142,7 +214,13 @@ const sizeOptions = [
 ]
 
 const demo1Code = `<template>
-  <Select v-model="val" :options="options" placeholder="请选择水果" />
+  <Select v-model="val" placeholder="请选择水果">
+    <Select.Option value="apple">苹果</Select.Option>
+    <Select.Option value="banana">香蕉</Select.Option>
+    <Select.Option value="cherry">樱桃</Select.Option>
+    <Select.Option value="grape">葡萄</Select.Option>
+    <Select.Option value="mango">芒果</Select.Option>
+  </Select>
   <p>当前值：{{ val || '未选择' }}</p>
 </template>
 
@@ -151,16 +229,40 @@ import { ref } from 'vue'
 import { Select } from '@/components/z-ui/select'
 
 const val = ref('')
-const options = [
-  { value: 'apple', label: '苹果' },
-  { value: 'banana', label: '香蕉' },
-  { value: 'cherry', label: '樱桃' },
-  { value: 'grape', label: '葡萄' },
-  { value: 'mango', label: '芒果' }
-]
 <\/script>`
 
 const demo2Code = `<template>
+  <div style="display: flex; gap: 12px; flex-wrap: wrap; align-items: center;">
+    <Select v-model="small" size="small" placeholder="Small">
+      <Select.Option value="one">Choice one</Select.Option>
+      <Select.Option value="two">Choice two</Select.Option>
+      <Select.Option value="three">Choice three</Select.Option>
+    </Select>
+
+    <Select v-model="medium" placeholder="Medium">
+      <Select.Option value="one">Choice one</Select.Option>
+      <Select.Option value="two">Choice two</Select.Option>
+      <Select.Option value="three">Choice three</Select.Option>
+    </Select>
+
+    <Select v-model="large" size="large" placeholder="Large">
+      <Select.Option value="one">Choice one</Select.Option>
+      <Select.Option value="two">Choice two</Select.Option>
+      <Select.Option value="three">Choice three</Select.Option>
+    </Select>
+  </div>
+</template>
+
+<script setup lang="ts">
+import { ref } from 'vue'
+import { Select } from '@/components/z-ui/select'
+
+const small = ref('')
+const medium = ref('')
+const large = ref('')
+<\/script>`
+
+const demo3Code = `<template>
   <Select v-model="val" :options="options" placeholder="禁用状态" disabled />
 </template>
 
@@ -175,7 +277,7 @@ const options = [
 ]
 <\/script>`
 
-const demo3Code = `<template>
+const demo4Code = `<template>
   <div style="display: flex; gap: 12px; flex-wrap: wrap;">
     <Select v-model="a" :options="fruits" placeholder="选择水果" />
     <Select v-model="b" :options="colors" placeholder="选择颜色" />
@@ -205,7 +307,7 @@ const sizes = [
 ]
 <\/script>`
 
-const demo4Code = `<!-- 聚焦后使用 ↑ ↓ Enter Space Esc 进行键盘操作 -->
+const demo5Code = `<!-- 聚焦后使用 ↑ ↓ Enter Space Esc 进行键盘操作 -->
 <template>
   <Select v-model="val" :options="options" placeholder="试试键盘操作" />
 </template>
@@ -231,14 +333,16 @@ const apiCols: TableColumn[] = [
 
 const apiRows = [
   { name: 'modelValue', description: '绑定值（v-model）', type: 'string', default: '—' },
-  { name: 'options', description: '选项数组', type: 'Option[]', default: '—' },
+  { name: 'options', description: '选项数组，未使用 Select.Option 时可传入', type: 'Option[]', default: '[]' },
   { name: 'placeholder', description: '未选时的占位文字', type: 'string', default: '—' },
-  { name: 'disabled', description: '是否禁用', type: 'boolean', default: 'false' }
+  { name: 'disabled', description: '是否禁用', type: 'boolean', default: 'false' },
+  { name: 'size', description: '选择器尺寸', type: `'small' | 'medium' | 'large'`, default: `'medium'` }
 ]
 
 const optionRows = [
   { name: 'value', description: '选项值', type: 'string', default: '—' },
-  { name: 'label', description: '选项显示文本', type: 'string', default: '—' }
+  { name: 'label', description: '选项显示文本；未设置时读取默认插槽文本', type: 'string', default: '—' },
+  { name: 'default', description: '选项内容', type: 'slot', default: '—' }
 ]
 
 const eventCols: TableColumn[] = [
@@ -263,6 +367,7 @@ const eventRows = [
 
 .demo-row {
   display: flex;
+  align-items: center;
   gap: 12px;
   flex-wrap: wrap;
 }
