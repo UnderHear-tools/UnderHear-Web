@@ -300,12 +300,12 @@ onMounted(async () => {
 }
 
 .left-column {
-  width: 26%;
+  width: 25%;
   min-width: 200px;
 }
 
 .right-column {
-  width: 74%;
+  width: 75%;
   min-width: 0;
 }
 
