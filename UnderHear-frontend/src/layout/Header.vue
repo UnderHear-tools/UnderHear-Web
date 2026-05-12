@@ -1,8 +1,10 @@
 <template>
   <header class="header">
     <div class="header-inner">
-
-      <a class="logo" href="/">
+      <a
+        class="logo"
+        href="/"
+      >
         <LogoUnderHear size="32" />
         <span>UnderHear</span>
       </a>

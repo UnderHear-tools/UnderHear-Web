@@ -7,7 +7,11 @@
           应用创建成功
         </h2>
       </div>
-      <Link :href="appUrl" :link-text="appUrl" target="_blank" />
+      <Link
+        :href="appUrl"
+        :link-text="appUrl"
+        target="_blank"
+      />
     </div>
   </Container>
 </template>

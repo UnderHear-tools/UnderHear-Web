@@ -1,124 +1,127 @@
 <template>
   <Container
-    v-if="profile !== null && profile !== undefined"
-    class="Container"
+    max-width="1280px"
   >
-    <div class="left-column">
-      <div class="profile">
-        <div class="profile-header">
-          <Avatar
-            class="avatar"
-            :src="profile?.avatarUrl"
-            :alt="profile?.nickname"
-            :size="128"
-          />
-          <div class="profile-info">
-            <div class="name">
-              {{ profile?.nickname }}
-            </div>
-            <div class="username">
-              @{{ profile?.nickname }}
+    <div
+      v-if="profile !== null && profile !== undefined"
+      class="layout"
+    >
+      <div class="left-column">
+        <div class="profile">
+          <div class="profile-header">
+            <Avatar
+              class="avatar"
+              :src="profile?.avatarUrl"
+              :alt="profile?.nickname"
+              :size="128"
+            />
+            <div class="profile-info">
+              <div class="name">
+                {{ profile?.nickname }}
+              </div>
+              <div class="username">
+                @{{ profile?.nickname }}
+              </div>
             </div>
           </div>
-        </div>
-
-        <p class="bio">
-          {{ profile?.bio || '这个用户还没有填写简介。' }}
-        </p>
-
-        <Button v-if="isOwnProfile" class="edit-profile-button">
-          编辑资料
-        </Button>
-
-        <div class="links">
-          <ul>
-            <li v-if="profile?.pronoun">
-              <Person
-                size="16"
-                color="#5a5a5a"
-              />
-              <span>{{ profile?.pronoun }}</span>
-            </li>
-            <li v-if="profile?.location">
-              <Location
-                size="16"
-                color="#5a5a5a"
-              />
-              <span>{{ profile?.location }}</span>
-            </li>
-            <li v-if="profile?.email">
-              <Mail
-                size="16"
-                color="#5a5a5a"
-              />
-              <span>{{ profile?.email }}</span>
-            </li>
-            <li v-if="profile?.socialAccount0">
-              <Link
-                size="16"
-                color="#5a5a5a"
-              />
-              <span>{{ profile?.socialAccount0 }}</span>
-            </li>
-            <li v-if="profile?.socialAccount1">
-              <Link
-                size="16"
-                color="#5a5a5a"
-              />
-              <span>{{ profile?.socialAccount1 }}</span>
-            </li>
-            <li v-if="profile?.socialAccount2">
-              <Link
-                size="16"
-                color="#5a5a5a"
-              />
-              <span>{{ profile?.socialAccount2 }}</span>
-            </li>
-          </ul>
+          <p class="bio">
+            {{ profile?.bio || '这个用户还没有填写简介。' }}
+          </p>
+          <Button
+            v-if="isOwnProfile"
+            class="edit-profile-button"
+          >
+            编辑资料
+          </Button>
+          <div class="links">
+            <ul>
+              <li v-if="profile?.pronoun">
+                <Person
+                  size="16"
+                  color="#5a5a5a"
+                />
+                <span>{{ profile?.pronoun }}</span>
+              </li>
+              <li v-if="profile?.location">
+                <Location
+                  size="16"
+                  color="#5a5a5a"
+                />
+                <span>{{ profile?.location }}</span>
+              </li>
+              <li v-if="profile?.email">
+                <Mail
+                  size="16"
+                  color="#5a5a5a"
+                />
+                <span>{{ profile?.email }}</span>
+              </li>
+              <li v-if="profile?.socialAccount0">
+                <Link
+                  size="16"
+                  color="#5a5a5a"
+                />
+                <span>{{ profile?.socialAccount0 }}</span>
+              </li>
+              <li v-if="profile?.socialAccount1">
+                <Link
+                  size="16"
+                  color="#5a5a5a"
+                />
+                <span>{{ profile?.socialAccount1 }}</span>
+              </li>
+              <li v-if="profile?.socialAccount2">
+                <Link
+                  size="16"
+                  color="#5a5a5a"
+                />
+                <span>{{ profile?.socialAccount2 }}</span>
+              </li>
+            </ul>
+          </div>
         </div>
       </div>
-    </div>
-
-    <div class="right-column">
-      <div class="profile-markdown">
-        <div class="markdown-header">
-          <div>{{ profile?.nickname }} / README.md</div>
-          <Button
-            v-if="isOwnProfile && profile?.markdown !== null"
-            variant="link"
-            @click="openMarkdownDialog"
-          >
-            编辑
-          </Button>
-        </div>
-        <div class="markdown-content">
-          <!-- eslint-disable vue/no-v-html -->
-          <div
-            v-if="profile?.markdown !== null"
-            class="markdown-body profile-readme"
-            v-html="renderedProfileMarkdown"
-          />
-          <!-- eslint-enable vue/no-v-html -->
-          <Blankslate
-            v-else
-            narrow
-          >
-            <Blankslate.Visual>
-              <RepoTemplate />
-            </Blankslate.Visual>
-            <Blankslate.Heading>
-              {{ isOwnProfile ? '编写你的 README' : '' }}
-            </Blankslate.Heading>
-            <Blankslate.Description>
-              {{ isOwnProfile ? '用 Markdown 介绍你自己、项目和正在做的事情。让所有人认识你。' : '空空如也' }}
-            </Blankslate.Description>
-            <Blankslate.PrimaryAction
-              v-if="isOwnProfile"
+      <div class="right-column">
+        <div class="profile-markdown">
+          <div class="markdown-header">
+            <div>{{ profile?.nickname }} / README.md</div>
+            <Button
+              v-if="isOwnProfile && profile?.markdown !== null"
+              variant="link"
               @click="openMarkdownDialog"
             >
-              现在开始
-            </Blankslate.PrimaryAction>
-          </Blankslate>
+              编辑
+            </Button>
+          </div>
+          <div class="markdown-content">
+            <!-- eslint-disable vue/no-v-html -->
+            <div
+              v-if="profile?.markdown !== null"
+              class="markdown-body profile-readme"
+              v-html="renderedProfileMarkdown"
+            />
+            <!-- eslint-enable vue/no-v-html -->
+            <Blankslate
+              v-else
+              narrow
+            >
+              <Blankslate.Visual>
+                <RepoTemplate />
+              </Blankslate.Visual>
+              <Blankslate.Heading>
+                {{ isOwnProfile ? '编写你的 README' : '' }}
+              </Blankslate.Heading>
+              <Blankslate.Description>
+                {{ isOwnProfile ? '用 Markdown 介绍你自己、项目和正在做的事情。让所有人认识你。' : '空空如也' }}
+              </Blankslate.Description>
+              <Blankslate.PrimaryAction
+                v-if="isOwnProfile"
+                @click="openMarkdownDialog"
+              >
+                现在开始
+              </Blankslate.PrimaryAction>
+            </Blankslate>
+          </div>
         </div>
       </div>
     </div>
@@ -290,19 +293,19 @@ onMounted(async () => {
 </script>
 
 <style scoped>
-.Container {
+.layout {
   display: flex;
   gap: 30px;
   min-height: calc(100vh - var(--header-height));
 }
 
 .left-column {
-  width: 22%;
+  width: 26%;
   min-width: 200px;
 }
 
 .right-column {
-  width: 78%;
+  width: 74%;
   min-width: 0;
 }
 
@@ -451,7 +454,7 @@ onMounted(async () => {
 }
 
 @media (max-width: 768px) {
-  .Container {
+  .layout {
       flex-direction: column;
       gap: 10px;
   }

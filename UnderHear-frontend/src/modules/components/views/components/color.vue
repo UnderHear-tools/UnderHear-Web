@@ -16,42 +16,90 @@
     <ComponentDocsSection title="主题">
       <div class="themePickerGrid">
         <label class="themeCard">
-          <div class="themePreview" style="background-color: #FFFFFF;">
-            <div class="colorDot" style="background-color: #96A199;" />
-            <div class="colorDot" style="background-color: #0377FF;" />
-            <div class="colorDot" style="background-color: #0FBF3E;" />
-            <div class="colorDot" style="background-color: #B85B06;" />
-            <div class="colorDot" style="background-color: #CF2230;" />
-            <div class="colorDot" style="background-color: #8534F3;" />
-            <div class="colorDot" style="background-color: #EF2AA4;" />
+          <div
+            class="themePreview"
+            style="background-color: #FFFFFF;"
+          >
+            <div
+              class="colorDot"
+              style="background-color: #96A199;"
+            />
+            <div
+              class="colorDot"
+              style="background-color: #0377FF;"
+            />
+            <div
+              class="colorDot"
+              style="background-color: #0FBF3E;"
+            />
+            <div
+              class="colorDot"
+              style="background-color: #B85B06;"
+            />
+            <div
+              class="colorDot"
+              style="background-color: #CF2230;"
+            />
+            <div
+              class="colorDot"
+              style="background-color: #8534F3;"
+            />
+            <div
+              class="colorDot"
+              style="background-color: #EF2AA4;"
+            />
           </div>
           <div class="themeCardContent">
             <input
-              type="radio"
               v-model="selectedTheme"
+              type="radio"
               name="color-theme"
               :value="0"
-            />
+            >
             <span>Light</span>
           </div>
         </label>
         <label class="themeCard">
-          <div class="themePreview" style="background-color: #000000;">
-            <div class="colorDot" style="background-color: #353D37;" />
-            <div class="colorDot" style="background-color: #0A50DB;" />
-            <div class="colorDot" style="background-color: #08872B;" />
-            <div class="colorDot" style="background-color: #B35101;" />
-            <div class="colorDot" style="background-color: #D31231;" />
-            <div class="colorDot" style="background-color: #6619E1;" />
-            <div class="colorDot" style="background-color: #CA2186;" />
+          <div
+            class="themePreview"
+            style="background-color: #000000;"
+          >
+            <div
+              class="colorDot"
+              style="background-color: #353D37;"
+            />
+            <div
+              class="colorDot"
+              style="background-color: #0A50DB;"
+            />
+            <div
+              class="colorDot"
+              style="background-color: #08872B;"
+            />
+            <div
+              class="colorDot"
+              style="background-color: #B35101;"
+            />
+            <div
+              class="colorDot"
+              style="background-color: #D31231;"
+            />
+            <div
+              class="colorDot"
+              style="background-color: #6619E1;"
+            />
+            <div
+              class="colorDot"
+              style="background-color: #CA2186;"
+            />
           </div>
           <div class="themeCardContent">
             <input
-              type="radio"
               v-model="selectedTheme"
+              type="radio"
               name="color-theme"
               :value="1"
-            />
+            >
             <span>Dark</span>
           </div>
         </label>
@@ -67,7 +115,6 @@
           v-for="colorScale in ColorScales"
           :key="colorScale.color"
         >
-
           <div
             v-for="(color, index) in colorScale.scale"
             :key="index"
