@@ -310,32 +310,29 @@ onMounted(async () => {
 }
 
 .profile-info {
+  padding: 16px 0;
   min-width: 0;
-  margin: 20px 0;
   text-align: left;
 }
 
 .name {
   color: var(--fgColor-default);
-  font-size: 26px;
+  font-size: 24px;
   font-weight: 600;
   line-height: 1.25;
   overflow-wrap: anywhere;
 }
 
 .username {
-  margin-top: 4px;
   color: var(--fgColor-muted);
   font-size: 18px;
-  line-height: 1.4;
   overflow-wrap: anywhere;
 }
 
 .bio {
-  margin: 16px 0;
-  color: var(--fgColor-muted);
+  margin-bottom: 16px;
+  color: var(--fgColor-default);
   font-size: 15px;
-  font-style: italic;
   font-weight: 400;
   line-height: 20px;
   overflow-wrap: anywhere;
@@ -456,7 +453,7 @@ onMounted(async () => {
   }
 
   .profile-header {
-    margin-top: 20px;
+    margin: 24px 0;
     display: flex;
     align-items: center;
   }
@@ -471,15 +468,6 @@ onMounted(async () => {
 
   .profile-info {
     text-align: left;
-    margin: 10px 0;
-  }
-
-  .profile .name {
-    font-size: 24px;
-  }
-
-  .profile .username {
-    font-size: 16px;
   }
 }
 </style>
