@@ -81,13 +81,10 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted } from 'vue'
+import { ref } from 'vue'
 
 import { Container } from '@/components/z-ui/container'
 import { Link } from '@/components/z-ui/link'
-
-// 引入数据
-import applicationData from '../views/application/Applicationcard.json'
 
 interface ApplicationDescription {
   zh: string
@@ -108,9 +105,6 @@ interface Application {
 
 const applications = ref<Application[]>([])
 
-onMounted(() => {
-  applications.value = applicationData as Application[]
-})
 </script>
 
 <style scoped>
