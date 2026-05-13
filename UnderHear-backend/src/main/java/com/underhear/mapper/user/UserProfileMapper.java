@@ -42,9 +42,9 @@ public interface UserProfileMapper {
             set `bio` = #{bio},
                 `pronoun` = #{pronoun},
                 `location` = #{location},
-                `social_account0` = #{socialAccount0},
-                `social_account1` = #{socialAccount1},
-                `social_account2` = #{socialAccount2},
+                `social_account_0` = #{socialAccount0},
+                `social_account_1` = #{socialAccount1},
+                `social_account_2` = #{socialAccount2},
                 `updated_at` = current_timestamp
             where `uuid` = #{uuid}
             """)
