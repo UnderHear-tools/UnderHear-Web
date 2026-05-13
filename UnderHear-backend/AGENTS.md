@@ -75,6 +75,7 @@
 - 非必要不要直接 new 通用 `RuntimeException` 表达业务失败。
 - 统一依赖 `GlobalExceptionHandler` 输出错误响应；不要在各个 controller 中重复写 try/catch。
 - 当前 `NOT_LOGIN` 的返回策略是业务码表示未登录，但 HTTP 状态仍为 `200 OK`。这是现有前后端契约，除非任务明确要求，否则不要擅自改动。
+- 如果 `ErrorCode`中没有对应的错误能够较好的反馈该种错误，应当优先考虑新增`ErrorCode`。
 
 ## 认证与安全约定
 

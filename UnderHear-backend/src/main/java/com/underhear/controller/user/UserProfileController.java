@@ -10,7 +10,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.underhear.converter.ToDore;
+import com.underhear.pojo.dto.request.UserProfileDort;
 import com.underhear.pojo.dto.request.UserProfileMarkdownDort;
+import com.underhear.pojo.dto.response.UserInfoDore;
 import com.underhear.pojo.dto.response.UserProfileDore;
 import com.underhear.pojo.dto.response.common.ApiResponse;
 import com.underhear.pojo.entity.User;
@@ -45,5 +47,15 @@ public class UserProfileController {
         User user = sessionAuthService.getCurrentUser(token);
         userProfileService.saveCurrentUserMarkdown(user, request);
         return ApiResponse.success(null);
+    }
+
+    @PostMapping("/me/profile")
+    // 基础资料只允许当前登录用户更新自己的公开资料字段。
+    public ApiResponse<UserInfoDore> saveProfile(
+            @CookieValue(value = "auth_token", required = false) String token,
+            @RequestBody UserProfileDort request) {
+        User user = sessionAuthService.getCurrentUser(token);
+        User updatedUser = userProfileService.saveCurrentUserProfile(user, request);
+        return ApiResponse.success(ToDore.toUserInfoDore(updatedUser));
     }
 }

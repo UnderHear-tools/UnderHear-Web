@@ -15,7 +15,10 @@
               :alt="profile?.nickname"
               :size="128"
             />
-            <div class="profile-info">
+            <div
+              v-if="!profileEditing"
+              class="profile-info"
+            >
               <div class="name">
                 {{ profile?.nickname }}
               </div>
@@ -24,61 +27,153 @@
               </div>
             </div>
           </div>
-          <p class="bio">
-            {{ profile?.bio || '这个用户还没有填写简介。' }}
-          </p>
-          <Button
-            v-if="isOwnProfile"
-            class="edit-profile-button"
+          <form
+            v-if="profileEditing"
+            class="profile-edit-form"
+            @submit.prevent="saveProfileEdit"
           >
-            编辑资料
-          </Button>
-          <div class="links">
-            <ul>
-              <li v-if="profile?.pronoun">
-                <Person
-                  size="16"
-                  color="#5a5a5a"
-                />
-                <span>{{ profile?.pronoun }}</span>
-              </li>
-              <li v-if="profile?.location">
-                <Location
-                  size="16"
-                  color="#5a5a5a"
-                />
-                <span>{{ profile?.location }}</span>
-              </li>
-              <li v-if="profile?.email">
-                <Mail
-                  size="16"
-                  color="#5a5a5a"
-                />
-                <span>{{ profile?.email }}</span>
-              </li>
-              <li v-if="profile?.socialAccount0">
-                <Link
-                  size="16"
-                  color="#5a5a5a"
-                />
-                <span>{{ profile?.socialAccount0 }}</span>
-              </li>
-              <li v-if="profile?.socialAccount1">
-                <Link
-                  size="16"
-                  color="#5a5a5a"
-                />
-                <span>{{ profile?.socialAccount1 }}</span>
-              </li>
-              <li v-if="profile?.socialAccount2">
-                <Link
-                  size="16"
-                  color="#5a5a5a"
-                />
-                <span>{{ profile?.socialAccount2 }}</span>
-              </li>
-            </ul>
-          </div>
+            <FormControl class="profile-edit-field">
+              <FormControl.Label>昵称</FormControl.Label>
+              <Input
+                v-model="profileEditDraft.nickname"
+                class="profile-edit-input"
+                placeholder="昵称"
+                disabled
+              />
+            </FormControl>
+            <FormControl class="profile-edit-field">
+              <FormControl.Label>简介</FormControl.Label>
+              <Textarea
+                v-model="profileEditDraft.bio"
+                class="profile-edit-textarea"
+                rows="3"
+                placeholder="添加简介"
+              />
+            </FormControl>
+            <FormControl class="profile-edit-field">
+              <FormControl.Label>Pronoun</FormControl.Label>
+              <Input
+                v-model="profileEditDraft.pronoun"
+                class="profile-edit-input"
+                placeholder="Pronoun"
+              />
+            </FormControl>
+            <FormControl class="profile-edit-field">
+              <FormControl.Label>位置</FormControl.Label>
+              <Input
+                v-model="profileEditDraft.location"
+                class="profile-edit-input"
+                placeholder="Location"
+              />
+            </FormControl>
+            <FormControl class="profile-edit-field">
+              <FormControl.Label>Email</FormControl.Label>
+              <Input
+                v-model="profileEditDraft.email"
+                class="profile-edit-input"
+                disabled
+              />
+            </FormControl>
+            <FormControl class="profile-edit-field">
+              <FormControl.Label>社交账号 1</FormControl.Label>
+              <Input
+                v-model="profileEditDraft.socialAccount0"
+                class="profile-edit-input"
+                placeholder="Link to social profile 1"
+              />
+            </FormControl>
+            <FormControl class="profile-edit-field">
+              <FormControl.Label>社交账号 2</FormControl.Label>
+              <Input
+                v-model="profileEditDraft.socialAccount1"
+                class="profile-edit-input"
+                placeholder="Link to social profile 2"
+              />
+            </FormControl>
+            <FormControl class="profile-edit-field">
+              <FormControl.Label>社交账号 3</FormControl.Label>
+              <Input
+                v-model="profileEditDraft.socialAccount2"
+                class="profile-edit-input"
+                placeholder="Link to social profile 3"
+              />
+            </FormControl>
+            <div class="profile-edit-actions">
+              <Button
+                type="submit"
+                variant="primary"
+                size="small"
+                :loading="profileSaving"
+              >
+                保存
+              </Button>
+              <Button
+                type="button"
+                size="small"
+                @click="cancelProfileEdit"
+              >
+                取消
+              </Button>
+            </div>
+          </form>
+          <template v-else>
+            <p class="bio">
+              {{ profile?.bio || '这个用户还没有填写简介。' }}
+            </p>
+            <Button
+              v-if="isOwnProfile"
+              class="edit-profile-button"
+              @click="openProfileEdit"
+            >
+              编辑资料
+            </Button>
+            <div class="links">
+              <ul>
+                <li v-if="profile?.pronoun">
+                  <Person
+                    size="16"
+                    color="#5a5a5a"
+                  />
+                  <span>{{ profile?.pronoun }}</span>
+                </li>
+                <li v-if="profile?.location">
+                  <Location
+                    size="16"
+                    color="#5a5a5a"
+                  />
+                  <span>{{ profile?.location }}</span>
+                </li>
+                <li v-if="profile?.email">
+                  <Mail
+                    size="16"
+                    color="#5a5a5a"
+                  />
+                  <span>{{ profile?.email }}</span>
+                </li>
+                <li v-if="profile?.socialAccount0">
+                  <Link
+                    size="16"
+                    color="#5a5a5a"
+                  />
+                  <span>{{ profile?.socialAccount0 }}</span>
+                </li>
+                <li v-if="profile?.socialAccount1">
+                  <Link
+                    size="16"
+                    color="#5a5a5a"
+                  />
+                  <span>{{ profile?.socialAccount1 }}</span>
+                </li>
+                <li v-if="profile?.socialAccount2">
+                  <Link
+                    size="16"
+                    color="#5a5a5a"
+                  />
+                  <span>{{ profile?.socialAccount2 }}</span>
+                </li>
+              </ul>
+            </div>
+          </template>
         </div>
       </div>
       <div class="right-column">
@@ -199,7 +294,7 @@
 <script setup lang="ts">
 import DOMPurify from 'dompurify'
 import { marked } from 'marked'
-import { computed, onMounted, ref } from 'vue'
+import { computed, onMounted, reactive, ref } from 'vue'
 import { useRoute } from 'vue-router'
 import 'github-markdown-css/github-markdown-light.css'
 import { Avatar } from '@/components/z-ui/avatar'
@@ -208,6 +303,8 @@ import { Button } from '@/components/z-ui/button'
 import { Banner } from '@/components/z-ui/banner'
 import { Container } from '@/components/z-ui/container'
 import { Dialog } from '@/components/z-ui/dialog'
+import { FormControl } from '@/components/z-ui/form-control'
+import { Input } from '@/components/z-ui/input'
 import { Textarea } from '@/components/z-ui/textarea'
 import {
   Location,
@@ -217,7 +314,12 @@ import {
   RepoTemplate
 } from '@/components/z-ui/icon/Octicons-vue'
 import { useUserStore } from '@/stores/user'
-import { getPublicUserProfile, saveCurrentUserMarkdown, type PublicUserProfile } from '../api/profile'
+import {
+  getPublicUserProfile,
+  saveCurrentUserMarkdown,
+  saveCurrentUserProfile,
+  type PublicUserProfile
+} from '../api/profile'
 
 import UserNotFound from '@/modules/error/views/404-user.vue'
 
@@ -225,6 +327,18 @@ const route = useRoute()
 const userStore = useUserStore()
 const nickname = String(route.params.nickname ?? '')
 const profile = ref<PublicUserProfile | null | undefined>(undefined)
+const profileEditing = ref(false)
+const profileSaving = ref(false)
+const profileEditDraft = reactive({
+  nickname: '',
+  bio: '',
+  pronoun: '',
+  location: '',
+  email: '',
+  socialAccount0: '',
+  socialAccount1: '',
+  socialAccount2: ''
+})
 const markdownDialogOpen = ref(false)
 const markdownDraft = ref('')
 const markdownMode = ref<'edit' | 'preview'>('edit')
@@ -250,6 +364,59 @@ const renderedProfileMarkdown = computed(() => {
 const renderedDraftMarkdown = computed(() => {
   return renderMarkdown(markdownDraft.value)
 })
+
+const fillProfileEditDraft = () => {
+  if (!profile.value) {
+    return
+  }
+
+  profileEditDraft.nickname = profile.value.nickname
+  profileEditDraft.bio = profile.value.bio ?? ''
+  profileEditDraft.pronoun = profile.value.pronoun ?? ''
+  profileEditDraft.location = profile.value.location ?? ''
+  profileEditDraft.email = profile.value.email
+  profileEditDraft.socialAccount0 = profile.value.socialAccount0 ?? ''
+  profileEditDraft.socialAccount1 = profile.value.socialAccount1 ?? ''
+  profileEditDraft.socialAccount2 = profile.value.socialAccount2 ?? ''
+}
+
+const openProfileEdit = () => {
+  fillProfileEditDraft()
+  profileEditing.value = true
+}
+
+const cancelProfileEdit = () => {
+  profileEditing.value = false
+}
+
+const saveProfileEdit = async () => {
+  if (!profile.value || profileSaving.value) {
+    return
+  }
+
+  profileSaving.value = true
+  try {
+    const updatedProfile = await saveCurrentUserProfile({
+      bio: profileEditDraft.bio,
+      pronoun: profileEditDraft.pronoun,
+      location: profileEditDraft.location,
+      socialAccount0: profileEditDraft.socialAccount0,
+      socialAccount1: profileEditDraft.socialAccount1,
+      socialAccount2: profileEditDraft.socialAccount2
+    })
+    profile.value = {
+      ...updatedProfile,
+      markdown: profile.value.markdown
+    }
+    userStore.setUserInfo(updatedProfile)
+    profileEditing.value = false
+    Banner.success('保存成功。')
+  } catch (error) {
+    Banner.error(error instanceof Error ? error.message : '保存失败，请稍后重试。')
+  } finally {
+    profileSaving.value = false
+  }
+}
 
 const openMarkdownDialog = () => {
   markdownDraft.value = profile.value?.markdown ?? ''
@@ -332,8 +499,9 @@ onMounted(async () => {
 
 .username {
   color: var(--fgColor-muted);
-  font-size: 18px;
+  font-size: 20px;
   overflow-wrap: anywhere;
+  font-weight: 200;
 }
 
 .bio {
@@ -348,6 +516,28 @@ onMounted(async () => {
 .edit-profile-button {
   margin-bottom: 16px;
   width: 100%;
+}
+
+.profile-edit-form {
+  display: grid;
+  gap: 12px;
+  margin-top: 16px;
+}
+
+.profile-edit-field :deep(.input),
+.profile-edit-field :deep(.textarea) {
+  box-sizing: border-box;
+  width: 100%;
+}
+
+.profile-edit-textarea {
+  min-height: 88px;
+}
+
+.profile-edit-actions {
+  display: flex;
+  gap: 8px;
+  margin-top: 4px;
 }
 
 .links ul {

@@ -15,6 +15,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import com.underhear.exception.BizException;
 import com.underhear.exception.ErrorCode;
 import com.underhear.mapper.user.UserProfileMapper;
+import com.underhear.pojo.dto.request.UserProfileDort;
 import com.underhear.pojo.dto.request.UserProfileMarkdownDort;
 import com.underhear.pojo.entity.User;
 import com.underhear.pojo.entity.UserProfileMarkdown;
@@ -101,6 +102,58 @@ class UserProfileServiceImplTest {
         assertEquals(ErrorCode.INTERNAL_ERROR.getCode(), exception.getCode());
     }
 
+    @Test
+    // 保存基础资料时只使用登录态用户 uuid，并返回同步后的用户对象。
+    void saveCurrentUserProfileShouldUpdateByCurrentUserUuid() {
+        UserProfileDort request = profileRequest(" updated bio ", " they/them ", " Hangzhou ",
+                " https://github.com/tester ", " https://gitee.com/tester ", " https://example.com/tester ");
+        when(userProfileMapper.updateCurrentUserProfile(
+                "user-1",
+                "updated bio",
+                "they/them",
+                "Hangzhou",
+                "https://github.com/tester",
+                "https://gitee.com/tester",
+                "https://example.com/tester")).thenReturn(1);
+
+        User result = userProfileService.saveCurrentUserProfile(user(), request);
+
+        assertEquals("updated bio", result.getBio());
+        assertEquals("they/them", result.getPronoun());
+        assertEquals("Hangzhou", result.getLocation());
+        assertEquals("https://github.com/tester", result.getSocialAccount0());
+        assertEquals("https://gitee.com/tester", result.getSocialAccount1());
+        assertEquals("https://example.com/tester", result.getSocialAccount2());
+    }
+
+    @Test
+    // 空字符串资料字段应统一转为 null，方便公开资料展示时按空值处理。
+    void saveCurrentUserProfileShouldNormalizeBlankFieldsToNull() {
+        UserProfileDort request = profileRequest(" ", "", null, "   ", null, "");
+        when(userProfileMapper.updateCurrentUserProfile("user-1", null, null, null, null, null, null)).thenReturn(1);
+
+        User result = userProfileService.saveCurrentUserProfile(user(), request);
+
+        assertEquals(null, result.getBio());
+        assertEquals(null, result.getPronoun());
+        assertEquals(null, result.getLocation());
+        assertEquals(null, result.getSocialAccount0());
+        assertEquals(null, result.getSocialAccount1());
+        assertEquals(null, result.getSocialAccount2());
+    }
+
+    @Test
+    // 基础资料更新失败时按内部错误处理，避免调用方误以为资料已保存。
+    void saveCurrentUserProfileShouldThrowWhenUpdateFails() {
+        UserProfileDort request = profileRequest("bio", null, null, null, null, null);
+        when(userProfileMapper.updateCurrentUserProfile("user-1", "bio", null, null, null, null, null)).thenReturn(0);
+
+        BizException exception = assertThrows(BizException.class,
+                () -> userProfileService.saveCurrentUserProfile(user(), request));
+
+        assertEquals(ErrorCode.INTERNAL_ERROR.getCode(), exception.getCode());
+    }
+
     private User user() {
         User user = new User();
         user.setUuid("user-1");
@@ -112,6 +165,22 @@ class UserProfileServiceImplTest {
     private UserProfileMarkdownDort request(String content) {
         UserProfileMarkdownDort request = new UserProfileMarkdownDort();
         request.setContent(content);
+        return request;
+    }
+
+    private UserProfileDort profileRequest(String bio,
+                                           String pronoun,
+                                           String location,
+                                           String socialAccount0,
+                                           String socialAccount1,
+                                           String socialAccount2) {
+        UserProfileDort request = new UserProfileDort();
+        request.setBio(bio);
+        request.setPronoun(pronoun);
+        request.setLocation(location);
+        request.setSocialAccount0(socialAccount0);
+        request.setSocialAccount1(socialAccount1);
+        request.setSocialAccount2(socialAccount2);
         return request;
     }
 

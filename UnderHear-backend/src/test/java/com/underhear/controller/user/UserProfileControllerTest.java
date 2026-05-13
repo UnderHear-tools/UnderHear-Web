@@ -22,6 +22,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import com.underhear.exception.BizException;
 import com.underhear.exception.ErrorCode;
 import com.underhear.exception.GlobalExceptionHandler;
+import com.underhear.pojo.dto.request.UserProfileDort;
 import com.underhear.pojo.dto.request.UserProfileMarkdownDort;
 import com.underhear.pojo.entity.User;
 import com.underhear.pojo.entity.UserProfileMarkdown;
@@ -143,12 +144,78 @@ class UserProfileControllerTest {
                 .andExpect(jsonPath("$.data").value(nullValue()));
     }
 
+    @Test
+    // 保存基础资料时通过 cookie 登录态定位当前用户，并返回更新后的当前用户资料。
+    void saveProfileShouldUseCurrentUserFromCookieAndReturnUpdatedProfile() throws Exception {
+        User user = user();
+        when(sessionAuthService.getCurrentUser("token")).thenReturn(user);
+        when(userProfileService.saveCurrentUserProfile(any(User.class), any(UserProfileDort.class)))
+                .thenReturn(updatedUser());
+
+        mockMvc.perform(post("/users/me/profile")
+                .cookie(new Cookie("auth_token", "token"))
+                .contentType(MediaType.APPLICATION_JSON)
+                .content("""
+                        {
+                          "bio": "updated bio",
+                          "pronoun": "they/them",
+                          "location": "Hangzhou",
+                          "socialAccount0": "https://github.com/tester",
+                          "socialAccount1": "",
+                          "socialAccount2": null
+                        }
+                        """))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.code").value("OK"))
+                .andExpect(jsonPath("$.data.uuid").value("user-1"))
+                .andExpect(jsonPath("$.data.nickname").value("tester"))
+                .andExpect(jsonPath("$.data.email").value("tester@example.com"))
+                .andExpect(jsonPath("$.data.bio").value("updated bio"))
+                .andExpect(jsonPath("$.data.pronoun").value("they/them"))
+                .andExpect(jsonPath("$.data.location").value("Hangzhou"))
+                .andExpect(jsonPath("$.data.socialAccount0").value("https://github.com/tester"))
+                .andExpect(jsonPath("$.data.socialAccount1").value(nullValue()))
+                .andExpect(jsonPath("$.data.socialAccount2").value(nullValue()));
+
+        verify(userProfileService).saveCurrentUserProfile(any(User.class), any(UserProfileDort.class));
+    }
+
+    @Test
+    // 保存基础资料接口沿用当前未登录契约：业务码 NOT_LOGIN，HTTP 仍为 200。
+    void saveProfileShouldReturnNotLoginWhenCookieInvalid() throws Exception {
+        when(sessionAuthService.getCurrentUser("expired")).thenThrow(new BizException(ErrorCode.NOT_LOGIN));
+
+        mockMvc.perform(post("/users/me/profile")
+                .cookie(new Cookie("auth_token", "expired"))
+                .contentType(MediaType.APPLICATION_JSON)
+                .content("""
+                        {
+                          "bio": "updated bio"
+                        }
+                        """))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.code").value("NOT_LOGIN"))
+                .andExpect(jsonPath("$.message").value("未登录或登录已过期"))
+                .andExpect(jsonPath("$.data").value(nullValue()));
+    }
+
     private User user() {
         User user = new User();
         user.setUuid("user-1");
         user.setNickName("tester");
         user.setEmail("tester@example.com");
         user.setAvatarUrl("https://avatar/tester.png");
+        return user;
+    }
+
+    private User updatedUser() {
+        User user = user();
+        user.setBio("updated bio");
+        user.setPronoun("they/them");
+        user.setLocation("Hangzhou");
+        user.setSocialAccount0("https://github.com/tester");
+        user.setSocialAccount1(null);
+        user.setSocialAccount2(null);
         return user;
     }
 

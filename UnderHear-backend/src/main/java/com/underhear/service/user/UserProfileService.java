@@ -1,6 +1,7 @@
 package com.underhear.service.user;
 
 import com.underhear.pojo.dto.request.UserProfileMarkdownDort;
+import com.underhear.pojo.dto.request.UserProfileDort;
 import com.underhear.pojo.entity.User;
 import com.underhear.pojo.entity.UserProfileMarkdown;
 
@@ -14,4 +15,7 @@ public interface UserProfileService {
 
     // 保存当前用户的 Markdown 资料页，uuid 只能来自登录态用户。
     void saveCurrentUserMarkdown(User user, UserProfileMarkdownDort request);
+
+    // 保存当前用户的公开基础资料，uuid 只能来自登录态用户。
+    User saveCurrentUserProfile(User user, UserProfileDort request);
 }
