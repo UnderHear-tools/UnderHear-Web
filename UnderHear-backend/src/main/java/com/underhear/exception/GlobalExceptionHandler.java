@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.multipart.MaxUploadSizeExceededException;
 import org.springframework.web.servlet.resource.NoResourceFoundException;
+import org.springframework.dao.DataIntegrityViolationException;
 
 import com.underhear.pojo.dto.response.common.ApiResponse;
 
@@ -40,6 +41,15 @@ public class GlobalExceptionHandler {
         log.warn("Upload size exceeded: {}", ex.getMessage());
         return ResponseEntity.status(ErrorCode.MAX_UPLOAD_SIZE_EXCEEDED.getStatus())
                 .body(ApiResponse.fail(ErrorCode.MAX_UPLOAD_SIZE_EXCEEDED.getCode(), message));
+    }
+
+    // 处理数据完整性异常（例如字段过长、外键约束等）
+    @ExceptionHandler(DataIntegrityViolationException.class)
+    public ResponseEntity<ApiResponse<Void>> handleDataIntegrityViolationException(DataIntegrityViolationException ex) {
+        String message = ErrorCode.DATA_TOO_LONG.getMessage();
+        log.warn("Data integrity violation: {}", ex.getMessage());
+        return ResponseEntity.status(ErrorCode.DATA_TOO_LONG.getStatus())
+                .body(ApiResponse.fail(ErrorCode.DATA_TOO_LONG.getCode(), message));
     }
 
     // 处理未命中任何接口或静态资源的请求，统一返回未找到资源。

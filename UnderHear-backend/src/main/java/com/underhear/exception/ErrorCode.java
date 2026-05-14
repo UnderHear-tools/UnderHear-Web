@@ -13,6 +13,7 @@ public enum ErrorCode {
     NOT_FOUND("NOT_FOUND", "未找到资源", HttpStatus.NOT_FOUND),
     INTERNAL_ERROR("INTERNAL_ERROR", "服务器内部错误", HttpStatus.INTERNAL_SERVER_ERROR),
     MAX_UPLOAD_SIZE_EXCEEDED("MAX_UPLOAD_SIZE_EXCEEDED", "上传文件大小超过限制", HttpStatus.CONTENT_TOO_LARGE),
+    DATA_TOO_LONG("DATA_TOO_LONG", "你提交了一些什么奇怪的东西？超过了长度限制！", HttpStatus.BAD_REQUEST),
 
     // 业务错误
     USER_NOT_FOUND("USER_NOT_FOUND", "未找到该用户", HttpStatus.NOT_FOUND),
