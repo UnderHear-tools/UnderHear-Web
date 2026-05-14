@@ -1,6 +1,7 @@
 <template>
   <input
     class="input"
+    :data-size="size"
     :value="modelValue"
     @input="onInput"
     @compositionstart="onCompositionStart"
@@ -13,10 +14,12 @@ import { ref } from 'vue'
 
 interface Props {
   modelValue?: string
+  size?: 'small' | 'medium' | 'large'
 }
 
 withDefaults(defineProps<Props>(), {
-  modelValue: ''
+  modelValue: '',
+  size: 'medium'
 })
 
 const emit = defineEmits<{
@@ -51,8 +54,21 @@ function onInput(event: Event) {
   background-repeat: no-repeat;
   border-radius: 6px;
   padding: 5px 12px;
+}
+
+.input[data-size="small"] {
+  font-size: 12px;
+  height: 29.6px;
+}
+
+.input[data-size="medium"] {
   font-size: 14px;
-  line-height: 20px;
+  height: 32px;
+}
+
+.input[data-size="large"] {
+  font-size: 14px;
+  height: 40px;
 }
 
 .input:focus {

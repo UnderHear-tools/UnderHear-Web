@@ -86,7 +86,7 @@ src/modules/<domain>/
 - 颜色、背景、边框、阴影、圆角、字号等优先使用 `src/css/themes/light.css`、`src/css/themes/dark.css` 中的 `var(--...)` token，并提供合理 fallback。
 - 全局样式入口是 `src/css/style.css`，不要在业务改动中随意重写全局基础样式。
 - 组件库组件默认使用 `scoped` 样式；只有在受控组件体系内部需要联动时才使用 `:deep`。
-- 视觉状态优先通过 `data-*` 表达，例如 `data-variant`、`data-size`、`data-loading`、`data-open`。
+- **组件状态和样式的控制，优先考虑使用 `data-*` 属性来实现**（例如 `data-variant`、`data-size`、`data-loading`、`data-open`），避免繁琐的 CSS class 动态拼接。
 - 交互组件必须同步考虑默认、hover、active、focus-visible、disabled、loading 等状态；loading 状态应同时处理禁用、`aria-busy` 和视觉反馈。
 - Dropdown / 弹层沿用 `Dropdown` 现有模型：`trigger`、`content` 插槽，`side` 控制方向，外部点击关闭，内容区点击默认不关闭；二级菜单需要调用方显式传入 `side="outside-right"`。
 - 组件介绍页位于 `src/modules/components/views/components` 时，遵循既有文档页骨架：`ComponentDocsPage`、`ComponentDocsHeader`、`ComponentDocsSection`、`ComponentDocsDemoBlock`、`Table` API 表格。
