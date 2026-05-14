@@ -23,7 +23,8 @@
                 {{ profile?.nickname }}
               </div>
               <div class="username">
-                @{{ profile?.nickname }}
+                <span>@{{ profile?.nickname }}</span>
+                <span v-if="profile?.pronoun"> · {{ profile?.pronoun }}</span>
               </div>
             </div>
           </div>
@@ -32,7 +33,7 @@
             class="profile-edit-form"
             @submit.prevent="saveProfileEdit"
           >
-            <FormControl class="profile-edit-field">
+            <FormControl>
               <FormControl.Label>昵称</FormControl.Label>
               <Input
                 v-model="profileEditDraft.nickname"
@@ -41,7 +42,7 @@
                 disabled
               />
             </FormControl>
-            <FormControl class="profile-edit-field">
+            <FormControl>
               <FormControl.Label>简介</FormControl.Label>
               <Textarea
                 v-model="profileEditDraft.bio"
@@ -50,54 +51,87 @@
                 placeholder="添加简介"
               />
             </FormControl>
-            <FormControl class="profile-edit-field">
-              <FormControl.Label>Pronoun</FormControl.Label>
+            <FormControl>
+              <FormControl.Label>称呼</FormControl.Label>
               <Input
                 v-model="profileEditDraft.pronoun"
                 class="profile-edit-input"
-                placeholder="Pronoun"
+                placeholder="选择一个你喜欢的称谓吧"
               />
             </FormControl>
-            <FormControl class="profile-edit-field">
-              <FormControl.Label>位置</FormControl.Label>
-              <Input
-                v-model="profileEditDraft.location"
-                class="profile-edit-input"
-                placeholder="Location"
-              />
-            </FormControl>
-            <FormControl class="profile-edit-field">
-              <FormControl.Label>Email</FormControl.Label>
-              <Input
-                v-model="profileEditDraft.email"
-                class="profile-edit-input"
-                disabled
-              />
-            </FormControl>
-            <FormControl class="profile-edit-field">
-              <FormControl.Label>社交账号 1</FormControl.Label>
-              <Input
-                v-model="profileEditDraft.socialAccount0"
-                class="profile-edit-input"
-                placeholder="Link to social profile 1"
-              />
-            </FormControl>
-            <FormControl class="profile-edit-field">
-              <FormControl.Label>社交账号 2</FormControl.Label>
-              <Input
-                v-model="profileEditDraft.socialAccount1"
-                class="profile-edit-input"
-                placeholder="Link to social profile 2"
-              />
-            </FormControl>
-            <FormControl class="profile-edit-field">
-              <FormControl.Label>社交账号 3</FormControl.Label>
-              <Input
-                v-model="profileEditDraft.socialAccount2"
-                class="profile-edit-input"
-                placeholder="Link to social profile 3"
-              />
-            </FormControl>
+            <div>
+              <div class="profile-icon-input">
+                <Location
+                  size="16"
+                  color="#5a5a5a"
+                  class="input-icon"
+                />
+                <Input
+                  v-model="profileEditDraft.location"
+                  class="profile-edit-input"
+                  size="small"
+                  placeholder="位置"
+                />
+              </div>
+              <div class="profile-icon-input">
+                <Mail
+                  size="16"
+                  color="#5a5a5a"
+                  class="input-icon"
+                />
+                <Input
+                  v-model="profileEditDraft.email"
+                  class="profile-edit-input"
+                  size="small"
+                  disabled
+                />
+              </div>
+            </div>
+
+            <div>
+              <div class="social-header">
+                社交账号
+              </div>
+              <div class="profile-icon-input">
+                <Link
+                  size="16"
+                  color="#5a5a5a"
+                  class="input-icon"
+                />
+                <Input
+                  v-model="profileEditDraft.socialAccount0"
+                  class="profile-edit-input"
+                  size="small"
+                  placeholder="https://github.com/UnderHear"
+                />
+              </div>
+              <div class="profile-icon-input">
+                <Link
+                  size="16"
+                  color="#5a5a5a"
+                  class="input-icon"
+                />
+                <Input
+                  v-model="profileEditDraft.socialAccount1"
+                  class="profile-edit-input"
+                  size="small"
+                  placeholder="https://x.com/github"
+                />
+              </div>
+              <div class="profile-icon-input">
+                <Link
+                  size="16"
+                  color="#5a5a5a"
+                  class="input-icon"
+                />
+                <Input
+                  v-model="profileEditDraft.socialAccount2"
+                  class="profile-edit-input"
+                  size="small"
+                  placeholder="12345678@gmail.com"
+                />
+              </div>
+            </div>
             <div class="profile-edit-actions">
               <Button
                 type="submit"
@@ -129,13 +163,6 @@
             </Button>
             <div class="links">
               <ul>
-                <li v-if="profile?.pronoun">
-                  <Person
-                    size="16"
-                    color="#5a5a5a"
-                  />
-                  <span>{{ profile?.pronoun }}</span>
-                </li>
                 <li v-if="profile?.location">
                   <Location
                     size="16"
@@ -309,7 +336,6 @@ import { Textarea } from '@/components/z-ui/textarea'
 import {
   Location,
   Mail,
-  Person,
   Link,
   RepoTemplate
 } from '@/components/z-ui/icon/Octicons-vue'
@@ -501,7 +527,7 @@ onMounted(async () => {
   color: var(--fgColor-muted);
   font-size: 20px;
   overflow-wrap: anywhere;
-  font-weight: 200;
+  font-weight: 300;
 }
 
 .bio {
@@ -524,10 +550,26 @@ onMounted(async () => {
   margin-top: 16px;
 }
 
-.profile-edit-field :deep(.input),
-.profile-edit-field :deep(.textarea) {
+.profile-icon-input {
+  display: flex;
+  align-items: center;
+  margin-top: 8px;
+  gap: 8px;
+}
+
+.profile-icon-input .input-icon {
+  flex-shrink: 0;
+}
+
+.profile-icon-input :deep(.input) {
   box-sizing: border-box;
-  width: 100%;
+  flex: 1;
+}
+
+.social-header {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--fgColor-default, #1f2328);
 }
 
 .profile-edit-textarea {
@@ -559,7 +601,7 @@ onMounted(async () => {
 
 .links li svg {
   flex-shrink: 0;
-  transform: translateY(2px);
+  transform: translateY(3px);
 }
 
 .links li span {
