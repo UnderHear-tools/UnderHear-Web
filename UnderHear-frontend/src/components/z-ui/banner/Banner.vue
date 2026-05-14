@@ -102,7 +102,7 @@ function createBanner(message: string, type: BannerType, options: BannerOptions)
     secondaryAction: options.secondaryAction,
     actionsLayout: options.actionsLayout ?? 'default',
     flush: options.flush ?? false,
-    duration: options.duration
+    duration: options.duration ?? 5000
   }
 }
 
