@@ -77,6 +77,31 @@
       </ComponentDocsDemoBlock>
     </ComponentDocsSection>
 
+    <ComponentDocsSection title="尺寸大小">
+      <template #description>
+        通过 <code>size</code> 属性设置组件大小，支持 <code>small</code>、<code>medium</code> 和 <code>large</code>，默认为 <code>medium</code>。
+      </template>
+      <ComponentDocsDemoBlock :code="demo5Code">
+        <div class="demo-row" style="align-items: center;">
+          <Input
+            v-model="valSmall"
+            size="small"
+            placeholder="small (29.6px)"
+          />
+          <Input
+            v-model="valMedium"
+            size="medium"
+            placeholder="medium (32px)"
+          />
+          <Input
+            v-model="valLarge"
+            size="large"
+            placeholder="large (40px)"
+          />
+        </div>
+      </ComponentDocsDemoBlock>
+    </ComponentDocsSection>
+
     <ComponentDocsSection
       title="API"
       variant="api"
@@ -124,6 +149,9 @@ const val2 = ref('Disabled value')
 const email = ref('')
 const password = ref('')
 const profileName = ref('Mona L!$a')
+const valSmall = ref('')
+const valMedium = ref('')
+const valLarge = ref('')
 
 const hasInvalidChars = computed(() => /[^a-zA-Z\s]/.test(profileName.value))
 
@@ -185,6 +213,23 @@ const name = ref('Mona L!$a')
 const hasInvalidChars = computed(() => /[^a-zA-Z\\s]/.test(name.value))
 <\/script>`
 
+const demo5Code = `<template>
+  <div style="display: flex; gap: 12px; flex-wrap: wrap; align-items: center;">
+    <Input v-model="valSmall" size="small" placeholder="small" />
+    <Input v-model="valMedium" size="medium" placeholder="medium" />
+    <Input v-model="valLarge" size="large" placeholder="large" />
+  </div>
+</template>
+
+<script setup lang="ts">
+import { ref } from 'vue'
+import { Input } from '@/components/z-ui/input'
+
+const valSmall = ref('')
+const valMedium = ref('')
+const valLarge = ref('')
+<\/script>`
+
 const apiCols: TableColumn[] = [
   { key: 'name', label: '属性名', rowHeader: true, minWidth: '140px' },
   { key: 'default', label: '默认值', minWidth: '120px' },
@@ -193,7 +238,8 @@ const apiCols: TableColumn[] = [
 ]
 
 const apiRows = [
-  { name: 'modelValue', description: '绑定值（v-model）', type: 'string', default: "''" }
+  { name: 'modelValue', description: '绑定值（v-model）', type: 'string', default: "''" },
+  { name: 'size', description: '输入框尺寸', type: "'small' | 'medium' | 'large'", default: "'medium'" }
 ]
 
 const nativeRows = [
