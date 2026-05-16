@@ -20,7 +20,7 @@
 import confetti from 'canvas-confetti'
 import { ref, onMounted } from 'vue'
 import { Container } from '@/components/z-ui/container'
-import { CheckCircle } from '@/components/z-ui/icon/Octicons-vue'
+import { CheckCircle } from '@/components/octicons-vue3'
 import { Link } from '@/components/z-ui/link'
 import { useRoute } from 'vue-router'
 

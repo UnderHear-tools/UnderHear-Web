@@ -98,7 +98,7 @@ import FirstStep from '@/modules/application/components/newForm/FirstStep.vue'
 import SecondStep from '@/modules/application/components/newForm/SecondStep.vue'
 import ThirdStep from '@/modules/application/components/newForm/ThirdStep.vue'
 import { useCreateApplicationForm } from '@/modules/application/components/newForm/useCreateApplicationForm'
-import Rocket from '@/components/z-ui/icon/Octicons-vue/icons/rocket.vue'
+import Rocket from '@/components/octicons-vue3/icons/rocket.vue'
 
 const router = useRouter()
 

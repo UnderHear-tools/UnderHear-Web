@@ -39,7 +39,7 @@
 
 <script setup lang="ts">
 import { HtmlMonacoEditor } from '@/components/monaco-editor'
-import LightBulb from '@/components/z-ui/icon/Octicons-vue/icons/light-bulb.vue'
+import LightBulb from '@/components/octicons-vue3/icons/light-bulb.vue'
 import { Upload } from '@/components/z-ui/upload'
 import type { FrameworkValue } from './useCreateApplicationForm'
 import { FormControlValidation } from '@/components/z-ui/form-control'

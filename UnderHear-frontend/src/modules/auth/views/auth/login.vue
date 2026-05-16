@@ -53,7 +53,7 @@ import { onMounted, ref } from 'vue'
 import { useRoute } from 'vue-router'
 import { useUserStore } from '@/stores/user'
 import { Banner } from '@/components/z-ui/banner'
-import { LogoGitee, MarkGithub } from '@/components/z-ui/icon/Octicons-vue'
+import { LogoGitee, MarkGithub } from '@/components/octicons-vue3'
 import { getOAuthRenderUrl, loginWithOAuthCallback } from '../../api/login'
 import {
   loginReturnToKey,

@@ -171,7 +171,7 @@
 <script setup lang="ts">
 import { Tag } from '@/components/z-ui/tag'
 import { Table, type TableColumn } from '@/components/z-ui/table'
-import { Star, Check, Alert, X, Trash } from '@/components/z-ui/icon/Octicons-vue'
+import { Star, Check, Alert, X, Trash } from '@/components/octicons-vue3'
 import ComponentDocsDemoBlock from '@/modules/components/components/ComponentDocsPage/ComponentDocsDemoBlock.vue'
 import ComponentDocsHeader from '@/modules/components/components/ComponentDocsPage/ComponentDocsHeader.vue'
 import ComponentDocsPage from '@/modules/components/components/ComponentDocsPage/ComponentDocsPage.vue'
@@ -227,7 +227,7 @@ const demo3Code = `<template>
 
 const demo4Code = `<script setup lang="ts">
 import { Tag } from '@/components/z-ui/tag'
-import { Star, Check, Alert } from '@/components/z-ui/icon/Octicons-vue'
+import { Star, Check, Alert } from '@/components/octicons-vue3'
 <\/script>
 
 <template>
@@ -257,7 +257,7 @@ import { Star, Check, Alert } from '@/components/z-ui/icon/Octicons-vue'
 
 const demo5Code = `<script setup lang="ts">
 import { Tag } from '@/components/z-ui/tag'
-import { Star, Check, X, Trash } from '@/components/z-ui/icon/Octicons-vue'
+import { Star, Check, X, Trash } from '@/components/octicons-vue3'
 <\/script>
 
 <template>

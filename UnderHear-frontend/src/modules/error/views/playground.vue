@@ -80,9 +80,9 @@ import { ref } from 'vue'
 import { Button } from "@/components/z-ui/button";
 import { Dropdown } from "@/components/z-ui/dropdown";
 import { ActionList } from "@/components/z-ui/action-list";
-import Repo from "@/components/z-ui/icon/Octicons-vue/icons/repo.vue";
-import TriangleDown from "@/components/z-ui/icon/Octicons-vue/icons/triangle-down.vue";
-import { ChevronRight } from '@/components/z-ui/icon/Octicons-vue';
+import Repo from "@/components/octicons-vue3/icons/repo.vue";
+import TriangleDown from "@/components/octicons-vue3/icons/triangle-down.vue";
+import { ChevronRight } from '@/components/octicons-vue3';
 
 const selectedAction = ref('1')
 const label = ref('新建文件')

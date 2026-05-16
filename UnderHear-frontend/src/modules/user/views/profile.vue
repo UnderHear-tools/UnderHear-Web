@@ -338,7 +338,7 @@ import {
   Mail,
   Link,
   RepoTemplate
-} from '@/components/z-ui/icon/Octicons-vue'
+} from '@/components/octicons-vue3'
 import { useUserStore } from '@/stores/user'
 import {
   getPublicUserProfile,

@@ -183,7 +183,7 @@
 
 <script setup lang="ts">
 import { Button } from '@/components/z-ui/button'
-import { Bell, ArrowUpRight, Search, Check } from '@/components/z-ui/icon/Octicons-vue'
+import { Bell, ArrowUpRight, Search, Check } from '@/components/octicons-vue3'
 import { Table, type TableColumn } from '@/components/z-ui/table'
 import ComponentDocsDemoBlock from '@/modules/components/components/ComponentDocsPage/ComponentDocsDemoBlock.vue'
 import ComponentDocsHeader from '@/modules/components/components/ComponentDocsPage/ComponentDocsHeader.vue'
@@ -265,7 +265,7 @@ import { Button } from '@/components/z-ui/button'
 
 const visualDemoCode = `<script setup lang="ts">
 import { Button } from '@/components/z-ui/button'
-import { Bell, ArrowUpRight, Search, Check } from '@/components/z-ui/icon/Octicons-vue'
+import { Bell, ArrowUpRight, Search, Check } from '@/components/octicons-vue3'
 <\/script>
 
 <template>

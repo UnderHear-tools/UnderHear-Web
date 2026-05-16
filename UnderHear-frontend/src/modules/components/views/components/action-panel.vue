@@ -213,7 +213,7 @@ import {
   Pencil,
   Trash,
   ChevronRight
-} from '@/components/z-ui/icon/Octicons-vue'
+} from '@/components/octicons-vue3'
 
 const handleClick = (action: string) => {
   alert(`执行操作：${action}`)
@@ -255,7 +255,7 @@ import { Dropdown } from '@/components/z-ui/dropdown'
 import { Button } from '@/components/z-ui/button'
 import { ActionList } from '@/components/z-ui/action-list'
 import { Divider } from '@/components/z-ui/divider'
-import { Plus, TriangleDown, File, Repo, Copy } from '@/components/z-ui/icon/Octicons-vue'
+import { Plus, TriangleDown, File, Repo, Copy } from '@/components/octicons-vue3'
 
 const handleClick = (action: string) => {
   alert(\`执行操作：\${action}\`)
@@ -294,7 +294,7 @@ import { Dropdown } from '@/components/z-ui/dropdown'
 import { Button } from '@/components/z-ui/button'
 import { ActionList } from '@/components/z-ui/action-list'
 import { Divider } from '@/components/z-ui/divider'
-import { KebabHorizontal, Pencil, Copy, Trash } from '@/components/z-ui/icon/Octicons-vue'
+import { KebabHorizontal, Pencil, Copy, Trash } from '@/components/octicons-vue3'
 <\/script>`
 
 const demo3Code = `<template>
@@ -319,7 +319,7 @@ const demo3Code = `<template>
 import { Dropdown } from '@/components/z-ui/dropdown'
 import { Button } from '@/components/z-ui/button'
 import { ActionList } from '@/components/z-ui/action-list'
-import { TriangleDown } from '@/components/z-ui/icon/Octicons-vue'
+import { TriangleDown } from '@/components/octicons-vue3'
 <\/script>`
 
 const demo4Code = `<template>
@@ -346,7 +346,7 @@ import { ref } from 'vue'
 import { Dropdown } from '@/components/z-ui/dropdown'
 import { Button } from '@/components/z-ui/button'
 import { ActionList } from '@/components/z-ui/action-list'
-import { Repo, TriangleDown } from '@/components/z-ui/icon/Octicons-vue'
+import { Repo, TriangleDown } from '@/components/octicons-vue3'
 
 const label = ref('新建文件')
 <\/script>`
@@ -386,7 +386,7 @@ const demo5Code = `<template>
 import { Dropdown } from '@/components/z-ui/dropdown'
 import { Button } from '@/components/z-ui/button'
 import { ActionList } from '@/components/z-ui/action-list'
-import { TriangleDown, ChevronRight } from '@/components/z-ui/icon/Octicons-vue'
+import { TriangleDown, ChevronRight } from '@/components/octicons-vue3'
 <\/script>
 
 <style scoped>

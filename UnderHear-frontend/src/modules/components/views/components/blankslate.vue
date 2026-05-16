@@ -179,7 +179,7 @@
 
 <script setup lang="ts">
 import { Blankslate } from '@/components/z-ui/blankslate'
-import { Book, Checklist, CodeOfConduct, Inbox, Repo } from '@/components/z-ui/icon/Octicons-vue'
+import { Book, Checklist, CodeOfConduct, Inbox, Repo } from '@/components/octicons-vue3'
 import { Table, type TableColumn } from '@/components/z-ui/table'
 import ComponentDocsDemoBlock from '@/modules/components/components/ComponentDocsPage/ComponentDocsDemoBlock.vue'
 import ComponentDocsHeader from '@/modules/components/components/ComponentDocsPage/ComponentDocsHeader.vue'
@@ -188,7 +188,7 @@ import ComponentDocsSection from '@/modules/components/components/ComponentDocsP
 
 const basicDemoCode = `<script setup lang="ts">
 import { Blankslate } from '@/components/z-ui/blankslate'
-import { Book } from '@/components/z-ui/icon/Octicons-vue'
+import { Book } from '@/components/octicons-vue3'
 <\/script>
 
 <template>
@@ -206,7 +206,7 @@ import { Book } from '@/components/z-ui/icon/Octicons-vue'
 
 const secondaryDemoCode = `<script setup lang="ts">
 import { Blankslate } from '@/components/z-ui/blankslate'
-import { Repo } from '@/components/z-ui/icon/Octicons-vue'
+import { Repo } from '@/components/octicons-vue3'
 <\/script>
 
 <template>
@@ -227,7 +227,7 @@ import { Repo } from '@/components/z-ui/icon/Octicons-vue'
 
 const narrowDemoCode = `<script setup lang="ts">
 import { Blankslate } from '@/components/z-ui/blankslate'
-import { Checklist } from '@/components/z-ui/icon/Octicons-vue'
+import { Checklist } from '@/components/octicons-vue3'
 <\/script>
 
 <template>
@@ -255,7 +255,7 @@ import { Checklist } from '@/components/z-ui/icon/Octicons-vue'
 
 const spaciousDemoCode = `<script setup lang="ts">
 import { Blankslate } from '@/components/z-ui/blankslate'
-import { CodeOfConduct } from '@/components/z-ui/icon/Octicons-vue'
+import { CodeOfConduct } from '@/components/octicons-vue3'
 <\/script>
 
 <template>
@@ -273,7 +273,7 @@ import { CodeOfConduct } from '@/components/z-ui/icon/Octicons-vue'
 
 const borderDemoCode = `<script setup lang="ts">
 import { Blankslate } from '@/components/z-ui/blankslate'
-import { Inbox } from '@/components/z-ui/icon/Octicons-vue'
+import { Inbox } from '@/components/octicons-vue3'
 <\/script>
 
 <template>

@@ -11,7 +11,7 @@
         <code>Button</code>、
         <code>Tooltip</code>、
         <code>Divider</code>、
-        <code>Octicons-vue</code>
+        <code>Octicons-vue3</code>
         组合而成的操作栏组件。
       </template>
       <ComponentDocsDemoBlock :code="demo1Code">
@@ -93,7 +93,7 @@ import ComponentDocsPage from '@/modules/components/components/ComponentDocsPage
 import ComponentDocsSection from '@/modules/components/components/ComponentDocsPage/ComponentDocsSection.vue'
 import { Tooltip } from '@/components/z-ui/tooltip'
 import { Divider } from '@/components/z-ui/divider'
-import { Bold, Italic, Code, Link, FileAdded, Search } from '@/components/z-ui/icon/Octicons-vue'
+import { Bold, Italic, Code, Link, FileAdded, Search } from '@/components/octicons-vue3'
 import { Button } from '@/components/z-ui/button'
 
 const demo1Code = `<template>
@@ -138,7 +138,7 @@ const demo1Code = `<template>
 import { Button } from '@/components/z-ui/button'
 import { Tooltip } from '@/components/z-ui/tooltip'
 import { Divider } from '@/components/z-ui/divider'
-import { Bold, Italic, Code, Link, FileAdded, Search } from '@/components/z-ui/icon/Octicons-vue'
+import { Bold, Italic, Code, Link, FileAdded, Search } from '@/components/octicons-vue3'
 <\/script>
 
 <style scoped>

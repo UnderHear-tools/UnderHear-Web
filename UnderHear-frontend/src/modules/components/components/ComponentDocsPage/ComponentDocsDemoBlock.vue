@@ -54,7 +54,7 @@
 <script setup lang="ts">
 import { ref, onMounted } from 'vue'
 import { Tooltip } from '@/components/z-ui/tooltip'
-import { Copy, Code } from '@/components/z-ui/icon/Octicons-vue/index.ts'
+import { Copy, Code } from '@/components/octicons-vue3/index.ts'
 
 const props = defineProps<{ code: string }>()
 

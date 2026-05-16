@@ -132,9 +132,9 @@ import { Textarea } from '@/components/z-ui/textarea'
 import { Button } from '@/components/z-ui/button'
 import { Dropdown } from '@/components/z-ui/dropdown'
 import { ActionList } from '@/components/z-ui/action-list'
-import Repo from '@/components/z-ui/icon/Octicons-vue/icons/repo.vue'
-import TriangleDown from '@/components/z-ui/icon/Octicons-vue/icons/triangle-down.vue'
-import Lock from '@/components/z-ui/icon/Octicons-vue/icons/lock.vue'
+import Repo from '@/components/octicons-vue3/icons/repo.vue'
+import TriangleDown from '@/components/octicons-vue3/icons/triangle-down.vue'
+import Lock from '@/components/octicons-vue3/icons/lock.vue'
 
 interface VisibilityOption {
   value: string

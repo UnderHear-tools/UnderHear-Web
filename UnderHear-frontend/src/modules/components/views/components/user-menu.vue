@@ -12,7 +12,7 @@
         <code>Avatar</code>、
         <code>ActionList</code>、<code>ActionList.Item</code>、
         <code>Divider</code>、
-        <code>Octicons-vue</code>
+        <code>Octicons-vue3</code>
         组合而成的用户菜单组件。
       </template>
       <ComponentDocsDemoBlock :code="demo1Code">
@@ -77,7 +77,7 @@ import { Dropdown } from '@/components/z-ui/dropdown'
 import { Avatar } from '@/components/z-ui/avatar'
 import { ActionList } from '@/components/z-ui/action-list'
 import { Divider } from '@/components/z-ui/divider'
-import { Person, MarkGithub, SignOut, Gear } from '@/components/z-ui/icon/Octicons-vue'
+import { Person, MarkGithub, SignOut, Gear } from '@/components/octicons-vue3'
 
 const demo1Code = `<template>
   <div class="user-menu">
@@ -124,7 +124,7 @@ import { Dropdown } from '@/components/z-ui/dropdown'
 import { Avatar } from '@/components/z-ui/avatar'
 import { ActionList } from '@/components/z-ui/action-list'
 import { Divider } from '@/components/z-ui/divider'
-import { Person, MarkGithub, SignOut, Gear } from '@/components/z-ui/icon/Octicons-vue'
+import { Person, MarkGithub, SignOut, Gear } from '@/components/octicons-vue3'
 <\/script>
 
 <style scoped>

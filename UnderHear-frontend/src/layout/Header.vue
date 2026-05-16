@@ -89,7 +89,7 @@ import { Dropdown } from '@/components/z-ui/dropdown'
 import { Avatar } from '@/components/z-ui/avatar'
 import { ActionList } from '@/components/z-ui/action-list'
 import { Divider } from '@/components/z-ui/divider'
-import { Person, Apps, SignOut, LogoUnderHear } from '@/components/z-ui/icon/Octicons-vue'
+import { Person, Apps, SignOut, LogoUnderHear } from '@/components/octicons-vue3'
 
 interface NavigationItem {
   name: string

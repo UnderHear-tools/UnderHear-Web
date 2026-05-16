@@ -106,7 +106,7 @@
 import { ref } from 'vue'
 import { Steps, type StepItem } from '@/components/z-ui/steps'
 import { Table, type TableColumn } from '@/components/z-ui/table'
-import { Person, Package, CreditCard, Rocket } from '@/components/z-ui/icon/Octicons-vue'
+import { Person, Package, CreditCard, Rocket } from '@/components/octicons-vue3'
 import ComponentDocsDemoBlock from '@/modules/components/components/ComponentDocsPage/ComponentDocsDemoBlock.vue'
 import ComponentDocsHeader from '@/modules/components/components/ComponentDocsPage/ComponentDocsHeader.vue'
 import ComponentDocsPage from '@/modules/components/components/ComponentDocsPage/ComponentDocsPage.vue'
@@ -158,7 +158,7 @@ const steps: StepItem[] = [
 const demo3Code = `<script setup lang="ts">
 import { ref } from 'vue'
 import { Steps, type StepItem } from '@/components/z-ui/steps'
-import { Person, Package, CreditCard, Rocket } from '@/components/z-ui/icon/Octicons-vue'
+import { Person, Package, CreditCard, Rocket } from '@/components/octicons-vue3'
 
 const active = ref(1)
 const steps: StepItem[] = [

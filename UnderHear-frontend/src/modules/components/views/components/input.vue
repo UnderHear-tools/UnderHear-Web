@@ -82,7 +82,10 @@
         通过 <code>size</code> 属性设置组件大小，支持 <code>small</code>、<code>medium</code> 和 <code>large</code>，默认为 <code>medium</code>。
       </template>
       <ComponentDocsDemoBlock :code="demo5Code">
-        <div class="demo-row" style="align-items: center;">
+        <div
+          class="demo-row"
+          style="align-items: center;"
+        >
           <Input
             v-model="valSmall"
             size="small"
