@@ -1,0 +1,14 @@
+package com.onlikee.pojo.dto.request;
+
+import lombok.Data;
+
+@Data
+public class UserGiteeDort {
+    private Long giteeId;
+    private String name;
+    private String avatarUrl;
+    private String email;
+    private String bio;
+    private String htmlUrl;
+    private String giteeToken;
+}

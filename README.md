@@ -1,6 +1,6 @@
-# UnderHear Web
+# onlikee
 
-UnderHear Web 是一个前后端分离的项目仓库，包含 Spring Boot 后端与 Vue 3 前端。当前实现涵盖 GitHub/Gitee OAuth 登录、JWT 认证基础、应用/组件展示页面与名片页面等模块。
+onlikee 是一个前后端分离的项目仓库，包含 Spring Boot 后端与 Vue 3 前端。当前实现涵盖 GitHub/Gitee OAuth 登录、JWT 认证基础、应用/组件展示页面与名片页面等模块。
 
 ## 技术栈
 
@@ -9,18 +9,18 @@ UnderHear Web 是一个前后端分离的项目仓库，包含 Spring Boot 后�
 
 ## 目录结构
 
-- `UnderHear-backend/`：后端服务
-- `UnderHear-frontend/`：前端应用
+- `onlikee-backend/`：后端服务
+- `onlikee-frontend/`：前端应用
 
 ## 快速开始
 
 ### 后端
 
-1) 配置 `UnderHear-backend/src/main/resources/application.properties`（数据库、OAuth、JWT）。
+1) 配置 `onlikee-backend/src/main/resources/application.properties`（数据库、OAuth、JWT）。
 2) 启动服务：
 
 ```bash
-cd UnderHear-backend
+cd onlikee-backend
 mvn spring-boot:run
 ```
 
@@ -29,7 +29,7 @@ mvn spring-boot:run
 ### 前端
 
 ```bash
-cd UnderHear-frontend
+cd onlikee-frontend
 npm install
 npm run dev
 ```
@@ -40,7 +40,7 @@ npm run dev
 
 ### 后端配置（Spring Boot）
 
-配置文件：`UnderHear-backend/src/main/resources/application.properties`
+配置文件：`onlikee-backend/src/main/resources/application.properties`
 
 常用配置项：
 
@@ -53,7 +53,7 @@ npm run dev
 
 ### 前端配置（Vite）
 
-可在 `UnderHear-frontend/.env.local` 中配置：
+可在 `onlikee-frontend/.env.local` 中配置：
 
 ```bash
 VITE_API_BASE_URL=http://localhost:8080
@@ -87,5 +87,5 @@ npm run preview
 
 ```bash
 mvn -DskipTests package
-java -jar target/UnderHear-0.0.1-SNAPSHOT.jar
+java -jar target/onlikee-0.0.1-SNAPSHOT.jar
 ```

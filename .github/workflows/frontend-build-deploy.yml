@@ -9,7 +9,7 @@ jobs:
     runs-on: ubuntu-latest
     defaults:
       run:
-        working-directory: UnderHear-frontend
+        working-directory: onlikee-frontend
 
     steps:
       - name: Checkout
@@ -20,7 +20,7 @@ jobs:
         with:
           node-version: "24"
           cache: "npm"
-          cache-dependency-path: UnderHear-frontend/package-lock.json
+          cache-dependency-path: onlikee-frontend/package-lock.json
 
       - name: Install dependencies
         run: npm ci
@@ -32,7 +32,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: frontend-dist
-          path: UnderHear-frontend/dist
+          path: onlikee-frontend/dist
           if-no-files-found: error
 
   deploy:
@@ -56,13 +56,13 @@ jobs:
       - name: Upload dist to server (_release)
         run: |
           rsync -az --delete -e "ssh -p ${{ secrets.SSH_PORT }} -i ~/.ssh/id_ed25519" \
-            dist/ ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }}:/www/wwwroot/UnderHear-Web/UnderHear-frontend/_release/
+            dist/ ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }}:/www/wwwroot/onlikee/onlikee-frontend/_release/
 
       - name: Activate release (replace dist)
         run: |
           ssh -p ${{ secrets.SSH_PORT }} -i ~/.ssh/id_ed25519 ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} << 'EOF'
           set -e
-          cd /www/wwwroot/UnderHear-Web/UnderHear-frontend
+          cd /www/wwwroot/onlikee/onlikee-frontend
 
           # 用 _release 替换 dist（远程永远正确）
           rm -rf dist

@@ -3,73 +3,73 @@
 # ============================================
 
 # Maven
-UnderHear-backend/target/
-UnderHear-backend/.mvn/
-UnderHear-backend/mvnw
-UnderHear-backend/mvnw.cmd
+onlikee-backend/target/
+onlikee-backend/.mvn/
+onlikee-backend/mvnw
+onlikee-backend/mvnw.cmd
 
 # IntelliJ IDEA
-UnderHear-backend/.idea/
-UnderHear-backend/*.iml
-UnderHear-backend/*.iws
-UnderHear-backend/*.ipr
-UnderHear-backend/out/
+onlikee-backend/.idea/
+onlikee-backend/*.iml
+onlikee-backend/*.iws
+onlikee-backend/*.ipr
+onlikee-backend/out/
 
 # Eclipse
-UnderHear-backend/.classpath
-UnderHear-backend/.project
-UnderHear-backend/.settings/
+onlikee-backend/.classpath
+onlikee-backend/.project
+onlikee-backend/.settings/
 
 # VS Code
-UnderHear-backend/.vscode/
+onlikee-backend/.vscode/
 
 # Spring Boot
-UnderHear-backend/*.log
-UnderHear-backend/*.gz
-UnderHear-backend/spring.log
+onlikee-backend/*.log
+onlikee-backend/*.gz
+onlikee-backend/spring.log
 
 # ============================================
 # Frontend (Vue + Vite + Node.js)
 # ============================================
 
 # Dependencies
-UnderHear-frontend/node_modules/
-UnderHear-frontend/pnpm-lock.yaml
+onlikee-frontend/node_modules/
+onlikee-frontend/pnpm-lock.yaml
 
 # Build output
-UnderHear-frontend/dist/
-UnderHear-frontend/dist-ssr/
-UnderHear-frontend/.vite/
+onlikee-frontend/dist/
+onlikee-frontend/dist-ssr/
+onlikee-frontend/.vite/
 
 # Cache
-UnderHear-frontend/.cache/
-UnderHear-frontend/.temp/
-UnderHear-frontend/.tmp/
+onlikee-frontend/.cache/
+onlikee-frontend/.temp/
+onlikee-frontend/.tmp/
 
 # Logs
-UnderHear-frontend/logs/
-UnderHear-frontend/*.log
-UnderHear-frontend/npm-debug.log*
-UnderHear-frontend/yarn-debug.log*
-UnderHear-frontend/yarn-error.log*
-UnderHear-frontend/pnpm-debug.log*
-UnderHear-frontend/lerna-debug.log*
+onlikee-frontend/logs/
+onlikee-frontend/*.log
+onlikee-frontend/npm-debug.log*
+onlikee-frontend/yarn-debug.log*
+onlikee-frontend/yarn-error.log*
+onlikee-frontend/pnpm-debug.log*
+onlikee-frontend/lerna-debug.log*
 
 # Editor directories and files
-UnderHear-frontend/.vscode/*
-!UnderHear-frontend/.vscode/extensions.json
-UnderHear-frontend/.idea/
-UnderHear-frontend/.DS_Store
-UnderHear-frontend/*.suo
-UnderHear-frontend/*.ntvs*
-UnderHear-frontend/*.njsproj
-UnderHear-frontend/*.sln
-UnderHear-frontend/*.sw?
+onlikee-frontend/.vscode/*
+!onlikee-frontend/.vscode/extensions.json
+onlikee-frontend/.idea/
+onlikee-frontend/.DS_Store
+onlikee-frontend/*.suo
+onlikee-frontend/*.ntvs*
+onlikee-frontend/*.njsproj
+onlikee-frontend/*.sln
+onlikee-frontend/*.sw?
 
 # Environment variables
-# UnderHear-frontend/.env
-UnderHear-frontend/.env.local
-UnderHear-frontend/.env.*.local
+# onlikee-frontend/.env
+onlikee-frontend/.env.local
+onlikee-frontend/.env.*.local
 
 # ============================================
 # General
