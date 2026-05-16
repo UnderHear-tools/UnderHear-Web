@@ -10,7 +10,7 @@
       <p class="subtitle">
         你也想加入？前往
         <Link
-          href="https://github.com/onlikee/toolsWeb"
+          href="https://github.com/onlikee/onlikee"
           link-text="本项目的GitHub"
           target="_blank"
           :external="true"

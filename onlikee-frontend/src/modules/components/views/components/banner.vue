@@ -252,7 +252,7 @@ const showInlineActionsBanner = () => {
     title: '容量提醒',
     primaryAction: {
       label: '查看套餐',
-      href: 'https://github.com/onlikee'
+      href: 'https://github.com/UnderHear'
     },
     secondaryAction: {
       label: '稍后处理',
@@ -372,7 +372,7 @@ const showDefaultActionsBanner = () => {
 const showInlineActionsBanner = () => {
   Banner.info('你的存储空间即将用尽。', {
     title: '容量提醒',
-    primaryAction: { label: '查看套餐', href: 'https://github.com/onlikee' },
+    primaryAction: { label: '查看套餐', href: 'https://github.com/UnderHear' },
     secondaryAction: { label: '稍后处理', onClick: () => Banner.info('你可以在设置页随时处理。') },
     actionsLayout: 'inline'
   })

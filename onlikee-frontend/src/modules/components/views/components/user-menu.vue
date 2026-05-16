@@ -45,7 +45,7 @@
                   <Person class="menu-icon" />
                   个人资料
                 </ActionList.Item>
-                <ActionList.Item href="https://github.com/onlikee">
+                <ActionList.Item href="https://github.com/UnderHear">
                   <MarkGithub class="menu-icon" />
                   前往 GitHub
                 </ActionList.Item>
@@ -99,7 +99,7 @@ const demo1Code = `<template>
             <Person class="menu-icon" />
             个人资料
           </ActionList.Item>
-          <ActionList.Item href="https://github.com/onlikee">
+          <ActionList.Item href="https://github.com/UnderHear">
             <MarkGithub class="menu-icon" />
             前往 GitHub
           </ActionList.Item>
