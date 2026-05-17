@@ -16,7 +16,7 @@
           :disabled="loading"
           @click="startLogin('github')"
         >
-          <MarkGithub size="20" />
+          <MarkGithubIcon size="20" />
           <span>{{ getButtonLabel('github') }}</span>
         </button>
         <button
@@ -24,7 +24,7 @@
           :disabled="loading"
           @click="startLogin('gitee')"
         >
-          <LogoGitee
+          <LogoGiteeIcon
             size="20"
             color="#c71d23"
           />
@@ -53,7 +53,7 @@ import { onMounted, ref } from 'vue'
 import { useRoute } from 'vue-router'
 import { useUserStore } from '@/stores/user'
 import { Banner } from '@/components/z-ui/banner'
-import { LogoGitee, MarkGithub } from '@/components/octicons-vue3'
+import { LogoGiteeIcon, MarkGithubIcon } from '@/components/octicons-vue3'
 import { getOAuthRenderUrl, loginWithOAuthCallback } from '../../api/login'
 import {
   loginReturnToKey,

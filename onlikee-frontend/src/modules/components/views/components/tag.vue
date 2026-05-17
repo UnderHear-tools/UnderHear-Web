@@ -23,16 +23,16 @@
       <ComponentDocsDemoBlock :code="demo2Code">
         <div class="tag-row">
           <Tag size="small">
-            Small
+            small
           </Tag>
           <Tag size="medium">
-            Medium
+            medium
           </Tag>
           <Tag size="large">
-            Large
+            large
           </Tag>
           <Tag size="xlarge">
-            X-Large
+            xlarge
           </Tag>
         </div>
       </ComponentDocsDemoBlock>
@@ -81,16 +81,16 @@
         <div class="tag-row">
           <Tag>
             <template #visual>
-              <Star />
+              <StarIcon />
             </template>
-            Star
+            StarIcon
           </Tag>
           <Tag
             color="#1a7f37"
             bg-color="#dafbe1"
           >
             <template #visual>
-              <Check />
+              <CheckIcon />
             </template>
             已完成
           </Tag>
@@ -99,7 +99,7 @@
             bg-color="#ffebe9"
           >
             <template #visual>
-              <Alert />
+              <AlertIcon />
             </template>
             错误
           </Tag>
@@ -116,16 +116,16 @@
           <Tag>
             Vue
             <template #action>
-              <Trash />
+              <TrashIcon />
             </template>
           </Tag>
           <Tag>
             <template #visual>
-              <Star />
+              <StarIcon />
             </template>
             收藏
             <template #action>
-              <X />
+              <XIcon />
             </template>
           </Tag>
           <Tag
@@ -133,11 +133,11 @@
             bg-color="#dafbe1"
           >
             <template #visual>
-              <Check />
+              <CheckIcon />
             </template>
             已完成
             <template #action>
-              <X />
+              <XIcon />
             </template>
           </Tag>
         </div>
@@ -171,7 +171,7 @@
 <script setup lang="ts">
 import { Tag } from '@/components/z-ui/tag'
 import { Table, type TableColumn } from '@/components/z-ui/table'
-import { Star, Check, Alert, X, Trash } from '@/components/octicons-vue3'
+import { StarIcon, CheckIcon, AlertIcon, XIcon, TrashIcon } from '@/components/octicons-vue3'
 import ComponentDocsDemoBlock from '@/modules/components/components/ComponentDocsPage/ComponentDocsDemoBlock.vue'
 import ComponentDocsHeader from '@/modules/components/components/ComponentDocsPage/ComponentDocsHeader.vue'
 import ComponentDocsPage from '@/modules/components/components/ComponentDocsPage/ComponentDocsPage.vue'
@@ -192,10 +192,10 @@ const demo1Code = `<template>
 
 const demo2Code = `<template>
   <div class="tag-row">
-    <Tag size="small">Small</Tag>
-    <Tag size="medium">Medium</Tag>
-    <Tag size="large">Large</Tag>
-    <Tag size="xlarge">X-Large</Tag>
+    <Tag size="small">small</Tag>
+    <Tag size="medium">medium</Tag>
+    <Tag size="large">large</Tag>
+    <Tag size="xlarge">xlarge</Tag>
   </div>
 </template>
 
@@ -227,21 +227,21 @@ const demo3Code = `<template>
 
 const demo4Code = `<script setup lang="ts">
 import { Tag } from '@/components/z-ui/tag'
-import { Star, Check, Alert } from '@/components/octicons-vue3'
+import { StarIcon, CheckIcon, AlertIcon } from '@/components/octicons-vue3'
 <\/script>
 
 <template>
   <div class="tag-row">
     <Tag>
-      <template #visual><Star /></template>
-      Star
+      <template #visual><StarIcon /></template>
+      StarIcon
     </Tag>
     <Tag color="#1a7f37" bgColor="#dafbe1">
-      <template #visual><Check /></template>
+      <template #visual><CheckIcon /></template>
       已完成
     </Tag>
     <Tag color="#cf222e" bgColor="#ffebe9">
-      <template #visual><Alert /></template>
+      <template #visual><AlertIcon /></template>
       错误
     </Tag>
   </div>
@@ -257,24 +257,24 @@ import { Star, Check, Alert } from '@/components/octicons-vue3'
 
 const demo5Code = `<script setup lang="ts">
 import { Tag } from '@/components/z-ui/tag'
-import { Star, Check, X, Trash } from '@/components/octicons-vue3'
+import { StarIcon, CheckIcon, XIcon, TrashIcon } from '@/components/octicons-vue3'
 <\/script>
 
 <template>
   <div class="tag-row">
     <Tag>
       Vue
-      <template #action><Trash /></template>
+      <template #action><TrashIcon /></template>
     </Tag>
     <Tag>
-      <template #visual><Star /></template>
+      <template #visual><StarIcon /></template>
       收藏
-      <template #action><X /></template>
+      <template #action><XIcon /></template>
     </Tag>
     <Tag color="#1a7f37" bgColor="#dafbe1">
-      <template #visual><Check /></template>
+      <template #visual><CheckIcon /></template>
       已完成
-      <template #action><X /></template>
+      <template #action><XIcon /></template>
     </Tag>
   </div>
 </template>

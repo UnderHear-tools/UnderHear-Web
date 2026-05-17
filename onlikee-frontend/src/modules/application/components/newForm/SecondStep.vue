@@ -4,7 +4,7 @@
       v-if="selectedFramework === null"
       class="upload-tip"
     >
-      <LightBulb />
+      <LightBulbIcon />
       请先选择一个框架
     </div>
 
@@ -39,7 +39,7 @@
 
 <script setup lang="ts">
 import { HtmlMonacoEditor } from '@/components/monaco-editor'
-import LightBulb from '@/components/octicons-vue3/icons/light-bulb.vue'
+import LightBulbIcon from '@/components/octicons-vue3/icons/light-bulb.vue'
 import { Upload } from '@/components/z-ui/upload'
 import type { FrameworkValue } from './useCreateApplicationForm'
 import { FormControlValidation } from '@/components/z-ui/form-control'

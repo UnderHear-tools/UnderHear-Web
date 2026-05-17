@@ -43,16 +43,16 @@
           :steps="iconSteps"
         >
           <template #icon-0>
-            <Person />
+            <PersonIcon />
           </template>
           <template #icon-1>
-            <Package />
+            <PackageIcon />
           </template>
           <template #icon-2>
-            <CreditCard />
+            <CreditCardIcon />
           </template>
           <template #icon-3>
-            <Rocket />
+            <RocketIcon />
           </template>
         </Steps>
       </ComponentDocsDemoBlock>
@@ -106,7 +106,7 @@
 import { ref } from 'vue'
 import { Steps, type StepItem } from '@/components/z-ui/steps'
 import { Table, type TableColumn } from '@/components/z-ui/table'
-import { Person, Package, CreditCard, Rocket } from '@/components/octicons-vue3'
+import { PersonIcon, PackageIcon, CreditCardIcon, RocketIcon } from '@/components/octicons-vue3'
 import ComponentDocsDemoBlock from '@/modules/components/components/ComponentDocsPage/ComponentDocsDemoBlock.vue'
 import ComponentDocsHeader from '@/modules/components/components/ComponentDocsPage/ComponentDocsHeader.vue'
 import ComponentDocsPage from '@/modules/components/components/ComponentDocsPage/ComponentDocsPage.vue'
@@ -158,7 +158,7 @@ const steps: StepItem[] = [
 const demo3Code = `<script setup lang="ts">
 import { ref } from 'vue'
 import { Steps, type StepItem } from '@/components/z-ui/steps'
-import { Person, Package, CreditCard, Rocket } from '@/components/octicons-vue3'
+import { PersonIcon, PackageIcon, CreditCardIcon, RocketIcon } from '@/components/octicons-vue3'
 
 const active = ref(1)
 const steps: StepItem[] = [
@@ -171,10 +171,10 @@ const steps: StepItem[] = [
 
 <template>
   <Steps v-model="active" :steps="steps">
-    <template #icon-0><Person /></template>
-    <template #icon-1><Package /></template>
-    <template #icon-2><CreditCard /></template>
-    <template #icon-3><Rocket /></template>
+    <template #icon-0><PersonIcon /></template>
+    <template #icon-1><PackageIcon /></template>
+    <template #icon-2><CreditCardIcon /></template>
+    <template #icon-3><RocketIcon /></template>
   </Steps>
 </template>`
 

@@ -42,21 +42,21 @@
               <ActionList>
                 <Divider />
                 <ActionList.Item>
-                  <Person class="menu-icon" />
+                  <PersonIcon class="menu-icon" />
                   个人资料
                 </ActionList.Item>
                 <ActionList.Item href="https://github.com/UnderHear">
-                  <MarkGithub class="menu-icon" />
+                  <MarkGithubIcon class="menu-icon" />
                   前往 GitHub
                 </ActionList.Item>
                 <Divider />
                 <ActionList.Item>
-                  <Gear class="menu-icon" />
+                  <GearIcon class="menu-icon" />
                   设置
                 </ActionList.Item>
                 <Divider />
                 <ActionList.Item>
-                  <SignOut class="menu-icon" />
+                  <SignOutIcon class="menu-icon" />
                   退出登录
                 </ActionList.Item>
               </ActionList>
@@ -77,7 +77,7 @@ import { Dropdown } from '@/components/z-ui/dropdown'
 import { Avatar } from '@/components/z-ui/avatar'
 import { ActionList } from '@/components/z-ui/action-list'
 import { Divider } from '@/components/z-ui/divider'
-import { Person, MarkGithub, SignOut, Gear } from '@/components/octicons-vue3'
+import { PersonIcon, MarkGithubIcon, SignOutIcon, GearIcon } from '@/components/octicons-vue3'
 
 const demo1Code = `<template>
   <div class="user-menu">
@@ -96,21 +96,21 @@ const demo1Code = `<template>
         <ActionList>
           <Divider />
           <ActionList.Item>
-            <Person class="menu-icon" />
+            <PersonIcon class="menu-icon" />
             个人资料
           </ActionList.Item>
           <ActionList.Item href="https://github.com/UnderHear">
-            <MarkGithub class="menu-icon" />
+            <MarkGithubIcon class="menu-icon" />
             前往 GitHub
           </ActionList.Item>
           <Divider />
           <ActionList.Item>
-            <Gear class="menu-icon" />
+            <GearIcon class="menu-icon" />
             设置
           </ActionList.Item>
           <Divider />
           <ActionList.Item>
-            <SignOut class="menu-icon" />
+            <SignOutIcon class="menu-icon" />
             退出登录
           </ActionList.Item>
         </ActionList>
@@ -124,7 +124,7 @@ import { Dropdown } from '@/components/z-ui/dropdown'
 import { Avatar } from '@/components/z-ui/avatar'
 import { ActionList } from '@/components/z-ui/action-list'
 import { Divider } from '@/components/z-ui/divider'
-import { Person, MarkGithub, SignOut, Gear } from '@/components/octicons-vue3'
+import { PersonIcon, MarkGithubIcon, SignOutIcon, GearIcon } from '@/components/octicons-vue3'
 <\/script>
 
 <style scoped>

@@ -13,7 +13,7 @@
       <ComponentDocsDemoBlock :code="basicDemoCode">
         <Blankslate>
           <Blankslate.Visual>
-            <Book />
+            <BookIcon />
           </Blankslate.Visual>
           <Blankslate.Heading>
             欢迎来到知识库
@@ -36,7 +36,7 @@
       <ComponentDocsDemoBlock :code="secondaryDemoCode">
         <Blankslate>
           <Blankslate.Visual>
-            <Repo />
+            <RepoIcon />
           </Blankslate.Visual>
           <Blankslate.Heading>
             还没有仓库内容
@@ -63,7 +63,7 @@
         <div class="blankslate-narrow-demo">
           <Blankslate narrow>
             <Blankslate.Visual>
-              <Checklist />
+              <ChecklistIcon />
             </Blankslate.Visual>
             <Blankslate.Heading as="h3">
               暂无任务
@@ -87,7 +87,7 @@
       <ComponentDocsDemoBlock :code="spaciousDemoCode">
         <Blankslate spacious>
           <Blankslate.Visual>
-            <CodeOfConduct />
+            <CodeOfConductIcon />
           </Blankslate.Visual>
           <Blankslate.Heading>
             创建社区准则
@@ -110,7 +110,7 @@
       <ComponentDocsDemoBlock :code="borderDemoCode">
         <Blankslate border>
           <Blankslate.Visual>
-            <Inbox />
+            <InboxIcon />
           </Blankslate.Visual>
           <Blankslate.Heading>
             暂无消息
@@ -179,7 +179,7 @@
 
 <script setup lang="ts">
 import { Blankslate } from '@/components/z-ui/blankslate'
-import { Book, Checklist, CodeOfConduct, Inbox, Repo } from '@/components/octicons-vue3'
+import { BookIcon, ChecklistIcon, CodeOfConductIcon, InboxIcon, RepoIcon } from '@/components/octicons-vue3'
 import { Table, type TableColumn } from '@/components/z-ui/table'
 import ComponentDocsDemoBlock from '@/modules/components/components/ComponentDocsPage/ComponentDocsDemoBlock.vue'
 import ComponentDocsHeader from '@/modules/components/components/ComponentDocsPage/ComponentDocsHeader.vue'
@@ -188,13 +188,13 @@ import ComponentDocsSection from '@/modules/components/components/ComponentDocsP
 
 const basicDemoCode = `<script setup lang="ts">
 import { Blankslate } from '@/components/z-ui/blankslate'
-import { Book } from '@/components/octicons-vue3'
+import { BookIcon } from '@/components/octicons-vue3'
 <\/script>
 
 <template>
   <Blankslate>
     <Blankslate.Visual>
-      <Book />
+      <BookIcon />
     </Blankslate.Visual>
     <Blankslate.Heading>欢迎来到知识库</Blankslate.Heading>
     <Blankslate.Description>
@@ -206,13 +206,13 @@ import { Book } from '@/components/octicons-vue3'
 
 const secondaryDemoCode = `<script setup lang="ts">
 import { Blankslate } from '@/components/z-ui/blankslate'
-import { Repo } from '@/components/octicons-vue3'
+import { RepoIcon } from '@/components/octicons-vue3'
 <\/script>
 
 <template>
   <Blankslate>
     <Blankslate.Visual>
-      <Repo />
+      <RepoIcon />
     </Blankslate.Visual>
     <Blankslate.Heading>还没有仓库内容</Blankslate.Heading>
     <Blankslate.Description>
@@ -227,14 +227,14 @@ import { Repo } from '@/components/octicons-vue3'
 
 const narrowDemoCode = `<script setup lang="ts">
 import { Blankslate } from '@/components/z-ui/blankslate'
-import { Checklist } from '@/components/octicons-vue3'
+import { ChecklistIcon } from '@/components/octicons-vue3'
 <\/script>
 
 <template>
   <div class="blankslate-narrow-demo">
     <Blankslate narrow>
       <Blankslate.Visual>
-        <Checklist />
+        <ChecklistIcon />
       </Blankslate.Visual>
       <Blankslate.Heading as="h3">暂无任务</Blankslate.Heading>
       <Blankslate.Description>
@@ -255,13 +255,13 @@ import { Checklist } from '@/components/octicons-vue3'
 
 const spaciousDemoCode = `<script setup lang="ts">
 import { Blankslate } from '@/components/z-ui/blankslate'
-import { CodeOfConduct } from '@/components/octicons-vue3'
+import { CodeOfConductIcon } from '@/components/octicons-vue3'
 <\/script>
 
 <template>
   <Blankslate spacious>
     <Blankslate.Visual>
-      <CodeOfConduct />
+      <CodeOfConductIcon />
     </Blankslate.Visual>
     <Blankslate.Heading>创建社区准则</Blankslate.Heading>
     <Blankslate.Description>
@@ -273,13 +273,13 @@ import { CodeOfConduct } from '@/components/octicons-vue3'
 
 const borderDemoCode = `<script setup lang="ts">
 import { Blankslate } from '@/components/z-ui/blankslate'
-import { Inbox } from '@/components/octicons-vue3'
+import { InboxIcon } from '@/components/octicons-vue3'
 <\/script>
 
 <template>
   <Blankslate border>
     <Blankslate.Visual>
-      <Inbox />
+      <InboxIcon />
     </Blankslate.Visual>
     <Blankslate.Heading>暂无消息</Blankslate.Heading>
     <Blankslate.Description>

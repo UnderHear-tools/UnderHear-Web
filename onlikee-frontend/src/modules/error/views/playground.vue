@@ -4,11 +4,11 @@
       <template #trigger>
         <Button>
           <template #leadingVisual>
-            <Repo />
+            <RepoIcon />
           </template>
           {{ label }}
           <template #trailingVisual>
-            <TriangleDown />
+            <TriangleDownIcon />
           </template>
         </Button>
       </template>
@@ -44,11 +44,11 @@
       <template #trigger>
         <Button>
           <template #leadingVisual>
-            <Repo />
+            <RepoIcon />
           </template>
           打开菜单
           <template #trailingVisual>
-            <TriangleDown />
+            <TriangleDownIcon />
           </template>
         </Button>
       </template>
@@ -59,7 +59,7 @@
           <Dropdown side="outside-right">
             <template #trigger>
               <ActionList.Item class="select">
-                选项3 <ChevronRight color="#59636e" />
+                选项3 <ChevronRightIcon color="#59636e" />
               </ActionList.Item>
             </template>
             <template #content>
@@ -80,9 +80,9 @@ import { ref } from 'vue'
 import { Button } from "@/components/z-ui/button";
 import { Dropdown } from "@/components/z-ui/dropdown";
 import { ActionList } from "@/components/z-ui/action-list";
-import Repo from "@/components/octicons-vue3/icons/repo.vue";
-import TriangleDown from "@/components/octicons-vue3/icons/triangle-down.vue";
-import { ChevronRight } from '@/components/octicons-vue3';
+import RepoIcon from "@/components/octicons-vue3/icons/repo.vue";
+import TriangleDownIcon from "@/components/octicons-vue3/icons/triangle-down.vue";
+import { ChevronRightIcon } from '@/components/octicons-vue3'
 
 const selectedAction = ref('1')
 const label = ref('新建文件')

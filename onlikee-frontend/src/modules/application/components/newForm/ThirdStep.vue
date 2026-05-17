@@ -67,7 +67,7 @@
               </template>
               {{ label }}
               <template #trailingVisual>
-                <TriangleDown color="var(--fgColor-muted)" />
+                <TriangleDownIcon color="var(--fgColor-muted)" />
               </template>
             </Button>
           </template>
@@ -132,14 +132,14 @@ import { Textarea } from '@/components/z-ui/textarea'
 import { Button } from '@/components/z-ui/button'
 import { Dropdown } from '@/components/z-ui/dropdown'
 import { ActionList } from '@/components/z-ui/action-list'
-import Repo from '@/components/octicons-vue3/icons/repo.vue'
-import TriangleDown from '@/components/octicons-vue3/icons/triangle-down.vue'
-import Lock from '@/components/octicons-vue3/icons/lock.vue'
+import RepoIcon from '@/components/octicons-vue3/icons/repo.vue'
+import TriangleDownIcon from '@/components/octicons-vue3/icons/triangle-down.vue'
+import LockIcon from '@/components/octicons-vue3/icons/lock.vue'
 
 interface VisibilityOption {
   value: string
   description: string
-  icon: typeof Repo
+  icon: typeof RepoIcon
 }
 
 interface Props {
@@ -169,12 +169,12 @@ const visibilityOptions: VisibilityOption[] = [
   {
     value: '公开的',
     description: '你的应用被公开，所有人都能够在应用广场上看见它。',
-    icon: Repo
+    icon: RepoIcon
   },
   {
     value: '私有的',
     description: '你可以在个人应用中查看和管理它。当然别人也可以通过URL进行访问。',
-    icon: Lock
+    icon: LockIcon
   }
 ]
 

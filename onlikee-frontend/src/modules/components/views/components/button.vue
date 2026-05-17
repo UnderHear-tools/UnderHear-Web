@@ -102,23 +102,23 @@
         <div class="button-row">
           <Button>
             <template #leadingVisual>
-              <Bell />
+              <BellIcon />
             </template>
             通知设置
           </Button>
           <Button variant="primary">
             继续前往
             <template #trailingVisual>
-              <ArrowUpRight />
+              <ArrowUpRightIcon />
             </template>
           </Button>
           <Button variant="invisible">
             <template #leadingVisual>
-              <Search />
+              <SearchIcon />
             </template>
             搜索项目
             <template #trailingVisual>
-              <Check />
+              <CheckIcon />
             </template>
           </Button>
         </div>
@@ -183,7 +183,7 @@
 
 <script setup lang="ts">
 import { Button } from '@/components/z-ui/button'
-import { Bell, ArrowUpRight, Search, Check } from '@/components/octicons-vue3'
+import { BellIcon, ArrowUpRightIcon, SearchIcon, CheckIcon } from '@/components/octicons-vue3'
 import { Table, type TableColumn } from '@/components/z-ui/table'
 import ComponentDocsDemoBlock from '@/modules/components/components/ComponentDocsPage/ComponentDocsDemoBlock.vue'
 import ComponentDocsHeader from '@/modules/components/components/ComponentDocsPage/ComponentDocsHeader.vue'
@@ -265,14 +265,14 @@ import { Button } from '@/components/z-ui/button'
 
 const visualDemoCode = `<script setup lang="ts">
 import { Button } from '@/components/z-ui/button'
-import { Bell, ArrowUpRight, Search, Check } from '@/components/octicons-vue3'
+import { BellIcon, ArrowUpRightIcon, SearchIcon, CheckIcon } from '@/components/octicons-vue3'
 <\/script>
 
 <template>
   <div class="button-row">
     <Button>
       <template #leadingVisual>
-        <Bell />
+        <BellIcon />
       </template>
       通知设置
     </Button>
@@ -280,17 +280,17 @@ import { Bell, ArrowUpRight, Search, Check } from '@/components/octicons-vue3'
     <Button variant="primary">
       继续前往
       <template #trailingVisual>
-        <ArrowUpRight />
+        <ArrowUpRightIcon />
       </template>
     </Button>
 
     <Button variant="invisible">
       <template #leadingVisual>
-        <Search />
+        <SearchIcon />
       </template>
       搜索项目
       <template #trailingVisual>
-        <Check />
+        <CheckIcon />
       </template>
     </Button>
   </div>

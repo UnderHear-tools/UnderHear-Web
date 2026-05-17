@@ -120,14 +120,14 @@ type ColorDemoEntry = IconEntry & {
 const iconSize = 24
 
 const demo1Code = `<script setup lang="ts">
-import { TelescopeFill, MarkGithub, HeartFill } from '@/components/octicons-vue3/index.ts'
+import { TelescopeFillIcon, MarkGithubIcon, HeartFillIcon } from '@/components/octicons-vue3/index.ts'
 <\/script>
 
 <template>
   <div class="icon-demo-row">
-    <TelescopeFill :size="32" />
-    <MarkGithub :size="32" />
-    <HeartFill :size="32" />
+    <TelescopeFillIcon :size="32" />
+    <MarkGithubIcon :size="32" />
+    <HeartFillIcon :size="32" />
   </div>
 </template>
 
@@ -141,14 +141,14 @@ import { TelescopeFill, MarkGithub, HeartFill } from '@/components/octicons-vue3
 </style>`
 
 const demo2Code = `<script setup lang="ts">
-import { TelescopeFill, MarkGithub, HeartFill } from '@/components/octicons-vue3/index.ts'
+import { TelescopeFillIcon, MarkGithubIcon, HeartFillIcon } from '@/components/octicons-vue3/index.ts'
 <\/script>
 
 <template>
   <div class="icon-demo-row">
-    <TelescopeFill :size="16" color="#656d76" />
-    <MarkGithub :size="24" color="#0969da" />
-    <HeartFill :size="32" color="#d1242f" />
+    <TelescopeFillIcon :size="16" color="#656d76" />
+    <MarkGithubIcon :size="24" color="#0969da" />
+    <HeartFillIcon :size="32" color="#d1242f" />
   </div>
 </template>
 
@@ -162,27 +162,27 @@ import { TelescopeFill, MarkGithub, HeartFill } from '@/components/octicons-vue3
 </style>`
 
 const basicIconEntries: IconEntry[] = [
-  { name: 'TelescopeFill', component: octicons.TelescopeFill as Component },
-  { name: 'MarkGithub', component: octicons.MarkGithub as Component },
-  { name: 'HeartFill', component: octicons.HeartFill as Component }
+  { name: 'TelescopeFillIcon', component: octicons.TelescopeFillIcon as Component },
+  { name: 'MarkGithubIcon', component: octicons.MarkGithubIcon as Component },
+  { name: 'HeartFillIcon', component: octicons.HeartFillIcon as Component }
 ]
 
 const colorDemoEntries: ColorDemoEntry[] = [
   {
-    name: 'TelescopeFill',
-    component: octicons.TelescopeFill as Component,
+    name: 'TelescopeFillIcon',
+    component: octicons.TelescopeFillIcon as Component,
     size: 16,
     color: '#656d76'
   },
   {
-    name: 'MarkGithub',
-    component: octicons.MarkGithub as Component,
+    name: 'MarkGithubIcon',
+    component: octicons.MarkGithubIcon as Component,
     size: 24,
     color: '#0969da'
   },
   {
-    name: 'HeartFill',
-    component: octicons.HeartFill as Component,
+    name: 'HeartFillIcon',
+    component: octicons.HeartFillIcon as Component,
     size: 32,
     color: '#d1242f'
   }

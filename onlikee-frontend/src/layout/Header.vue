@@ -5,7 +5,7 @@
         class="logo"
         href="/"
       >
-        <LogoOnlikee size="32" />
+        <LogoOnlikeeIcon size="32" />
         <span>onlikee</span>
       </a>
 
@@ -61,16 +61,16 @@
             <ActionList>
               <Divider />
               <ActionList.Item @click="goToProfile">
-                <Person class="menu-icon" />
+                <PersonIcon class="menu-icon" />
                 个人资料
               </ActionList.Item>
               <ActionList.Item href="/application">
-                <Apps class="menu-icon" />
+                <AppsIcon class="menu-icon" />
                 我的应用
               </ActionList.Item>
               <Divider />
               <ActionList.Item href="/auth/logout">
-                <SignOut class="menu-icon" />
+                <SignOutIcon class="menu-icon" />
                 退出登录
               </ActionList.Item>
             </ActionList>
@@ -89,7 +89,7 @@ import { Dropdown } from '@/components/z-ui/dropdown'
 import { Avatar } from '@/components/z-ui/avatar'
 import { ActionList } from '@/components/z-ui/action-list'
 import { Divider } from '@/components/z-ui/divider'
-import { Person, Apps, SignOut, LogoOnlikee } from '@/components/octicons-vue3'
+import { PersonIcon, AppsIcon, SignOutIcon, LogoOnlikeeIcon } from '@/components/octicons-vue3'
 
 interface NavigationItem {
   name: string

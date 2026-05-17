@@ -17,27 +17,27 @@
           <template #trigger>
             <Button>
               <template #leadingVisual>
-                <Plus />
+                <PlusIcon />
               </template>
               新建
               <template #trailingVisual>
-                <TriangleDown />
+                <TriangleDownIcon />
               </template>
             </Button>
           </template>
           <template #content>
             <ActionList>
               <ActionList.Item @click="handleClick('新建文件')">
-                <File class="action-icon" />
+                <FileIcon class="action-icon" />
                 新建文件
               </ActionList.Item>
               <ActionList.Item @click="handleClick('新建文件夹')">
-                <Repo class="action-icon" />
+                <RepoIcon class="action-icon" />
                 新建文件夹
               </ActionList.Item>
               <Divider />
               <ActionList.Item @click="handleClick('从模板创建')">
-                <Copy class="action-icon" />
+                <CopyIcon class="action-icon" />
                 从模板创建
               </ActionList.Item>
             </ActionList>
@@ -55,23 +55,23 @@
           <template #trigger>
             <Button variant="invisible">
               <template #leadingVisual>
-                <KebabHorizontal />
+                <KebabHorizontalIcon />
               </template>
             </Button>
           </template>
           <template #content>
             <ActionList>
               <ActionList.Item>
-                <Pencil class="action-icon" />
+                <PencilIcon class="action-icon" />
                 编辑
               </ActionList.Item>
               <ActionList.Item>
-                <Copy class="action-icon" />
+                <CopyIcon class="action-icon" />
                 复制
               </ActionList.Item>
               <Divider />
               <ActionList.Item>
-                <Trash class="action-icon danger" />
+                <TrashIcon class="action-icon danger" />
                 <span class="danger">删除</span>
               </ActionList.Item>
             </ActionList>
@@ -90,7 +90,7 @@
             <Button>
               导航
               <template #trailingVisual>
-                <TriangleDown />
+                <TriangleDownIcon />
               </template>
             </Button>
           </template>
@@ -128,11 +128,11 @@
           <template #trigger>
             <Button>
               <template #leadingVisual>
-                <Repo class="action-icon" />
+                <RepoIcon class="action-icon" />
               </template>
               {{ selectedLabel }}
               <template #trailingVisual>
-                <TriangleDown />
+                <TriangleDownIcon />
               </template>
             </Button>
           </template>
@@ -163,7 +163,7 @@
             <Button>
               打开菜单
               <template #trailingVisual>
-                <TriangleDown />
+                <TriangleDownIcon />
               </template>
             </Button>
           </template>
@@ -174,7 +174,7 @@
               <Dropdown side="outside-right">
                 <template #trigger>
                   <ActionList.Item class="submenu-trigger">
-                    选项3 <ChevronRight color="#59636e" />
+                    选项3 <ChevronRightIcon color="#59636e" />
                   </ActionList.Item>
                 </template>
                 <template #content>
@@ -203,17 +203,7 @@ import { Dropdown } from '@/components/z-ui/dropdown'
 import { Button } from '@/components/z-ui/button'
 import { ActionList } from '@/components/z-ui/action-list'
 import { Divider } from '@/components/z-ui/divider'
-import {
-  Plus,
-  TriangleDown,
-  File,
-  Repo,
-  Copy,
-  KebabHorizontal,
-  Pencil,
-  Trash,
-  ChevronRight
-} from '@/components/octicons-vue3'
+import { PlusIcon, TriangleDownIcon, FileIcon, RepoIcon, CopyIcon, KebabHorizontalIcon, PencilIcon, TrashIcon, ChevronRightIcon } from '@/components/octicons-vue3'
 
 const handleClick = (action: string) => {
   alert(`执行操作：${action}`)
@@ -225,24 +215,24 @@ const demo1Code = `<template>
   <Dropdown>
     <template #trigger>
       <Button>
-        <template #leadingVisual><Plus /></template>
+        <template #leadingVisual><PlusIcon /></template>
         新建
-        <template #trailingVisual><TriangleDown /></template>
+        <template #trailingVisual><TriangleDownIcon /></template>
       </Button>
     </template>
     <template #content>
       <ActionList>
         <ActionList.Item @click="handleClick('新建文件')">
-          <File class="action-icon" />
+          <FileIcon class="action-icon" />
           新建文件
         </ActionList.Item>
         <ActionList.Item @click="handleClick('新建文件夹')">
-          <Repo class="action-icon" />
+          <RepoIcon class="action-icon" />
           新建文件夹
         </ActionList.Item>
         <Divider />
         <ActionList.Item @click="handleClick('从模板创建')">
-          <Copy class="action-icon" />
+          <CopyIcon class="action-icon" />
           从模板创建
         </ActionList.Item>
       </ActionList>
@@ -255,7 +245,7 @@ import { Dropdown } from '@/components/z-ui/dropdown'
 import { Button } from '@/components/z-ui/button'
 import { ActionList } from '@/components/z-ui/action-list'
 import { Divider } from '@/components/z-ui/divider'
-import { Plus, TriangleDown, File, Repo, Copy } from '@/components/octicons-vue3'
+import { PlusIcon, TriangleDownIcon, FileIcon, RepoIcon, CopyIcon } from '@/components/octicons-vue3'
 
 const handleClick = (action: string) => {
   alert(\`执行操作：\${action}\`)
@@ -266,22 +256,22 @@ const demo2Code = `<template>
   <Dropdown side="outside-bottom">
     <template #trigger>
       <Button variant="invisible">
-        <template #leadingVisual><KebabHorizontal /></template>
+        <template #leadingVisual><KebabHorizontalIcon /></template>
       </Button>
     </template>
     <template #content>
       <ActionList>
         <ActionList.Item>
-          <Pencil class="action-icon" />
+          <PencilIcon class="action-icon" />
           编辑
         </ActionList.Item>
         <ActionList.Item>
-          <Copy class="action-icon" />
+          <CopyIcon class="action-icon" />
           复制
         </ActionList.Item>
         <Divider />
         <ActionList.Item>
-          <Trash class="action-icon danger" />
+          <TrashIcon class="action-icon danger" />
           <span class="danger">删除</span>
         </ActionList.Item>
       </ActionList>
@@ -294,7 +284,7 @@ import { Dropdown } from '@/components/z-ui/dropdown'
 import { Button } from '@/components/z-ui/button'
 import { ActionList } from '@/components/z-ui/action-list'
 import { Divider } from '@/components/z-ui/divider'
-import { KebabHorizontal, Pencil, Copy, Trash } from '@/components/octicons-vue3'
+import { KebabHorizontalIcon, PencilIcon, CopyIcon, TrashIcon } from '@/components/octicons-vue3'
 <\/script>`
 
 const demo3Code = `<template>
@@ -302,7 +292,7 @@ const demo3Code = `<template>
     <template #trigger>
       <Button>
         导航
-        <template #trailingVisual><TriangleDown /></template>
+        <template #trailingVisual><TriangleDownIcon /></template>
       </Button>
     </template>
     <template #content>
@@ -319,16 +309,16 @@ const demo3Code = `<template>
 import { Dropdown } from '@/components/z-ui/dropdown'
 import { Button } from '@/components/z-ui/button'
 import { ActionList } from '@/components/z-ui/action-list'
-import { TriangleDown } from '@/components/octicons-vue3'
+import { TriangleDownIcon } from '@/components/octicons-vue3'
 <\/script>`
 
 const demo4Code = `<template>
   <Dropdown>
     <template #trigger>
       <Button>
-        <template #leadingVisual><Repo /></template>
+        <template #leadingVisual><RepoIcon /></template>
         {{ label }}
-        <template #trailingVisual><TriangleDown /></template>
+        <template #trailingVisual><TriangleDownIcon /></template>
       </Button>
     </template>
     <template #content>
@@ -346,7 +336,7 @@ import { ref } from 'vue'
 import { Dropdown } from '@/components/z-ui/dropdown'
 import { Button } from '@/components/z-ui/button'
 import { ActionList } from '@/components/z-ui/action-list'
-import { Repo, TriangleDown } from '@/components/octicons-vue3'
+import { RepoIcon, TriangleDownIcon } from '@/components/octicons-vue3'
 
 const label = ref('新建文件')
 <\/script>`
@@ -356,7 +346,7 @@ const demo5Code = `<template>
     <template #trigger>
       <Button>
         打开菜单
-        <template #trailingVisual><TriangleDown /></template>
+        <template #trailingVisual><TriangleDownIcon /></template>
       </Button>
     </template>
     <template #content>
@@ -366,7 +356,7 @@ const demo5Code = `<template>
         <Dropdown side="outside-right">
           <template #trigger>
             <ActionList.Item class="submenu-trigger">
-              选项3 <ChevronRight color="#59636e" />
+              选项3 <ChevronRightIcon color="#59636e" />
             </ActionList.Item>
           </template>
           <template #content>
@@ -386,7 +376,7 @@ const demo5Code = `<template>
 import { Dropdown } from '@/components/z-ui/dropdown'
 import { Button } from '@/components/z-ui/button'
 import { ActionList } from '@/components/z-ui/action-list'
-import { TriangleDown, ChevronRight } from '@/components/octicons-vue3'
+import { TriangleDownIcon, ChevronRightIcon } from '@/components/octicons-vue3'
 <\/script>
 
 <style scoped>

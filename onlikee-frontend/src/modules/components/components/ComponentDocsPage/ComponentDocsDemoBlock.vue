@@ -12,7 +12,7 @@
           class="action-btn"
           @click="copyCode"
         >
-          <Copy />
+          <CopyIcon />
         </button>
       </Tooltip>
       <Tooltip
@@ -23,7 +23,7 @@
           class="action-btn"
           @click="codeVisible = !codeVisible"
         >
-          <Code />
+          <CodeIcon />
         </button>
       </Tooltip>
     </div>
@@ -54,7 +54,7 @@
 <script setup lang="ts">
 import { ref, onMounted } from 'vue'
 import { Tooltip } from '@/components/z-ui/tooltip'
-import { Copy, Code } from '@/components/octicons-vue3/index.ts'
+import { CopyIcon, CodeIcon } from '@/components/octicons-vue3/index.ts'
 
 const props = defineProps<{ code: string }>()
 

@@ -61,7 +61,7 @@
             </FormControl>
             <div>
               <div class="profile-icon-input">
-                <Location
+                <LocationIcon
                   size="16"
                   color="#5a5a5a"
                   class="input-icon"
@@ -74,7 +74,7 @@
                 />
               </div>
               <div class="profile-icon-input">
-                <Mail
+                <MailIcon
                   size="16"
                   color="#5a5a5a"
                   class="input-icon"
@@ -93,7 +93,7 @@
                 社交账号
               </div>
               <div class="profile-icon-input">
-                <Link
+                <LinkIcon
                   size="16"
                   color="#5a5a5a"
                   class="input-icon"
@@ -106,7 +106,7 @@
                 />
               </div>
               <div class="profile-icon-input">
-                <Link
+                <LinkIcon
                   size="16"
                   color="#5a5a5a"
                   class="input-icon"
@@ -119,7 +119,7 @@
                 />
               </div>
               <div class="profile-icon-input">
-                <Link
+                <LinkIcon
                   size="16"
                   color="#5a5a5a"
                   class="input-icon"
@@ -164,35 +164,35 @@
             <div class="links">
               <ul>
                 <li v-if="profile?.location">
-                  <Location
+                  <LocationIcon
                     size="16"
                     color="#5a5a5a"
                   />
                   <span>{{ profile?.location }}</span>
                 </li>
                 <li v-if="profile?.email">
-                  <Mail
+                  <MailIcon
                     size="16"
                     color="#5a5a5a"
                   />
                   <span>{{ profile?.email }}</span>
                 </li>
                 <li v-if="profile?.socialAccount0">
-                  <Link
+                  <LinkIcon
                     size="16"
                     color="#5a5a5a"
                   />
                   <span>{{ profile?.socialAccount0 }}</span>
                 </li>
                 <li v-if="profile?.socialAccount1">
-                  <Link
+                  <LinkIcon
                     size="16"
                     color="#5a5a5a"
                   />
                   <span>{{ profile?.socialAccount1 }}</span>
                 </li>
                 <li v-if="profile?.socialAccount2">
-                  <Link
+                  <LinkIcon
                     size="16"
                     color="#5a5a5a"
                   />
@@ -228,7 +228,7 @@
               narrow
             >
               <Blankslate.Visual>
-                <RepoTemplate />
+                <RepoTemplateIcon />
               </Blankslate.Visual>
               <Blankslate.Heading>
                 {{ isOwnProfile ? '编写你的 README' : '' }}
@@ -333,12 +333,7 @@ import { Dialog } from '@/components/z-ui/dialog'
 import { FormControl } from '@/components/z-ui/form-control'
 import { Input } from '@/components/z-ui/input'
 import { Textarea } from '@/components/z-ui/textarea'
-import {
-  Location,
-  Mail,
-  Link,
-  RepoTemplate
-} from '@/components/octicons-vue3'
+import { LocationIcon, MailIcon, LinkIcon, RepoTemplateIcon } from '@/components/octicons-vue3'
 import { useUserStore } from '@/stores/user'
 import {
   getPublicUserProfile,

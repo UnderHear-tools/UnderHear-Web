@@ -17,42 +17,42 @@
       <ComponentDocsDemoBlock :code="demo1Code">
         <div class="demo-actions">
           <Tooltip
-            content="Bold"
+            content="BoldIcon"
             placement="bottom"
           >
             <Button variant="invisible">
               <template #leadingVisual>
-                <Bold />
+                <BoldIcon />
               </template>
             </Button>
           </Tooltip>
           <Tooltip
-            content="Italic"
+            content="ItalicIcon"
             placement="bottom"
           >
             <Button variant="invisible">
               <template #leadingVisual>
-                <Italic />
+                <ItalicIcon />
               </template>
             </Button>
           </Tooltip>
           <Tooltip
-            content="Code"
+            content="CodeIcon"
             placement="bottom"
           >
             <Button variant="invisible">
               <template #leadingVisual>
-                <Code />
+                <CodeIcon />
               </template>
             </Button>
           </Tooltip>
           <Tooltip
-            content="Link"
+            content="LinkIcon"
             placement="bottom"
           >
             <Button variant="invisible">
               <template #leadingVisual>
-                <Link />
+                <LinkIcon />
               </template>
             </Button>
           </Tooltip>
@@ -66,17 +66,17 @@
           >
             <Button variant="invisible">
               <template #leadingVisual>
-                <FileAdded />
+                <FileAddedIcon />
               </template>
             </Button>
           </Tooltip>
           <Tooltip
-            content="Search"
+            content="SearchIcon"
             placement="bottom"
           >
             <Button variant="invisible">
               <template #leadingVisual>
-                <Search />
+                <SearchIcon />
               </template>
             </Button>
           </Tooltip>
@@ -93,29 +93,29 @@ import ComponentDocsPage from '@/modules/components/components/ComponentDocsPage
 import ComponentDocsSection from '@/modules/components/components/ComponentDocsPage/ComponentDocsSection.vue'
 import { Tooltip } from '@/components/z-ui/tooltip'
 import { Divider } from '@/components/z-ui/divider'
-import { Bold, Italic, Code, Link, FileAdded, Search } from '@/components/octicons-vue3'
+import { BoldIcon, ItalicIcon, CodeIcon, LinkIcon, FileAddedIcon, SearchIcon } from '@/components/octicons-vue3'
 import { Button } from '@/components/z-ui/button'
 
 const demo1Code = `<template>
   <div class="demo-actions">
-    <Tooltip content="Bold" placement="bottom">
+    <Tooltip content="BoldIcon" placement="bottom">
       <Button variant="invisible">
-        <template #leadingVisual><Bold /></template>
+        <template #leadingVisual><BoldIcon /></template>
       </Button>
     </Tooltip>
-    <Tooltip content="Italic" placement="bottom">
+    <Tooltip content="ItalicIcon" placement="bottom">
       <Button variant="invisible">
-        <template #leadingVisual><Italic /></template>
+        <template #leadingVisual><ItalicIcon /></template>
       </Button>
     </Tooltip>
-    <Tooltip content="Code" placement="bottom">
+    <Tooltip content="CodeIcon" placement="bottom">
       <Button variant="invisible">
-        <template #leadingVisual><Code /></template>
+        <template #leadingVisual><CodeIcon /></template>
       </Button>
     </Tooltip>
-    <Tooltip content="Link" placement="bottom">
+    <Tooltip content="LinkIcon" placement="bottom">
       <Button variant="invisible">
-        <template #leadingVisual><Link /></template>
+        <template #leadingVisual><LinkIcon /></template>
       </Button>
     </Tooltip>
 
@@ -123,12 +123,12 @@ const demo1Code = `<template>
 
     <Tooltip content="File Added" placement="bottom">
       <Button variant="invisible">
-        <template #leadingVisual><FileAdded /></template>
+        <template #leadingVisual><FileAddedIcon /></template>
       </Button>
     </Tooltip>
-    <Tooltip content="Search" placement="bottom">
+    <Tooltip content="SearchIcon" placement="bottom">
       <Button variant="invisible">
-        <template #leadingVisual><Search /></template>
+        <template #leadingVisual><SearchIcon /></template>
       </Button>
     </Tooltip>
   </div>
@@ -138,7 +138,7 @@ const demo1Code = `<template>
 import { Button } from '@/components/z-ui/button'
 import { Tooltip } from '@/components/z-ui/tooltip'
 import { Divider } from '@/components/z-ui/divider'
-import { Bold, Italic, Code, Link, FileAdded, Search } from '@/components/octicons-vue3'
+import { BoldIcon, ItalicIcon, CodeIcon, LinkIcon, FileAddedIcon, SearchIcon } from '@/components/octicons-vue3'
 <\/script>
 
 <style scoped>

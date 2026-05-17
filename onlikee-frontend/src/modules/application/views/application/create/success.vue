@@ -2,7 +2,7 @@
   <Container>
     <div class="success-message">
       <div class="success-info">
-        <CheckCircle :size="32" />
+        <CheckCircleIcon :size="32" />
         <h2>
           应用创建成功
         </h2>
@@ -20,7 +20,7 @@
 import confetti from 'canvas-confetti'
 import { ref, onMounted } from 'vue'
 import { Container } from '@/components/z-ui/container'
-import { CheckCircle } from '@/components/octicons-vue3'
+import { CheckCircleIcon } from '@/components/octicons-vue3'
 import { Link } from '@/components/z-ui/link'
 import { useRoute } from 'vue-router'
 
