@@ -13,7 +13,14 @@ const request = axios.create({
 })
 
 request.interceptors.response.use((response) => {
-  response.data = unwrapApiResponse(response.data as ApiResponse<unknown>)
+  try {
+    response.data = unwrapApiResponse(response.data as ApiResponse<unknown>)
+  } catch (error) {
+    if (error instanceof Error) {
+      Banner.error(error.message)
+    }
+    throw error
+  }
   return response
 }, (error) => {
   if (axios.isAxiosError(error)) {
@@ -24,6 +31,7 @@ request.interceptors.response.use((response) => {
 
     const payload = error.response?.data
     if (isApiResponse(payload) && payload.message) {
+      Banner.error(payload.message)
       return Promise.reject(new Error(payload.message))
     }
   }

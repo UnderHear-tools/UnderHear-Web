@@ -153,8 +153,6 @@ const submit = async () => {
     sessionStorage.removeItem(loginReturnToKey)
     clearOAuthSignupContext()
     window.location.href = returnTo
-  } catch (error) {
-    Banner.error(error instanceof Error ? error.message : '注册失败，请稍后重试。')
   } finally {
     loading.value = false
   }

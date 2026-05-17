@@ -119,16 +119,11 @@ const login = async () => {
       window.location.href = '/auth/signup-complete'
       return
     }
-    if (!response.userInfo) {
-      throw new Error('登录响应无效，请稍后重试。')
-    }
-    userStore.setUserInfo(response.userInfo)
+    userStore.setUserInfo(response.userInfo!)
     // 登录成功后跳回登录前页面
     const returnTo = sessionStorage.getItem(loginReturnToKey) || '/'
     window.location.href = returnTo
     sessionStorage.removeItem(loginReturnToKey)
-  } catch (error) {
-    Banner.error(error instanceof Error ? error.message : '登录失败，请稍后重试。')
   } finally {
     sessionStorage.removeItem(oauthProviderKey)
     loading.value = false

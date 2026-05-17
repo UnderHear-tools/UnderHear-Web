@@ -432,8 +432,6 @@ const saveProfileEdit = async () => {
     userStore.setUserInfo(updatedProfile)
     profileEditing.value = false
     Banner.success('保存成功。')
-  } catch (error) {
-    Banner.error(error instanceof Error ? error.message : '保存失败，请稍后重试。')
   } finally {
     profileSaving.value = false
   }
@@ -459,8 +457,6 @@ const saveMarkdown = async () => {
     }
     markdownDialogOpen.value = false
     Banner.success('保存成功。')
-  } catch (error) {
-    Banner.error(error instanceof Error ? error.message : '保存失败，请稍后重试。')
   } finally {
     markdownSaving.value = false
   }

@@ -47,7 +47,6 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 import { Avatar } from '@/components/z-ui/avatar'
-import { Banner } from '@/components/z-ui/banner'
 import { useUserStore } from '@/stores/user'
 import { logout, logoutAll } from '../../api/logout'
 
@@ -61,8 +60,6 @@ const handleLogout = async () => {
   try {
     await logout()
     window.location.href = '/'
-  } catch (error) {
-    Banner.error(error instanceof Error ? error.message : '退出失败，请稍后重试。')
   } finally {
     isSubmitting.value = false
   }
@@ -75,8 +72,6 @@ const handleLogoutAll = async () => {
   try {
     await logoutAll()
     window.location.href = '/'
-  } catch (error) {
-    Banner.error(error instanceof Error ? error.message : '退出失败，请稍后重试。')
   } finally {
     isSubmitting.value = false
   }
