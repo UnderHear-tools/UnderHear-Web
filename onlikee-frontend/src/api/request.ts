@@ -13,14 +13,7 @@ const request = axios.create({
 })
 
 request.interceptors.response.use((response) => {
-  try {
-    response.data = unwrapApiResponse(response.data as ApiResponse<unknown>)
-  } catch (error) {
-    if (error instanceof Error) {
-      Banner.error(error.message)
-    }
-    throw error
-  }
+  response.data = unwrapApiResponse(response.data as ApiResponse<unknown>)
   return response
 }, (error) => {
   if (axios.isAxiosError(error)) {
