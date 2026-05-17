@@ -59,7 +59,7 @@
       </div>
     </div>
     <div class="title">
-      EXPLORE
+      onlikee
     </div>
   </div>
 </template>
