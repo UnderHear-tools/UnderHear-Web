@@ -20,12 +20,12 @@
 
     <div class="creator-grid">
       <RouterLink
-        to="/namecard/onlikee"
+        to="/@UnderHear"
         class="creator-card"
       >
         <div class="creator-main">
           <img
-            src="../views/namecard/onlikee/assets/index/avatar.png"
+            src="https://avatars.githubusercontent.com/u/131276691?v=4"
             alt="onlikee"
             class="avatar"
           >

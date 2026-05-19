@@ -12,7 +12,6 @@
   },
   "dependencies": {
     "@guolao/vue-monaco-editor": "^1.6.0",
-    "@icon-park/vue-next": "^1.4.2",
     "@tailwindcss/vite": "^4.1.12",
     "axios": "^1.13.5",
     "canvas-confetti": "^1.9.4",
