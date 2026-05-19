@@ -1,5 +1,6 @@
 import { createApp } from 'vue'
 import { createPinia } from 'pinia'
+import { loader } from '@guolao/vue-monaco-editor'
 
 //引入全局样式
 import './css/style.css'
@@ -10,7 +11,11 @@ import App from './App.vue'
 import router from './router'
 import { useUserStore } from '@/stores/user'
 
-import '@/components/monaco-editor/setupMonaco'
+loader.config({
+  paths: {
+    vs: 'https://cdn.jsdelivr.net/npm/monaco-editor@0.55.1/min/vs'
+  }
+})
 
 const app = createApp(App)
 const pinia = createPinia()
