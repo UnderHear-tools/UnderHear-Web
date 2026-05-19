@@ -8,16 +8,8 @@
       :options="editorOptions"
       @update:value="updateEditorValue"
     >
-      <template #default>
-        <div class="html-editor-status">
-          正在加载编辑器...
-        </div>
-      </template>
-      <template #failure>
-        <div class="html-editor-status">
-          编辑器加载失败
-        </div>
-      </template>
+      <template #default />
+      <template #failure />
     </VueMonacoEditor>
   </div>
 </template>
@@ -65,14 +57,5 @@ function updateEditorValue(value: string | undefined) {
 .html-editor-wrapper :deep(.html-editor) {
   width: 100%;
   height: 100%;
-}
-
-.html-editor-status {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  height: 360px;
-  color: var(--fgColor-muted);
-  font-size: 14px;
 }
 </style>
