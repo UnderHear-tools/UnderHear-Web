@@ -56,6 +56,8 @@ function onInput(event: Event) {
   resize: vertical;
   overflow: auto;
   scrollbar-color: var(--fgColor-muted, #59636e) transparent;
+  box-sizing: border-box;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
 .textarea:focus {
