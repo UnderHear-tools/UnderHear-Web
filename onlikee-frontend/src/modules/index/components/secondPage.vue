@@ -45,6 +45,7 @@
   background-color: #fff;
 }
 .second-grid {
+  width: 100%;
   height: 100%;
   display: grid;
   grid-template-columns: repeat(2, 1fr);
@@ -53,21 +54,27 @@
 }
 
 .panel-vision {
-order: 1;
+  order: 1;
 }
 
 .panel-city {
-order: 2;
-z-index: 1;
+  order: 2;
+  z-index: 1;
 }
 
 .panel-space {
-order: 3;
+  order: 3;
 }
 
 .panel-mission {
-order: 4;
-z-index: 0;
+  order: 4;
+  z-index: 0;
+}
+
+.panel-text,
+.panel-image {
+  min-width: 0;
+  min-height: 0;
 }
 
 .panel-text {
@@ -93,14 +100,16 @@ z-index: 0;
 }
 
 .panel-city img {
+  width: 100%;
   height: 100%;
   margin-left: auto;
   margin-top: 16px;
 }
 
 .panel-space img {
-  object-fit: cover;
+  width: 100%;
   height: 100%;
+  object-fit: cover;
 }
 
 .panel-mission {
@@ -136,10 +145,7 @@ z-index: 0;
   }
 
   .panel-city img {
-   width: 100%;
-   margin-left: 0;
-   margin-top: 0;
-}
-
+    width: 100%;
+  }
 }
 </style>

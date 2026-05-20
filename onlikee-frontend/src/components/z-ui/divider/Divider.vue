@@ -20,14 +20,19 @@ withDefaults(defineProps<{
 
 <style scoped>
 .divider {
-  color: var(--borderColor-muted, #d1d9e0b3);
-  margin-block-end: 0.5rem;
-  margin-block-start: calc(0.5rem - 0.0625rem);
+  border: 0;
+  border-block-start: 1px solid var(--borderColor-muted, #d1d9e0b3);
+  height: 1px;
+  margin: 0.5rem 0;
+  width: 100%;
 }
 
 .divider--vertical {
-  width: 1px;
+  align-self: stretch;
+  border-block-start: 0;
+  border-inline-start: 1px solid var(--borderColor-muted, #d1d9e0b3);
+  flex-shrink: 0;
   height: 1em;
-  background: var(--borderColor-muted, #d1d9e0b3);
+  width: 1px;
 }
 </style>

@@ -9,21 +9,19 @@
         <span>onlikee</span>
       </a>
 
-      <nav>
-        <ul class="nav-list">
-          <li
-            v-for="item in navigationItems"
-            :key="item.name"
+      <div class="nav-list">
+        <div
+          v-for="item in navigationItems"
+          :key="item.name"
+        >
+          <div
+            :class="['nav-link', { active: item.active }]"
+            @click="navigateToPage(item)"
           >
-            <div
-              :class="['nav-link', { active: item.active }]"
-              @click="navigateToPage(item)"
-            >
-              {{ item.name }}
-            </div>
-          </li>
-        </ul>
-      </nav>
+            {{ item.name }}
+          </div>
+        </div>
+      </div>
 
       <div class="user-menu">
         <div
@@ -180,7 +178,6 @@ watch(() => route.path, () => {
   position: relative;
   display: flex;
   height: 4rem;
-  padding: 6px 8px;
   align-items: center;
   justify-content: center;
 }
@@ -196,6 +193,7 @@ watch(() => route.path, () => {
   cursor: pointer;
   font-family: 'Arial Black', sans-serif;
   font-size: 24px;
+  text-decoration: none;
 }
 
 .nav-list {
@@ -282,6 +280,7 @@ watch(() => route.path, () => {
 
   .header-inner {
     height: auto;
+    padding: 6px 8px;
   }
 
   .logo{

@@ -122,7 +122,7 @@ const applications = ref<Application[]>([])
 }
 
 .application-subtitle {
-  font-size: 1.1rem;
+  font-size: 18px;
   color: var(--fgColor-muted);
   line-height: 1.6;
   max-width: 600px;

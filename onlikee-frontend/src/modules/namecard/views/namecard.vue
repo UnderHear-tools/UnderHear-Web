@@ -75,7 +75,7 @@ import { Link } from '@/components/z-ui/link'
 }
 
 .subtitle {
-	font-size: 1.05rem;
+	font-size: 18px;
 	color: var(--fgColor-muted);
 	line-height: 1.6;
 	max-width: 620px;

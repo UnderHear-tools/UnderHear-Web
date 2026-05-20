@@ -54,6 +54,7 @@ function onInput(event: Event) {
   background-repeat: no-repeat;
   border-radius: 6px;
   padding: 5px 12px;
+  box-sizing: border-box;
 }
 
 .input[data-size="small"] {

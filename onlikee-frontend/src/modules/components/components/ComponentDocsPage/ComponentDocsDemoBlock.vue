@@ -93,6 +93,7 @@ const copyCode = () => {
 }
 
 .demo-content {
+  box-sizing: border-box;
   min-height: 160px;
   padding: 2rem;
   display: flex;
@@ -117,6 +118,7 @@ const copyCode = () => {
   color: var(--fgColor-muted);
   cursor: pointer;
   border-radius: 4px;
+  background-color: transparent;
 }
 
 .action-btn:hover {

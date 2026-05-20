@@ -10,12 +10,14 @@
       <p class="subtitle">
         所有组件都经过精心设计，支持 TypeScript 并遵循最佳实践。
       </p>
-      <RouterLink
-        to="/component/overview"
-        class="link"
-      >
-        &nbsp;&nbsp;探索一下！
-      </RouterLink>
+      <div class="actions">
+        <RouterLink
+          to="/component/overview"
+          class="link"
+        >
+          探索一下！
+        </RouterLink>
+      </div>
       <img
         src="@/modules/components/assets/components.svg"
         alt="Components Preview"
@@ -44,7 +46,7 @@ import { Container } from '@/components/z-ui/container'
 }
 
 .subtitle {
-  font-size: 1.05rem;
+  font-size: 18px;
   color: var(--fgColor-muted);
   line-height: 1.6;
   max-width: 620px;
@@ -53,20 +55,25 @@ import { Container } from '@/components/z-ui/container'
 
 .link {
   display: inline-block;
-  margin-top: 2rem;
   padding: 0.75rem 2rem;
   background-color: var(--bgColor-accent-emphasis);
   color: var(--fgColor-onEmphasis);
   border-radius: 6px;
+  text-decoration: none;
 }
 
 .link:hover {
   background-color: var(--bgColor-accent-emphasis);
 }
 
+.actions {
+  display: flex;
+  justify-content: center;
+  margin-top: 2rem;
+}
+
 .components-preview {
-  margin: 0 auto;
-  width: 800px;
+  width: min(100%, 800px);
 }
 
 @media (max-width: 768px) {

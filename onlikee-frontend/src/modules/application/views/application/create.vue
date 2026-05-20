@@ -115,7 +115,7 @@ function goCollect() {
 }
 
 .subtitle {
-  font-size: 1.05rem;
+  font-size: 18px;
   color: var(--fgColor-muted);
   line-height: 1.6;
   max-width: 620px;
