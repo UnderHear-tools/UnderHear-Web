@@ -8,7 +8,6 @@
         应用名称
       </FormControl.Label>
       <Input
-        class="w-full"
         :model-value="appName"
         placeholder="请输入应用名称"
         maxlength="100"
@@ -27,7 +26,6 @@
         英文名称
       </FormControl.Label>
       <Input
-        class="w-full"
         :model-value="appEnglishName"
         placeholder="请输入英文名称"
         minlength="1"
@@ -104,7 +102,6 @@
         应用描述
       </FormControl.Label>
       <Textarea
-        class="w-full"
         :model-value="appDescription"
         placeholder="请输入应用描述"
         maxlength="1000"

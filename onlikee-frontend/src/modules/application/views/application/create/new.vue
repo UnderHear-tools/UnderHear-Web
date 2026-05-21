@@ -72,7 +72,7 @@
         </Timeline.Body>
       </Timeline.Item>
     </Timeline>
-    <div class="mt-6 flex justify-end">
+    <div class="submit-actions">
       <Button
         variant="primary"
         :loading="isUploading"
@@ -211,6 +211,12 @@ async function submit() {
   font-weight: 600;
   color: var(--fgColor-default);
   margin-bottom: 1rem;
+}
+
+.submit-actions {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 1.5rem;
 }
 
 @media (max-width: 768px) {

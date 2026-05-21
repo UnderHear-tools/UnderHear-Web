@@ -55,11 +55,16 @@ function onInput(event: Event) {
   border-radius: 6px;
   padding: 5px 12px;
   box-sizing: border-box;
+  font-family: inherit;
+  line-height: 20px;
 }
 
 .input[data-size="small"] {
   font-size: 12px;
   height: 29.6px;
+  line-height: 18px;
+  padding-top: 4.8px;
+  padding-bottom: 4.8px;
 }
 
 .input[data-size="medium"] {
@@ -70,6 +75,8 @@ function onInput(event: Event) {
 .input[data-size="large"] {
   font-size: 14px;
   height: 40px;
+  padding-top: 9px;
+  padding-bottom: 9px;
 }
 
 .input:focus {

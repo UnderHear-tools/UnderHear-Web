@@ -13,6 +13,7 @@ html, body {
   color: var(--fgColor-default, #1f2328);
   margin: 0;
 }
+
 h1 {
   font-size: 2em;
   font-weight: bold;

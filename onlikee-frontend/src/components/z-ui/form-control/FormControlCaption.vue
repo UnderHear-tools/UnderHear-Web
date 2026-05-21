@@ -1,7 +1,7 @@
 <template>
-  <p class="form-control__caption">
+  <span class="form-control__caption">
     <slot />
-  </p>
+  </span>
 </template>
 
 <script setup lang="ts">
