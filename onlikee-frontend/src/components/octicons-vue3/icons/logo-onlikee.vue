@@ -5,7 +5,7 @@
     :width="size"
     :height="size"
     viewBox="0 0 24 24"
-    :fill="color || 'currentColor'"
+    :fill="color"
   >
     <path
       fill-rule="evenodd"
@@ -18,5 +18,6 @@
 <script setup lang="ts">
 withDefaults(defineProps<{ size?: number | string; color?: string }>(), {
   size: 16,
+  color: 'currentColor',
 })
 </script>
