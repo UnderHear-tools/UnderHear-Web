@@ -1,11 +1,14 @@
 import { inject, provide, type ComputedRef, type InjectionKey } from 'vue'
 
-export type ActionListSelectionMode = 'none' | 'single'
+export type ActionListVariant = 'inset' | 'horizontal-inset' | 'full'
+export type ActionListSelectionVariant = 'single' | 'multiple'
+export type ActionListItemVariant = 'default' | 'danger'
+export type ActionListItemSize = 'medium' | 'large'
+export type ActionListDescriptionVariant = 'inline' | 'block'
 
 export interface ActionListContext {
-  selectionMode: ComputedRef<ActionListSelectionMode>
-  modelValue: ComputedRef<string>
-  select: (value: string) => void
+  selectionVariant: ComputedRef<ActionListSelectionVariant | undefined>
+  listRole: ComputedRef<string | undefined>
 }
 
 const actionListContextKey: InjectionKey<ActionListContext> = Symbol('ActionListContext')

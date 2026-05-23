@@ -14,24 +14,27 @@
       </template>
       <template #content>
         <ActionList
-          v-model="selectedAction"
-          selection-mode="single"
+          selection-variant="single"
+          role="listbox"
         >
           <ActionList.Item
-            value="1"
-            @click="label = '新建文件'"
+            role="option"
+            :selected="selectedAction === '1'"
+            @select="selectAction('1', '新建文件')"
           >
             新建文件
           </ActionList.Item>
           <ActionList.Item
-            value="2"
-            @click="label = '打开文件'"
+            role="option"
+            :selected="selectedAction === '2'"
+            @select="selectAction('2', '打开文件')"
           >
             打开文件
           </ActionList.Item>
           <ActionList.Item
-            value="3"
-            @click="label = '保存文件'"
+            role="option"
+            :selected="selectedAction === '3'"
+            @select="selectAction('3', '保存文件')"
           >
             保存文件
           </ActionList.Item>
@@ -58,8 +61,11 @@
           <ActionList.Item>选项2</ActionList.Item>
           <Dropdown side="outside-right">
             <template #trigger>
-              <ActionList.Item class="select">
-                选项3 <ChevronRightIcon color="#59636e" />
+              <ActionList.Item>
+                选项3
+                <template #trailingVisual>
+                  <ChevronRightIcon />
+                </template>
               </ActionList.Item>
             </template>
             <template #content>
@@ -86,6 +92,11 @@ import { ChevronRightIcon } from '@/components/octicons-vue3'
 
 const selectedAction = ref('1')
 const label = ref('新建文件')
+
+function selectAction(value: string, nextLabel: string) {
+  selectedAction.value = value
+  label.value = nextLabel
+}
 </script>
 <style scoped>
 .hero {
@@ -94,10 +105,4 @@ const label = ref('新建文件')
   bottom: 0;
 }
 
-.select {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  width: 100%;
-}
 </style>

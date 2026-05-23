@@ -56,21 +56,36 @@
                 </div>
               </div>
             </div>
-            <ActionList>
-              <Divider />
-              <ActionList.Item @click="goToProfile">
-                <PersonIcon class="menu-icon" />
+            <ActionList role="menu">
+              <ActionList.Divider />
+              <ActionList.Item
+                role="menuitem"
+                @select="goToProfile"
+              >
+                <template #leadingVisual>
+                  <PersonIcon />
+                </template>
                 个人资料
               </ActionList.Item>
-              <ActionList.Item href="/application">
-                <AppsIcon class="menu-icon" />
+              <ActionList.LinkItem
+                href="/application"
+                role="menuitem"
+              >
+                <template #leadingVisual>
+                  <AppsIcon />
+                </template>
                 我的应用
-              </ActionList.Item>
-              <Divider />
-              <ActionList.Item href="/auth/logout">
-                <SignOutIcon class="menu-icon" />
+              </ActionList.LinkItem>
+              <ActionList.Divider />
+              <ActionList.LinkItem
+                href="/auth/logout"
+                role="menuitem"
+              >
+                <template #leadingVisual>
+                  <SignOutIcon />
+                </template>
                 退出登录
-              </ActionList.Item>
+              </ActionList.LinkItem>
             </ActionList>
           </template>
         </Dropdown>
@@ -86,7 +101,6 @@ import { useUserStore } from '@/stores/user'
 import { Dropdown } from '@/components/z-ui/dropdown'
 import { Avatar } from '@/components/z-ui/avatar'
 import { ActionList } from '@/components/z-ui/action-list'
-import { Divider } from '@/components/z-ui/divider'
 import { PersonIcon, AppsIcon, SignOutIcon, LogoOnlikeeIcon } from '@/components/octicons-vue3'
 
 interface NavigationItem {
@@ -259,10 +273,6 @@ watch(() => route.path, () => {
   font-size: 12px;
   color: var(--fgColor-muted);
   white-space: nowrap;
-}
-
-.menu-icon {
-  color: var(--fgColor-muted);
 }
 
 @media (max-width: 768px) {

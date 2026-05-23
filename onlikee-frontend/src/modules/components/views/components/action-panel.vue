@@ -7,10 +7,7 @@
 
     <ComponentDocsSection title="基础用法">
       <template #description>
-        使用
-        <code>Dropdown</code>、
-        <code>ActionList</code>、<code>ActionList.Item</code>
-        组合而成的操作面板。点击按钮弹出操作列表。
+        使用 <code>Dropdown</code> 和 <code>ActionList</code> 组合操作面板，图标通过命名插槽进入列表项的 leading 区域。
       </template>
       <ComponentDocsDemoBlock :code="demo1Code">
         <Dropdown>
@@ -26,18 +23,33 @@
             </Button>
           </template>
           <template #content>
-            <ActionList>
-              <ActionList.Item @click="handleClick('新建文件')">
-                <FileIcon class="action-icon" />
+            <ActionList role="menu">
+              <ActionList.Item
+                role="menuitem"
+                @select="handleClick('新建文件')"
+              >
+                <template #leadingVisual>
+                  <FileIcon />
+                </template>
                 新建文件
               </ActionList.Item>
-              <ActionList.Item @click="handleClick('新建文件夹')">
-                <RepoIcon class="action-icon" />
+              <ActionList.Item
+                role="menuitem"
+                @select="handleClick('新建文件夹')"
+              >
+                <template #leadingVisual>
+                  <RepoIcon />
+                </template>
                 新建文件夹
               </ActionList.Item>
-              <Divider />
-              <ActionList.Item @click="handleClick('从模板创建')">
-                <CopyIcon class="action-icon" />
+              <ActionList.Divider />
+              <ActionList.Item
+                role="menuitem"
+                @select="handleClick('从模板创建')"
+              >
+                <template #leadingVisual>
+                  <CopyIcon />
+                </template>
                 从模板创建
               </ActionList.Item>
             </ActionList>
@@ -48,7 +60,7 @@
 
     <ComponentDocsSection title="更多操作">
       <template #description>
-        使用图标按钮作为触发器，适用于表格行尾的操作菜单。
+        使用图标按钮作为触发器，并用 <code>variant="danger"</code> 标记破坏性操作。
       </template>
       <ComponentDocsDemoBlock :code="demo2Code">
         <Dropdown side="outside-bottom">
@@ -60,19 +72,28 @@
             </Button>
           </template>
           <template #content>
-            <ActionList>
-              <ActionList.Item>
-                <PencilIcon class="action-icon" />
+            <ActionList role="menu">
+              <ActionList.Item role="menuitem">
+                <template #leadingVisual>
+                  <PencilIcon />
+                </template>
                 编辑
               </ActionList.Item>
-              <ActionList.Item>
-                <CopyIcon class="action-icon" />
+              <ActionList.Item role="menuitem">
+                <template #leadingVisual>
+                  <CopyIcon />
+                </template>
                 复制
               </ActionList.Item>
-              <Divider />
-              <ActionList.Item>
-                <TrashIcon class="action-icon danger" />
-                <span class="danger">删除</span>
+              <ActionList.Divider />
+              <ActionList.Item
+                role="menuitem"
+                variant="danger"
+              >
+                <template #leadingVisual>
+                  <TrashIcon />
+                </template>
+                删除
               </ActionList.Item>
             </ActionList>
           </template>
@@ -82,7 +103,7 @@
 
     <ComponentDocsSection title="带链接的操作面板">
       <template #description>
-        通过 <code>href</code> 属性将操作项渲染为链接。
+        使用 <code>ActionList.LinkItem</code> 渲染链接操作。
       </template>
       <ComponentDocsDemoBlock :code="demo3Code">
         <Dropdown>
@@ -95,40 +116,53 @@
             </Button>
           </template>
           <template #content>
-            <ActionList>
-              <ActionList.Item
+            <ActionList role="menu">
+              <ActionList.LinkItem
                 href="https://github.com"
                 new-tab
+                role="menuitem"
               >
                 GitHub
-              </ActionList.Item>
-              <ActionList.Item
+                <template #trailingVisual>
+                  <LinkExternalIcon />
+                </template>
+              </ActionList.LinkItem>
+              <ActionList.LinkItem
                 href="https://vuejs.org"
                 new-tab
+                role="menuitem"
               >
                 Vue.js
-              </ActionList.Item>
-              <ActionList.Item
+                <template #trailingVisual>
+                  <LinkExternalIcon />
+                </template>
+              </ActionList.LinkItem>
+              <ActionList.LinkItem
                 href="https://vitejs.dev"
                 new-tab
+                role="menuitem"
               >
                 Vite
-              </ActionList.Item>
+                <template #trailingVisual>
+                  <LinkExternalIcon />
+                </template>
+              </ActionList.LinkItem>
             </ActionList>
           </template>
         </Dropdown>
       </ComponentDocsDemoBlock>
     </ComponentDocsSection>
+
     <ComponentDocsSection title="选中状态同步">
       <template #description>
-        通过 <code>@click</code> 更新响应式变量，将选中项的文字同步显示到触发按钮上。
+        在列表上设置 <code>selectionVariant="single"</code>，并用列表项的 <code>selected</code> 控制选中状态。
       </template>
       <ComponentDocsDemoBlock :code="demo4Code">
         <Dropdown>
           <template #trigger>
             <Button>
               <template #leadingVisual>
-                <RepoIcon class="action-icon" />
+                <RepoIcon />
               </template>
               {{ selectedLabel }}
               <template #trailingVisual>
@@ -137,15 +171,18 @@
             </Button>
           </template>
           <template #content>
-            <ActionList>
-              <ActionList.Item @click="selectedLabel = '新建文件'">
-                新建文件
-              </ActionList.Item>
-              <ActionList.Item @click="selectedLabel = '打开文件'">
-                打开文件
-              </ActionList.Item>
-              <ActionList.Item @click="selectedLabel = '保存文件'">
-                保存文件
+            <ActionList
+              selection-variant="single"
+              role="listbox"
+            >
+              <ActionList.Item
+                v-for="item in labels"
+                :key="item"
+                role="option"
+                :selected="selectedLabel === item"
+                @select="selectedLabel = item"
+              >
+                {{ item }}
               </ActionList.Item>
             </ActionList>
           </template>
@@ -155,7 +192,7 @@
 
     <ComponentDocsSection title="嵌套二级菜单">
       <template #description>
-        直接将某个 <code>ActionList.Item</code> 作为嵌套 <code>Dropdown</code> 的触发器，实现多级菜单效果。
+        将 <code>ActionList.Item</code> 作为嵌套 <code>Dropdown</code> 的触发器，并把箭头放入 trailing 区域。
       </template>
       <ComponentDocsDemoBlock :code="demo5Code">
         <Dropdown>
@@ -168,20 +205,33 @@
             </Button>
           </template>
           <template #content>
-            <ActionList>
-              <ActionList.Item>选项1</ActionList.Item>
-              <ActionList.Item>选项2</ActionList.Item>
+            <ActionList role="menu">
+              <ActionList.Item role="menuitem">
+                选项1
+              </ActionList.Item>
+              <ActionList.Item role="menuitem">
+                选项2
+              </ActionList.Item>
               <Dropdown side="outside-right">
                 <template #trigger>
-                  <ActionList.Item class="submenu-trigger">
-                    选项3 <ChevronRightIcon color="#59636e" />
+                  <ActionList.Item role="menuitem">
+                    选项3
+                    <template #trailingVisual>
+                      <ChevronRightIcon />
+                    </template>
                   </ActionList.Item>
                 </template>
                 <template #content>
-                  <ActionList>
-                    <ActionList.Item>子选项1</ActionList.Item>
-                    <ActionList.Item>子选项2</ActionList.Item>
-                    <ActionList.Item>子选项3</ActionList.Item>
+                  <ActionList role="menu">
+                    <ActionList.Item role="menuitem">
+                      子选项1
+                    </ActionList.Item>
+                    <ActionList.Item role="menuitem">
+                      子选项2
+                    </ActionList.Item>
+                    <ActionList.Item role="menuitem">
+                      子选项3
+                    </ActionList.Item>
                   </ActionList>
                 </template>
               </Dropdown>
@@ -199,17 +249,28 @@ import ComponentDocsDemoBlock from '@/modules/components/components/ComponentDoc
 import ComponentDocsHeader from '@/modules/components/components/ComponentDocsPage/ComponentDocsHeader.vue'
 import ComponentDocsPage from '@/modules/components/components/ComponentDocsPage/ComponentDocsPage.vue'
 import ComponentDocsSection from '@/modules/components/components/ComponentDocsPage/ComponentDocsSection.vue'
-import { Dropdown } from '@/components/z-ui/dropdown'
-import { Button } from '@/components/z-ui/button'
 import { ActionList } from '@/components/z-ui/action-list'
-import { Divider } from '@/components/z-ui/divider'
-import { PlusIcon, TriangleDownIcon, FileIcon, RepoIcon, CopyIcon, KebabHorizontalIcon, PencilIcon, TrashIcon, ChevronRightIcon } from '@/components/octicons-vue3'
+import { Button } from '@/components/z-ui/button'
+import { Dropdown } from '@/components/z-ui/dropdown'
+import {
+  ChevronRightIcon,
+  CopyIcon,
+  FileIcon,
+  KebabHorizontalIcon,
+  LinkExternalIcon,
+  PencilIcon,
+  PlusIcon,
+  RepoIcon,
+  TrashIcon,
+  TriangleDownIcon
+} from '@/components/octicons-vue3'
+
+const labels = ['新建文件', '打开文件', '保存文件']
+const selectedLabel = ref(labels[0])
 
 const handleClick = (action: string) => {
   alert(`执行操作：${action}`)
 }
-
-const selectedLabel = ref('新建文件')
 
 const demo1Code = `<template>
   <Dropdown>
@@ -221,18 +282,18 @@ const demo1Code = `<template>
       </Button>
     </template>
     <template #content>
-      <ActionList>
-        <ActionList.Item @click="handleClick('新建文件')">
-          <FileIcon class="action-icon" />
+      <ActionList role="menu">
+        <ActionList.Item role="menuitem" @select="handleClick('新建文件')">
+          <template #leadingVisual><FileIcon /></template>
           新建文件
         </ActionList.Item>
-        <ActionList.Item @click="handleClick('新建文件夹')">
-          <RepoIcon class="action-icon" />
+        <ActionList.Item role="menuitem" @select="handleClick('新建文件夹')">
+          <template #leadingVisual><RepoIcon /></template>
           新建文件夹
         </ActionList.Item>
-        <Divider />
-        <ActionList.Item @click="handleClick('从模板创建')">
-          <CopyIcon class="action-icon" />
+        <ActionList.Divider />
+        <ActionList.Item role="menuitem" @select="handleClick('从模板创建')">
+          <template #leadingVisual><CopyIcon /></template>
           从模板创建
         </ActionList.Item>
       </ActionList>
@@ -241,11 +302,10 @@ const demo1Code = `<template>
 </template>
 
 <script setup lang="ts">
-import { Dropdown } from '@/components/z-ui/dropdown'
-import { Button } from '@/components/z-ui/button'
 import { ActionList } from '@/components/z-ui/action-list'
-import { Divider } from '@/components/z-ui/divider'
-import { PlusIcon, TriangleDownIcon, FileIcon, RepoIcon, CopyIcon } from '@/components/octicons-vue3'
+import { Button } from '@/components/z-ui/button'
+import { Dropdown } from '@/components/z-ui/dropdown'
+import { CopyIcon, FileIcon, PlusIcon, RepoIcon, TriangleDownIcon } from '@/components/octicons-vue3'
 
 const handleClick = (action: string) => {
   alert(\`执行操作：\${action}\`)
@@ -260,19 +320,19 @@ const demo2Code = `<template>
       </Button>
     </template>
     <template #content>
-      <ActionList>
-        <ActionList.Item>
-          <PencilIcon class="action-icon" />
+      <ActionList role="menu">
+        <ActionList.Item role="menuitem">
+          <template #leadingVisual><PencilIcon /></template>
           编辑
         </ActionList.Item>
-        <ActionList.Item>
-          <CopyIcon class="action-icon" />
+        <ActionList.Item role="menuitem">
+          <template #leadingVisual><CopyIcon /></template>
           复制
         </ActionList.Item>
-        <Divider />
-        <ActionList.Item>
-          <TrashIcon class="action-icon danger" />
-          <span class="danger">删除</span>
+        <ActionList.Divider />
+        <ActionList.Item role="menuitem" variant="danger">
+          <template #leadingVisual><TrashIcon /></template>
+          删除
         </ActionList.Item>
       </ActionList>
     </template>
@@ -280,11 +340,10 @@ const demo2Code = `<template>
 </template>
 
 <script setup lang="ts">
-import { Dropdown } from '@/components/z-ui/dropdown'
-import { Button } from '@/components/z-ui/button'
 import { ActionList } from '@/components/z-ui/action-list'
-import { Divider } from '@/components/z-ui/divider'
-import { KebabHorizontalIcon, PencilIcon, CopyIcon, TrashIcon } from '@/components/octicons-vue3'
+import { Button } from '@/components/z-ui/button'
+import { Dropdown } from '@/components/z-ui/dropdown'
+import { CopyIcon, KebabHorizontalIcon, PencilIcon, TrashIcon } from '@/components/octicons-vue3'
 <\/script>`
 
 const demo3Code = `<template>
@@ -296,20 +355,29 @@ const demo3Code = `<template>
       </Button>
     </template>
     <template #content>
-      <ActionList>
-        <ActionList.Item href="https://github.com" new-tab>GitHub</ActionList.Item>
-        <ActionList.Item href="https://vuejs.org" new-tab>Vue.js</ActionList.Item>
-        <ActionList.Item href="https://vitejs.dev" new-tab>Vite</ActionList.Item>
+      <ActionList role="menu">
+        <ActionList.LinkItem href="https://github.com" new-tab role="menuitem">
+          GitHub
+          <template #trailingVisual><LinkExternalIcon /></template>
+        </ActionList.LinkItem>
+        <ActionList.LinkItem href="https://vuejs.org" new-tab role="menuitem">
+          Vue.js
+          <template #trailingVisual><LinkExternalIcon /></template>
+        </ActionList.LinkItem>
+        <ActionList.LinkItem href="https://vitejs.dev" new-tab role="menuitem">
+          Vite
+          <template #trailingVisual><LinkExternalIcon /></template>
+        </ActionList.LinkItem>
       </ActionList>
     </template>
   </Dropdown>
 </template>
 
 <script setup lang="ts">
-import { Dropdown } from '@/components/z-ui/dropdown'
-import { Button } from '@/components/z-ui/button'
 import { ActionList } from '@/components/z-ui/action-list'
-import { TriangleDownIcon } from '@/components/octicons-vue3'
+import { Button } from '@/components/z-ui/button'
+import { Dropdown } from '@/components/z-ui/dropdown'
+import { LinkExternalIcon, TriangleDownIcon } from '@/components/octicons-vue3'
 <\/script>`
 
 const demo4Code = `<template>
@@ -317,15 +385,21 @@ const demo4Code = `<template>
     <template #trigger>
       <Button>
         <template #leadingVisual><RepoIcon /></template>
-        {{ label }}
+        {{ selectedLabel }}
         <template #trailingVisual><TriangleDownIcon /></template>
       </Button>
     </template>
     <template #content>
-      <ActionList>
-        <ActionList.Item @click="label = '新建文件'">新建文件</ActionList.Item>
-        <ActionList.Item @click="label = '打开文件'">打开文件</ActionList.Item>
-        <ActionList.Item @click="label = '保存文件'">保存文件</ActionList.Item>
+      <ActionList selection-variant="single" role="listbox">
+        <ActionList.Item
+          v-for="item in labels"
+          :key="item"
+          role="option"
+          :selected="selectedLabel === item"
+          @select="selectedLabel = item"
+        >
+          {{ item }}
+        </ActionList.Item>
       </ActionList>
     </template>
   </Dropdown>
@@ -333,12 +407,13 @@ const demo4Code = `<template>
 
 <script setup lang="ts">
 import { ref } from 'vue'
-import { Dropdown } from '@/components/z-ui/dropdown'
-import { Button } from '@/components/z-ui/button'
 import { ActionList } from '@/components/z-ui/action-list'
+import { Button } from '@/components/z-ui/button'
+import { Dropdown } from '@/components/z-ui/dropdown'
 import { RepoIcon, TriangleDownIcon } from '@/components/octicons-vue3'
 
-const label = ref('新建文件')
+const labels = ['新建文件', '打开文件', '保存文件']
+const selectedLabel = ref(labels[0])
 <\/script>`
 
 const demo5Code = `<template>
@@ -350,20 +425,21 @@ const demo5Code = `<template>
       </Button>
     </template>
     <template #content>
-      <ActionList>
-        <ActionList.Item>选项1</ActionList.Item>
-        <ActionList.Item>选项2</ActionList.Item>
+      <ActionList role="menu">
+        <ActionList.Item role="menuitem">选项1</ActionList.Item>
+        <ActionList.Item role="menuitem">选项2</ActionList.Item>
         <Dropdown side="outside-right">
           <template #trigger>
-            <ActionList.Item class="submenu-trigger">
-              选项3 <ChevronRightIcon color="#59636e" />
+            <ActionList.Item role="menuitem">
+              选项3
+              <template #trailingVisual><ChevronRightIcon /></template>
             </ActionList.Item>
           </template>
           <template #content>
-            <ActionList>
-              <ActionList.Item>子选项1</ActionList.Item>
-              <ActionList.Item>子选项2</ActionList.Item>
-              <ActionList.Item>子选项3</ActionList.Item>
+            <ActionList role="menu">
+              <ActionList.Item role="menuitem">子选项1</ActionList.Item>
+              <ActionList.Item role="menuitem">子选项2</ActionList.Item>
+              <ActionList.Item role="menuitem">子选项3</ActionList.Item>
             </ActionList>
           </template>
         </Dropdown>
@@ -373,35 +449,9 @@ const demo5Code = `<template>
 </template>
 
 <script setup lang="ts">
-import { Dropdown } from '@/components/z-ui/dropdown'
-import { Button } from '@/components/z-ui/button'
 import { ActionList } from '@/components/z-ui/action-list'
-import { TriangleDownIcon, ChevronRightIcon } from '@/components/octicons-vue3'
-<\/script>
-
-<style scoped>
-.submenu-trigger {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  width: 100%;
-}
-<\/style>`
+import { Button } from '@/components/z-ui/button'
+import { Dropdown } from '@/components/z-ui/dropdown'
+import { ChevronRightIcon, TriangleDownIcon } from '@/components/octicons-vue3'
+<\/script>`
 </script>
-
-<style scoped>
-.action-icon {
-  color: var(--fgColor-muted);
-}
-
-.danger {
-  color: var(--fgColor-danger);
-}
-
-.submenu-trigger {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  width: 100%;
-}
-</style>

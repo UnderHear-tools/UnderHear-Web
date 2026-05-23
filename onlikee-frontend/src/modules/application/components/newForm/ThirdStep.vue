@@ -71,25 +71,24 @@
           </template>
           <template #content>
             <ActionList
-              v-model="selectedAction"
-              selection-mode="single"
+              selection-variant="single"
+              role="listbox"
             >
               <ActionList.Item
                 v-for="item in visibilityOptions"
                 :key="item.value"
-                class="visibility-action-item"
-                :value="item.value"
-                @click="visibilityDropdownRef?.close()"
+                :selected="visibility === item.value"
+                role="option"
+                description-variant="block"
+                @select="selectVisibility(item.value)"
               >
-                <component
-                  :is="item.icon"
-                  class="visibility-item-icon"
-                  color="var(--fgColor-muted)"
-                />
-                <span class="visibility-item-content">
-                  <span class="visibility-item-title">{{ item.value }}</span>
-                  <span class="visibility-item-desc">{{ item.description }}</span>
-                </span>
+                <template #leadingVisual>
+                  <component :is="item.icon" />
+                </template>
+                {{ item.value }}
+                <template #description>
+                  {{ item.description }}
+                </template>
               </ActionList.Item>
             </ActionList>
           </template>
@@ -181,14 +180,12 @@ const selectedVisibilityOption = computed(() => {
   return visibilityOptions.find(item => item.value === props.visibility) ?? visibilityOptions[0]
 })
 
-const selectedAction = computed({
-  get: () => props.visibility,
-  set: value => {
-    emit('update:visibility', value)
-  }
-})
-
 const label = computed(() => selectedVisibilityOption.value.value)
+
+function selectVisibility(value: string) {
+  emit('update:visibility', value)
+  visibilityDropdownRef.value?.close()
+}
 </script>
 
 <style scoped>
@@ -225,39 +222,6 @@ const label = computed(() => selectedVisibilityOption.value.value)
   font-size: 12px;
   line-height: 1.5;
 }
-
-.visibility-action-item {
-  align-items: flex-start;
-  gap: 10px;
-  padding-top: 8px;
-  padding-bottom: 8px;
-}
-
-.visibility-item-icon {
-  margin-top: 2px;
-  flex-shrink: 0;
-}
-
-.visibility-item-content {
-  display: flex;
-  flex-direction: column;
-  gap: 2px;
-  width: 240px;
-}
-
-.visibility-item-title {
-  color: var(--fgColor-default);
-  font-size: 14px;
-  font-weight: 600;
-  line-height: 1.4;
-}
-
-.visibility-item-desc {
-  color: var(--fgColor-muted);
-  font-size: 12px;
-  line-height: 1.45;
-}
-
 
 @media (max-width: 768px) {
   .visibility-panel {

@@ -1,6 +1,7 @@
 <template>
   <ActionListItemBase
     v-bind="{ ...props, ...$attrs }"
+    as="a"
     @select="event => emit('select', event)"
   >
     <slot />
@@ -33,6 +34,10 @@ defineOptions({ inheritAttrs: false })
 
 const props = withDefaults(
   defineProps<{
+    href: string
+    newTab?: boolean
+    target?: string
+    rel?: string
     selected?: boolean
     active?: boolean
     variant?: ActionListItemVariant
@@ -42,9 +47,11 @@ const props = withDefaults(
     role?: string
     descriptionVariant?: ActionListDescriptionVariant
     truncateDescription?: boolean
-    type?: 'button' | 'submit' | 'reset'
   }>(),
   {
+    newTab: false,
+    target: undefined,
+    rel: undefined,
     selected: false,
     active: false,
     variant: 'default',
@@ -53,8 +60,7 @@ const props = withDefaults(
     size: 'medium',
     role: undefined,
     descriptionVariant: 'inline',
-    truncateDescription: false,
-    type: 'button'
+    truncateDescription: false
   }
 )
 
