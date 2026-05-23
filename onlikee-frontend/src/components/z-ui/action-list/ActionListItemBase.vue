@@ -58,29 +58,29 @@
         aria-hidden="true"
       >
         <SpinnerIcon
-          v-if="loading && !slots.leadingVisual"
+          v-if="loading && !parsedChildren.leading.length"
           class="action-list-spinner"
         />
-        <slot
+        <RenderNodes
           v-else
-          name="leadingVisual"
+          :nodes="parsedChildren.leading"
         />
       </span>
 
       <span class="action-list-sub-content">
         <span
           class="action-list-description-wrap"
-          :data-description-variant="hasDescription ? descriptionVariant : undefined"
+          :data-description-variant="hasDescription ? parsedChildren.descriptionVariant : undefined"
         >
           <span class="action-list-label">
-            <slot />
+            <RenderNodes :nodes="parsedChildren.label" />
           </span>
           <span
             v-if="hasDescription"
             class="action-list-description"
-            :data-truncate="truncateDescription || undefined"
+            :data-truncate="parsedChildren.truncateDescription || undefined"
           >
-            <slot name="description" />
+            <RenderNodes :nodes="parsedChildren.description" />
           </span>
         </span>
 
@@ -90,12 +90,12 @@
           aria-hidden="true"
         >
           <SpinnerIcon
-            v-if="loading && slots.leadingVisual"
+            v-if="loading && parsedChildren.leading.length"
             class="action-list-spinner"
           />
-          <slot
+          <RenderNodes
             v-else
-            name="trailingVisual"
+            :nodes="parsedChildren.trailing"
           />
         </span>
       </span>
@@ -104,7 +104,7 @@
 </template>
 
 <script setup lang="ts">
-import { computed, useSlots } from 'vue'
+import { Comment, Fragment, Text, computed, useSlots, type VNode } from 'vue'
 import { CheckIcon, SpinnerIcon } from '@/components/octicons-vue3'
 import { useContext } from './context'
 import type { ActionListDescriptionVariant, ActionListItemSize, ActionListItemVariant } from './context'
@@ -126,8 +126,6 @@ const props = withDefaults(
     loading?: boolean
     size?: ActionListItemSize
     role?: string
-    descriptionVariant?: ActionListDescriptionVariant
-    truncateDescription?: boolean
   }>(),
   {
     as: 'button',
@@ -142,9 +140,7 @@ const props = withDefaults(
     disabled: false,
     loading: false,
     size: 'medium',
-    role: undefined,
-    descriptionVariant: 'inline',
-    truncateDescription: false
+    role: undefined
   }
 )
 
@@ -155,6 +151,92 @@ const emit = defineEmits<{
 const slots = useSlots()
 const context = useContext()
 
+interface ActionListMarkerType {
+  name?: string
+  __name?: string
+}
+
+interface ParsedActionListChildren {
+  label: VNode[]
+  leading: VNode[]
+  trailing: VNode[]
+  description: VNode[]
+  descriptionVariant: ActionListDescriptionVariant
+  truncateDescription: boolean
+}
+
+const RenderNodes = (props: { nodes: VNode[] }) => props.nodes
+
+function getComponentName(type: VNode['type']) {
+  if (typeof type !== 'object' && typeof type !== 'function') return ''
+
+  const marker = type as ActionListMarkerType
+  return marker.name ?? marker.__name ?? ''
+}
+
+function readSlotChildren(node: VNode) {
+  if (typeof node.children === 'object' && node.children && 'default' in node.children) {
+    const slot = node.children.default
+    return typeof slot === 'function' ? slot() : []
+  }
+
+  return []
+}
+
+function isWhitespaceNode(node: VNode) {
+  return node.type === Text && typeof node.children === 'string' && node.children.trim() === ''
+}
+
+function flattenChildren(nodes: VNode[]): VNode[] {
+  return nodes.flatMap(node => {
+    if (node.type === Fragment && Array.isArray(node.children)) {
+      return flattenChildren(node.children as VNode[])
+    }
+
+    return [node]
+  })
+}
+
+function parseActionListChildren(nodes: VNode[]): ParsedActionListChildren {
+  const parsed: ParsedActionListChildren = {
+    label: [],
+    leading: [],
+    trailing: [],
+    description: [],
+    descriptionVariant: 'inline',
+    truncateDescription: false
+  }
+
+  for (const node of flattenChildren(nodes)) {
+    if (node.type === Comment || isWhitespaceNode(node)) continue
+
+    const componentName = getComponentName(node.type)
+
+    if (componentName === 'ActionListLeadingVisual') {
+      parsed.leading.push(...readSlotChildren(node))
+      continue
+    }
+
+    if (componentName === 'ActionListTrailingVisual') {
+      parsed.trailing.push(...readSlotChildren(node))
+      continue
+    }
+
+    if (componentName === 'ActionListDescription') {
+      const props = node.props as { variant?: ActionListDescriptionVariant, truncate?: boolean } | null
+
+      parsed.description.push(...readSlotChildren(node))
+      parsed.descriptionVariant = props?.variant ?? 'inline'
+      parsed.truncateDescription = props?.truncate ?? false
+      continue
+    }
+
+    parsed.label.push(node)
+  }
+
+  return parsed
+}
+
 const controlTag = computed(() => props.as)
 const selectionVariant = computed(() => context?.selectionVariant.value)
 const compositeListRoles = new Set(['grid', 'listbox', 'menu', 'menubar', 'tree'])
@@ -163,9 +245,10 @@ const presentationRole = computed(() => {
   return role && compositeListRoles.has(role) ? 'none' : undefined
 })
 const hasSelection = computed(() => Boolean(selectionVariant.value))
-const hasDescription = computed(() => Boolean(slots.description))
-const hasLeadingArea = computed(() => Boolean(slots.leadingVisual) || (props.loading && !slots.leadingVisual))
-const hasTrailingArea = computed(() => Boolean(slots.trailingVisual) || (props.loading && Boolean(slots.leadingVisual)))
+const parsedChildren = computed(() => parseActionListChildren(slots.default?.() ?? []))
+const hasDescription = computed(() => Boolean(parsedChildren.value.description.length))
+const hasLeadingArea = computed(() => Boolean(parsedChildren.value.leading.length) || (props.loading && !parsedChildren.value.leading.length))
+const hasTrailingArea = computed(() => Boolean(parsedChildren.value.trailing.length) || (props.loading && Boolean(parsedChildren.value.leading.length)))
 const buttonType = computed(() => controlTag.value === 'button' ? props.type : undefined)
 const linkHref = computed(() => controlTag.value === 'a' ? props.href : undefined)
 const linkTarget = computed(() => {
@@ -208,14 +291,15 @@ function handleClick(event: MouseEvent) {
 }
 
 .action-list-item[data-active='true']::after {
-  position: absolute;
-  top: 6px;
-  bottom: 6px;
-  left: 0;
-  width: 4px;
   content: '';
-  background: var(--fgColor-accent, #0969da);
-  border-radius: 999px;
+  position: absolute;
+  left: -8px;
+  top: 4px;
+  bottom: 0;
+  width: 4px;
+  height: calc(100% - 8px);
+  background-color: var(--bgColor-accent-emphasis , #0969da);
+  border-radius: 6px;
 }
 
 .action-list-content {

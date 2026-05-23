@@ -13,26 +13,20 @@
         </Button>
       </template>
       <template #content>
-        <ActionList
-          selection-variant="single"
-          role="listbox"
-        >
+        <ActionList selection-variant="single">
           <ActionList.Item
-            role="option"
             :selected="selectedAction === '1'"
             @select="selectAction('1', '新建文件')"
           >
             新建文件
           </ActionList.Item>
           <ActionList.Item
-            role="option"
             :selected="selectedAction === '2'"
             @select="selectAction('2', '打开文件')"
           >
             打开文件
           </ActionList.Item>
           <ActionList.Item
-            role="option"
             :selected="selectedAction === '3'"
             @select="selectAction('3', '保存文件')"
           >
@@ -63,9 +57,9 @@
             <template #trigger>
               <ActionList.Item>
                 选项3
-                <template #trailingVisual>
+                <ActionList.TrailingVisual>
                   <ChevronRightIcon />
-                </template>
+                </ActionList.TrailingVisual>
               </ActionList.Item>
             </template>
             <template #content>

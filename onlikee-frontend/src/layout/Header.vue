@@ -56,34 +56,31 @@
                 </div>
               </div>
             </div>
-            <ActionList role="menu">
+            <ActionList>
               <ActionList.Divider />
               <ActionList.Item
-                role="menuitem"
                 @select="goToProfile"
               >
-                <template #leadingVisual>
+                <ActionList.LeadingVisual>
                   <PersonIcon />
-                </template>
+                </ActionList.LeadingVisual>
                 个人资料
               </ActionList.Item>
               <ActionList.LinkItem
                 href="/application"
-                role="menuitem"
               >
-                <template #leadingVisual>
+                <ActionList.LeadingVisual>
                   <AppsIcon />
-                </template>
+                </ActionList.LeadingVisual>
                 我的应用
               </ActionList.LinkItem>
               <ActionList.Divider />
               <ActionList.LinkItem
                 href="/auth/logout"
-                role="menuitem"
               >
-                <template #leadingVisual>
+                <ActionList.LeadingVisual>
                   <SignOutIcon />
-                </template>
+                </ActionList.LeadingVisual>
                 退出登录
               </ActionList.LinkItem>
             </ActionList>

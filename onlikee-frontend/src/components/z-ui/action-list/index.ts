@@ -4,16 +4,31 @@ import ActionListLinkItem from './ActionListLinkItem.vue'
 import ActionListDivider from './ActionListDivider.vue'
 import ActionListGroup from './ActionListGroup.vue'
 import ActionListGroupHeading from './ActionListGroupHeading.vue'
+import ActionListLeadingVisual from './ActionListLeadingVisual.vue'
+import ActionListTrailingVisual from './ActionListTrailingVisual.vue'
+import ActionListDescription from './ActionListDescription.vue'
 
 export const ActionList = Object.assign(ActionListRoot, {
   Item: ActionListItem,
   LinkItem: ActionListLinkItem,
   Divider: ActionListDivider,
   Group: ActionListGroup,
-  GroupHeading: ActionListGroupHeading
+  GroupHeading: ActionListGroupHeading,
+  LeadingVisual: ActionListLeadingVisual,
+  TrailingVisual: ActionListTrailingVisual,
+  Description: ActionListDescription
 })
 
-export { ActionListDivider, ActionListGroup, ActionListGroupHeading, ActionListItem, ActionListLinkItem }
+export {
+  ActionListDescription,
+  ActionListDivider,
+  ActionListGroup,
+  ActionListGroupHeading,
+  ActionListItem,
+  ActionListLeadingVisual,
+  ActionListLinkItem,
+  ActionListTrailingVisual
+}
 export type {
   ActionListDescriptionVariant,
   ActionListItemSize,

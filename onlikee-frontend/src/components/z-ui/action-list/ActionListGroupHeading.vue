@@ -31,7 +31,7 @@ withDefaults(
 .action-list-group-heading-wrap {
   display: flex;
   flex-direction: column;
-  padding: 6px 16px;
+  padding: 6px 8px;
   color: var(--fgColor-muted, #59636e);
   font-size: 12px;
   font-weight: 600;

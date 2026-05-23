@@ -70,25 +70,20 @@
             </Button>
           </template>
           <template #content>
-            <ActionList
-              selection-variant="single"
-              role="listbox"
-            >
+            <ActionList selection-variant="single">
               <ActionList.Item
                 v-for="item in visibilityOptions"
                 :key="item.value"
                 :selected="visibility === item.value"
-                role="option"
-                description-variant="block"
                 @select="selectVisibility(item.value)"
               >
-                <template #leadingVisual>
+                <ActionList.LeadingVisual>
                   <component :is="item.icon" />
-                </template>
+                </ActionList.LeadingVisual>
                 {{ item.value }}
-                <template #description>
+                <ActionList.Description variant="block">
                   {{ item.description }}
-                </template>
+                </ActionList.Description>
               </ActionList.Item>
             </ActionList>
           </template>

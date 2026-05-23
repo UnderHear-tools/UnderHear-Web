@@ -5,30 +5,12 @@
     @select="event => emit('select', event)"
   >
     <slot />
-    <template
-      v-if="$slots.leadingVisual"
-      #leadingVisual
-    >
-      <slot name="leadingVisual" />
-    </template>
-    <template
-      v-if="$slots.description"
-      #description
-    >
-      <slot name="description" />
-    </template>
-    <template
-      v-if="$slots.trailingVisual"
-      #trailingVisual
-    >
-      <slot name="trailingVisual" />
-    </template>
   </ActionListItemBase>
 </template>
 
 <script setup lang="ts">
 import ActionListItemBase from './ActionListItemBase.vue'
-import type { ActionListDescriptionVariant, ActionListItemSize, ActionListItemVariant } from './context'
+import type { ActionListItemSize, ActionListItemVariant } from './context'
 
 defineOptions({ inheritAttrs: false })
 
@@ -45,8 +27,6 @@ const props = withDefaults(
     loading?: boolean
     size?: ActionListItemSize
     role?: string
-    descriptionVariant?: ActionListDescriptionVariant
-    truncateDescription?: boolean
   }>(),
   {
     newTab: false,
@@ -58,9 +38,7 @@ const props = withDefaults(
     disabled: false,
     loading: false,
     size: 'medium',
-    role: undefined,
-    descriptionVariant: 'inline',
-    truncateDescription: false
+    role: undefined
   }
 )
 

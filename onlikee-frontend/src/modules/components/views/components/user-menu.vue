@@ -33,35 +33,34 @@
                   </div>
                 </div>
               </div>
-              <ActionList role="menu">
+              <ActionList>
                 <ActionList.Divider />
-                <ActionList.Item role="menuitem">
-                  <template #leadingVisual>
+                <ActionList.Item>
+                  <ActionList.LeadingVisual>
                     <PersonIcon />
-                  </template>
+                  </ActionList.LeadingVisual>
                   个人资料
                 </ActionList.Item>
                 <ActionList.LinkItem
                   href="https://github.com/UnderHear"
-                  role="menuitem"
                 >
-                  <template #leadingVisual>
+                  <ActionList.LeadingVisual>
                     <MarkGithubIcon />
-                  </template>
+                  </ActionList.LeadingVisual>
                   前往 GitHub
                 </ActionList.LinkItem>
                 <ActionList.Divider />
-                <ActionList.Item role="menuitem">
-                  <template #leadingVisual>
+                <ActionList.Item>
+                  <ActionList.LeadingVisual>
                     <GearIcon />
-                  </template>
+                  </ActionList.LeadingVisual>
                   设置
                 </ActionList.Item>
                 <ActionList.Divider />
-                <ActionList.Item role="menuitem">
-                  <template #leadingVisual>
+                <ActionList.Item>
+                  <ActionList.LeadingVisual>
                     <SignOutIcon />
-                  </template>
+                  </ActionList.LeadingVisual>
                   退出登录
                 </ActionList.Item>
               </ActionList>
@@ -97,24 +96,24 @@ const demo1Code = `<template>
             <div class="user-email">hello@onlikee.audio</div>
           </div>
         </div>
-        <ActionList role="menu">
+        <ActionList>
           <ActionList.Divider />
-          <ActionList.Item role="menuitem">
-            <template #leadingVisual><PersonIcon /></template>
+          <ActionList.Item>
+            <ActionList.LeadingVisual><PersonIcon /></ActionList.LeadingVisual>
             个人资料
           </ActionList.Item>
-          <ActionList.LinkItem href="https://github.com/UnderHear" role="menuitem">
-            <template #leadingVisual><MarkGithubIcon /></template>
+          <ActionList.LinkItem href="https://github.com/UnderHear">
+            <ActionList.LeadingVisual><MarkGithubIcon /></ActionList.LeadingVisual>
             前往 GitHub
           </ActionList.LinkItem>
           <ActionList.Divider />
-          <ActionList.Item role="menuitem">
-            <template #leadingVisual><GearIcon /></template>
+          <ActionList.Item>
+            <ActionList.LeadingVisual><GearIcon /></ActionList.LeadingVisual>
             设置
           </ActionList.Item>
           <ActionList.Divider />
-          <ActionList.Item role="menuitem">
-            <template #leadingVisual><SignOutIcon /></template>
+          <ActionList.Item>
+            <ActionList.LeadingVisual><SignOutIcon /></ActionList.LeadingVisual>
             退出登录
           </ActionList.Item>
         </ActionList>

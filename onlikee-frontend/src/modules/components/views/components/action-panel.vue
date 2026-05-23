@@ -7,7 +7,7 @@
 
     <ComponentDocsSection title="基础用法">
       <template #description>
-        使用 <code>Dropdown</code> 和 <code>ActionList</code> 组合操作面板，图标通过命名插槽进入列表项的 leading 区域。
+        使用 <code>Dropdown</code> 和 <code>ActionList</code> 组合操作面板，图标通过 <code>ActionList.LeadingVisual</code> 进入列表项的 leading 区域。
       </template>
       <ComponentDocsDemoBlock :code="demo1Code">
         <Dropdown>
@@ -23,33 +23,24 @@
             </Button>
           </template>
           <template #content>
-            <ActionList role="menu">
-              <ActionList.Item
-                role="menuitem"
-                @select="handleClick('新建文件')"
-              >
-                <template #leadingVisual>
+            <ActionList>
+              <ActionList.Item @select="handleClick('新建文件')">
+                <ActionList.LeadingVisual>
                   <FileIcon />
-                </template>
+                </ActionList.LeadingVisual>
                 新建文件
               </ActionList.Item>
-              <ActionList.Item
-                role="menuitem"
-                @select="handleClick('新建文件夹')"
-              >
-                <template #leadingVisual>
+              <ActionList.Item @select="handleClick('新建文件夹')">
+                <ActionList.LeadingVisual>
                   <RepoIcon />
-                </template>
+                </ActionList.LeadingVisual>
                 新建文件夹
               </ActionList.Item>
               <ActionList.Divider />
-              <ActionList.Item
-                role="menuitem"
-                @select="handleClick('从模板创建')"
-              >
-                <template #leadingVisual>
+              <ActionList.Item @select="handleClick('从模板创建')">
+                <ActionList.LeadingVisual>
                   <CopyIcon />
-                </template>
+                </ActionList.LeadingVisual>
                 从模板创建
               </ActionList.Item>
             </ActionList>
@@ -72,27 +63,24 @@
             </Button>
           </template>
           <template #content>
-            <ActionList role="menu">
-              <ActionList.Item role="menuitem">
-                <template #leadingVisual>
+            <ActionList>
+              <ActionList.Item>
+                <ActionList.LeadingVisual>
                   <PencilIcon />
-                </template>
+                </ActionList.LeadingVisual>
                 编辑
               </ActionList.Item>
-              <ActionList.Item role="menuitem">
-                <template #leadingVisual>
+              <ActionList.Item>
+                <ActionList.LeadingVisual>
                   <CopyIcon />
-                </template>
+                </ActionList.LeadingVisual>
                 复制
               </ActionList.Item>
               <ActionList.Divider />
-              <ActionList.Item
-                role="menuitem"
-                variant="danger"
-              >
-                <template #leadingVisual>
+              <ActionList.Item variant="danger">
+                <ActionList.LeadingVisual>
                   <TrashIcon />
-                </template>
+                </ActionList.LeadingVisual>
                 删除
               </ActionList.Item>
             </ActionList>
@@ -116,36 +104,33 @@
             </Button>
           </template>
           <template #content>
-            <ActionList role="menu">
+            <ActionList>
               <ActionList.LinkItem
                 href="https://github.com"
                 new-tab
-                role="menuitem"
               >
                 GitHub
-                <template #trailingVisual>
+                <ActionList.TrailingVisual>
                   <LinkExternalIcon />
-                </template>
+                </ActionList.TrailingVisual>
               </ActionList.LinkItem>
               <ActionList.LinkItem
                 href="https://vuejs.org"
                 new-tab
-                role="menuitem"
               >
                 Vue.js
-                <template #trailingVisual>
+                <ActionList.TrailingVisual>
                   <LinkExternalIcon />
-                </template>
+                </ActionList.TrailingVisual>
               </ActionList.LinkItem>
               <ActionList.LinkItem
                 href="https://vitejs.dev"
                 new-tab
-                role="menuitem"
               >
                 Vite
-                <template #trailingVisual>
+                <ActionList.TrailingVisual>
                   <LinkExternalIcon />
-                </template>
+                </ActionList.TrailingVisual>
               </ActionList.LinkItem>
             </ActionList>
           </template>
@@ -171,14 +156,10 @@
             </Button>
           </template>
           <template #content>
-            <ActionList
-              selection-variant="single"
-              role="listbox"
-            >
+            <ActionList selection-variant="single">
               <ActionList.Item
                 v-for="item in labels"
                 :key="item"
-                role="option"
                 :selected="selectedLabel === item"
                 @select="selectedLabel = item"
               >
@@ -205,31 +186,31 @@
             </Button>
           </template>
           <template #content>
-            <ActionList role="menu">
-              <ActionList.Item role="menuitem">
+            <ActionList>
+              <ActionList.Item>
                 选项1
               </ActionList.Item>
-              <ActionList.Item role="menuitem">
+              <ActionList.Item>
                 选项2
               </ActionList.Item>
               <Dropdown side="outside-right">
                 <template #trigger>
-                  <ActionList.Item role="menuitem">
+                  <ActionList.Item>
                     选项3
-                    <template #trailingVisual>
+                    <ActionList.TrailingVisual>
                       <ChevronRightIcon />
-                    </template>
+                    </ActionList.TrailingVisual>
                   </ActionList.Item>
                 </template>
                 <template #content>
-                  <ActionList role="menu">
-                    <ActionList.Item role="menuitem">
+                  <ActionList>
+                    <ActionList.Item>
                       子选项1
                     </ActionList.Item>
-                    <ActionList.Item role="menuitem">
+                    <ActionList.Item>
                       子选项2
                     </ActionList.Item>
-                    <ActionList.Item role="menuitem">
+                    <ActionList.Item>
                       子选项3
                     </ActionList.Item>
                   </ActionList>
@@ -282,18 +263,18 @@ const demo1Code = `<template>
       </Button>
     </template>
     <template #content>
-      <ActionList role="menu">
-        <ActionList.Item role="menuitem" @select="handleClick('新建文件')">
-          <template #leadingVisual><FileIcon /></template>
+      <ActionList>
+        <ActionList.Item @select="handleClick('新建文件')">
+          <ActionList.LeadingVisual><FileIcon /></ActionList.LeadingVisual>
           新建文件
         </ActionList.Item>
-        <ActionList.Item role="menuitem" @select="handleClick('新建文件夹')">
-          <template #leadingVisual><RepoIcon /></template>
+        <ActionList.Item @select="handleClick('新建文件夹')">
+          <ActionList.LeadingVisual><RepoIcon /></ActionList.LeadingVisual>
           新建文件夹
         </ActionList.Item>
         <ActionList.Divider />
-        <ActionList.Item role="menuitem" @select="handleClick('从模板创建')">
-          <template #leadingVisual><CopyIcon /></template>
+        <ActionList.Item @select="handleClick('从模板创建')">
+          <ActionList.LeadingVisual><CopyIcon /></ActionList.LeadingVisual>
           从模板创建
         </ActionList.Item>
       </ActionList>
@@ -320,18 +301,18 @@ const demo2Code = `<template>
       </Button>
     </template>
     <template #content>
-      <ActionList role="menu">
-        <ActionList.Item role="menuitem">
-          <template #leadingVisual><PencilIcon /></template>
+      <ActionList>
+        <ActionList.Item>
+          <ActionList.LeadingVisual><PencilIcon /></ActionList.LeadingVisual>
           编辑
         </ActionList.Item>
-        <ActionList.Item role="menuitem">
-          <template #leadingVisual><CopyIcon /></template>
+        <ActionList.Item>
+          <ActionList.LeadingVisual><CopyIcon /></ActionList.LeadingVisual>
           复制
         </ActionList.Item>
         <ActionList.Divider />
-        <ActionList.Item role="menuitem" variant="danger">
-          <template #leadingVisual><TrashIcon /></template>
+        <ActionList.Item variant="danger">
+          <ActionList.LeadingVisual><TrashIcon /></ActionList.LeadingVisual>
           删除
         </ActionList.Item>
       </ActionList>
@@ -355,18 +336,18 @@ const demo3Code = `<template>
       </Button>
     </template>
     <template #content>
-      <ActionList role="menu">
-        <ActionList.LinkItem href="https://github.com" new-tab role="menuitem">
+      <ActionList>
+        <ActionList.LinkItem href="https://github.com" new-tab>
           GitHub
-          <template #trailingVisual><LinkExternalIcon /></template>
+          <ActionList.TrailingVisual><LinkExternalIcon /></ActionList.TrailingVisual>
         </ActionList.LinkItem>
-        <ActionList.LinkItem href="https://vuejs.org" new-tab role="menuitem">
+        <ActionList.LinkItem href="https://vuejs.org" new-tab>
           Vue.js
-          <template #trailingVisual><LinkExternalIcon /></template>
+          <ActionList.TrailingVisual><LinkExternalIcon /></ActionList.TrailingVisual>
         </ActionList.LinkItem>
-        <ActionList.LinkItem href="https://vitejs.dev" new-tab role="menuitem">
+        <ActionList.LinkItem href="https://vitejs.dev" new-tab>
           Vite
-          <template #trailingVisual><LinkExternalIcon /></template>
+          <ActionList.TrailingVisual><LinkExternalIcon /></ActionList.TrailingVisual>
         </ActionList.LinkItem>
       </ActionList>
     </template>
@@ -390,11 +371,10 @@ const demo4Code = `<template>
       </Button>
     </template>
     <template #content>
-      <ActionList selection-variant="single" role="listbox">
+      <ActionList selection-variant="single">
         <ActionList.Item
           v-for="item in labels"
           :key="item"
-          role="option"
           :selected="selectedLabel === item"
           @select="selectedLabel = item"
         >
@@ -425,21 +405,21 @@ const demo5Code = `<template>
       </Button>
     </template>
     <template #content>
-      <ActionList role="menu">
-        <ActionList.Item role="menuitem">选项1</ActionList.Item>
-        <ActionList.Item role="menuitem">选项2</ActionList.Item>
+      <ActionList>
+        <ActionList.Item>选项1</ActionList.Item>
+        <ActionList.Item>选项2</ActionList.Item>
         <Dropdown side="outside-right">
           <template #trigger>
-            <ActionList.Item role="menuitem">
+            <ActionList.Item>
               选项3
-              <template #trailingVisual><ChevronRightIcon /></template>
+              <ActionList.TrailingVisual><ChevronRightIcon /></ActionList.TrailingVisual>
             </ActionList.Item>
           </template>
           <template #content>
-            <ActionList role="menu">
-              <ActionList.Item role="menuitem">子选项1</ActionList.Item>
-              <ActionList.Item role="menuitem">子选项2</ActionList.Item>
-              <ActionList.Item role="menuitem">子选项3</ActionList.Item>
+            <ActionList>
+              <ActionList.Item>子选项1</ActionList.Item>
+              <ActionList.Item>子选项2</ActionList.Item>
+              <ActionList.Item>子选项3</ActionList.Item>
             </ActionList>
           </template>
         </Dropdown>
