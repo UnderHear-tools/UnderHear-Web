@@ -2,6 +2,7 @@
   <svg
     aria-hidden="true"
     focusable="false"
+    data-octicon="graph-bar-vertical"
     :width="size"
     :height="size"
     viewBox="0 0 16 16"

@@ -2,6 +2,7 @@
   <svg
     aria-hidden="true"
     focusable="false"
+    data-octicon="logo-onlikee"
     :width="size"
     :height="size"
     viewBox="0 0 24 24"

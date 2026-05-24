@@ -2,6 +2,7 @@
   <svg
     aria-hidden="true"
     focusable="false"
+    data-octicon="paper-airplane"
     :width="size"
     :height="size"
     viewBox="0 0 16 16"

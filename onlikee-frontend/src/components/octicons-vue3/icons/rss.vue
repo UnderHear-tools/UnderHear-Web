@@ -2,6 +2,7 @@
   <svg
     aria-hidden="true"
     focusable="false"
+    data-octicon="rss"
     :width="size"
     :height="size"
     viewBox="0 0 16 16"

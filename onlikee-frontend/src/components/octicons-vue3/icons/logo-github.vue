@@ -2,6 +2,7 @@
   <svg
     aria-hidden="true"
     focusable="false"
+    data-octicon="logo-github"
     :width="size"
     :height="size"
     viewBox="0 0 45 16"

@@ -2,6 +2,7 @@
   <svg
     aria-hidden="true"
     focusable="false"
+    data-octicon="feed-issue-reopen"
     :width="size"
     :height="size"
     viewBox="0 0 17 16"

@@ -2,6 +2,7 @@
   <svg
     aria-hidden="true"
     focusable="false"
+    data-octicon="logo-gist"
     :width="size"
     :height="size"
     viewBox="0 0 25 16"

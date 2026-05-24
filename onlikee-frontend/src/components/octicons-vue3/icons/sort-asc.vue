@@ -2,6 +2,7 @@
   <svg
     aria-hidden="true"
     focusable="false"
+    data-octicon="sort-asc"
     :width="size"
     :height="size"
     viewBox="0 0 16 16"
