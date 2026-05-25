@@ -185,6 +185,7 @@ const isIconButton = computed(() => !hasLabel.value)
   transition-property: color, background-color, border-color, box-shadow;
   user-select: none;
   vertical-align: middle;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
 .button:focus-visible {
