@@ -56,8 +56,8 @@
 </template>
 
 <script setup lang="ts">
-import { Container } from '@/components/z-ui/container'
-import { Link } from '@/components/z-ui/link'
+import { Container } from '@/components/z-ui/Container'
+import { Link } from '@/components/z-ui/Link'
 </script>
 
 <style scoped>

@@ -77,9 +77,9 @@
 </template>
 <script setup lang="ts">
 import { ref } from 'vue'
-import { Button } from "@/components/z-ui/button";
-import { Dropdown } from "@/components/z-ui/dropdown";
-import { ActionList } from "@/components/z-ui/action-list";
+import { Button } from "@/components/z-ui/Button";
+import { Dropdown } from "@/components/z-ui/Dropdown";
+import { ActionList } from "@/components/z-ui/ActionList";
 import RepoIcon from "@/components/octicons-vue3/icons/repo.vue";
 import TriangleDownIcon from "@/components/octicons-vue3/icons/triangle-down.vue";
 import { ChevronRightIcon } from '@/components/octicons-vue3'

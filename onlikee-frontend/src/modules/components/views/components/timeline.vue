@@ -196,8 +196,8 @@
 </template>
 
 <script setup lang="ts">
-import { Timeline } from '@/components/z-ui/timeline'
-import { Table, type TableColumn } from '@/components/z-ui/table'
+import { Timeline } from '@/components/z-ui/Timeline'
+import { Table, type TableColumn } from '@/components/z-ui/Table'
 import ComponentDocsDemoBlock from '@/modules/components/components/ComponentDocsPage/ComponentDocsDemoBlock.vue'
 import ComponentDocsHeader from '@/modules/components/components/ComponentDocsPage/ComponentDocsHeader.vue'
 import ComponentDocsPage from '@/modules/components/components/ComponentDocsPage/ComponentDocsPage.vue'
@@ -233,7 +233,7 @@ const basicDemoCode = `<template>
 </template>
 
 <script setup lang="ts">
-import { Timeline } from '@/components/z-ui/timeline'
+import { Timeline } from '@/components/z-ui/Timeline'
 <\/script>`
 
 const clipSidebarDemoCode = `<template>
@@ -263,7 +263,7 @@ const clipSidebarDemoCode = `<template>
 </template>
 
 <script setup lang="ts">
-import { Timeline } from '@/components/z-ui/timeline'
+import { Timeline } from '@/components/z-ui/Timeline'
 <\/script>`
 
 const apiTableColumns: TableColumn[] = [

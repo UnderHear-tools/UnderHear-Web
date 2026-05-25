@@ -90,9 +90,9 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 import { useRouter } from 'vue-router'
-import { Container } from '@/components/z-ui/container'
-import { Button } from '@/components/z-ui/button'
-import { Timeline } from '@/components/z-ui/timeline'
+import { Container } from '@/components/z-ui/Container'
+import { Button } from '@/components/z-ui/Button'
+import { Timeline } from '@/components/z-ui/Timeline'
 import { applicationCreateNew } from '@/modules/application/api/create-new'
 import FirstStep from '@/modules/application/components/newForm/FirstStep.vue'
 import SecondStep from '@/modules/application/components/newForm/SecondStep.vue'

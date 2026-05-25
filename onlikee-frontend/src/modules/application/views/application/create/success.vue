@@ -19,9 +19,9 @@
 <script setup lang="ts">
 import confetti from 'canvas-confetti'
 import { ref, onMounted } from 'vue'
-import { Container } from '@/components/z-ui/container'
+import { Container } from '@/components/z-ui/Container'
 import { CheckCircleIcon } from '@/components/octicons-vue3'
-import { Link } from '@/components/z-ui/link'
+import { Link } from '@/components/z-ui/Link'
 import { useRoute } from 'vue-router'
 
 const route = useRoute()

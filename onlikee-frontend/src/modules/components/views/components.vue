@@ -28,7 +28,7 @@
 </template>
 
 <script setup lang="ts">
-import { Container } from '@/components/z-ui/container'
+import { Container } from '@/components/z-ui/Container'
 </script>
 
 <style scoped>

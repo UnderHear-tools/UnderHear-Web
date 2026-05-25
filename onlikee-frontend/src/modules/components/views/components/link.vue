@@ -98,8 +98,8 @@
 </template>
 
 <script setup lang="ts">
-import { Link } from '@/components/z-ui/link'
-import { Table, type TableColumn } from '@/components/z-ui/table'
+import { Link } from '@/components/z-ui/Link'
+import { Table, type TableColumn } from '@/components/z-ui/Table'
 import ComponentDocsDemoBlock from '@/modules/components/components/ComponentDocsPage/ComponentDocsDemoBlock.vue'
 import ComponentDocsHeader from '@/modules/components/components/ComponentDocsPage/ComponentDocsHeader.vue'
 import ComponentDocsPage from '@/modules/components/components/ComponentDocsPage/ComponentDocsPage.vue'

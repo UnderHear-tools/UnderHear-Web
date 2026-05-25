@@ -91,10 +91,10 @@ import ComponentDocsDemoBlock from '@/modules/components/components/ComponentDoc
 import ComponentDocsHeader from '@/modules/components/components/ComponentDocsPage/ComponentDocsHeader.vue'
 import ComponentDocsPage from '@/modules/components/components/ComponentDocsPage/ComponentDocsPage.vue'
 import ComponentDocsSection from '@/modules/components/components/ComponentDocsPage/ComponentDocsSection.vue'
-import { Tooltip } from '@/components/z-ui/tooltip'
-import { Divider } from '@/components/z-ui/divider'
+import { Tooltip } from '@/components/z-ui/Tooltip'
+import { Divider } from '@/components/z-ui/Divider'
 import { BoldIcon, ItalicIcon, CodeIcon, LinkIcon, FileAddedIcon, SearchIcon } from '@/components/octicons-vue3'
-import { Button } from '@/components/z-ui/button'
+import { Button } from '@/components/z-ui/Button'
 
 const demo1Code = `<template>
   <div class="demo-actions">
@@ -135,9 +135,9 @@ const demo1Code = `<template>
 </template>
 
 <script setup lang="ts">
-import { Button } from '@/components/z-ui/button'
-import { Tooltip } from '@/components/z-ui/tooltip'
-import { Divider } from '@/components/z-ui/divider'
+import { Button } from '@/components/z-ui/Button'
+import { Tooltip } from '@/components/z-ui/Tooltip'
+import { Divider } from '@/components/z-ui/Divider'
 import { BoldIcon, ItalicIcon, CodeIcon, LinkIcon, FileAddedIcon, SearchIcon } from '@/components/octicons-vue3'
 <\/script>
 

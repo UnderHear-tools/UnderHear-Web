@@ -473,10 +473,10 @@
 
 <script setup lang="ts">
 import { ref } from 'vue'
-import { ActionList } from '@/components/z-ui/action-list'
-import { Button } from '@/components/z-ui/button'
-import { Dropdown } from '@/components/z-ui/dropdown'
-import { Table, type TableColumn } from '@/components/z-ui/table'
+import { ActionList } from '@/components/z-ui/ActionList'
+import { Button } from '@/components/z-ui/Button'
+import { Dropdown } from '@/components/z-ui/Dropdown'
+import { Table, type TableColumn } from '@/components/z-ui/Table'
 import {
   ArchiveIcon,
   BookIcon,
@@ -548,7 +548,7 @@ const demo1Code = `<template>
 </template>
 
 <script setup lang="ts">
-import { ActionList } from '@/components/z-ui/action-list'
+import { ActionList } from '@/components/z-ui/ActionList'
 import { ChevronRightIcon, FileIcon, LinkExternalIcon, MarkGithubIcon, RepoIcon } from '@/components/octicons-vue3'
 <\/script>`
 
@@ -573,7 +573,7 @@ const demo2Code = `<template>
 </template>
 
 <script setup lang="ts">
-import { ActionList } from '@/components/z-ui/action-list'
+import { ActionList } from '@/components/z-ui/ActionList'
 <\/script>`
 
 const demo3Code = `<template>
@@ -599,7 +599,7 @@ const demo3Code = `<template>
 </template>
 
 <script setup lang="ts">
-import { ActionList } from '@/components/z-ui/action-list'
+import { ActionList } from '@/components/z-ui/ActionList'
 import { ArchiveIcon, FileCodeIcon, LinkExternalIcon, RepoIcon } from '@/components/octicons-vue3'
 <\/script>`
 
@@ -631,7 +631,7 @@ const demo4Code = `<template>
 
 <script setup lang="ts">
 import { ref } from 'vue'
-import { ActionList } from '@/components/z-ui/action-list'
+import { ActionList } from '@/components/z-ui/ActionList'
 import { EyeClosedIcon, EyeIcon } from '@/components/octicons-vue3'
 
 const visibilityOptions = [
@@ -669,7 +669,7 @@ const demo5Code = `<template>
 </template>
 
 <script setup lang="ts">
-import { ActionList } from '@/components/z-ui/action-list'
+import { ActionList } from '@/components/z-ui/ActionList'
 import { LockIcon, ProjectIcon, TrashIcon } from '@/components/octicons-vue3'
 <\/script>`
 
@@ -715,7 +715,7 @@ const demo6Code = `<template>
 </template>
 
 <script setup lang="ts">
-import { ActionList } from '@/components/z-ui/action-list'
+import { ActionList } from '@/components/z-ui/ActionList'
 import { CodeIcon, GitBranchIcon, PeopleIcon, ShieldLockIcon, SignOutIcon } from '@/components/octicons-vue3'
 <\/script>`
 
@@ -738,7 +738,7 @@ const demo7Code = `<template>
 </template>
 
 <script setup lang="ts">
-import { ActionList } from '@/components/z-ui/action-list'
+import { ActionList } from '@/components/z-ui/ActionList'
 import { BookIcon, LinkExternalIcon, MarkGithubIcon, ZapIcon } from '@/components/octicons-vue3'
 <\/script>`
 
@@ -771,9 +771,9 @@ const demo8Code = `<template>
 </template>
 
 <script setup lang="ts">
-import { ActionList } from '@/components/z-ui/action-list'
-import { Button } from '@/components/z-ui/button'
-import { Dropdown } from '@/components/z-ui/dropdown'
+import { ActionList } from '@/components/z-ui/ActionList'
+import { Button } from '@/components/z-ui/Button'
+import { Dropdown } from '@/components/z-ui/Dropdown'
 import { CopyIcon, PencilIcon, TrashIcon, TriangleDownIcon } from '@/components/octicons-vue3'
 <\/script>`
 

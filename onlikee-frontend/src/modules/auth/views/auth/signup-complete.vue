@@ -84,11 +84,11 @@
 <script setup lang="ts">
 import { computed, onMounted, ref } from 'vue'
 import { useUserStore } from '@/stores/user'
-import { Avatar } from '@/components/z-ui/avatar'
-import { FormControl } from '@/components/z-ui/form-control'
-import { Input } from '@/components/z-ui/input'
-import { Button } from '@/components/z-ui/button'
-import { Banner } from '@/components/z-ui/banner'
+import { Avatar } from '@/components/z-ui/Avatar'
+import { FormControl } from '@/components/z-ui/FormControl'
+import { Input } from '@/components/z-ui/Input'
+import { Button } from '@/components/z-ui/Button'
+import { Banner } from '@/components/z-ui/Banner'
 import { completeOAuthSignup } from '../../api/login'
 import {
   clearOAuthSignupContext,

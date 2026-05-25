@@ -249,8 +249,8 @@
 
 <script setup lang="ts">
 import { ref } from 'vue'
-import { Dropdown } from '@/components/z-ui/dropdown'
-import { Table, type TableColumn } from '@/components/z-ui/table'
+import { Dropdown } from '@/components/z-ui/Dropdown'
+import { Table, type TableColumn } from '@/components/z-ui/Table'
 import ComponentDocsDemoBlock from '@/modules/components/components/ComponentDocsPage/ComponentDocsDemoBlock.vue'
 import ComponentDocsHeader from '@/modules/components/components/ComponentDocsPage/ComponentDocsHeader.vue'
 import ComponentDocsPage from '@/modules/components/components/ComponentDocsPage/ComponentDocsPage.vue'
@@ -276,7 +276,7 @@ const demo1Code = `<template>
 </template>
 
 <script setup lang="ts">
-import { Dropdown } from '@/components/z-ui/dropdown'
+import { Dropdown } from '@/components/z-ui/Dropdown'
 <\/script>
 
 <style scoped>
@@ -392,7 +392,7 @@ const demoPlacementCode = `<template>
 </template>
 
 <script setup lang="ts">
-import { Dropdown } from '@/components/z-ui/dropdown'
+import { Dropdown } from '@/components/z-ui/Dropdown'
 <\/script>
 
 <style scoped>
@@ -478,7 +478,7 @@ const demoKeepOpenCode = `<template>
 </template>
 
 <script setup lang="ts">
-import { Dropdown } from '@/components/z-ui/dropdown'
+import { Dropdown } from '@/components/z-ui/Dropdown'
 <\/script>`
 
 const demoExposeCode = `<template>
@@ -494,7 +494,7 @@ const demoExposeCode = `<template>
 
 <script setup lang="ts">
 import { ref } from 'vue'
-import { Dropdown } from '@/components/z-ui/dropdown'
+import { Dropdown } from '@/components/z-ui/Dropdown'
 
 const dropdownRef = ref<InstanceType<typeof Dropdown>>()
 <\/script>`

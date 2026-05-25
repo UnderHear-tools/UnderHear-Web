@@ -83,8 +83,8 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 
-import { Container } from '@/components/z-ui/container'
-import { Link } from '@/components/z-ui/link'
+import { Container } from '@/components/z-ui/Container'
+import { Link } from '@/components/z-ui/Link'
 
 interface ApplicationDescription {
   zh: string

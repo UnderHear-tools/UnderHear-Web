@@ -123,8 +123,8 @@
 
 <script setup lang="ts">
 import { ref } from 'vue'
-import { Upload } from '@/components/z-ui/upload'
-import { Table, type TableColumn } from '@/components/z-ui/table'
+import { Upload } from '@/components/z-ui/Upload'
+import { Table, type TableColumn } from '@/components/z-ui/Table'
 import { UploadIcon } from '@/components/octicons-vue3'
 import ComponentDocsDemoBlock from '@/modules/components/components/ComponentDocsPage/ComponentDocsDemoBlock.vue'
 import ComponentDocsHeader from '@/modules/components/components/ComponentDocsPage/ComponentDocsHeader.vue'
@@ -144,7 +144,7 @@ const demo1Code = `<template>
 
 <script setup lang="ts">
 import { ref } from 'vue'
-import { Upload } from '@/components/z-ui/upload'
+import { Upload } from '@/components/z-ui/Upload'
 
 const files = ref<File[]>([])
 <\/script>`
@@ -159,7 +159,7 @@ const demo2Code = `<template>
 
 <script setup lang="ts">
 import { ref } from 'vue'
-import { Upload } from '@/components/z-ui/upload'
+import { Upload } from '@/components/z-ui/Upload'
 
 const files = ref<File[]>([])
 <\/script>`
@@ -174,7 +174,7 @@ const demo3Code = `<template>
 
 <script setup lang="ts">
 import { ref } from 'vue'
-import { Upload } from '@/components/z-ui/upload'
+import { Upload } from '@/components/z-ui/Upload'
 
 const files = ref<File[]>([])
 <\/script>`
@@ -185,7 +185,7 @@ const demo4Code = `<template>
 
 <script setup lang="ts">
 import { ref } from 'vue'
-import { Upload } from '@/components/z-ui/upload'
+import { Upload } from '@/components/z-ui/Upload'
 
 const files = ref<File[]>([])
 <\/script>`
@@ -202,7 +202,7 @@ const demo5Code = `<template>
 
 <script setup lang="ts">
 import { ref } from 'vue'
-import { Upload } from '@/components/z-ui/upload'
+import { Upload } from '@/components/z-ui/Upload'
 import { UploadIcon } from '@/components/octicons-vue3'
 
 const files = ref<File[]>([])

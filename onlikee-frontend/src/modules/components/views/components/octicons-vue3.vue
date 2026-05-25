@@ -99,13 +99,13 @@
 import { computed, ref } from 'vue'
 import type { Component } from 'vue'
 import * as octicons from '@/components/octicons-vue3/index.ts'
-import { Link } from '@/components/z-ui/link'
-import { Table, type TableColumn } from '@/components/z-ui/table'
+import { Link } from '@/components/z-ui/Link'
+import { Table, type TableColumn } from '@/components/z-ui/Table'
 import ComponentDocsDemoBlock from '@/modules/components/components/ComponentDocsPage/ComponentDocsDemoBlock.vue'
 import ComponentDocsHeader from '@/modules/components/components/ComponentDocsPage/ComponentDocsHeader.vue'
 import ComponentDocsPage from '@/modules/components/components/ComponentDocsPage/ComponentDocsPage.vue'
 import ComponentDocsSection from '@/modules/components/components/ComponentDocsPage/ComponentDocsSection.vue'
-import { Banner } from '@/components/z-ui/banner'
+import { Banner } from '@/components/z-ui/Banner'
 
 type IconEntry = {
   name: string

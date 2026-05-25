@@ -97,8 +97,8 @@
 </template>
 
 <script setup lang="ts">
-import { Avatar } from '@/components/z-ui/avatar'
-import { Table, type TableColumn } from '@/components/z-ui/table'
+import { Avatar } from '@/components/z-ui/Avatar'
+import { Table, type TableColumn } from '@/components/z-ui/Table'
 import ComponentDocsDemoBlock from '@/modules/components/components/ComponentDocsPage/ComponentDocsDemoBlock.vue'
 import ComponentDocsHeader from '@/modules/components/components/ComponentDocsPage/ComponentDocsHeader.vue'
 import ComponentDocsPage from '@/modules/components/components/ComponentDocsPage/ComponentDocsPage.vue'
@@ -111,7 +111,7 @@ const demo1Code = `<template>
 </template>
 
 <script setup lang="ts">
-import { Avatar } from '@/components/z-ui/avatar'
+import { Avatar } from '@/components/z-ui/Avatar'
 <\/script>`
 
 const demo2Code = `<template>
@@ -123,7 +123,7 @@ const demo2Code = `<template>
 </template>
 
 <script setup lang="ts">
-import { Avatar } from '@/components/z-ui/avatar'
+import { Avatar } from '@/components/z-ui/Avatar'
 <\/script>`
 
 const demo3Code = `<template>
@@ -135,7 +135,7 @@ const demo3Code = `<template>
 </template>
 
 <script setup lang="ts">
-import { Avatar } from '@/components/z-ui/avatar'
+import { Avatar } from '@/components/z-ui/Avatar'
 <\/script>`
 
 const apiTableColumns: TableColumn[] = [

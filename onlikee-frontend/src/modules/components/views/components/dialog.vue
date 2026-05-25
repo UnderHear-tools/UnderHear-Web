@@ -146,9 +146,9 @@
 
 <script setup lang="ts">
 import { ref } from 'vue'
-import { Button } from '@/components/z-ui/button'
-import { Dialog } from '@/components/z-ui/dialog'
-import { Table, type TableColumn } from '@/components/z-ui/table'
+import { Button } from '@/components/z-ui/Button'
+import { Dialog } from '@/components/z-ui/Dialog'
+import { Table, type TableColumn } from '@/components/z-ui/Table'
 import ComponentDocsDemoBlock from '@/modules/components/components/ComponentDocsPage/ComponentDocsDemoBlock.vue'
 import ComponentDocsHeader from '@/modules/components/components/ComponentDocsPage/ComponentDocsHeader.vue'
 import ComponentDocsPage from '@/modules/components/components/ComponentDocsPage/ComponentDocsPage.vue'
@@ -167,8 +167,8 @@ const largeDialogItems = [
 
 const basicDemoCode = `<script setup lang="ts">
 import { ref } from 'vue'
-import { Button } from '@/components/z-ui/button'
-import { Dialog } from '@/components/z-ui/dialog'
+import { Button } from '@/components/z-ui/Button'
+import { Dialog } from '@/components/z-ui/Dialog'
 
 const open = ref(false)
 <\/script>
@@ -185,8 +185,8 @@ const open = ref(false)
 
 const footerDemoCode = `<script setup lang="ts">
 import { ref } from 'vue'
-import { Button } from '@/components/z-ui/button'
-import { Dialog } from '@/components/z-ui/dialog'
+import { Button } from '@/components/z-ui/Button'
+import { Dialog } from '@/components/z-ui/Dialog'
 
 const open = ref(false)
 <\/script>
@@ -212,8 +212,8 @@ const open = ref(false)
 
 const sizeDemoCode = `<script setup lang="ts">
 import { ref } from 'vue'
-import { Button } from '@/components/z-ui/button'
-import { Dialog } from '@/components/z-ui/dialog'
+import { Button } from '@/components/z-ui/Button'
+import { Dialog } from '@/components/z-ui/Dialog'
 
 const smallOpen = ref(false)
 const largeOpen = ref(false)

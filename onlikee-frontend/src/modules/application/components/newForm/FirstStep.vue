@@ -81,9 +81,9 @@
 </template>
 
 <script setup lang="ts">
-import { Tag } from '@/components/z-ui/tag'
+import { Tag } from '@/components/z-ui/Tag'
 import type { FrameworkValue } from './useCreateApplicationForm'
-import { FormControlValidation } from '@/components/z-ui/form-control'
+import { FormControlValidation } from '@/components/z-ui/FormControl'
 
 interface Props {
   selectedFramework: FrameworkValue | null
