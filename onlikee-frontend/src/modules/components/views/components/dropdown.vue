@@ -2,7 +2,7 @@
   <ComponentDocsPage>
     <ComponentDocsHeader
       title="Dropdown 下拉菜单"
-      description="通过 trigger 和 content 子组件组织触发器与浮层内容的下拉容器。"
+      description="通过 trigger 和 content 子组件组织触发器与浮层内容的下拉容器，支持碰撞检测、自动翻转和视口钳制。"
     />
 
     <ComponentDocsSection title="基础用法">
@@ -38,7 +38,7 @@
 
     <ComponentDocsSection title="弹出方向">
       <template #description>
-        通过 <code>side</code> 设置下拉菜单弹出方向。
+        通过 <code>side</code> 设置首选锚定方向；外侧方向在空间不足时会自动尝试反向、换轴和对齐方式。
       </template>
 
       <ComponentDocsDemoBlock :code="demoPlacementCode">
@@ -521,9 +521,39 @@ const propsTableColumns: TableColumn[] = [
 const propsTableRows = [
   {
     name: 'side',
-    description: '下拉菜单弹出方向',
+    description: '下拉菜单首选锚定方向；外侧方向会在空间不足时自动翻转或换轴',
     type: `'inside-top' | 'inside-bottom' | 'inside-left' | 'inside-right' | 'inside-center' | 'outside-top' | 'outside-bottom' | 'outside-left' | 'outside-right'`,
     default: 'outside-bottom'
+  },
+  {
+    name: 'align',
+    description: '浮层在交叉轴上的对齐方式',
+    type: `'start' | 'center' | 'end'`,
+    default: 'start'
+  },
+  {
+    name: 'anchorOffset',
+    description: '浮层与触发器在主轴上的偏移距离，单位 px',
+    type: 'number',
+    default: '4'
+  },
+  {
+    name: 'alignmentOffset',
+    description: '浮层与触发器在交叉轴上的偏移距离，单位 px；内侧非居中对齐默认 4，其余默认 0',
+    type: 'number',
+    default: '按 side/align 推导'
+  },
+  {
+    name: 'allowOutOfBounds',
+    description: '允许浮层超出裁剪区域；开启后不再自动翻转和钳制',
+    type: 'boolean',
+    default: 'false'
+  },
+  {
+    name: 'displayInViewport',
+    description: '忽略最近滚动裁剪祖先，直接以可视视口作为定位边界',
+    type: 'boolean',
+    default: 'false'
   }
 ]
 
