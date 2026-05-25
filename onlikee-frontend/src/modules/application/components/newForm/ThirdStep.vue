@@ -55,7 +55,7 @@
 
       <div class="visibility-select-wrap">
         <Dropdown ref="visibilityDropdownRef">
-          <template #trigger>
+          <Dropdown.trigger>
             <Button>
               <Button.leadingVisual>
                 <component
@@ -68,8 +68,8 @@
                 <TriangleDownIcon color="var(--fgColor-muted)" />
               </Button.trailingVisual>
             </Button>
-          </template>
-          <template #content>
+          </Dropdown.trigger>
+          <Dropdown.content>
             <ActionList selection-variant="single">
               <ActionList.Item
                 v-for="item in visibilityOptions"
@@ -86,7 +86,7 @@
                 </ActionList.Description>
               </ActionList.Item>
             </ActionList>
-          </template>
+          </Dropdown.content>
         </Dropdown>
       </div>
     </section>

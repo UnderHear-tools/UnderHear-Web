@@ -357,15 +357,15 @@
 
       <ComponentDocsDemoBlock :code="demo8Code">
         <Dropdown>
-          <template #trigger>
+          <Dropdown.trigger>
             <Button>
               更多操作
               <Button.trailingVisual>
                 <TriangleDownIcon />
               </Button.trailingVisual>
             </Button>
-          </template>
-          <template #content>
+          </Dropdown.trigger>
+          <Dropdown.content>
             <ActionList>
               <ActionList.Item>
                 <ActionList.LeadingVisual>
@@ -387,7 +387,7 @@
                 删除
               </ActionList.Item>
             </ActionList>
-          </template>
+          </Dropdown.content>
         </Dropdown>
       </ComponentDocsDemoBlock>
     </ComponentDocsSection>
@@ -744,13 +744,13 @@ import { BookIcon, LinkExternalIcon, MarkGithubIcon, ZapIcon } from '@/component
 
 const demo8Code = `<template>
   <Dropdown>
-    <template #trigger>
+    <Dropdown.trigger>
       <Button>
         更多操作
         <Button.trailingVisual><TriangleDownIcon /></Button.trailingVisual>
       </Button>
-    </template>
-    <template #content>
+    </Dropdown.trigger>
+    <Dropdown.content>
       <ActionList>
         <ActionList.Item>
           <ActionList.LeadingVisual><PencilIcon /></ActionList.LeadingVisual>
@@ -766,7 +766,7 @@ const demo8Code = `<template>
           删除
         </ActionList.Item>
       </ActionList>
-    </template>
+    </Dropdown.content>
   </Dropdown>
 </template>
 

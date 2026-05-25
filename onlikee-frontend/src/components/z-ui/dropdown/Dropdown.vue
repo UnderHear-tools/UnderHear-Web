@@ -8,7 +8,7 @@
       :data-open="isOpen || undefined"
       @click="isOpen = !isOpen"
     >
-      <slot name="trigger" />
+      <RenderNodes :nodes="parsedChildren.trigger" />
     </div>
     <Transition name="dropdown-fade">
       <div
@@ -18,14 +18,15 @@
         :class="sideClass"
         :style="contentStyle"
       >
-        <slot name="content" />
+        <RenderNodes :nodes="parsedChildren.content" />
       </div>
     </Transition>
   </div>
 </template>
 
 <script setup lang="ts">
-import { computed, ref, onMounted, onBeforeUnmount, watch, nextTick } from 'vue'
+import { computed, ref, onMounted, onBeforeUnmount, watch, nextTick, useSlots } from 'vue'
+import { RenderNodes, parseSlotMarkers } from '../utils/slotMarkers'
 
 type InsideSide =
   | 'inside-top'
@@ -74,6 +75,7 @@ const props = defineProps<{
   side?: DropdownSide
 }>()
 
+const slots = useSlots()
 const isOpen = ref(false)
 const dropdownRef = ref<HTMLElement>()
 const contentRef = ref<HTMLElement>()
@@ -99,6 +101,10 @@ const effectiveSide = computed<DropdownSide>(() => {
   return autoPlacement.value.side
 })
 const sideClass = computed(() => `dropdown-content--${effectiveSide.value}`)
+const parsedChildren = computed(() => parseSlotMarkers(slots.default?.() ?? [], {
+  trigger: 'DropdownTrigger',
+  content: 'DropdownContent'
+}))
 const contentStyle = computed(() => {
   if (isInsideSide.value) return undefined
 

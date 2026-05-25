@@ -11,7 +11,7 @@
       </template>
       <ComponentDocsDemoBlock :code="demo1Code">
         <Dropdown>
-          <template #trigger>
+          <Dropdown.trigger>
             <Button>
               <Button.leadingVisual>
                 <PlusIcon />
@@ -21,8 +21,8 @@
                 <TriangleDownIcon />
               </Button.trailingVisual>
             </Button>
-          </template>
-          <template #content>
+          </Dropdown.trigger>
+          <Dropdown.content>
             <ActionList>
               <ActionList.Item @select="handleClick('新建文件')">
                 <ActionList.LeadingVisual>
@@ -44,7 +44,7 @@
                 从模板创建
               </ActionList.Item>
             </ActionList>
-          </template>
+          </Dropdown.content>
         </Dropdown>
       </ComponentDocsDemoBlock>
     </ComponentDocsSection>
@@ -55,14 +55,14 @@
       </template>
       <ComponentDocsDemoBlock :code="demo2Code">
         <Dropdown side="outside-bottom">
-          <template #trigger>
+          <Dropdown.trigger>
             <Button variant="invisible">
               <Button.leadingVisual>
                 <KebabHorizontalIcon />
               </Button.leadingVisual>
             </Button>
-          </template>
-          <template #content>
+          </Dropdown.trigger>
+          <Dropdown.content>
             <ActionList>
               <ActionList.Item>
                 <ActionList.LeadingVisual>
@@ -84,7 +84,7 @@
                 删除
               </ActionList.Item>
             </ActionList>
-          </template>
+          </Dropdown.content>
         </Dropdown>
       </ComponentDocsDemoBlock>
     </ComponentDocsSection>
@@ -95,15 +95,15 @@
       </template>
       <ComponentDocsDemoBlock :code="demo3Code">
         <Dropdown>
-          <template #trigger>
+          <Dropdown.trigger>
             <Button>
               导航
               <Button.trailingVisual>
                 <TriangleDownIcon />
               </Button.trailingVisual>
             </Button>
-          </template>
-          <template #content>
+          </Dropdown.trigger>
+          <Dropdown.content>
             <ActionList>
               <ActionList.LinkItem
                 href="https://github.com"
@@ -133,7 +133,7 @@
                 </ActionList.TrailingVisual>
               </ActionList.LinkItem>
             </ActionList>
-          </template>
+          </Dropdown.content>
         </Dropdown>
       </ComponentDocsDemoBlock>
     </ComponentDocsSection>
@@ -144,7 +144,7 @@
       </template>
       <ComponentDocsDemoBlock :code="demo4Code">
         <Dropdown>
-          <template #trigger>
+          <Dropdown.trigger>
             <Button>
               <Button.leadingVisual>
                 <RepoIcon />
@@ -154,8 +154,8 @@
                 <TriangleDownIcon />
               </Button.trailingVisual>
             </Button>
-          </template>
-          <template #content>
+          </Dropdown.trigger>
+          <Dropdown.content>
             <ActionList selection-variant="single">
               <ActionList.Item
                 v-for="item in labels"
@@ -166,7 +166,7 @@
                 {{ item }}
               </ActionList.Item>
             </ActionList>
-          </template>
+          </Dropdown.content>
         </Dropdown>
       </ComponentDocsDemoBlock>
     </ComponentDocsSection>
@@ -177,15 +177,15 @@
       </template>
       <ComponentDocsDemoBlock :code="demo5Code">
         <Dropdown>
-          <template #trigger>
+          <Dropdown.trigger>
             <Button>
               打开菜单
               <Button.trailingVisual>
                 <TriangleDownIcon />
               </Button.trailingVisual>
             </Button>
-          </template>
-          <template #content>
+          </Dropdown.trigger>
+          <Dropdown.content>
             <ActionList>
               <ActionList.Item>
                 选项1
@@ -194,15 +194,15 @@
                 选项2
               </ActionList.Item>
               <Dropdown side="outside-right">
-                <template #trigger>
+                <Dropdown.trigger>
                   <ActionList.Item>
                     选项3
                     <ActionList.TrailingVisual>
                       <ChevronRightIcon />
                     </ActionList.TrailingVisual>
                   </ActionList.Item>
-                </template>
-                <template #content>
+                </Dropdown.trigger>
+                <Dropdown.content>
                   <ActionList>
                     <ActionList.Item>
                       子选项1
@@ -214,10 +214,10 @@
                       子选项3
                     </ActionList.Item>
                   </ActionList>
-                </template>
+                </Dropdown.content>
               </Dropdown>
             </ActionList>
-          </template>
+          </Dropdown.content>
         </Dropdown>
       </ComponentDocsDemoBlock>
     </ComponentDocsSection>
@@ -255,14 +255,14 @@ const handleClick = (action: string) => {
 
 const demo1Code = `<template>
   <Dropdown>
-    <template #trigger>
+    <Dropdown.trigger>
       <Button>
         <Button.leadingVisual><PlusIcon /></Button.leadingVisual>
         新建
         <Button.trailingVisual><TriangleDownIcon /></Button.trailingVisual>
       </Button>
-    </template>
-    <template #content>
+    </Dropdown.trigger>
+    <Dropdown.content>
       <ActionList>
         <ActionList.Item @select="handleClick('新建文件')">
           <ActionList.LeadingVisual><FileIcon /></ActionList.LeadingVisual>
@@ -278,7 +278,7 @@ const demo1Code = `<template>
           从模板创建
         </ActionList.Item>
       </ActionList>
-    </template>
+    </Dropdown.content>
   </Dropdown>
 </template>
 
@@ -295,12 +295,12 @@ const handleClick = (action: string) => {
 
 const demo2Code = `<template>
   <Dropdown side="outside-bottom">
-    <template #trigger>
+    <Dropdown.trigger>
       <Button variant="invisible">
         <Button.leadingVisual><KebabHorizontalIcon /></Button.leadingVisual>
       </Button>
-    </template>
-    <template #content>
+    </Dropdown.trigger>
+    <Dropdown.content>
       <ActionList>
         <ActionList.Item>
           <ActionList.LeadingVisual><PencilIcon /></ActionList.LeadingVisual>
@@ -316,7 +316,7 @@ const demo2Code = `<template>
           删除
         </ActionList.Item>
       </ActionList>
-    </template>
+    </Dropdown.content>
   </Dropdown>
 </template>
 
@@ -329,13 +329,13 @@ import { CopyIcon, KebabHorizontalIcon, PencilIcon, TrashIcon } from '@/componen
 
 const demo3Code = `<template>
   <Dropdown>
-    <template #trigger>
+    <Dropdown.trigger>
       <Button>
         导航
         <Button.trailingVisual><TriangleDownIcon /></Button.trailingVisual>
       </Button>
-    </template>
-    <template #content>
+    </Dropdown.trigger>
+    <Dropdown.content>
       <ActionList>
         <ActionList.LinkItem href="https://github.com" new-tab>
           GitHub
@@ -350,7 +350,7 @@ const demo3Code = `<template>
           <ActionList.TrailingVisual><LinkExternalIcon /></ActionList.TrailingVisual>
         </ActionList.LinkItem>
       </ActionList>
-    </template>
+    </Dropdown.content>
   </Dropdown>
 </template>
 
@@ -363,14 +363,14 @@ import { LinkExternalIcon, TriangleDownIcon } from '@/components/octicons-vue3'
 
 const demo4Code = `<template>
   <Dropdown>
-    <template #trigger>
+    <Dropdown.trigger>
       <Button>
         <Button.leadingVisual><RepoIcon /></Button.leadingVisual>
         {{ selectedLabel }}
         <Button.trailingVisual><TriangleDownIcon /></Button.trailingVisual>
       </Button>
-    </template>
-    <template #content>
+    </Dropdown.trigger>
+    <Dropdown.content>
       <ActionList selection-variant="single">
         <ActionList.Item
           v-for="item in labels"
@@ -381,7 +381,7 @@ const demo4Code = `<template>
           {{ item }}
         </ActionList.Item>
       </ActionList>
-    </template>
+    </Dropdown.content>
   </Dropdown>
 </template>
 
@@ -398,33 +398,33 @@ const selectedLabel = ref(labels[0])
 
 const demo5Code = `<template>
   <Dropdown>
-    <template #trigger>
+    <Dropdown.trigger>
       <Button>
         打开菜单
         <Button.trailingVisual><TriangleDownIcon /></Button.trailingVisual>
       </Button>
-    </template>
-    <template #content>
+    </Dropdown.trigger>
+    <Dropdown.content>
       <ActionList>
         <ActionList.Item>选项1</ActionList.Item>
         <ActionList.Item>选项2</ActionList.Item>
         <Dropdown side="outside-right">
-          <template #trigger>
+          <Dropdown.trigger>
             <ActionList.Item>
               选项3
               <ActionList.TrailingVisual><ChevronRightIcon /></ActionList.TrailingVisual>
             </ActionList.Item>
-          </template>
-          <template #content>
+          </Dropdown.trigger>
+          <Dropdown.content>
             <ActionList>
               <ActionList.Item>子选项1</ActionList.Item>
               <ActionList.Item>子选项2</ActionList.Item>
               <ActionList.Item>子选项3</ActionList.Item>
             </ActionList>
-          </template>
+          </Dropdown.content>
         </Dropdown>
       </ActionList>
-    </template>
+    </Dropdown.content>
   </Dropdown>
 </template>
 

@@ -35,13 +35,13 @@
           v-else
           side="outside-bottom"
         >
-          <template #trigger>
+          <Dropdown.trigger>
             <Avatar
               :src="userStore.userInfo?.avatarUrl"
               :size="32"
             />
-          </template>
-          <template #content>
+          </Dropdown.trigger>
+          <Dropdown.content>
             <div class="user-header">
               <Avatar
                 :src="userStore.userInfo?.avatarUrl"
@@ -84,7 +84,7 @@
                 退出登录
               </ActionList.LinkItem>
             </ActionList>
-          </template>
+          </Dropdown.content>
         </Dropdown>
       </div>
     </div>

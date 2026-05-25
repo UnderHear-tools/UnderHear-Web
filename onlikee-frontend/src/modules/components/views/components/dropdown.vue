@@ -7,18 +7,18 @@
 
     <ComponentDocsSection title="基础用法">
       <template #description>
-        通过 <code>trigger</code> 插槽定义触发元素，content 插槽放置下拉内容。
+        通过 <code>Dropdown.trigger</code> 子组件定义触发元素，<code>Dropdown.content</code> 子组件放置下拉内容。
       </template>
 
       <ComponentDocsDemoBlock :code="demo1Code">
         <div class="dropdown-demo">
           <Dropdown>
-            <template #trigger>
+            <Dropdown.trigger>
               <button class="demo-trigger">
                 点击展开
               </button>
-            </template>
-            <template #content>
+            </Dropdown.trigger>
+            <Dropdown.content>
               <div class="demo-content">
                 <div class="demo-item">
                   选项一
@@ -30,7 +30,7 @@
                   选项三
                 </div>
               </div>
-            </template>
+            </Dropdown.content>
           </Dropdown>
         </div>
       </ComponentDocsDemoBlock>
@@ -44,112 +44,112 @@
       <ComponentDocsDemoBlock :code="demoPlacementCode">
         <div class="dropdown-placement-demo">
           <Dropdown side="inside-top">
-            <template #trigger>
+            <Dropdown.trigger>
               <button class="demo-trigger">
                 内侧上方
               </button>
-            </template>
-            <template #content>
+            </Dropdown.trigger>
+            <Dropdown.content>
               <div class="demo-content">
                 内侧上方内容
               </div>
-            </template>
+            </Dropdown.content>
           </Dropdown>
           <Dropdown side="inside-bottom">
-            <template #trigger>
+            <Dropdown.trigger>
               <button class="demo-trigger">
                 内侧下方
               </button>
-            </template>
-            <template #content>
+            </Dropdown.trigger>
+            <Dropdown.content>
               <div class="demo-content">
                 内侧下方内容
               </div>
-            </template>
+            </Dropdown.content>
           </Dropdown>
           <Dropdown side="inside-left">
-            <template #trigger>
+            <Dropdown.trigger>
               <button class="demo-trigger">
                 内侧左边
               </button>
-            </template>
-            <template #content>
+            </Dropdown.trigger>
+            <Dropdown.content>
               <div class="demo-content">
                 内侧左边内容
               </div>
-            </template>
+            </Dropdown.content>
           </Dropdown>
           <Dropdown side="inside-right">
-            <template #trigger>
+            <Dropdown.trigger>
               <button class="demo-trigger">
                 内侧右边
               </button>
-            </template>
-            <template #content>
+            </Dropdown.trigger>
+            <Dropdown.content>
               <div class="demo-content">
                 内侧右边内容
               </div>
-            </template>
+            </Dropdown.content>
           </Dropdown>
           <Dropdown side="inside-center">
-            <template #trigger>
+            <Dropdown.trigger>
               <button class="demo-trigger">
                 内侧居中
               </button>
-            </template>
-            <template #content>
+            </Dropdown.trigger>
+            <Dropdown.content>
               <div class="demo-content">
                 内侧居中内容
               </div>
-            </template>
+            </Dropdown.content>
           </Dropdown>
           <Dropdown side="outside-top">
-            <template #trigger>
+            <Dropdown.trigger>
               <button class="demo-trigger">
                 外侧上方
               </button>
-            </template>
-            <template #content>
+            </Dropdown.trigger>
+            <Dropdown.content>
               <div class="demo-content">
                 外侧上方内容
               </div>
-            </template>
+            </Dropdown.content>
           </Dropdown>
           <Dropdown side="outside-bottom">
-            <template #trigger>
+            <Dropdown.trigger>
               <button class="demo-trigger">
                 外侧下方
               </button>
-            </template>
-            <template #content>
+            </Dropdown.trigger>
+            <Dropdown.content>
               <div class="demo-content">
                 外侧下方内容
               </div>
-            </template>
+            </Dropdown.content>
           </Dropdown>
           <Dropdown side="outside-left">
-            <template #trigger>
+            <Dropdown.trigger>
               <button class="demo-trigger">
                 外侧左边
               </button>
-            </template>
-            <template #content>
+            </Dropdown.trigger>
+            <Dropdown.content>
               <div class="demo-content">
                 外侧左边内容
               </div>
-            </template>
+            </Dropdown.content>
           </Dropdown>
           <Dropdown side="outside-right">
-            <template #trigger>
+            <Dropdown.trigger>
               <button class="demo-trigger">
                 外侧右边
               </button>
-            </template>
-            <template #content>
+            </Dropdown.trigger>
+            <Dropdown.content>
               <div class="demo-content">
                 外侧右边内容
               </div>
-            </template>
+            </Dropdown.content>
           </Dropdown>
         </div>
       </ComponentDocsDemoBlock>
@@ -157,18 +157,18 @@
 
     <ComponentDocsSection title="点击内容保持展开">
       <template #description>
-        点击 <code>content</code> 插槽内的任意元素时，下拉菜单会保持展开；点击组件外部区域才会关闭。
+        点击 <code>Dropdown.content</code> 子组件内的任意元素时，下拉菜单会保持展开；点击组件外部区域才会关闭。
       </template>
 
       <ComponentDocsDemoBlock :code="demoKeepOpenCode">
         <div class="dropdown-demo">
           <Dropdown>
-            <template #trigger>
+            <Dropdown.trigger>
               <button class="demo-trigger">
                 点击展开
               </button>
-            </template>
-            <template #content>
+            </Dropdown.trigger>
+            <Dropdown.content>
               <div class="demo-content">
                 <div class="demo-item">
                   选项一（点击后保持展开）
@@ -177,7 +177,7 @@
                   选项二（点击后保持展开）
                 </div>
               </div>
-            </template>
+            </Dropdown.content>
           </Dropdown>
         </div>
       </ComponentDocsDemoBlock>
@@ -191,12 +191,12 @@
       <ComponentDocsDemoBlock :code="demoExposeCode">
         <div class="dropdown-demo">
           <Dropdown ref="exposeDropdownRef">
-            <template #trigger>
+            <Dropdown.trigger>
               <button class="demo-trigger">
                 点击展开
               </button>
-            </template>
-            <template #content>
+            </Dropdown.trigger>
+            <Dropdown.content>
               <div class="demo-content">
                 <div
                   class="demo-item"
@@ -205,7 +205,7 @@
                   点击关闭
                 </div>
               </div>
-            </template>
+            </Dropdown.content>
           </Dropdown>
         </div>
       </ComponentDocsDemoBlock>
@@ -224,11 +224,11 @@
         :hoverable="false"
       />
       <h4 style="margin-top: 24px;">
-        Slots 插槽
+        内容与子组件
       </h4>
       <Table
-        :columns="slotsTableColumns"
-        :data="slotsTableRows"
+        :columns="contentTableColumns"
+        :data="contentTableRows"
         row-key="name"
         compact
         :hoverable="false"
@@ -261,16 +261,16 @@ const exposeDropdownRef = ref<InstanceType<typeof Dropdown>>()
 const demo1Code = `<template>
   <div class="dropdown-demo">
     <Dropdown>
-      <template #trigger>
+      <Dropdown.trigger>
         <button class="demo-trigger">点击展开</button>
-      </template>
-      <template #content>
+      </Dropdown.trigger>
+      <Dropdown.content>
         <div class="demo-content">
           <div class="demo-item">选项一</div>
           <div class="demo-item">选项二</div>
           <div class="demo-item">选项三</div>
         </div>
-      </template>
+      </Dropdown.content>
     </Dropdown>
   </div>
 </template>
@@ -317,76 +317,76 @@ import { Dropdown } from '@/components/z-ui/dropdown'
 const demoPlacementCode = `<template>
   <div class="dropdown-placement-demo">
     <Dropdown side="inside-top">
-      <template #trigger>
+      <Dropdown.trigger>
         <button class="demo-trigger">内侧上方</button>
-      </template>
-      <template #content>
+      </Dropdown.trigger>
+      <Dropdown.content>
         <div class="demo-content">内侧上方内容</div>
-      </template>
+      </Dropdown.content>
     </Dropdown>
     <Dropdown side="inside-bottom">
-      <template #trigger>
+      <Dropdown.trigger>
         <button class="demo-trigger">内侧下方</button>
-      </template>
-      <template #content>
+      </Dropdown.trigger>
+      <Dropdown.content>
         <div class="demo-content">内侧下方内容</div>
-      </template>
+      </Dropdown.content>
     </Dropdown>
     <Dropdown side="inside-left">
-      <template #trigger>
+      <Dropdown.trigger>
         <button class="demo-trigger">内侧左边</button>
-      </template>
-      <template #content>
+      </Dropdown.trigger>
+      <Dropdown.content>
         <div class="demo-content">内侧左边内容</div>
-      </template>
+      </Dropdown.content>
     </Dropdown>
     <Dropdown side="inside-right">
-      <template #trigger>
+      <Dropdown.trigger>
         <button class="demo-trigger">内侧右边</button>
-      </template>
-      <template #content>
+      </Dropdown.trigger>
+      <Dropdown.content>
         <div class="demo-content">内侧右边内容</div>
-      </template>
+      </Dropdown.content>
     </Dropdown>
     <Dropdown side="inside-center">
-      <template #trigger>
+      <Dropdown.trigger>
         <button class="demo-trigger">内侧居中</button>
-      </template>
-      <template #content>
+      </Dropdown.trigger>
+      <Dropdown.content>
         <div class="demo-content">内侧居中内容</div>
-      </template>
+      </Dropdown.content>
     </Dropdown>
     <Dropdown side="outside-top">
-      <template #trigger>
+      <Dropdown.trigger>
         <button class="demo-trigger">外侧上方</button>
-      </template>
-      <template #content>
+      </Dropdown.trigger>
+      <Dropdown.content>
         <div class="demo-content">外侧上方内容</div>
-      </template>
+      </Dropdown.content>
     </Dropdown>
     <Dropdown side="outside-bottom">
-      <template #trigger>
+      <Dropdown.trigger>
         <button class="demo-trigger">外侧下方</button>
-      </template>
-      <template #content>
+      </Dropdown.trigger>
+      <Dropdown.content>
         <div class="demo-content">外侧下方内容</div>
-      </template>
+      </Dropdown.content>
     </Dropdown>
     <Dropdown side="outside-left">
-      <template #trigger>
+      <Dropdown.trigger>
         <button class="demo-trigger">外侧左边</button>
-      </template>
-      <template #content>
+      </Dropdown.trigger>
+      <Dropdown.content>
         <div class="demo-content">外侧左边内容</div>
-      </template>
+      </Dropdown.content>
     </Dropdown>
     <Dropdown side="outside-right">
-      <template #trigger>
+      <Dropdown.trigger>
         <button class="demo-trigger">外侧右边</button>
-      </template>
-      <template #content>
+      </Dropdown.trigger>
+      <Dropdown.content>
         <div class="demo-content">外侧右边内容</div>
-      </template>
+      </Dropdown.content>
     </Dropdown>
   </div>
 </template>
@@ -437,19 +437,19 @@ const propsTableRows = [
   }
 ]
 
-const slotsTableColumns: TableColumn[] = [
-  { key: 'name', label: '插槽名', rowHeader: true, minWidth: '140px' },
+const contentTableColumns: TableColumn[] = [
+  { key: 'name', label: '名称', rowHeader: true, minWidth: '180px' },
   { key: 'description', label: '说明', minWidth: '300px', wrap: true }
 ]
 
-const slotsTableRows = [
+const contentTableRows = [
   {
-    name: 'trigger',
-    description: '触发下拉的元素，点击该元素会展开/收起下拉内容'
+    name: 'Dropdown.trigger',
+    description: '触发下拉的元素子组件，点击该元素会展开/收起下拉内容'
   },
   {
-    name: 'content',
-    description: '下拉菜单的内容，点击内容区域会保持展开，点击组件外部区域会关闭'
+    name: 'Dropdown.content',
+    description: '下拉菜单的内容子组件，点击内容区域会保持展开，点击组件外部区域会关闭'
   }
 ]
 
@@ -467,13 +467,13 @@ const exposeTableRows = [
 
 const demoKeepOpenCode = `<template>
   <Dropdown>
-    <template #trigger>
+    <Dropdown.trigger>
       <button>点击展开</button>
-    </template>
-    <template #content>
+    </Dropdown.trigger>
+    <Dropdown.content>
       <div class="demo-item">选项一（点击后保持展开）</div>
       <div class="demo-item">选项二（点击后保持展开）</div>
-    </template>
+    </Dropdown.content>
   </Dropdown>
 </template>
 
@@ -483,12 +483,12 @@ import { Dropdown } from '@/components/z-ui/dropdown'
 
 const demoExposeCode = `<template>
   <Dropdown ref="dropdownRef">
-    <template #trigger>
+    <Dropdown.trigger>
       <button>点击展开</button>
-    </template>
-    <template #content>
+    </Dropdown.trigger>
+    <Dropdown.content>
       <div @click="dropdownRef?.close()">点击关闭</div>
-    </template>
+    </Dropdown.content>
   </Dropdown>
 </template>
 

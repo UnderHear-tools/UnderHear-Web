@@ -1,7 +1,7 @@
 <template>
   <div class="hero">
     <Dropdown side="outside-right">
-      <template #trigger>
+      <Dropdown.trigger>
         <Button>
           <Button.leadingVisual>
             <RepoIcon />
@@ -11,8 +11,8 @@
             <TriangleDownIcon />
           </Button.trailingVisual>
         </Button>
-      </template>
-      <template #content>
+      </Dropdown.trigger>
+      <Dropdown.content>
         <ActionList selection-variant="single">
           <ActionList.Item
             :selected="selectedAction === '1'"
@@ -33,12 +33,12 @@
             保存文件
           </ActionList.Item>
         </ActionList>
-      </template>
+      </Dropdown.content>
     </Dropdown>
 
 
     <Dropdown>
-      <template #trigger>
+      <Dropdown.trigger>
         <Button>
           <Button.leadingVisual>
             <RepoIcon />
@@ -48,30 +48,30 @@
             <TriangleDownIcon />
           </Button.trailingVisual>
         </Button>
-      </template>
-      <template #content>
+      </Dropdown.trigger>
+      <Dropdown.content>
         <ActionList>
           <ActionList.Item>选项1</ActionList.Item>
           <ActionList.Item>选项2</ActionList.Item>
           <Dropdown side="outside-right">
-            <template #trigger>
+            <Dropdown.trigger>
               <ActionList.Item>
                 选项3
                 <ActionList.TrailingVisual>
                   <ChevronRightIcon />
                 </ActionList.TrailingVisual>
               </ActionList.Item>
-            </template>
-            <template #content>
+            </Dropdown.trigger>
+            <Dropdown.content>
               <ActionList>
                 <ActionList.Item>选项1</ActionList.Item>
                 <ActionList.Item>选项2</ActionList.Item>
                 <ActionList.Item>选项3</ActionList.Item>
               </ActionList>
-            </template>
+            </Dropdown.content>
           </Dropdown>
         </ActionList>
-      </template>
+      </Dropdown.content>
     </Dropdown>
   </div>
 </template>

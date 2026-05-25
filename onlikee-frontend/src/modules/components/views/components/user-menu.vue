@@ -12,13 +12,13 @@
       <ComponentDocsDemoBlock :code="demo1Code">
         <div class="user-menu">
           <Dropdown>
-            <template #trigger>
+            <Dropdown.trigger>
               <Avatar
                 src="https://avatars.githubusercontent.com/u/131276691?v=4"
                 :size="42"
               />
-            </template>
-            <template #content>
+            </Dropdown.trigger>
+            <Dropdown.content>
               <div class="user-header">
                 <Avatar
                   src="https://avatars.githubusercontent.com/u/131276691?v=4"
@@ -64,7 +64,7 @@
                   退出登录
                 </ActionList.Item>
               </ActionList>
-            </template>
+            </Dropdown.content>
           </Dropdown>
         </div>
       </ComponentDocsDemoBlock>
@@ -85,10 +85,10 @@ import { GearIcon, MarkGithubIcon, PersonIcon, SignOutIcon } from '@/components/
 const demo1Code = `<template>
   <div class="user-menu">
     <Dropdown>
-      <template #trigger>
+      <Dropdown.trigger>
         <Avatar src="https://avatars.githubusercontent.com/u/131276691?v=4" :size="42" />
-      </template>
-      <template #content>
+      </Dropdown.trigger>
+      <Dropdown.content>
         <div class="user-header">
           <Avatar src="https://avatars.githubusercontent.com/u/131276691?v=4" :size="36" />
           <div class="user-info">
@@ -117,7 +117,7 @@ const demo1Code = `<template>
             退出登录
           </ActionList.Item>
         </ActionList>
-      </template>
+      </Dropdown.content>
     </Dropdown>
   </div>
 </template>
