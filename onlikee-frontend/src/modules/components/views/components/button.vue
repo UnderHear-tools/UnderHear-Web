@@ -95,7 +95,7 @@
 
     <ComponentDocsSection title="前后视觉元素">
       <template #description>
-        通过 <code>Button.leadingVisual</code> 和 <code>Button.trailingVisual</code> 子组件在文本前后放置图标。按钮内容保持单行排列，适合轻量视觉引导。
+        通过 <code>Button.leadingVisual</code> 和 <code>Button.trailingVisual</code> 子组件在文本前后放置图标。按钮会从默认插槽中提取这两个子组件，其余节点作为按钮文案渲染。
       </template>
 
       <ComponentDocsDemoBlock :code="visualDemoCode">
@@ -396,15 +396,15 @@ const contentTableColumns: TableColumn[] = [
 const contentTableRows = [
   {
     name: 'default',
-    description: '按钮的主文案内容，直接作为 Button 的默认内容传入。'
+    description: '按钮的主文案内容。除 Button.leadingVisual 和 Button.trailingVisual 外，其余默认插槽节点都会作为 label 渲染。'
   },
   {
     name: 'Button.leadingVisual',
-    description: '前置视觉元素子组件，通常用于放置图标或状态标记。'
+    description: '前置视觉元素子组件，通常用于放置图标或状态标记；会被提取到按钮文案前方的视觉区域。'
   },
   {
     name: 'Button.trailingVisual',
-    description: '后置视觉元素子组件，通常用于放置方向、完成态等辅助图标。'
+    description: '后置视觉元素子组件，通常用于放置方向、完成态等辅助图标；会被提取到按钮文案后方的视觉区域。'
   }
 ]
 </script>

@@ -16,6 +16,7 @@
         ref="contentRef"
         class="dropdown-content"
         :class="sideClass"
+        :data-width="parsedChildren.contentWidth"
         :style="contentStyle"
       >
         <RenderNodes :nodes="parsedChildren.content" />
@@ -25,8 +26,7 @@
 </template>
 
 <script setup lang="ts">
-import { computed, ref, onMounted, onBeforeUnmount, watch, nextTick, useSlots } from 'vue'
-import { RenderNodes, parseSlotMarkers } from '../utils/slotMarkers'
+import { Comment, Fragment, Text, computed, ref, onMounted, onBeforeUnmount, watch, nextTick, useSlots, type VNode } from 'vue'
 
 type InsideSide =
   | 'inside-top'
@@ -48,6 +48,18 @@ type OutsideAlign = 'start' | 'end'
 type OutsidePlacement = {
   side: OutsideSide
   align: OutsideAlign
+}
+type DropdownContentWidth = 'small' | 'medium' | 'large' | 'xlarge' | 'xxlarge' | 'auto'
+
+interface DropdownMarkerType {
+  name?: string
+  __name?: string
+}
+
+interface ParsedDropdownChildren {
+  trigger: VNode[]
+  content: VNode[]
+  contentWidth: DropdownContentWidth
 }
 
 const INSIDE_TO_OUTSIDE: Record<InsideSide, OutsideSide> = {
@@ -101,10 +113,6 @@ const effectiveSide = computed<DropdownSide>(() => {
   return autoPlacement.value.side
 })
 const sideClass = computed(() => `dropdown-content--${effectiveSide.value}`)
-const parsedChildren = computed(() => parseSlotMarkers(slots.default?.() ?? [], {
-  trigger: 'DropdownTrigger',
-  content: 'DropdownContent'
-}))
 const contentStyle = computed(() => {
   if (isInsideSide.value) return undefined
 
@@ -115,6 +123,68 @@ const contentStyle = computed(() => {
 
   return align === 'end' ? { top: 'auto', bottom: '0' } : { top: '0', bottom: 'auto' }
 })
+
+const RenderNodes = (props: { nodes: VNode[] }) => props.nodes
+
+function getComponentName(type: VNode['type']) {
+  if (typeof type !== 'object' && typeof type !== 'function') return ''
+
+  const marker = type as DropdownMarkerType
+  return marker.name ?? marker.__name ?? ''
+}
+
+function readSlotChildren(node: VNode) {
+  if (typeof node.children === 'object' && node.children && 'default' in node.children) {
+    const slot = node.children.default
+    return typeof slot === 'function' ? slot() : []
+  }
+
+  return []
+}
+
+function isWhitespaceNode(node: VNode) {
+  return node.type === Text && typeof node.children === 'string' && node.children.trim() === ''
+}
+
+function flattenChildren(nodes: VNode[]): VNode[] {
+  return nodes.flatMap(node => {
+    if (node.type === Fragment && Array.isArray(node.children)) {
+      return flattenChildren(node.children as VNode[])
+    }
+
+    return [node]
+  })
+}
+
+function parseDropdownChildren(nodes: VNode[]): ParsedDropdownChildren {
+  const parsed: ParsedDropdownChildren = {
+    trigger: [],
+    content: [],
+    contentWidth: 'auto'
+  }
+
+  for (const node of flattenChildren(nodes)) {
+    if (node.type === Comment || isWhitespaceNode(node)) continue
+
+    const componentName = getComponentName(node.type)
+
+    if (componentName === 'DropdownTrigger') {
+      parsed.trigger.push(...readSlotChildren(node))
+      continue
+    }
+
+    if (componentName === 'DropdownContent') {
+      const props = node.props as { width?: DropdownContentWidth } | null
+
+      parsed.content.push(...readSlotChildren(node))
+      parsed.contentWidth = props?.width ?? 'auto'
+    }
+  }
+
+  return parsed
+}
+
+const parsedChildren = computed(() => parseDropdownChildren(slots.default?.() ?? []))
 
 function getOutsidePosition(
   placement: OutsidePlacement,
@@ -389,6 +459,26 @@ defineExpose({ close: () => { isOpen.value = false } })
   border-radius: 12px;
   background: var(--overlay-bgColor, #ffffff);
   box-shadow: var(--shadow-floating-small, 0px 0px 0px 1px #d1d9e080, 0px 6px 12px -3px #25292e0a, 0px 6px 18px 0px #25292e1f);
+}
+
+.dropdown-content[data-width='small'] {
+  width: min(256px, calc(100vw - 80px));
+}
+
+.dropdown-content[data-width='medium'] {
+  width: min(320px, calc(100vw - 80px));
+}
+
+.dropdown-content[data-width='large'] {
+  width: min(480px, calc(100vw - 80px));
+}
+
+.dropdown-content[data-width='xlarge'] {
+  width: min(640px, calc(100vw - 80px));
+}
+
+.dropdown-content[data-width='xxlarge'] {
+  width: min(960px, calc(100vw - 80px));
 }
 
 .dropdown-content--outside-bottom {

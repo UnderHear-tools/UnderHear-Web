@@ -2,12 +2,12 @@
   <ComponentDocsPage>
     <ComponentDocsHeader
       title="Dropdown 下拉菜单"
-      description="向下弹出的菜单容器。"
+      description="通过 trigger 和 content 子组件组织触发器与浮层内容的下拉容器。"
     />
 
     <ComponentDocsSection title="基础用法">
       <template #description>
-        通过 <code>Dropdown.trigger</code> 子组件定义触发元素，<code>Dropdown.content</code> 子组件放置下拉内容。
+        通过 <code>Dropdown.trigger</code> 子组件定义触发元素，<code>Dropdown.content</code> 子组件放置下拉内容。组件会从默认插槽中提取这两个子组件并分别渲染到触发区和内容区。
       </template>
 
       <ComponentDocsDemoBlock :code="demo1Code">
@@ -155,6 +155,33 @@
       </ComponentDocsDemoBlock>
     </ComponentDocsSection>
 
+    <ComponentDocsSection title="内容宽度">
+      <template #description>
+        <code>Dropdown.content</code> 支持 <code>width</code> prop，用固定尺寸 token 控制浮层宽度；默认 <code>auto</code> 保持内容自适应。
+      </template>
+
+      <ComponentDocsDemoBlock :code="demoWidthCode">
+        <div class="dropdown-width-demo">
+          <Dropdown
+            v-for="option in widthOptions"
+            :key="option.width"
+          >
+            <Dropdown.trigger>
+              <button class="demo-trigger">
+                {{ option.label }}
+              </button>
+            </Dropdown.trigger>
+            <Dropdown.content :width="option.width">
+              <div class="demo-content demo-content--width">
+                <strong>{{ option.label }}</strong>
+                <span>{{ option.size }}</span>
+              </div>
+            </Dropdown.content>
+          </Dropdown>
+        </div>
+      </ComponentDocsDemoBlock>
+    </ComponentDocsSection>
+
     <ComponentDocsSection title="点击内容保持展开">
       <template #description>
         点击 <code>Dropdown.content</code> 子组件内的任意元素时，下拉菜单会保持展开；点击组件外部区域才会关闭。
@@ -257,6 +284,16 @@ import ComponentDocsPage from '@/modules/components/components/ComponentDocsPage
 import ComponentDocsSection from '@/modules/components/components/ComponentDocsPage/ComponentDocsSection.vue'
 
 const exposeDropdownRef = ref<InstanceType<typeof Dropdown>>()
+type DropdownContentWidth = 'small' | 'medium' | 'large' | 'xlarge' | 'xxlarge' | 'auto'
+
+const widthOptions: Array<{ width: DropdownContentWidth, label: string, size: string }> = [
+  { width: 'small', label: 'Small', size: '256px' },
+  { width: 'medium', label: 'Medium', size: '320px' },
+  { width: 'large', label: 'Large', size: '480px' },
+  { width: 'xlarge', label: 'Xlarge', size: '640px' },
+  { width: 'xxlarge', label: 'Xxlarge', size: '960px' },
+  { width: 'auto', label: 'Auto', size: '内容自适应' }
+]
 
 const demo1Code = `<template>
   <div class="dropdown-demo">
@@ -421,6 +458,59 @@ import { Dropdown } from '@/components/z-ui/Dropdown'
 }
 <\/style>`
 
+const demoWidthCode = `<script setup lang="ts">
+import { Dropdown } from '@/components/z-ui/Dropdown'
+
+type DropdownContentWidth = 'small' | 'medium' | 'large' | 'xlarge' | 'xxlarge' | 'auto'
+
+const widthOptions: Array<{ width: DropdownContentWidth, label: string, size: string }> = [
+  { width: 'small', label: 'Small', size: '256px' },
+  { width: 'medium', label: 'Medium', size: '320px' },
+  { width: 'large', label: 'Large', size: '480px' },
+  { width: 'xlarge', label: 'Xlarge', size: '640px' },
+  { width: 'xxlarge', label: 'Xxlarge', size: '960px' },
+  { width: 'auto', label: 'Auto', size: '内容自适应' }
+]
+<\/script>
+
+<template>
+  <div class="dropdown-width-demo">
+    <Dropdown
+      v-for="option in widthOptions"
+      :key="option.width"
+    >
+      <Dropdown.trigger>
+        <button class="demo-trigger">
+          {{ option.label }}
+        </button>
+      </Dropdown.trigger>
+      <Dropdown.content :width="option.width">
+        <div class="demo-content demo-content--width">
+          <strong>{{ option.label }}</strong>
+          <span>{{ option.size }}</span>
+        </div>
+      </Dropdown.content>
+    </Dropdown>
+  </div>
+</template>
+
+<style scoped>
+.dropdown-width-demo {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+
+.demo-content {
+  padding: 12px;
+}
+
+.demo-content--width {
+  display: grid;
+  gap: 4px;
+}
+<\/style>`
+
 const propsTableColumns: TableColumn[] = [
   { key: 'name', label: '属性名', rowHeader: true, minWidth: '140px' },
   { key: 'default', label: '默认值', minWidth: '120px' },
@@ -445,11 +535,11 @@ const contentTableColumns: TableColumn[] = [
 const contentTableRows = [
   {
     name: 'Dropdown.trigger',
-    description: '触发下拉的元素子组件，点击该元素会展开/收起下拉内容'
+    description: '触发下拉的元素子组件，会被提取到触发区；点击该元素会展开/收起下拉内容'
   },
   {
     name: 'Dropdown.content',
-    description: '下拉菜单的内容子组件，点击内容区域会保持展开，点击组件外部区域会关闭'
+    description: '下拉菜单的内容子组件，会被提取到浮层内容区；支持 width="small | medium | large | xlarge | xxlarge | auto" 控制宽度，默认 auto'
   }
 ]
 
@@ -511,6 +601,12 @@ const dropdownRef = ref<InstanceType<typeof Dropdown>>()
   gap: 20px;
 }
 
+.dropdown-width-demo {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+
 .demo-trigger {
   padding: 8px 16px;
   border: 1px solid var(--borderColor-default);
@@ -527,6 +623,11 @@ const dropdownRef = ref<InstanceType<typeof Dropdown>>()
 .demo-content {
   padding: 8px;
   min-width: 120px;
+}
+
+.demo-content--width {
+  display: grid;
+  gap: 4px;
 }
 
 .demo-item {

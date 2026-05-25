@@ -66,8 +66,7 @@
 </template>
 
 <script setup lang="ts">
-import { computed, useSlots } from 'vue'
-import { RenderNodes, parseSlotMarkers } from '../utils/slotMarkers'
+import { Comment, Fragment, Text, computed, useSlots, type VNode } from 'vue'
 
 interface Props {
   type?: 'button' | 'submit' | 'reset'
@@ -87,18 +86,78 @@ withDefaults(defineProps<Props>(), {
 
 const slots = useSlots()
 
-const parsedChildren = computed(() => {
-  const children = parseSlotMarkers(slots.default?.() ?? [], {
-    leadingVisual: 'ButtonLeadingVisual',
-    trailingVisual: 'ButtonTrailingVisual'
-  })
+interface ButtonMarkerType {
+  name?: string
+  __name?: string
+}
 
-  return {
-    label: children.default,
-    leadingVisual: children.leadingVisual,
-    trailingVisual: children.trailingVisual
+interface ParsedButtonChildren {
+  label: VNode[]
+  leadingVisual: VNode[]
+  trailingVisual: VNode[]
+}
+
+const RenderNodes = (props: { nodes: VNode[] }) => props.nodes
+
+function getComponentName(type: VNode['type']) {
+  if (typeof type !== 'object' && typeof type !== 'function') return ''
+
+  const marker = type as ButtonMarkerType
+  return marker.name ?? marker.__name ?? ''
+}
+
+function readSlotChildren(node: VNode) {
+  if (typeof node.children === 'object' && node.children && 'default' in node.children) {
+    const slot = node.children.default
+    return typeof slot === 'function' ? slot() : []
   }
-})
+
+  return []
+}
+
+function isWhitespaceNode(node: VNode) {
+  return node.type === Text && typeof node.children === 'string' && node.children.trim() === ''
+}
+
+function flattenChildren(nodes: VNode[]): VNode[] {
+  return nodes.flatMap(node => {
+    if (node.type === Fragment && Array.isArray(node.children)) {
+      return flattenChildren(node.children as VNode[])
+    }
+
+    return [node]
+  })
+}
+
+function parseButtonChildren(nodes: VNode[]): ParsedButtonChildren {
+  const parsed: ParsedButtonChildren = {
+    label: [],
+    leadingVisual: [],
+    trailingVisual: []
+  }
+
+  for (const node of flattenChildren(nodes)) {
+    if (node.type === Comment || isWhitespaceNode(node)) continue
+
+    const componentName = getComponentName(node.type)
+
+    if (componentName === 'ButtonLeadingVisual') {
+      parsed.leadingVisual.push(...readSlotChildren(node))
+      continue
+    }
+
+    if (componentName === 'ButtonTrailingVisual') {
+      parsed.trailingVisual.push(...readSlotChildren(node))
+      continue
+    }
+
+    parsed.label.push(node)
+  }
+
+  return parsed
+}
+
+const parsedChildren = computed(() => parseButtonChildren(slots.default?.() ?? []))
 const hasLabel = computed(() => Boolean(parsedChildren.value.label.length))
 const hasLeadingVisual = computed(() => Boolean(parsedChildren.value.leadingVisual.length))
 const hasTrailingVisual = computed(() => Boolean(parsedChildren.value.trailingVisual.length))
