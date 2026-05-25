@@ -13,13 +13,13 @@
         <Dropdown>
           <template #trigger>
             <Button>
-              <template #leadingVisual>
+              <Button.leadingVisual>
                 <PlusIcon />
-              </template>
+              </Button.leadingVisual>
               新建
-              <template #trailingVisual>
+              <Button.trailingVisual>
                 <TriangleDownIcon />
-              </template>
+              </Button.trailingVisual>
             </Button>
           </template>
           <template #content>
@@ -57,9 +57,9 @@
         <Dropdown side="outside-bottom">
           <template #trigger>
             <Button variant="invisible">
-              <template #leadingVisual>
+              <Button.leadingVisual>
                 <KebabHorizontalIcon />
-              </template>
+              </Button.leadingVisual>
             </Button>
           </template>
           <template #content>
@@ -98,9 +98,9 @@
           <template #trigger>
             <Button>
               导航
-              <template #trailingVisual>
+              <Button.trailingVisual>
                 <TriangleDownIcon />
-              </template>
+              </Button.trailingVisual>
             </Button>
           </template>
           <template #content>
@@ -146,13 +146,13 @@
         <Dropdown>
           <template #trigger>
             <Button>
-              <template #leadingVisual>
+              <Button.leadingVisual>
                 <RepoIcon />
-              </template>
+              </Button.leadingVisual>
               {{ selectedLabel }}
-              <template #trailingVisual>
+              <Button.trailingVisual>
                 <TriangleDownIcon />
-              </template>
+              </Button.trailingVisual>
             </Button>
           </template>
           <template #content>
@@ -180,9 +180,9 @@
           <template #trigger>
             <Button>
               打开菜单
-              <template #trailingVisual>
+              <Button.trailingVisual>
                 <TriangleDownIcon />
-              </template>
+              </Button.trailingVisual>
             </Button>
           </template>
           <template #content>
@@ -257,9 +257,9 @@ const demo1Code = `<template>
   <Dropdown>
     <template #trigger>
       <Button>
-        <template #leadingVisual><PlusIcon /></template>
+        <Button.leadingVisual><PlusIcon /></Button.leadingVisual>
         新建
-        <template #trailingVisual><TriangleDownIcon /></template>
+        <Button.trailingVisual><TriangleDownIcon /></Button.trailingVisual>
       </Button>
     </template>
     <template #content>
@@ -297,7 +297,7 @@ const demo2Code = `<template>
   <Dropdown side="outside-bottom">
     <template #trigger>
       <Button variant="invisible">
-        <template #leadingVisual><KebabHorizontalIcon /></template>
+        <Button.leadingVisual><KebabHorizontalIcon /></Button.leadingVisual>
       </Button>
     </template>
     <template #content>
@@ -332,7 +332,7 @@ const demo3Code = `<template>
     <template #trigger>
       <Button>
         导航
-        <template #trailingVisual><TriangleDownIcon /></template>
+        <Button.trailingVisual><TriangleDownIcon /></Button.trailingVisual>
       </Button>
     </template>
     <template #content>
@@ -365,9 +365,9 @@ const demo4Code = `<template>
   <Dropdown>
     <template #trigger>
       <Button>
-        <template #leadingVisual><RepoIcon /></template>
+        <Button.leadingVisual><RepoIcon /></Button.leadingVisual>
         {{ selectedLabel }}
-        <template #trailingVisual><TriangleDownIcon /></template>
+        <Button.trailingVisual><TriangleDownIcon /></Button.trailingVisual>
       </Button>
     </template>
     <template #content>
@@ -401,7 +401,7 @@ const demo5Code = `<template>
     <template #trigger>
       <Button>
         打开菜单
-        <template #trailingVisual><TriangleDownIcon /></template>
+        <Button.trailingVisual><TriangleDownIcon /></Button.trailingVisual>
       </Button>
     </template>
     <template #content>

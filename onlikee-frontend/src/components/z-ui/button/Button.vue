@@ -7,29 +7,29 @@
     :data-loading="loading"
     :data-size="size"
     :data-variant="variant"
-    :data-icon-button="!$slots.default ? 'true' : 'false'"
+    :data-icon-button="isIconButton ? 'true' : 'false'"
   >
     <span
       class="button__content"
     >
       <span class="button__content-row">
         <span
-          v-if="$slots.leadingVisual"
+          v-if="hasLeadingVisual"
           class="button__visual"
         >
-          <slot name="leadingVisual" />
+          <RenderNodes :nodes="parsedChildren.leadingVisual" />
         </span>
         <span
-          v-if="$slots.default"
+          v-if="hasLabel"
           class="button__label"
         >
-          <slot />
+          <RenderNodes :nodes="parsedChildren.label" />
         </span>
         <span
-          v-if="$slots.trailingVisual"
+          v-if="hasTrailingVisual"
           class="button__visual"
         >
-          <slot name="trailingVisual" />
+          <RenderNodes :nodes="parsedChildren.trailingVisual" />
         </span>
       </span>
       <svg
@@ -66,6 +66,8 @@
 </template>
 
 <script setup lang="ts">
+import { Comment, Fragment, Text, computed, useSlots, type VNode } from 'vue'
+
 interface Props {
   type?: 'button' | 'submit' | 'reset'
   variant?: 'default' | 'primary' | 'invisible' | 'danger' | 'link'
@@ -81,6 +83,85 @@ withDefaults(defineProps<Props>(), {
   loading: false,
   disabled: false
 })
+
+const slots = useSlots()
+
+interface ButtonMarkerType {
+  name?: string
+  __name?: string
+}
+
+interface ParsedButtonChildren {
+  label: VNode[]
+  leadingVisual: VNode[]
+  trailingVisual: VNode[]
+}
+
+const RenderNodes = (props: { nodes: VNode[] }) => props.nodes
+
+function getComponentName(type: VNode['type']) {
+  if (typeof type !== 'object' && typeof type !== 'function') return ''
+
+  const marker = type as ButtonMarkerType
+  return marker.name ?? marker.__name ?? ''
+}
+
+function readSlotChildren(node: VNode) {
+  if (typeof node.children === 'object' && node.children && 'default' in node.children) {
+    const slot = node.children.default
+    return typeof slot === 'function' ? slot() : []
+  }
+
+  return []
+}
+
+function isWhitespaceNode(node: VNode) {
+  return node.type === Text && typeof node.children === 'string' && node.children.trim() === ''
+}
+
+function flattenChildren(nodes: VNode[]): VNode[] {
+  return nodes.flatMap(node => {
+    if (node.type === Fragment && Array.isArray(node.children)) {
+      return flattenChildren(node.children as VNode[])
+    }
+
+    return [node]
+  })
+}
+
+function parseButtonChildren(nodes: VNode[]): ParsedButtonChildren {
+  const parsed: ParsedButtonChildren = {
+    label: [],
+    leadingVisual: [],
+    trailingVisual: []
+  }
+
+  for (const node of flattenChildren(nodes)) {
+    if (node.type === Comment || isWhitespaceNode(node)) continue
+
+    const componentName = getComponentName(node.type)
+
+    if (componentName === 'ButtonLeadingVisual') {
+      parsed.leadingVisual.push(...readSlotChildren(node))
+      continue
+    }
+
+    if (componentName === 'ButtonTrailingVisual') {
+      parsed.trailingVisual.push(...readSlotChildren(node))
+      continue
+    }
+
+    parsed.label.push(node)
+  }
+
+  return parsed
+}
+
+const parsedChildren = computed(() => parseButtonChildren(slots.default?.() ?? []))
+const hasLabel = computed(() => Boolean(parsedChildren.value.label.length))
+const hasLeadingVisual = computed(() => Boolean(parsedChildren.value.leadingVisual.length))
+const hasTrailingVisual = computed(() => Boolean(parsedChildren.value.trailingVisual.length))
+const isIconButton = computed(() => !hasLabel.value)
 </script>
 
 <style scoped>

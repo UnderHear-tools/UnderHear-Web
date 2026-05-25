@@ -360,9 +360,9 @@
           <template #trigger>
             <Button>
               更多操作
-              <template #trailingVisual>
+              <Button.trailingVisual>
                 <TriangleDownIcon />
-              </template>
+              </Button.trailingVisual>
             </Button>
           </template>
           <template #content>
@@ -747,7 +747,7 @@ const demo8Code = `<template>
     <template #trigger>
       <Button>
         更多操作
-        <template #trailingVisual><TriangleDownIcon /></template>
+        <Button.trailingVisual><TriangleDownIcon /></Button.trailingVisual>
       </Button>
     </template>
     <template #content>

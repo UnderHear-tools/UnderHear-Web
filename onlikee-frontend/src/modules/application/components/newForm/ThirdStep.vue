@@ -57,16 +57,16 @@
         <Dropdown ref="visibilityDropdownRef">
           <template #trigger>
             <Button>
-              <template #leadingVisual>
+              <Button.leadingVisual>
                 <component
                   :is="selectedVisibilityOption.icon"
                   color="var(--fgColor-muted)"
                 />
-              </template>
+              </Button.leadingVisual>
               {{ label }}
-              <template #trailingVisual>
+              <Button.trailingVisual>
                 <TriangleDownIcon color="var(--fgColor-muted)" />
-              </template>
+              </Button.trailingVisual>
             </Button>
           </template>
           <template #content>

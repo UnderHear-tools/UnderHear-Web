@@ -78,9 +78,9 @@
         :loading="isUploading"
         @click="submit"
       >
-        <template #leadingVisual>
+        <Button.leadingVisual>
           <RocketIcon />
-        </template>
+        </Button.leadingVisual>
         创建应用
       </Button>
     </div>

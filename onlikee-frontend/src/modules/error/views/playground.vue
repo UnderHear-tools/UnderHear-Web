@@ -3,13 +3,13 @@
     <Dropdown side="outside-right">
       <template #trigger>
         <Button>
-          <template #leadingVisual>
+          <Button.leadingVisual>
             <RepoIcon />
-          </template>
+          </Button.leadingVisual>
           {{ label }}
-          <template #trailingVisual>
+          <Button.trailingVisual>
             <TriangleDownIcon />
-          </template>
+          </Button.trailingVisual>
         </Button>
       </template>
       <template #content>
@@ -40,13 +40,13 @@
     <Dropdown>
       <template #trigger>
         <Button>
-          <template #leadingVisual>
+          <Button.leadingVisual>
             <RepoIcon />
-          </template>
+          </Button.leadingVisual>
           打开菜单
-          <template #trailingVisual>
+          <Button.trailingVisual>
             <TriangleDownIcon />
-          </template>
+          </Button.trailingVisual>
         </Button>
       </template>
       <template #content>

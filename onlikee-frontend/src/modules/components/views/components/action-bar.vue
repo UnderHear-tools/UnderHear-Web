@@ -21,9 +21,9 @@
             placement="bottom"
           >
             <Button variant="invisible">
-              <template #leadingVisual>
+              <Button.leadingVisual>
                 <BoldIcon />
-              </template>
+              </Button.leadingVisual>
             </Button>
           </Tooltip>
           <Tooltip
@@ -31,9 +31,9 @@
             placement="bottom"
           >
             <Button variant="invisible">
-              <template #leadingVisual>
+              <Button.leadingVisual>
                 <ItalicIcon />
-              </template>
+              </Button.leadingVisual>
             </Button>
           </Tooltip>
           <Tooltip
@@ -41,9 +41,9 @@
             placement="bottom"
           >
             <Button variant="invisible">
-              <template #leadingVisual>
+              <Button.leadingVisual>
                 <CodeIcon />
-              </template>
+              </Button.leadingVisual>
             </Button>
           </Tooltip>
           <Tooltip
@@ -51,9 +51,9 @@
             placement="bottom"
           >
             <Button variant="invisible">
-              <template #leadingVisual>
+              <Button.leadingVisual>
                 <LinkIcon />
-              </template>
+              </Button.leadingVisual>
             </Button>
           </Tooltip>
           <Divider
@@ -65,9 +65,9 @@
             placement="bottom"
           >
             <Button variant="invisible">
-              <template #leadingVisual>
+              <Button.leadingVisual>
                 <FileAddedIcon />
-              </template>
+              </Button.leadingVisual>
             </Button>
           </Tooltip>
           <Tooltip
@@ -75,9 +75,9 @@
             placement="bottom"
           >
             <Button variant="invisible">
-              <template #leadingVisual>
+              <Button.leadingVisual>
                 <SearchIcon />
-              </template>
+              </Button.leadingVisual>
             </Button>
           </Tooltip>
         </div>
@@ -100,22 +100,22 @@ const demo1Code = `<template>
   <div class="demo-actions">
     <Tooltip content="BoldIcon" placement="bottom">
       <Button variant="invisible">
-        <template #leadingVisual><BoldIcon /></template>
+        <Button.leadingVisual><BoldIcon /></Button.leadingVisual>
       </Button>
     </Tooltip>
     <Tooltip content="ItalicIcon" placement="bottom">
       <Button variant="invisible">
-        <template #leadingVisual><ItalicIcon /></template>
+        <Button.leadingVisual><ItalicIcon /></Button.leadingVisual>
       </Button>
     </Tooltip>
     <Tooltip content="CodeIcon" placement="bottom">
       <Button variant="invisible">
-        <template #leadingVisual><CodeIcon /></template>
+        <Button.leadingVisual><CodeIcon /></Button.leadingVisual>
       </Button>
     </Tooltip>
     <Tooltip content="LinkIcon" placement="bottom">
       <Button variant="invisible">
-        <template #leadingVisual><LinkIcon /></template>
+        <Button.leadingVisual><LinkIcon /></Button.leadingVisual>
       </Button>
     </Tooltip>
 
@@ -123,12 +123,12 @@ const demo1Code = `<template>
 
     <Tooltip content="File Added" placement="bottom">
       <Button variant="invisible">
-        <template #leadingVisual><FileAddedIcon /></template>
+        <Button.leadingVisual><FileAddedIcon /></Button.leadingVisual>
       </Button>
     </Tooltip>
     <Tooltip content="SearchIcon" placement="bottom">
       <Button variant="invisible">
-        <template #leadingVisual><SearchIcon /></template>
+        <Button.leadingVisual><SearchIcon /></Button.leadingVisual>
       </Button>
     </Tooltip>
   </div>

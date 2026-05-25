@@ -95,31 +95,31 @@
 
     <ComponentDocsSection title="前后视觉元素">
       <template #description>
-        通过 <code>#leadingVisual</code> 和 <code>#trailingVisual</code> 在文本前后放置图标。按钮内容保持单行排列，适合轻量视觉引导。
+        通过 <code>Button.leadingVisual</code> 和 <code>Button.trailingVisual</code> 子组件在文本前后放置图标。按钮内容保持单行排列，适合轻量视觉引导。
       </template>
 
       <ComponentDocsDemoBlock :code="visualDemoCode">
         <div class="button-row">
           <Button>
-            <template #leadingVisual>
+            <Button.leadingVisual>
               <BellIcon />
-            </template>
+            </Button.leadingVisual>
             通知设置
           </Button>
           <Button variant="primary">
             继续前往
-            <template #trailingVisual>
+            <Button.trailingVisual>
               <ArrowUpRightIcon />
-            </template>
+            </Button.trailingVisual>
           </Button>
           <Button variant="invisible">
-            <template #leadingVisual>
+            <Button.leadingVisual>
               <SearchIcon />
-            </template>
+            </Button.leadingVisual>
             搜索项目
-            <template #trailingVisual>
+            <Button.trailingVisual>
               <CheckIcon />
-            </template>
+            </Button.trailingVisual>
           </Button>
         </div>
       </ComponentDocsDemoBlock>
@@ -169,10 +169,10 @@
         :hoverable="false"
       />
 
-      <h3>插槽</h3>
+      <h3>内容与子组件</h3>
       <Table
-        :columns="slotTableColumns"
-        :data="slotTableRows"
+        :columns="contentTableColumns"
+        :data="contentTableRows"
         row-key="name"
         compact
         :hoverable="false"
@@ -271,27 +271,27 @@ import { BellIcon, ArrowUpRightIcon, SearchIcon, CheckIcon } from '@/components/
 <template>
   <div class="button-row">
     <Button>
-      <template #leadingVisual>
+      <Button.leadingVisual>
         <BellIcon />
-      </template>
+      </Button.leadingVisual>
       通知设置
     </Button>
 
     <Button variant="primary">
       继续前往
-      <template #trailingVisual>
+      <Button.trailingVisual>
         <ArrowUpRightIcon />
-      </template>
+      </Button.trailingVisual>
     </Button>
 
     <Button variant="invisible">
-      <template #leadingVisual>
+      <Button.leadingVisual>
         <SearchIcon />
-      </template>
+      </Button.leadingVisual>
       搜索项目
-      <template #trailingVisual>
+      <Button.trailingVisual>
         <CheckIcon />
-      </template>
+      </Button.trailingVisual>
     </Button>
   </div>
 </template>
@@ -388,23 +388,23 @@ const apiTableRows = [
   }
 ]
 
-const slotTableColumns: TableColumn[] = [
-  { key: 'name', label: '插槽名', rowHeader: true, minWidth: '140px' },
+const contentTableColumns: TableColumn[] = [
+  { key: 'name', label: '名称', rowHeader: true, minWidth: '180px' },
   { key: 'description', label: '说明', minWidth: '320px', wrap: true }
 ]
 
-const slotTableRows = [
+const contentTableRows = [
   {
     name: 'default',
-    description: '按钮的主文案内容。'
+    description: '按钮的主文案内容，直接作为 Button 的默认内容传入。'
   },
   {
-    name: 'leadingVisual',
-    description: '前置视觉元素，通常用于放置图标或状态标记。'
+    name: 'Button.leadingVisual',
+    description: '前置视觉元素子组件，通常用于放置图标或状态标记。'
   },
   {
-    name: 'trailingVisual',
-    description: '后置视觉元素，通常用于放置方向、完成态等辅助图标。'
+    name: 'Button.trailingVisual',
+    description: '后置视觉元素子组件，通常用于放置方向、完成态等辅助图标。'
   }
 ]
 </script>
