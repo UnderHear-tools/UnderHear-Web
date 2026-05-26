@@ -1,102 +1,25 @@
 <template>
-  <div class="hero">
-    <Dropdown side="outside-right">
-      <Dropdown.trigger>
-        <Button>
-          <Button.leadingVisual>
-            <RepoIcon />
-          </Button.leadingVisual>
-          {{ label }}
-          <Button.trailingVisual>
-            <TriangleDownIcon />
-          </Button.trailingVisual>
-        </Button>
-      </Dropdown.trigger>
-      <Dropdown.content>
-        <ActionList selection-variant="single">
-          <ActionList.Item
-            :selected="selectedAction === '1'"
-            @select="selectAction('1', '新建文件')"
-          >
-            新建文件
-          </ActionList.Item>
-          <ActionList.Item
-            :selected="selectedAction === '2'"
-            @select="selectAction('2', '打开文件')"
-          >
-            打开文件
-          </ActionList.Item>
-          <ActionList.Item
-            :selected="selectedAction === '3'"
-            @select="selectAction('3', '保存文件')"
-          >
-            保存文件
-          </ActionList.Item>
-        </ActionList>
-      </Dropdown.content>
-    </Dropdown>
-
-
-    <Dropdown>
-      <Dropdown.trigger>
-        <Button>
-          <Button.leadingVisual>
-            <RepoIcon />
-          </Button.leadingVisual>
-          打开菜单
-          <Button.trailingVisual>
-            <TriangleDownIcon />
-          </Button.trailingVisual>
-        </Button>
-      </Dropdown.trigger>
-      <Dropdown.content>
-        <ActionList>
-          <ActionList.Item>选项1</ActionList.Item>
-          <ActionList.Item>选项2</ActionList.Item>
-          <Dropdown side="outside-right">
-            <Dropdown.trigger>
-              <ActionList.Item>
-                选项3
-                <ActionList.TrailingVisual>
-                  <ChevronRightIcon />
-                </ActionList.TrailingVisual>
-              </ActionList.Item>
-            </Dropdown.trigger>
-            <Dropdown.content>
-              <ActionList>
-                <ActionList.Item>选项1</ActionList.Item>
-                <ActionList.Item>选项2</ActionList.Item>
-                <ActionList.Item>选项3</ActionList.Item>
-              </ActionList>
-            </Dropdown.content>
-          </Dropdown>
-        </ActionList>
-      </Dropdown.content>
-    </Dropdown>
-  </div>
+  <Tag
+    size="small"
+    color="#fff"
+    background="red"
+    removable
+    @remove="Remove"
+  >
+  <template #visual>
+    <StarIcon />
+  </template>
+  66666
+  </Tag>
 </template>
 <script setup lang="ts">
-import { ref } from 'vue'
-import { Button } from "@/components/z-ui/Button";
-import { Dropdown } from "@/components/z-ui/Dropdown";
-import { ActionList } from "@/components/z-ui/ActionList";
-import RepoIcon from "@/components/octicons-vue3/icons/repo.vue";
-import TriangleDownIcon from "@/components/octicons-vue3/icons/triangle-down.vue";
-import { ChevronRightIcon } from '@/components/octicons-vue3'
+import { Tag } from "@/components/z-ui/Tag";
+import { StarIcon } from "@/components/octicons-vue3";
 
-const selectedAction = ref('1')
-const label = ref('新建文件')
-
-function selectAction(value: string, nextLabel: string) {
-  selectedAction.value = value
-  label.value = nextLabel
+const Remove = () => {
+  console.log('tag removed')
 }
 </script>
 <style scoped>
-.hero {
-  position: absolute;
-  right: 0;
-  bottom: 0;
-}
 
 </style>

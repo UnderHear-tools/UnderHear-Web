@@ -40,32 +40,32 @@
 
     <ComponentDocsSection title="自定义颜色">
       <template #description>
-        通过 <code>color</code> 和 <code>bgColor</code> 属性自定义字体颜色和背景色。
+        通过 <code>color</code> 和 <code>background</code> 属性自定义字体颜色和背景色。
       </template>
       <ComponentDocsDemoBlock :code="demo3Code">
         <div class="tag-row">
           <Tag>默认</Tag>
           <Tag
             color="#1a7f37"
-            bg-color="#dafbe1"
+            background="#dafbe1"
           >
             成功
           </Tag>
           <Tag
             color="#9a6700"
-            bg-color="#fff8c5"
+            background="#fff8c5"
           >
             警告
           </Tag>
           <Tag
             color="#cf222e"
-            bg-color="#ffebe9"
+            background="#ffebe9"
           >
             危险
           </Tag>
           <Tag
             color="#6639ba"
-            bg-color="#fbefff"
+            background="#fbefff"
           >
             紫色
           </Tag>
@@ -87,7 +87,7 @@
           </Tag>
           <Tag
             color="#1a7f37"
-            bg-color="#dafbe1"
+            background="#dafbe1"
           >
             <template #visual>
               <CheckIcon />
@@ -96,7 +96,7 @@
           </Tag>
           <Tag
             color="#cf222e"
-            bg-color="#ffebe9"
+            background="#ffebe9"
           >
             <template #visual>
               <AlertIcon />
@@ -107,38 +107,34 @@
       </ComponentDocsDemoBlock>
     </ComponentDocsSection>
 
-    <ComponentDocsSection title="操作图标">
+    <ComponentDocsSection title="可删除">
       <template #description>
-        通过 <code>action</code> 插槽添加后置操作图标，通常用于关闭、删除等操作。
+        设置 <code>removable</code> 属性后，标签右侧会显示删除按钮；点击时触发 <code>remove</code> 事件。
       </template>
       <ComponentDocsDemoBlock :code="demo5Code">
         <div class="tag-row">
-          <Tag>
+          <Tag removable>
             Vue
-            <template #action>
-              <TrashIcon />
-            </template>
           </Tag>
-          <Tag>
+          <Tag
+            removable
+            @remove="() => {}"
+          >
             <template #visual>
               <StarIcon />
             </template>
             收藏
-            <template #action>
-              <XIcon />
-            </template>
           </Tag>
           <Tag
             color="#1a7f37"
-            bg-color="#dafbe1"
+            background="#dafbe1"
+            removable
+            @remove="() => {}"
           >
             <template #visual>
               <CheckIcon />
             </template>
             已完成
-            <template #action>
-              <XIcon />
-            </template>
           </Tag>
         </div>
       </ComponentDocsDemoBlock>
@@ -164,6 +160,14 @@
         compact
         :hoverable="false"
       />
+      <h3>事件</h3>
+      <Table
+        :columns="eventTableColumns"
+        :data="eventTableRows"
+        row-key="name"
+        compact
+        :hoverable="false"
+      />
     </ComponentDocsSection>
   </ComponentDocsPage>
 </template>
@@ -171,7 +175,7 @@
 <script setup lang="ts">
 import { Tag } from '@/components/z-ui/Tag'
 import { Table, type TableColumn } from '@/components/z-ui/Table'
-import { StarIcon, CheckIcon, AlertIcon, XIcon, TrashIcon } from '@/components/octicons-vue3'
+import { StarIcon, CheckIcon, AlertIcon } from '@/components/octicons-vue3'
 import ComponentDocsDemoBlock from '@/modules/components/components/ComponentDocsPage/ComponentDocsDemoBlock.vue'
 import ComponentDocsHeader from '@/modules/components/components/ComponentDocsPage/ComponentDocsHeader.vue'
 import ComponentDocsPage from '@/modules/components/components/ComponentDocsPage/ComponentDocsPage.vue'
@@ -210,10 +214,10 @@ const demo2Code = `<template>
 const demo3Code = `<template>
   <div class="tag-row">
     <Tag>默认</Tag>
-    <Tag color="#1a7f37" bgColor="#dafbe1">成功</Tag>
-    <Tag color="#9a6700" bgColor="#fff8c5">警告</Tag>
-    <Tag color="#cf222e" bgColor="#ffebe9">危险</Tag>
-    <Tag color="#6639ba" bgColor="#fbefff">紫色</Tag>
+    <Tag color="#1a7f37" background="#dafbe1">成功</Tag>
+    <Tag color="#9a6700" background="#fff8c5">警告</Tag>
+    <Tag color="#cf222e" background="#ffebe9">危险</Tag>
+    <Tag color="#6639ba" background="#fbefff">紫色</Tag>
   </div>
 </template>
 
@@ -236,11 +240,11 @@ import { StarIcon, CheckIcon, AlertIcon } from '@/components/octicons-vue3'
       <template #visual><StarIcon /></template>
       StarIcon
     </Tag>
-    <Tag color="#1a7f37" bgColor="#dafbe1">
+    <Tag color="#1a7f37" background="#dafbe1">
       <template #visual><CheckIcon /></template>
       已完成
     </Tag>
-    <Tag color="#cf222e" bgColor="#ffebe9">
+    <Tag color="#cf222e" background="#ffebe9">
       <template #visual><AlertIcon /></template>
       错误
     </Tag>
@@ -257,24 +261,25 @@ import { StarIcon, CheckIcon, AlertIcon } from '@/components/octicons-vue3'
 
 const demo5Code = `<script setup lang="ts">
 import { Tag } from '@/components/z-ui/Tag'
-import { StarIcon, CheckIcon, XIcon, TrashIcon } from '@/components/octicons-vue3'
+import { StarIcon, CheckIcon } from '@/components/octicons-vue3'
+
+const handleRemove = (label: string) => {
+  console.log(label, 'removed')
+}
 <\/script>
 
 <template>
   <div class="tag-row">
-    <Tag>
+    <Tag removable @remove="handleRemove('Vue')">
       Vue
-      <template #action><TrashIcon /></template>
     </Tag>
-    <Tag>
+    <Tag removable @remove="handleRemove('收藏')">
       <template #visual><StarIcon /></template>
       收藏
-      <template #action><XIcon /></template>
     </Tag>
-    <Tag color="#1a7f37" bgColor="#dafbe1">
+    <Tag color="#1a7f37" background="#dafbe1" removable @remove="handleRemove('已完成')">
       <template #visual><CheckIcon /></template>
       已完成
-      <template #action><XIcon /></template>
     </Tag>
   </div>
 </template>
@@ -305,13 +310,19 @@ const apiTableRows = [
     name: 'color',
     description: '字体颜色',
     type: 'string',
-    default: "'#0969da'"
+    default: "''"
   },
   {
-    name: 'bgColor',
+    name: 'background',
     description: '背景颜色',
     type: 'string',
-    default: "'#ddf4ff'"
+    default: "''"
+  },
+  {
+    name: 'removable',
+    description: '是否显示删除按钮',
+    type: 'boolean',
+    default: 'false'
   }
 ]
 
@@ -328,10 +339,20 @@ const slotTableRows = [
   {
     name: 'visual',
     description: '前置视觉引导，通常用于放置图标'
-  },
+  }
+]
+
+const eventTableColumns: TableColumn[] = [
+  { key: 'name', label: '事件名', rowHeader: true, minWidth: '140px' },
+  { key: 'params', label: '参数', minWidth: '140px' },
+  { key: 'description', label: '说明', minWidth: '200px', wrap: true }
+]
+
+const eventTableRows = [
   {
-    name: 'action',
-    description: '后置操作图标，通常用于关闭、删除等操作'
+    name: 'remove',
+    params: '无',
+    description: '点击删除按钮时触发'
   }
 ]
 </script>
