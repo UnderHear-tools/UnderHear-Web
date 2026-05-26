@@ -249,7 +249,8 @@
 
       <ComponentDocsDemoBlock :code="demo6Code">
         <ActionList class="demo-list-wide">
-          <ActionList.Group title="代码">
+          <ActionList.Group>
+            <ActionList.GroupHeading>代码</ActionList.GroupHeading>
             <ActionList.Item>
               <ActionList.LeadingVisual>
                 <CodeIcon />
@@ -268,14 +269,12 @@
           </ActionList.Group>
 
           <ActionList.Group>
-            <template #heading>
-              <ActionList.GroupHeading variant="filled">
-                访问范围
-                <template #trailingAction>
-                  <span class="demo-heading-action">管理</span>
-                </template>
-              </ActionList.GroupHeading>
-            </template>
+            <ActionList.GroupHeading variant="filled">
+              访问范围
+              <ActionList.GroupHeadingTrailingAction>
+                <span class="demo-heading-action">管理</span>
+              </ActionList.GroupHeadingTrailingAction>
+            </ActionList.GroupHeading>
             <ActionList.Item>
               <ActionList.LeadingVisual>
                 <PeopleIcon />
@@ -675,7 +674,8 @@ import { LockIcon, ProjectIcon, TrashIcon } from '@/components/octicons-vue3'
 
 const demo6Code = `<template>
   <ActionList>
-    <ActionList.Group title="代码">
+    <ActionList.Group>
+      <ActionList.GroupHeading>代码</ActionList.GroupHeading>
       <ActionList.Item>
         <ActionList.LeadingVisual><CodeIcon /></ActionList.LeadingVisual>
         打开 Codespace
@@ -688,12 +688,10 @@ const demo6Code = `<template>
     </ActionList.Group>
 
     <ActionList.Group>
-      <template #heading>
-        <ActionList.GroupHeading variant="filled">
-          访问范围
-          <template #trailingAction>管理</template>
-        </ActionList.GroupHeading>
-      </template>
+      <ActionList.GroupHeading variant="filled">
+        访问范围
+        <ActionList.GroupHeadingTrailingAction>管理</ActionList.GroupHeadingTrailingAction>
+      </ActionList.GroupHeading>
       <ActionList.Item>
         <ActionList.LeadingVisual><PeopleIcon /></ActionList.LeadingVisual>
         团队成员
@@ -813,10 +811,7 @@ const actionListDescriptionPropsRows = [
   { name: 'truncate', type: 'boolean', default: 'false', description: '单行截断说明文字' }
 ]
 
-const actionListGroupPropsRows = [
-  { name: 'title', type: 'string', default: "''", description: '默认分组标题文本' },
-  { name: 'headingVariant', type: "'subtle' | 'filled'", default: "'subtle'", description: '默认分组标题的视觉样式' }
-]
+const actionListGroupPropsRows: never[] = []
 
 const actionListGroupHeadingPropsRows = [
   { name: 'variant', type: "'subtle' | 'filled'", default: "'subtle'", description: '分组标题的视觉样式' }
@@ -844,10 +839,9 @@ const slotsRows = [
   { key: 'leading-default', component: 'ActionList.LeadingVisual', name: 'default', description: '列表项左侧图标区域' },
   { key: 'description-default', component: 'ActionList.Description', name: 'default', description: '列表项说明文字' },
   { key: 'trailing-default', component: 'ActionList.TrailingVisual', name: 'default', description: '列表项右侧图标或辅助信息区域' },
-  { key: 'group-default', component: 'ActionList.Group', name: 'default', description: '分组内的列表项' },
-  { key: 'group-heading', component: 'ActionList.Group', name: 'heading', description: '自定义分组标题区域，可放入 GroupHeading' },
-  { key: 'heading-default', component: 'ActionList.GroupHeading', name: 'default', description: '分组标题内容' },
-  { key: 'heading-action', component: 'ActionList.GroupHeading', name: 'trailingAction', description: '分组标题右侧辅助操作区域' }
+  { key: 'group-default', component: 'ActionList.Group', name: 'default', description: '分组内的列表项及 GroupHeading 子组件' },
+  { key: 'heading-default', component: 'ActionList.GroupHeading', name: 'default', description: '分组标题内容及 GroupHeadingTrailingAction 子组件' },
+  { key: 'heading-trailing-default', component: 'ActionList.GroupHeadingTrailingAction', name: 'default', description: '分组标题右侧辅助操作区域' }
 ]
 </script>
 

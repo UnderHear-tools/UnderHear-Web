@@ -7,6 +7,7 @@ import ActionListGroupHeading from './ActionListGroupHeading.vue'
 import ActionListLeadingVisual from './ActionListLeadingVisual.vue'
 import ActionListTrailingVisual from './ActionListTrailingVisual.vue'
 import ActionListDescription from './ActionListDescription.vue'
+import ActionListGroupHeadingTrailingAction from './ActionListGroupHeadingTrailingAction.vue'
 
 export const ActionList = Object.assign(ActionListRoot, {
   Item: ActionListItem,
@@ -14,6 +15,7 @@ export const ActionList = Object.assign(ActionListRoot, {
   Divider: ActionListDivider,
   Group: ActionListGroup,
   GroupHeading: ActionListGroupHeading,
+  GroupHeadingTrailingAction: ActionListGroupHeadingTrailingAction,
   LeadingVisual: ActionListLeadingVisual,
   TrailingVisual: ActionListTrailingVisual,
   Description: ActionListDescription
@@ -24,6 +26,7 @@ export {
   ActionListDivider,
   ActionListGroup,
   ActionListGroupHeading,
+  ActionListGroupHeadingTrailingAction,
   ActionListItem,
   ActionListLeadingVisual,
   ActionListLinkItem,
