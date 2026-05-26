@@ -120,7 +120,7 @@ const buildToc = () => {
   observer?.disconnect()
 
   const headings = Array.from(
-    mainContentRef.value?.querySelectorAll('h2, h3') ?? []
+    mainContentRef.value?.querySelectorAll('h2:not(.demo-content *), h3:not(.demo-content *)') ?? []
   ) as HTMLElement[]
 
   tocItems.value = headings.map((heading) => {
