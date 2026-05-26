@@ -75,32 +75,32 @@
 
     <ComponentDocsSection title="带图标">
       <template #description>
-        通过 <code>visual</code> 插槽添加前置图标。
+        通过 <code>Tag.leadingVisual</code> 子组件添加前置图标。
       </template>
       <ComponentDocsDemoBlock :code="demo4Code">
         <div class="tag-row">
           <Tag>
-            <template #visual>
+            <Tag.leadingVisual>
               <StarIcon />
-            </template>
+            </Tag.leadingVisual>
             StarIcon
           </Tag>
           <Tag
             color="#1a7f37"
             background="#dafbe1"
           >
-            <template #visual>
+            <Tag.leadingVisual>
               <CheckIcon />
-            </template>
+            </Tag.leadingVisual>
             已完成
           </Tag>
           <Tag
             color="#cf222e"
             background="#ffebe9"
           >
-            <template #visual>
+            <Tag.leadingVisual>
               <AlertIcon />
-            </template>
+            </Tag.leadingVisual>
             错误
           </Tag>
         </div>
@@ -120,9 +120,9 @@
             removable
             @remove="() => {}"
           >
-            <template #visual>
+            <Tag.leadingVisual>
               <StarIcon />
-            </template>
+            </Tag.leadingVisual>
             收藏
           </Tag>
           <Tag
@@ -131,9 +131,9 @@
             removable
             @remove="() => {}"
           >
-            <template #visual>
+            <Tag.leadingVisual>
               <CheckIcon />
-            </template>
+            </Tag.leadingVisual>
             已完成
           </Tag>
         </div>
@@ -152,7 +152,7 @@
         compact
         :hoverable="false"
       />
-      <h3>插槽</h3>
+      <h3>子组件</h3>
       <Table
         :columns="slotTableColumns"
         :data="slotTableRows"
@@ -237,15 +237,15 @@ import { StarIcon, CheckIcon, AlertIcon } from '@/components/octicons-vue3'
 <template>
   <div class="tag-row">
     <Tag>
-      <template #visual><StarIcon /></template>
+      <Tag.leadingVisual><StarIcon /></Tag.leadingVisual>
       StarIcon
     </Tag>
     <Tag color="#1a7f37" background="#dafbe1">
-      <template #visual><CheckIcon /></template>
+      <Tag.leadingVisual><CheckIcon /></Tag.leadingVisual>
       已完成
     </Tag>
     <Tag color="#cf222e" background="#ffebe9">
-      <template #visual><AlertIcon /></template>
+      <Tag.leadingVisual><AlertIcon /></Tag.leadingVisual>
       错误
     </Tag>
   </div>
@@ -274,11 +274,11 @@ const handleRemove = (label: string) => {
       Vue
     </Tag>
     <Tag removable @remove="handleRemove('收藏')">
-      <template #visual><StarIcon /></template>
+      <Tag.leadingVisual><StarIcon /></Tag.leadingVisual>
       收藏
     </Tag>
     <Tag color="#1a7f37" background="#dafbe1" removable @remove="handleRemove('已完成')">
-      <template #visual><CheckIcon /></template>
+      <Tag.leadingVisual><CheckIcon /></Tag.leadingVisual>
       已完成
     </Tag>
   </div>
@@ -327,17 +327,13 @@ const apiTableRows = [
 ]
 
 const slotTableColumns: TableColumn[] = [
-  { key: 'name', label: '插槽名', rowHeader: true, minWidth: '140px' },
+  { key: 'name', label: '子组件', rowHeader: true, minWidth: '140px' },
   { key: 'description', label: '说明', minWidth: '300px', wrap: true }
 ]
 
 const slotTableRows = [
   {
-    name: 'default',
-    description: '标签的内容'
-  },
-  {
-    name: 'visual',
+    name: 'Tag.leadingVisual',
     description: '前置视觉引导，通常用于放置图标'
   }
 ]

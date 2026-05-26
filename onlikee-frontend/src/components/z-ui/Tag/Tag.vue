@@ -6,13 +6,13 @@
     :style="customStyle"
   >
     <span
-      v-if="$slots.visual"
+      v-if="hasLeadingVisual"
       class="tag__visual"
       :data-size="size"
     >
-      <slot name="visual" />
+      <RenderNodes :nodes="parsedChildren.leadingVisual" />
     </span>
-    <slot />
+    <RenderNodes :nodes="parsedChildren.label" />
     <button
       v-if="showRemove"
       class="tag__remove"
@@ -32,7 +32,64 @@
 </template>
 
 <script setup lang="ts">
-import { computed } from 'vue'
+import { Comment, Fragment, Text, computed, useSlots, type VNode } from 'vue'
+
+interface TagMarkerType {
+  name?: string
+  __name?: string
+}
+
+interface ParsedTagChildren {
+  label: VNode[]
+  leadingVisual: VNode[]
+}
+
+const RenderNodes = (props: { nodes: VNode[] }) => props.nodes
+
+function getComponentName(type: VNode['type']) {
+  if (typeof type !== 'object' && typeof type !== 'function') return ''
+  const marker = type as TagMarkerType
+  return marker.name ?? marker.__name ?? ''
+}
+
+function readSlotChildren(node: VNode) {
+  if (typeof node.children === 'object' && node.children && 'default' in node.children) {
+    const slot = node.children.default
+    return typeof slot === 'function' ? slot() : []
+  }
+  return []
+}
+
+function isWhitespaceNode(node: VNode) {
+  return node.type === Text && typeof node.children === 'string' && node.children.trim() === ''
+}
+
+function flattenChildren(nodes: VNode[]): VNode[] {
+  return nodes.flatMap(node => {
+    if (node.type === Fragment && Array.isArray(node.children)) {
+      return flattenChildren(node.children as VNode[])
+    }
+    return [node]
+  })
+}
+
+function parseTagChildren(nodes: VNode[]): ParsedTagChildren {
+  const parsed: ParsedTagChildren = { label: [], leadingVisual: [] }
+  for (const node of flattenChildren(nodes)) {
+    if (node.type === Comment || isWhitespaceNode(node)) continue
+    const componentName = getComponentName(node.type)
+    if (componentName === 'TagLeadingVisual') {
+      parsed.leadingVisual.push(...readSlotChildren(node))
+      continue
+    }
+    parsed.label.push(node)
+  }
+  return parsed
+}
+
+const slots = useSlots()
+const parsedChildren = computed(() => parseTagChildren(slots.default?.() ?? []))
+const hasLeadingVisual = computed(() => Boolean(parsedChildren.value.leadingVisual.length))
 
 const props = withDefaults(defineProps<{
   size?: 'small' | 'medium' | 'large' | 'xlarge'
