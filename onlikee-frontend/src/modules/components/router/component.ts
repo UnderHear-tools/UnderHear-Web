@@ -122,7 +122,7 @@ export const componentRoutes: Array<RouteRecordRaw> = [
             },
             {
                 path: 'timeline',
-                name: 'TimeLine',
+                name: 'Timeline',
                 component: () => import('../views/components/timeline.vue')
             },
             // Navigation

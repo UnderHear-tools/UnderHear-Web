@@ -1,7 +1,7 @@
 <template>
   <ComponentDocsPage>
     <ComponentDocsHeader
-      title="TimeLine 时间线"
+      title="Timeline 时间线"
       description="用于按时间顺序展示事件流的组合式组件。"
     />
 
@@ -25,7 +25,7 @@
                   2026-03-01 10:30
                 </div>
                 <div class="timeline-text">
-                  确认 TimeLine 组件结构与文档范围。
+                  确认 Timeline 组件结构与文档范围。
                 </div>
               </Timeline.Body>
             </Timeline.Item>
@@ -210,7 +210,7 @@ const basicDemoCode = `<template>
       <Timeline.Body>
         <div class="timeline-title">需求评审</div>
         <div class="timeline-meta">2026-03-01 10:30</div>
-        <div class="timeline-text">确认 TimeLine 组件结构与文档范围。</div>
+        <div class="timeline-text">确认 Timeline 组件结构与文档范围。</div>
       </Timeline.Body>
     </Timeline.Item>
     <Timeline.Item>
