@@ -212,6 +212,7 @@ const navSections = ref([
       { path: '/component/action-list', label: 'ActionList 操作列表' },
       { path: '/component/avatar', label: 'Avatar 头像' },
       { path: '/component/button', label: 'Button 按钮' },
+      { path: '/component/copy-button', label: 'CopyButton 复制按钮' },
       { path: '/component/container', label: 'Container 布局容器' },
       { path: '/component/divider', label: 'Divider 分隔线' },
       { path: '/component/dropdown', label: 'Dropdown 下拉菜单' },

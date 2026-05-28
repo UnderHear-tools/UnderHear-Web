@@ -8,12 +8,7 @@
         :content="codeCopied ? copiedLabel : copyLabel"
         placement="bottom"
       >
-        <button
-          class="action-btn"
-          @click="copyCode"
-        >
-          <CopyIcon />
-        </button>
+        <CopyButton @click="copyCode" />
       </Tooltip>
       <Tooltip
         :content="codeVisible ? hideCodeLabel : showCodeLabel"
@@ -54,7 +49,8 @@
 <script setup lang="ts">
 import { ref, onMounted } from 'vue'
 import { Tooltip } from '@/components/z-ui/Tooltip'
-import { CopyIcon, CodeIcon } from '@/components/octicons-vue3/index.ts'
+import { CodeIcon } from '@/components/octicons-vue3/index.ts'
+import { CopyButton } from '@/components/z-ui/CopyButton'
 
 const props = defineProps<{ code: string }>()
 

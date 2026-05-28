@@ -59,6 +59,11 @@ export const componentRoutes: Array<RouteRecordRaw> = [
                 component: () => import('../views/components/button.vue')
             },
             {
+                path: 'copy-button',
+                name: 'CopyButton',
+                component: () => import('../views/components/copy-button.vue')
+            },
+            {
                 path: 'link',
                 name: 'Link',
                 component: () => import('../views/components/link.vue')
