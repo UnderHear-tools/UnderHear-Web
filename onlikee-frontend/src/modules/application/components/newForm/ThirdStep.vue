@@ -69,7 +69,9 @@
               </Button.trailingVisual>
             </Button>
           </Dropdown.trigger>
-          <Dropdown.content>
+          <Dropdown.content
+            width="medium"
+          >
             <ActionList selection-variant="single">
               <ActionList.Item
                 v-for="item in visibilityOptions"

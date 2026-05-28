@@ -193,7 +193,10 @@
               <ActionList.Item>
                 选项2
               </ActionList.Item>
-              <Dropdown side="outside-right">
+              <Dropdown 
+                side="outside-right" 
+                display-in-viewport
+              >
                 <Dropdown.trigger>
                   <ActionList.Item>
                     选项3

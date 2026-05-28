@@ -69,6 +69,16 @@ interface RectLike {
   height: number
 }
 
+interface HorizontalBoundary {
+  left: number
+  width: number
+}
+
+interface DocumentVerticalBoundary {
+  top: number
+  bottom: number
+}
+
 interface PositionSettings {
   side: DropdownSide
   align: DropdownAlign
@@ -82,7 +92,6 @@ interface DropdownPosition {
   top: number
   left: number
   maxWidth?: number
-  maxHeight?: number
   anchorSide: DropdownSide
   anchorAlign: DropdownAlign
 }
@@ -93,12 +102,6 @@ type DropdownContentStyle = CSSProperties & {
 
 type ScrollTarget = Element | Window | VisualViewport
 
-const ALTERNATE_ORDERS: Record<OutsideSide, OutsideSide[]> = {
-  'outside-top': ['outside-bottom', 'outside-right', 'outside-left', 'outside-bottom'],
-  'outside-bottom': ['outside-top', 'outside-right', 'outside-left', 'outside-bottom'],
-  'outside-left': ['outside-right', 'outside-bottom', 'outside-top', 'outside-bottom'],
-  'outside-right': ['outside-left', 'outside-bottom', 'outside-top', 'outside-bottom']
-}
 const ALTERNATE_ALIGNMENTS: Record<DropdownAlign, DropdownAlign[]> = {
   start: ['end', 'center'],
   end: ['start', 'center'],
@@ -141,7 +144,6 @@ const contentStyle = computed<DropdownContentStyle>(() => ({
   top: `${position.value?.top ?? 0}px`,
   left: `${position.value?.left ?? 0}px`,
   '--dropdown-available-width': position.value?.maxWidth === undefined ? undefined : `${position.value.maxWidth}px`,
-  maxHeight: position.value?.maxHeight === undefined ? undefined : `${position.value.maxHeight}px`,
   visibility: position.value ? undefined : 'hidden'
 }))
 const positionSettings = computed<PositionSettings>(() => ({
@@ -165,15 +167,11 @@ const positionDependencies = computed(() => [
 
 const RenderNodes = (props: { nodes: VNode[] }) => props.nodes
 
-function isOutsideSide(side: DropdownSide): side is OutsideSide {
-  return side.startsWith('outside-')
-}
-
-function getRectRight(rect: RectLike) {
+function getRectRight(rect: Pick<RectLike, 'left' | 'width'>) {
   return rect.left + rect.width
 }
 
-function getRectBottom(rect: RectLike) {
+function getRectBottom(rect: Pick<RectLike, 'top' | 'height'>) {
   return rect.top + rect.height
 }
 
@@ -182,17 +180,35 @@ function clamp(value: number, min: number, max: number) {
   return Math.min(Math.max(value, min), max)
 }
 
-function getVisualViewportRect(): RectLike {
+function getVisualViewportHorizontalBoundary(): HorizontalBoundary {
   const viewport = window.visualViewport
   const documentElement = document.documentElement
   const layoutWidth = documentElement.clientWidth || window.innerWidth
-  const layoutHeight = documentElement.clientHeight || window.innerHeight
 
   return {
-    top: viewport?.offsetTop ?? 0,
     left: viewport?.offsetLeft ?? 0,
-    width: Math.min(viewport?.width ?? layoutWidth, layoutWidth),
-    height: Math.min(viewport?.height ?? layoutHeight, layoutHeight)
+    width: Math.min(viewport?.width ?? layoutWidth, layoutWidth)
+  }
+}
+
+function getDocumentVerticalBoundary(): DocumentVerticalBoundary {
+  const viewport = window.visualViewport
+  const scrollingElement = document.scrollingElement ?? document.documentElement
+  const documentElement = document.documentElement
+  const body = document.body
+  const documentHeight = Math.max(
+    scrollingElement.scrollHeight,
+    documentElement.scrollHeight,
+    documentElement.offsetHeight,
+    body?.scrollHeight ?? 0,
+    body?.offsetHeight ?? 0
+  )
+  const viewportTop = viewport?.offsetTop ?? 0
+  const top = viewportTop - scrollingElement.scrollTop
+
+  return {
+    top,
+    bottom: top + documentHeight
   }
 }
 
@@ -218,24 +234,20 @@ function getClippingAncestor(element: HTMLElement) {
   return null
 }
 
-function getClippingRect(anchorElement: HTMLElement, displayInViewport: boolean): RectLike {
-  if (displayInViewport) return getVisualViewportRect()
+function getHorizontalBoundary(anchorElement: HTMLElement, displayInViewport: boolean): HorizontalBoundary {
+  if (displayInViewport) return getVisualViewportHorizontalBoundary()
 
   const clippingAncestor = getClippingAncestor(anchorElement)
-  if (!clippingAncestor) return getVisualViewportRect()
+  if (!clippingAncestor) return getVisualViewportHorizontalBoundary()
 
   const rect = clippingAncestor.getBoundingClientRect()
   const style = getComputedStyle(clippingAncestor)
-  const borderTop = parseInt(style.borderTopWidth, 10) || 0
   const borderRight = parseInt(style.borderRightWidth, 10) || 0
-  const borderBottom = parseInt(style.borderBottomWidth, 10) || 0
   const borderLeft = parseInt(style.borderLeftWidth, 10) || 0
 
   return {
-    top: rect.top + borderTop,
     left: rect.left + borderLeft,
-    width: rect.width - borderLeft - borderRight,
-    height: rect.height - borderTop - borderBottom
+    width: Math.max(0, rect.width - borderLeft - borderRight)
   }
 }
 
@@ -336,32 +348,63 @@ function calculatePosition(
   return { top, left }
 }
 
-function shouldRecalculatePosition(side: DropdownSide, currentPosition: Pick<DropdownPosition, 'top' | 'left'>, clippingRect: RectLike, floatingRect: RectLike) {
-  if (side === 'outside-top' || side === 'outside-bottom') {
-    return currentPosition.top < clippingRect.top + VIEWPORT_MARGIN ||
-      currentPosition.top + floatingRect.height > getRectBottom(clippingRect) - VIEWPORT_MARGIN
-  }
+function getVerticalFlipSide(side: DropdownSide): OutsideSide | undefined {
+  if (side === 'outside-top') return 'outside-bottom'
+  if (side === 'outside-bottom') return 'outside-top'
 
-  return currentPosition.left < clippingRect.left + VIEWPORT_MARGIN ||
-    currentPosition.left + floatingRect.width > getRectRight(clippingRect) - VIEWPORT_MARGIN
+  return undefined
 }
 
-function shouldRecalculateAlignment(align: DropdownAlign, currentPosition: Pick<DropdownPosition, 'top' | 'left'>, clippingRect: RectLike, floatingRect: RectLike) {
-  if (align === 'end') {
-    return currentPosition.left < clippingRect.left + VIEWPORT_MARGIN
-  }
+function getHorizontalFlipSide(side: DropdownSide): OutsideSide | undefined {
+  if (side === 'outside-left') return 'outside-right'
+  if (side === 'outside-right') return 'outside-left'
 
-  return currentPosition.left + floatingRect.width > getRectRight(clippingRect) - VIEWPORT_MARGIN ||
-    currentPosition.left < clippingRect.left + VIEWPORT_MARGIN
+  return undefined
 }
 
-function calculateAnchoredPosition(clippingRect: RectLike, floatingRect: RectLike, anchorRect: RectLike, settings: PositionSettings): DropdownPosition {
-  const maxWidth = settings.allowOutOfBounds ? undefined : Math.max(0, clippingRect.width - VIEWPORT_MARGIN * 2)
-  const maxHeight = settings.allowOutOfBounds ? undefined : Math.max(0, clippingRect.height - VIEWPORT_MARGIN * 2)
+function shouldTryHorizontalAlignment(side: DropdownSide) {
+  return side === 'outside-top' || side === 'outside-bottom' || side === 'inside-top' || side === 'inside-bottom'
+}
+
+function getHorizontalOverflow(left: number, floatingWidth: number, boundary: HorizontalBoundary) {
+  const minLeft = boundary.left + VIEWPORT_MARGIN
+  const maxRight = getRectRight(boundary) - VIEWPORT_MARGIN
+
+  return Math.max(0, minLeft - left) + Math.max(0, left + floatingWidth - maxRight)
+}
+
+function getVerticalOverflow(top: number, floatingHeight: number, boundary: DocumentVerticalBoundary) {
+  const minTop = boundary.top + VIEWPORT_MARGIN
+  const maxBottom = boundary.bottom - VIEWPORT_MARGIN
+
+  return Math.max(0, minTop - top) + Math.max(0, top + floatingHeight - maxBottom)
+}
+
+function clampHorizontalPosition(left: number, floatingWidth: number, boundary: HorizontalBoundary) {
+  return clamp(left, boundary.left + VIEWPORT_MARGIN, getRectRight(boundary) - floatingWidth - VIEWPORT_MARGIN)
+}
+
+function toRectLike(rect: DOMRect | RectLike): RectLike {
+  return {
+    top: rect.top,
+    left: rect.left,
+    width: rect.width,
+    height: rect.height
+  }
+}
+
+function calculateAnchoredPosition(
+  horizontalBoundary: HorizontalBoundary,
+  documentVerticalBoundary: DocumentVerticalBoundary,
+  floatingRect: RectLike,
+  anchorRect: RectLike,
+  settings: PositionSettings
+): DropdownPosition {
+  const maxWidth = settings.allowOutOfBounds ? undefined : Math.max(0, horizontalBoundary.width - VIEWPORT_MARGIN * 2)
+  const normalizedFloatingRect = toRectLike(floatingRect)
   const effectiveFloatingRect = {
-    ...floatingRect,
-    width: maxWidth === undefined ? floatingRect.width : Math.min(floatingRect.width, maxWidth),
-    height: maxHeight === undefined ? floatingRect.height : Math.min(floatingRect.height, maxHeight)
+    ...normalizedFloatingRect,
+    width: maxWidth === undefined ? normalizedFloatingRect.width : Math.min(normalizedFloatingRect.width, maxWidth)
   }
   let currentPosition = calculatePosition(
     effectiveFloatingRect,
@@ -375,61 +418,88 @@ function calculateAnchoredPosition(clippingRect: RectLike, floatingRect: RectLik
   let anchorAlign = settings.align
 
   if (!settings.allowOutOfBounds) {
-    const alternateOrder = isOutsideSide(settings.side) ? ALTERNATE_ORDERS[settings.side] : undefined
-    let positionAttempt = 0
+    const verticalFlipSide = getVerticalFlipSide(anchorSide)
+    if (verticalFlipSide) {
+      const currentOverflow = getVerticalOverflow(currentPosition.top, effectiveFloatingRect.height, documentVerticalBoundary)
 
-    if (alternateOrder) {
-      let previousSide: DropdownSide = settings.side
-
-      while (
-        positionAttempt < alternateOrder.length &&
-        shouldRecalculatePosition(previousSide, currentPosition, clippingRect, effectiveFloatingRect)
-      ) {
-        const nextSide = alternateOrder[positionAttempt]
-        positionAttempt += 1
-        previousSide = nextSide
-        currentPosition = calculatePosition(
+      if (currentOverflow > 0) {
+        const nextPosition = calculatePosition(
           effectiveFloatingRect,
           anchorRect,
-          nextSide,
-          settings.align,
+          verticalFlipSide,
+          anchorAlign,
           settings.anchorOffset,
           settings.alignmentOffset
         )
-        anchorSide = nextSide
+        const nextOverflow = getVerticalOverflow(nextPosition.top, effectiveFloatingRect.height, documentVerticalBoundary)
+
+        if (nextOverflow <= currentOverflow) {
+          currentPosition = nextPosition
+          anchorSide = verticalFlipSide
+        }
       }
     }
 
-    const alternateAlignment = ALTERNATE_ALIGNMENTS[settings.align]
-    let alignmentAttempt = 0
+    const horizontalFlipSide = getHorizontalFlipSide(anchorSide)
+    if (horizontalFlipSide) {
+      const currentOverflow = getHorizontalOverflow(currentPosition.left, effectiveFloatingRect.width, horizontalBoundary)
 
-    while (
-      alignmentAttempt < alternateAlignment.length &&
-      shouldRecalculateAlignment(anchorAlign, currentPosition, clippingRect, effectiveFloatingRect)
-    ) {
-      const nextAlign = alternateAlignment[alignmentAttempt]
-      alignmentAttempt += 1
-      currentPosition = calculatePosition(
-        effectiveFloatingRect,
-        anchorRect,
-        anchorSide,
-        nextAlign,
-        settings.anchorOffset,
-        settings.alignmentOffset
-      )
-      anchorAlign = nextAlign
+      if (currentOverflow > 0) {
+        const nextPosition = calculatePosition(
+          effectiveFloatingRect,
+          anchorRect,
+          horizontalFlipSide,
+          anchorAlign,
+          settings.anchorOffset,
+          settings.alignmentOffset
+        )
+        const nextOverflow = getHorizontalOverflow(nextPosition.left, effectiveFloatingRect.width, horizontalBoundary)
+
+        if (nextOverflow < currentOverflow) {
+          currentPosition = nextPosition
+          anchorSide = horizontalFlipSide
+        }
+      }
+    }
+
+    if (shouldTryHorizontalAlignment(anchorSide)) {
+      let bestPosition = currentPosition
+      let bestAlign = anchorAlign
+      let bestOverflow = getHorizontalOverflow(currentPosition.left, effectiveFloatingRect.width, horizontalBoundary)
+
+      for (const nextAlign of ALTERNATE_ALIGNMENTS[anchorAlign]) {
+        const nextPosition = calculatePosition(
+          effectiveFloatingRect,
+          anchorRect,
+          anchorSide,
+          nextAlign,
+          settings.anchorOffset,
+          settings.alignmentOffset
+        )
+        const nextOverflow = getHorizontalOverflow(nextPosition.left, effectiveFloatingRect.width, horizontalBoundary)
+
+        if (nextOverflow < bestOverflow) {
+          bestPosition = nextPosition
+          bestAlign = nextAlign
+          bestOverflow = nextOverflow
+
+          if (nextOverflow === 0) break
+        }
+      }
+
+      currentPosition = bestPosition
+      anchorAlign = bestAlign
     }
 
     currentPosition = {
-      top: clamp(currentPosition.top, clippingRect.top + VIEWPORT_MARGIN, getRectBottom(clippingRect) - effectiveFloatingRect.height - VIEWPORT_MARGIN),
-      left: clamp(currentPosition.left, clippingRect.left + VIEWPORT_MARGIN, getRectRight(clippingRect) - effectiveFloatingRect.width - VIEWPORT_MARGIN)
+      ...currentPosition,
+      left: clampHorizontalPosition(currentPosition.left, effectiveFloatingRect.width, horizontalBoundary)
     }
   }
 
   return {
     ...currentPosition,
     maxWidth,
-    maxHeight: settings.allowOutOfBounds ? undefined : Math.max(0, getRectBottom(clippingRect) - currentPosition.top - VIEWPORT_MARGIN),
     anchorSide,
     anchorAlign
   }
@@ -504,8 +574,9 @@ function updatePosition() {
 
   const anchorRect = anchor.getBoundingClientRect()
   const contentRect = content.getBoundingClientRect()
-  const clippingRect = getClippingRect(anchor, positionSettings.value.displayInViewport)
-  position.value = calculateAnchoredPosition(clippingRect, contentRect, anchorRect, positionSettings.value)
+  const horizontalBoundary = getHorizontalBoundary(anchor, positionSettings.value.displayInViewport)
+  const documentVerticalBoundary = getDocumentVerticalBoundary()
+  position.value = calculateAnchoredPosition(horizontalBoundary, documentVerticalBoundary, contentRect, anchorRect, positionSettings.value)
 }
 
 function scheduleUpdatePosition() {
@@ -603,6 +674,7 @@ defineExpose({ close: () => { isOpen.value = false } })
 <style scoped>
 .dropdown {
   display: inline-block;
+  width: 100%;
 }
 
 .dropdown-trigger {

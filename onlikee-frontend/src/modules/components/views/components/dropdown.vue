@@ -2,7 +2,7 @@
   <ComponentDocsPage>
     <ComponentDocsHeader
       title="Dropdown 下拉菜单"
-      description="通过 trigger 和 content 子组件组织触发器与浮层内容的下拉容器，支持碰撞检测、自动翻转和视口钳制。"
+      description="通过 trigger 和 content 子组件组织触发器与浮层内容的下拉容器，支持横向碰撞检测、自动翻转与文档竖向越界回退。"
     />
 
     <ComponentDocsSection title="基础用法">
@@ -38,7 +38,7 @@
 
     <ComponentDocsSection title="弹出方向">
       <template #description>
-        通过 <code>side</code> 设置首选锚定方向；外侧方向在空间不足时会自动尝试反向、换轴和对齐方式。
+        通过 <code>side</code> 设置首选锚定方向；外侧方向会按横向空间自动换边，<code>outside-top</code>/<code>outside-bottom</code> 在超出文档上下边界时会互相翻转。
       </template>
 
       <ComponentDocsDemoBlock :code="demoPlacementCode">
@@ -521,7 +521,7 @@ const propsTableColumns: TableColumn[] = [
 const propsTableRows = [
   {
     name: 'side',
-    description: '下拉菜单首选锚定方向；外侧方向会在空间不足时自动翻转或换轴',
+    description: '下拉菜单首选锚定方向；外侧方向会按横向空间自动换边，outside-top/outside-bottom 超出文档上下边界时会互翻',
     type: `'inside-top' | 'inside-bottom' | 'inside-left' | 'inside-right' | 'inside-center' | 'outside-top' | 'outside-bottom' | 'outside-left' | 'outside-right'`,
     default: 'outside-bottom'
   },
@@ -545,13 +545,13 @@ const propsTableRows = [
   },
   {
     name: 'allowOutOfBounds',
-    description: '允许浮层超出裁剪区域；开启后不再自动翻转和钳制',
+    description: '允许浮层超出横向边界或文档竖向范围；开启后不再自动翻转和横向钳制',
     type: 'boolean',
     default: 'false'
   },
   {
     name: 'displayInViewport',
-    description: '忽略最近滚动裁剪祖先，直接以可视视口作为定位边界',
+    description: '忽略最近滚动裁剪祖先，直接以可视视口作为横向定位边界',
     type: 'boolean',
     default: 'false'
   }

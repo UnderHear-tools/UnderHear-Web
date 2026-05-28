@@ -6,10 +6,10 @@
     removable
     @remove="Remove"
   >
-  <template #visual>
-    <StarIcon />
-  </template>
-  66666
+    <template #visual>
+      <StarIcon />
+    </template>
+    66666
   </Tag>
 </template>
 <script setup lang="ts">
