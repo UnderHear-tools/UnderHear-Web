@@ -1,13 +1,13 @@
 <template>
   <header class="header">
     <div class="header-inner">
-      <a
+      <div
         class="logo"
-        href="/"
+        @click="navigateToPage('/')"
       >
         <LogoOnlikeeIcon size="32" />
         <span>onlikee</span>
-      </a>
+      </div>
 
       <div class="nav-list">
         <div
@@ -16,7 +16,7 @@
         >
           <div
             :class="['nav-link', { active: item.active }]"
-            @click="navigateToPage(item)"
+            @click="navigateToPage(item.href)"
           >
             {{ item.name }}
           </div>
@@ -66,23 +66,23 @@
                 </ActionList.LeadingVisual>
                 个人资料
               </ActionList.Item>
-              <ActionList.LinkItem
-                href="/application"
+              <ActionList.Item
+                @select="navigateToPage('/application')"
               >
                 <ActionList.LeadingVisual>
                   <AppsIcon />
                 </ActionList.LeadingVisual>
                 我的应用
-              </ActionList.LinkItem>
+              </ActionList.Item>
               <ActionList.Divider />
-              <ActionList.LinkItem
-                href="/auth/logout"
+              <ActionList.Item
+                @select="navigateToPage('/auth/logout')"
               >
                 <ActionList.LeadingVisual>
                   <SignOutIcon />
                 </ActionList.LeadingVisual>
                 退出登录
-              </ActionList.LinkItem>
+              </ActionList.Item>
             </ActionList>
           </Dropdown.content>
         </Dropdown>
@@ -129,7 +129,7 @@ const goToLogin = () => {
   //加入队列
   void enqueueNavigation(async () => {
     const returnTo = encodeURIComponent(window.location.href)
-    window.location.href = `/auth/login?return_to=${returnTo}`
+    await router.push(`/auth/login?return_to=${returnTo}`)
   })
 }
 
@@ -139,7 +139,7 @@ const goToProfile = () => {
     if (!nickname) return
 
     const profilePath = `/@${encodeURIComponent(nickname)}`
-    window.location.href = profilePath
+    await router.push(profilePath)
   })
 }
 
@@ -156,11 +156,11 @@ const updateActiveState = () => {
   })
 }
 
-const navigateToPage = (item: NavigationItem) => {
+const navigateToPage = (href: string) => {
   //加入队列
   void enqueueNavigation(async () => {
-    if (route.path === item.href) return
-    await router.push(item.href)
+    if (route.path === href) return
+    await router.push(href)
   })
 }
 
