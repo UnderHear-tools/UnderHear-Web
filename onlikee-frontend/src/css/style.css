@@ -6,7 +6,6 @@
 
 * {
   -webkit-tap-highlight-color: transparent;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   box-sizing: border-box;
   border: 0 solid;
   margin: 0;
@@ -16,6 +15,7 @@
 html, body {
   color: var(--fgColor-default, #1f2328);
   margin: 0;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
 h1 {
