@@ -683,7 +683,7 @@ defineExpose({ close: () => { isOpen.value = false } })
 
 .dropdown-content {
   position: fixed;
-  z-index: 1000;
+  z-index: 9999;
   --dropdown-enter-x: 0;
   --dropdown-enter-y: 0;
   --dropdown-available-width: calc(100vw - 16px);

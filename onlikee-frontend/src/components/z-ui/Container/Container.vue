@@ -25,6 +25,7 @@ withDefaults(
   margin: 0 auto;
   padding: 2rem;
   background-color: var(--bgColor-default, #ffffff);
+  box-sizing: border-box;
 }
 
 @media (max-width: 768px) {

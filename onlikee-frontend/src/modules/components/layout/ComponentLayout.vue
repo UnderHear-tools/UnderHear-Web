@@ -326,6 +326,7 @@ const navSections = ref([
   padding: 2rem;
   min-height: calc(100vh - var(--header-height));
   min-width: 0;
+  box-sizing: border-box;
 }
 
 /* 右侧目录区 */
