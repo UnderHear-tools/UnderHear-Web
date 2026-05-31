@@ -138,6 +138,11 @@ export const componentRoutes: Array<RouteRecordRaw> = [
             },
             // Feedback 反馈组件
             {
+                path: 'admonition',
+                name: 'Admonition',
+                component: () => import('../views/components/admonition.vue')
+            },
+            {
                 path: 'blankslate',
                 name: 'Blankslate',
                 component: () => import('../views/components/blankslate.vue')

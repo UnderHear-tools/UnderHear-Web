@@ -28,6 +28,7 @@ import tooltipSfcSource from '@/components/z-ui/Tooltip/Tooltip.vue?raw'
 import dividerSfcSource from '@/components/z-ui/Divider/Divider.vue?raw'
 import { Tooltip } from '@/components/z-ui/Tooltip'
 import { Divider } from '@/components/z-ui/Divider'
+import { Admonition } from '@/components/z-ui/Admonition'
 import { BoldIcon, ItalicIcon, CodeIcon, LinkIcon, FileAddedIcon, SearchIcon } from '@/components/octicons-vue3'
 
 const PREVIEW_UPDATE_DEBOUNCE = 240
@@ -42,6 +43,10 @@ declare module '@/components/z-ui/Tooltip' {
 
 declare module '@/components/z-ui/Divider' {
   export const Divider: any
+}
+
+declare module '@/components/z-ui/Admonition' {
+  export const Admonition: any
 }
 
 declare module '@/components/octicons-vue3' {
@@ -128,37 +133,15 @@ let updateTimer: number | undefined
 let playgroundTypeDisposables: Array<{ dispose: () => void }> = []
 
 const source = ref(`<template>
-  <main class="card">
-    <h1>{{ title }}</h1>
-    <button @click="count += 1">count: {{ count }}</button>
-  </main>
+
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue'
-
-const title = 'Hello Playground'
-const count = ref(0)
+123
 <\/script>
 
 <style>
-body {
-  margin: 0;
-}
 
-.card {
-  display: grid;
-  gap: 12px;
-}
-
-button {
-  width: fit-content;
-  padding: 8px 12px;
-  border: 1px solid #d0d7de;
-  border-radius: 6px;
-  background: #f6f8fa;
-  cursor: pointer;
-}
 </style>`)
 
 const editorOptions = {

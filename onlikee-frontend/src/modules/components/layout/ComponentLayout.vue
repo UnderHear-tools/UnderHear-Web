@@ -244,6 +244,7 @@ const navSections = ref([
   {
     title: 'Feedback 反馈组件',
     items: [
+      { path: '/component/admonition', label: 'Admonition 提示框' },
       { path: '/component/blankslate', label: 'Blankslate 空状态' },
       { path: '/component/dialog', label: 'Dialog 对话框' },
       { path: '/component/banner', label: 'Banner 横幅提示' },
