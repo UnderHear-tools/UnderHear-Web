@@ -26,7 +26,6 @@
     "vue-router": "^4.5.1"
   },
   "devDependencies": {
-    "@vue/compiler-sfc": "^3.5.18",
     "@types/canvas-confetti": "^1.9.0",
     "@types/node": "^24.3.0",
     "@typescript-eslint/eslint-plugin": "^8.56.1",
