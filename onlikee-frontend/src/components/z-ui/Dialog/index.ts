@@ -7,8 +7,6 @@ export const Dialog = Object.assign(DialogRoot, {
   Footer: DialogFooter
 })
 
-export const zDialog = Dialog
-
 export { DialogBody, DialogFooter }
 export type {
   DialogCloseGesture,
