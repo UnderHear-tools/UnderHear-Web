@@ -59,7 +59,7 @@ class ApplicationCreateControllerTest {
                         .file(new MockMultipartFile("appFile", "index.html", "text/html", "<html></html>".getBytes()))
                         .param("framework", "html")
                         .param("appName", "Demo")
-                        .param("appEnglishName", "demo")
+                        .param("appUrl", "https://demo.onlikee.cn/")
                         .param("visibility", "public")
                         .param("appDescription", "description")
                         .cookie(new Cookie("auth_token", "token")))
@@ -74,7 +74,7 @@ class ApplicationCreateControllerTest {
         ApplicationCreateNewDort capturedDort = dortCaptor.getValue();
         assertEquals("html", capturedDort.getFramework());
         assertEquals("Demo", capturedDort.getAppName());
-        assertEquals("demo", capturedDort.getAppEnglishName());
+        assertEquals("https://demo.onlikee.cn/", capturedDort.getAppUrl());
     }
 
     @Test
@@ -83,7 +83,7 @@ class ApplicationCreateControllerTest {
         mockMvc.perform(multipart("/application/create/new")
                         .param("framework", "html")
                         .param("appName", "Demo")
-                        .param("appEnglishName", "demo")
+                        .param("appUrl", "https://demo.onlikee.cn/")
                         .param("visibility", "public")
                         .param("appDescription", "description")
                         .cookie(new Cookie("auth_token", "token")))
@@ -97,11 +97,11 @@ class ApplicationCreateControllerTest {
 
     @Test
     // 缺少必填文本字段时应触发参数校验失败。
-    void applicationCreateNewShouldReturnValidationFailedWhenRequiredFieldIsMissing() throws Exception {
+    void applicationCreateNewShouldReturnValidationFailedWhenAppUrlIsMissing() throws Exception {
         mockMvc.perform(multipart("/application/create/new")
                         .file(new MockMultipartFile("appFile", "index.html", "text/html", "<html></html>".getBytes()))
                         .param("framework", "html")
-                        .param("appEnglishName", "demo")
+                        .param("appName", "Demo")
                         .param("visibility", "public")
                         .param("appDescription", "description")
                         .cookie(new Cookie("auth_token", "token")))

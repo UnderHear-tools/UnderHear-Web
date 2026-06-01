@@ -16,8 +16,8 @@ public class ApplicationCreateNewDort {
     @NotBlank(message = "appName不能为空")
     private String appName;
 
-    @NotBlank(message = "appEnglishName不能为空")
-    private String appEnglishName;
+    @NotBlank(message = "appUrl不能为空")
+    private String appUrl;
 
     @NotBlank(message = "visibility不能为空")
     private String visibility;

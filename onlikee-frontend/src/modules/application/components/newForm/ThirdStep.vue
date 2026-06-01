@@ -23,23 +23,23 @@
 
     <FormControl required>
       <FormControl.Label>
-        英文名称
+        应用地址前缀
       </FormControl.Label>
       <Input
-        :model-value="appEnglishName"
-        placeholder="请输入英文名称"
+        :model-value="appUrlPrefix"
+        placeholder="请输入地址前缀"
         minlength="1"
         maxlength="63"
-        @update:model-value="value => emit('update:app-english-name', value)"
+        @update:model-value="value => emit('update:app-url-prefix', value)"
       />
       <FormControl.Validation
-        v-if="appEnglishNameError"
+        v-if="appUrlPrefixError"
         variant="error"
       >
-        {{ appEnglishNameError }}
+        {{ appUrlPrefixError }}
       </FormControl.Validation>
-      <FormControl.Caption v-if="appEnglishName.trim()">
-        应用地址：https://{{ appEnglishName }}.onlikee.cn/
+      <FormControl.Caption v-if="appUrlPrefix.trim()">
+        应用地址：https://{{ appUrlPrefix }}.onlikee.cn/
       </FormControl.Caption>
     </FormControl>
 
@@ -137,23 +137,23 @@ interface VisibilityOption {
 
 interface Props {
   appName: string
-  appEnglishName: string
+  appUrlPrefix: string
   visibility: string
   appDescription: string
   appNameError?: string
-  appEnglishNameError?: string
+  appUrlPrefixError?: string
   appDescriptionError?: string
 }
 
 const props = withDefaults(defineProps<Props>(), {
   appNameError: '',
-  appEnglishNameError: '',
+  appUrlPrefixError: '',
   appDescriptionError: ''
 })
 
 const emit = defineEmits<{
   'update:app-name': [value: string]
-  'update:app-english-name': [value: string]
+  'update:app-url-prefix': [value: string]
   'update:visibility': [value: string]
   'update:app-description': [value: string]
 }>()

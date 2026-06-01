@@ -31,9 +31,9 @@
       </template>
       <ComponentDocsDemoBlock :code="requiredDemoCode">
         <FormControl required>
-          <FormControl.Label>英文名称</FormControl.Label>
+          <FormControl.Label>应用地址前缀</FormControl.Label>
           <Input
-            v-model="appEnglishName"
+            v-model="appUrlPrefix"
             placeholder="onlikee-app"
           />
           <FormControl.Caption>
@@ -141,7 +141,7 @@ import ComponentDocsPage from '@/modules/components/components/ComponentDocsPage
 import ComponentDocsSection from '@/modules/components/components/ComponentDocsPage/ComponentDocsSection.vue'
 
 const appName = ref('')
-const appEnglishName = ref('onlikee-app')
+const appUrlPrefix = ref('onlikee-app')
 const releaseSlug = ref('onlikee-app')
 const domainPrefix = ref('podcast-hub')
 
@@ -167,8 +167,8 @@ const appName = ref('')
 
 const requiredDemoCode = `<template>
   <FormControl required>
-    <FormControl.Label>英文名称</FormControl.Label>
-    <Input v-model="appEnglishName" placeholder="onlikee-app" />
+    <FormControl.Label>应用地址前缀</FormControl.Label>
+    <Input v-model="appUrlPrefix" placeholder="onlikee-app" />
     <FormControl.Caption>Label 会自动显示必填标记。</FormControl.Caption>
   </FormControl>
 </template>
@@ -178,7 +178,7 @@ import { ref } from 'vue'
 import { FormControl } from '@/components/z-ui/FormControl'
 import { Input } from '@/components/z-ui/Input'
 
-const appEnglishName = ref('onlikee-app')
+const appUrlPrefix = ref('onlikee-app')
 <\/script>`
 
 const validationDemoCode = `<template>

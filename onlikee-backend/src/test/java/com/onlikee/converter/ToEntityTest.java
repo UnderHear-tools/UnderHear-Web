@@ -18,6 +18,7 @@ import com.onlikee.pojo.entity.Application;
 import com.onlikee.pojo.entity.User;
 import com.onlikee.pojo.entity.UserGitee;
 import com.onlikee.pojo.entity.UserGithub;
+import com.onlikee.util.ApplicationUrl;
 
 class ToEntityTest {
 
@@ -141,7 +142,7 @@ class ToEntityTest {
         ApplicationCreateNewDort request = new ApplicationCreateNewDort();
         request.setFramework("html");
         request.setAppName("Demo");
-        request.setAppEnglishName("demo");
+        request.setAppUrl("https://demo.onlikee.cn/");
         request.setVisibility("public");
         request.setAppDescription("description");
         request.setAppFile(new MockMultipartFile(
@@ -150,7 +151,7 @@ class ToEntityTest {
                 "text/html",
                 "<html></html>".getBytes()));
 
-        Application application = ToEntity.toApplication(user, request);
+        Application application = ToEntity.toApplication(user, request, ApplicationUrl.parse(request.getAppUrl()));
 
         assertNotNull(application.getAppid());
         UUID.fromString(application.getAppid());
@@ -158,7 +159,6 @@ class ToEntityTest {
         assertEquals("new", application.getCreationMethod());
         assertEquals("html", application.getFramework());
         assertEquals("Demo", application.getAppName());
-        assertEquals("demo", application.getAppEnglishName());
         assertEquals("https://demo.onlikee.cn/", application.getAppUrl());
         assertEquals("public", application.getVisibility());
         assertEquals("description", application.getAppDescription());

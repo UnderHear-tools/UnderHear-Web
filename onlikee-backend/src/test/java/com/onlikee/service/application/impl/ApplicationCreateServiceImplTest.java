@@ -42,17 +42,33 @@ class ApplicationCreateServiceImplTest {
     private ApplicationCreateServiceImpl applicationCreateService;
 
     @Test
-    // 英文名已存在时不应继续发布站点。
-    void applicationCreateNewShouldThrowWhenEnglishNameAlreadyExists() {
+    // 应用地址已存在时不应继续发布站点。
+    void applicationCreateNewShouldThrowWhenAppUrlAlreadyExists() {
         User user = user();
         ApplicationCreateNewDort request = htmlRequest();
-        when(applicationCreateMapper.countByAppEnglishName("demo")).thenReturn(1);
+        when(applicationCreateMapper.countByAppUrl("https://demo.onlikee.cn/")).thenReturn(1);
 
         BizException exception = assertThrows(
                 BizException.class,
                 () -> applicationCreateService.applicationCreateNew(user, request));
 
-        assertEquals(ErrorCode.APP_ENGLISH_NAME_ALREADY_EXISTS.getCode(), exception.getCode());
+        assertEquals(ErrorCode.APP_URL_ALREADY_EXISTS.getCode(), exception.getCode());
+        verify(lightOssPublishService, never()).ensureBucketExists(any());
+    }
+
+    @Test
+    // 应用地址不符合站点 URL 规则时应在发布前失败。
+    void applicationCreateNewShouldThrowWhenAppUrlIsInvalid() {
+        User user = user();
+        ApplicationCreateNewDort request = htmlRequest();
+        request.setAppUrl("https://demo.onlikee.cn");
+
+        BizException exception = assertThrows(
+                BizException.class,
+                () -> applicationCreateService.applicationCreateNew(user, request));
+
+        assertEquals(ErrorCode.APP_URL_INVALID.getCode(), exception.getCode());
+        verify(applicationCreateMapper, never()).countByAppUrl(any());
         verify(lightOssPublishService, never()).ensureBucketExists(any());
     }
 
@@ -62,7 +78,7 @@ class ApplicationCreateServiceImplTest {
         User user = user();
         ApplicationCreateNewDort request = htmlRequest();
         LightOssPublishedSiteDort publishedSite = publishedSite();
-        when(applicationCreateMapper.countByAppEnglishName("demo")).thenReturn(0);
+        when(applicationCreateMapper.countByAppUrl("https://demo.onlikee.cn/")).thenReturn(0);
         when(lightOssPublishService.publishHtml(eq("user-1"), eq("demo"), any())).thenReturn(publishedSite);
         when(applicationCreateMapper.insertApplication(any(Application.class))).thenReturn(1);
 
@@ -74,7 +90,7 @@ class ApplicationCreateServiceImplTest {
         verify(lightOssPublishService, never()).publishZipSite(eq("user-1"), eq("demo"), any());
         verify(lightOssPublishService, never()).cleanupPublishedSite(any());
         assertEquals("https://demo.onlikee.cn/", result.getAppUrl());
-        assertEquals("demo", applicationCaptor.getValue().getAppEnglishName());
+        assertEquals("https://demo.onlikee.cn/", applicationCaptor.getValue().getAppUrl());
     }
 
     @Test
@@ -83,7 +99,7 @@ class ApplicationCreateServiceImplTest {
         User user = user();
         ApplicationCreateNewDort request = zipRequest();
         LightOssPublishedSiteDort publishedSite = publishedSite();
-        when(applicationCreateMapper.countByAppEnglishName("demo-zip")).thenReturn(0);
+        when(applicationCreateMapper.countByAppUrl("https://demo-zip.onlikee.cn/")).thenReturn(0);
         when(lightOssPublishService.publishZipSite(eq("user-1"), eq("demo-zip"), any())).thenReturn(publishedSite);
         when(applicationCreateMapper.insertApplication(any(Application.class))).thenReturn(1);
 
@@ -100,7 +116,7 @@ class ApplicationCreateServiceImplTest {
         User user = user();
         ApplicationCreateNewDort request = htmlRequest();
         LightOssPublishedSiteDort publishedSite = publishedSite();
-        when(applicationCreateMapper.countByAppEnglishName("demo")).thenReturn(0);
+        when(applicationCreateMapper.countByAppUrl("https://demo.onlikee.cn/")).thenReturn(0);
         when(lightOssPublishService.publishHtml(eq("user-1"), eq("demo"), any())).thenReturn(publishedSite);
         when(applicationCreateMapper.insertApplication(any(Application.class))).thenReturn(0);
 
@@ -113,12 +129,12 @@ class ApplicationCreateServiceImplTest {
     }
 
     @Test
-    // 唯一键冲突时应翻译成英文名重复，并清理已发布站点。
+    // 唯一键冲突时应翻译成应用地址重复，并清理已发布站点。
     void applicationCreateNewShouldCleanupSiteWhenInsertThrowsDuplicateKeyException() {
         User user = user();
         ApplicationCreateNewDort request = htmlRequest();
         LightOssPublishedSiteDort publishedSite = publishedSite();
-        when(applicationCreateMapper.countByAppEnglishName("demo")).thenReturn(0);
+        when(applicationCreateMapper.countByAppUrl("https://demo.onlikee.cn/")).thenReturn(0);
         when(lightOssPublishService.publishHtml(eq("user-1"), eq("demo"), any())).thenReturn(publishedSite);
         when(applicationCreateMapper.insertApplication(any(Application.class)))
                 .thenThrow(new DuplicateKeyException("duplicate"));
@@ -127,7 +143,7 @@ class ApplicationCreateServiceImplTest {
                 BizException.class,
                 () -> applicationCreateService.applicationCreateNew(user, request));
 
-        assertEquals(ErrorCode.APP_ENGLISH_NAME_ALREADY_EXISTS.getCode(), exception.getCode());
+        assertEquals(ErrorCode.APP_URL_ALREADY_EXISTS.getCode(), exception.getCode());
         verify(lightOssPublishService).cleanupPublishedSite(publishedSite);
     }
 
@@ -137,7 +153,7 @@ class ApplicationCreateServiceImplTest {
         User user = user();
         ApplicationCreateNewDort request = htmlRequest();
         LightOssPublishedSiteDort publishedSite = publishedSite();
-        when(applicationCreateMapper.countByAppEnglishName("demo")).thenReturn(0);
+        when(applicationCreateMapper.countByAppUrl("https://demo.onlikee.cn/")).thenReturn(0);
         when(lightOssPublishService.publishHtml(eq("user-1"), eq("demo"), any())).thenReturn(publishedSite);
         when(applicationCreateMapper.insertApplication(any(Application.class)))
                 .thenThrow(new IllegalStateException("boom"));
@@ -156,7 +172,7 @@ class ApplicationCreateServiceImplTest {
         User user = user();
         ApplicationCreateNewDort request = htmlRequest();
         LightOssPublishedSiteDort publishedSite = publishedSite();
-        when(applicationCreateMapper.countByAppEnglishName("demo")).thenReturn(0);
+        when(applicationCreateMapper.countByAppUrl("https://demo.onlikee.cn/")).thenReturn(0);
         when(lightOssPublishService.publishHtml(eq("user-1"), eq("demo"), any())).thenReturn(publishedSite);
         when(applicationCreateMapper.insertApplication(any(Application.class))).thenReturn(1);
 
@@ -178,7 +194,7 @@ class ApplicationCreateServiceImplTest {
         ApplicationCreateNewDort request = new ApplicationCreateNewDort();
         request.setFramework("html");
         request.setAppName("Demo");
-        request.setAppEnglishName("demo");
+        request.setAppUrl("https://demo.onlikee.cn/");
         request.setVisibility("public");
         request.setAppDescription("description");
         request.setAppFile(new MockMultipartFile(
@@ -193,7 +209,7 @@ class ApplicationCreateServiceImplTest {
         ApplicationCreateNewDort request = new ApplicationCreateNewDort();
         request.setFramework("vue");
         request.setAppName("Demo Zip");
-        request.setAppEnglishName("demo-zip");
+        request.setAppUrl("https://demo-zip.onlikee.cn/");
         request.setVisibility("public");
         request.setAppDescription("description");
         request.setAppFile(new MockMultipartFile(
