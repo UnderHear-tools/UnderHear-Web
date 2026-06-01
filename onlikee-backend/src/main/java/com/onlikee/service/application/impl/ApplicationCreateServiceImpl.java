@@ -9,8 +9,9 @@ import com.onlikee.converter.ToEntity;
 import com.onlikee.exception.BizException;
 import com.onlikee.exception.ErrorCode;
 import com.onlikee.mapper.application.ApplicationCreateMapper;
-import com.onlikee.pojo.dto.request.LightOssPublishedSiteDort;
+import com.onlikee.pojo.dto.request.ApplicationCreateConnectDort;
 import com.onlikee.pojo.dto.request.ApplicationCreateNewDort;
+import com.onlikee.pojo.dto.request.LightOssPublishedSiteDort;
 import com.onlikee.pojo.dto.response.ApplicationCreateNewDore;
 import com.onlikee.pojo.entity.Application;
 import com.onlikee.pojo.entity.User;
@@ -52,6 +53,27 @@ public class ApplicationCreateServiceImpl implements ApplicationCreateService {
 
         if (rows != 1) {
             lightOssPublishService.cleanupPublishedSite(publishedSite);
+            throw new BizException(ErrorCode.APPLICATION_CREATE_FAILED);
+        }
+        return ToDore.toApplicationCreateNewDore(application);
+    }
+
+    @Override
+    public ApplicationCreateNewDore applicationCreateConnect(User user, ApplicationCreateConnectDort applicationCreateConnectDort) {
+        String appUrl = ApplicationUrl.normalizeExternal(applicationCreateConnectDort.getAppUrl());
+        Application application = ToEntity.toApplication(user, applicationCreateConnectDort, appUrl);
+        if (applicationCreateMapper.countByAppUrl(appUrl) > 0) {
+            throw new BizException(ErrorCode.APP_URL_ALREADY_EXISTS);
+        }
+
+        int rows;
+        try {
+            rows = applicationCreateMapper.insertApplication(application);
+        } catch (DuplicateKeyException ex) {
+            throw new BizException(ErrorCode.APP_URL_ALREADY_EXISTS);
+        }
+
+        if (rows != 1) {
             throw new BizException(ErrorCode.APPLICATION_CREATE_FAILED);
         }
         return ToDore.toApplicationCreateNewDore(application);

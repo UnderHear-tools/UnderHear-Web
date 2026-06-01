@@ -41,8 +41,38 @@ class ApplicationUrlTest {
         assertInvalid("https://aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa.onlikee.cn/");
     }
 
+    @Test
+    // 外部站点 URL 缺少协议时应自动补全为 https。
+    void normalizeExternalShouldAddHttpsWhenSchemeIsMissing() {
+        String appUrl = ApplicationUrl.normalizeExternal("www.demo.com");
+
+        assertEquals("https://www.demo.com", appUrl);
+    }
+
+    @Test
+    // 外部站点 URL 已带 http/https 协议时应保留原协议和路径。
+    void normalizeExternalShouldKeepHttpSchemeAndPath() {
+        String appUrl = ApplicationUrl.normalizeExternal("http://www.demo.com/path?a=1");
+
+        assertEquals("http://www.demo.com/path?a=1", appUrl);
+    }
+
+    @Test
+    // 外部站点 URL 只允许 http/https 且必须包含 host。
+    void normalizeExternalShouldRejectInvalidUrls() {
+        assertInvalidExternal("ftp://www.demo.com");
+        assertInvalidExternal("https://");
+        assertInvalidExternal("https:///path");
+        assertInvalidExternal("not a url");
+    }
+
     private void assertInvalid(String value) {
         BizException exception = assertThrows(BizException.class, () -> ApplicationUrl.parse(value));
+        assertEquals(ErrorCode.APP_URL_INVALID.getCode(), exception.getCode());
+    }
+
+    private void assertInvalidExternal(String value) {
+        BizException exception = assertThrows(BizException.class, () -> ApplicationUrl.normalizeExternal(value));
         assertEquals(ErrorCode.APP_URL_INVALID.getCode(), exception.getCode());
     }
 }

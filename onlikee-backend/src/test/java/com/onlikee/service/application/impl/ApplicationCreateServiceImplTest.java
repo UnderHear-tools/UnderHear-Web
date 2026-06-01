@@ -7,6 +7,7 @@ import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.inOrder;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.verifyNoInteractions;
 import static org.mockito.Mockito.when;
 
 import org.junit.jupiter.api.Test;
@@ -22,6 +23,7 @@ import org.springframework.mock.web.MockMultipartFile;
 import com.onlikee.exception.BizException;
 import com.onlikee.exception.ErrorCode;
 import com.onlikee.mapper.application.ApplicationCreateMapper;
+import com.onlikee.pojo.dto.request.ApplicationCreateConnectDort;
 import com.onlikee.pojo.dto.request.ApplicationCreateNewDort;
 import com.onlikee.pojo.dto.request.LightOssPublishedSiteDort;
 import com.onlikee.pojo.dto.response.ApplicationCreateNewDore;
@@ -184,6 +186,95 @@ class ApplicationCreateServiceImplTest {
         inOrder.verify(applicationCreateMapper).insertApplication(any(Application.class));
     }
 
+    @Test
+    // 接入已有网站时应规范化 URL、只落库，不发布 Light OSS 站点。
+    void applicationCreateConnectShouldNormalizeUrlAndInsertWithoutLightOss() {
+        User user = user();
+        ApplicationCreateConnectDort request = connectRequest();
+        when(applicationCreateMapper.countByAppUrl("https://www.demo.com")).thenReturn(0);
+        when(applicationCreateMapper.insertApplication(any(Application.class))).thenReturn(1);
+
+        ApplicationCreateNewDore result = applicationCreateService.applicationCreateConnect(user, request);
+
+        ArgumentCaptor<Application> applicationCaptor = ArgumentCaptor.forClass(Application.class);
+        verify(applicationCreateMapper).insertApplication(applicationCaptor.capture());
+        verifyNoInteractions(lightOssPublishService);
+        Application application = applicationCaptor.getValue();
+        assertEquals("https://www.demo.com", result.getAppUrl());
+        assertEquals("connect", application.getCreationMethod());
+        assertEquals("website", application.getFramework());
+        assertEquals("https://www.demo.com", application.getAppUrl());
+        assertEquals("", application.getOriginalFilename());
+        assertEquals("", application.getOriginalFileType());
+        assertEquals("0 B", application.getOriginalFileSize());
+    }
+
+    @Test
+    // 接入已有网站时非法 URL 应在查重和落库前失败。
+    void applicationCreateConnectShouldThrowWhenAppUrlIsInvalid() {
+        User user = user();
+        ApplicationCreateConnectDort request = connectRequest();
+        request.setAppUrl("ftp://www.demo.com");
+
+        BizException exception = assertThrows(
+                BizException.class,
+                () -> applicationCreateService.applicationCreateConnect(user, request));
+
+        assertEquals(ErrorCode.APP_URL_INVALID.getCode(), exception.getCode());
+        verify(applicationCreateMapper, never()).countByAppUrl(any());
+        verify(applicationCreateMapper, never()).insertApplication(any());
+        verifyNoInteractions(lightOssPublishService);
+    }
+
+    @Test
+    // 接入已有网站时 URL 已存在不应继续落库。
+    void applicationCreateConnectShouldThrowWhenAppUrlAlreadyExists() {
+        User user = user();
+        ApplicationCreateConnectDort request = connectRequest();
+        when(applicationCreateMapper.countByAppUrl("https://www.demo.com")).thenReturn(1);
+
+        BizException exception = assertThrows(
+                BizException.class,
+                () -> applicationCreateService.applicationCreateConnect(user, request));
+
+        assertEquals(ErrorCode.APP_URL_ALREADY_EXISTS.getCode(), exception.getCode());
+        verify(applicationCreateMapper, never()).insertApplication(any());
+        verifyNoInteractions(lightOssPublishService);
+    }
+
+    @Test
+    // 接入已有网站时唯一键冲突应翻译成应用地址重复。
+    void applicationCreateConnectShouldThrowWhenInsertThrowsDuplicateKeyException() {
+        User user = user();
+        ApplicationCreateConnectDort request = connectRequest();
+        when(applicationCreateMapper.countByAppUrl("https://www.demo.com")).thenReturn(0);
+        when(applicationCreateMapper.insertApplication(any(Application.class)))
+                .thenThrow(new DuplicateKeyException("duplicate"));
+
+        BizException exception = assertThrows(
+                BizException.class,
+                () -> applicationCreateService.applicationCreateConnect(user, request));
+
+        assertEquals(ErrorCode.APP_URL_ALREADY_EXISTS.getCode(), exception.getCode());
+        verifyNoInteractions(lightOssPublishService);
+    }
+
+    @Test
+    // 接入已有网站时落库影响行数异常应返回创建失败。
+    void applicationCreateConnectShouldThrowWhenInsertReturnsUnexpectedRows() {
+        User user = user();
+        ApplicationCreateConnectDort request = connectRequest();
+        when(applicationCreateMapper.countByAppUrl("https://www.demo.com")).thenReturn(0);
+        when(applicationCreateMapper.insertApplication(any(Application.class))).thenReturn(0);
+
+        BizException exception = assertThrows(
+                BizException.class,
+                () -> applicationCreateService.applicationCreateConnect(user, request));
+
+        assertEquals(ErrorCode.APPLICATION_CREATE_FAILED.getCode(), exception.getCode());
+        verifyNoInteractions(lightOssPublishService);
+    }
+
     private User user() {
         User user = new User();
         user.setUuid("user-1");
@@ -217,6 +308,15 @@ class ApplicationCreateServiceImplTest {
                 "dist.zip",
                 "application/zip",
                 "zip-content".getBytes()));
+        return request;
+    }
+
+    private ApplicationCreateConnectDort connectRequest() {
+        ApplicationCreateConnectDort request = new ApplicationCreateConnectDort();
+        request.setAppName("Demo Website");
+        request.setAppUrl("www.demo.com");
+        request.setVisibility("public");
+        request.setAppDescription("description");
         return request;
     }
 

@@ -2,6 +2,7 @@ package com.onlikee.converter;
 
 import java.time.LocalDateTime;
 
+import com.onlikee.pojo.dto.request.ApplicationCreateConnectDort;
 import com.onlikee.pojo.dto.request.ApplicationCreateNewDort;
 import com.onlikee.pojo.dto.request.OAuthPendingSignupDort;
 import com.onlikee.pojo.dto.request.UserGiteeDort;
@@ -165,6 +166,24 @@ public final class ToEntity {
         application.setOriginalFilename(originalFilename);
         application.setOriginalFileType(request.getAppFile().getContentType());
         application.setOriginalFileSize(FileSizeFormatter.format(request.getAppFile().getSize()));
+        return application;
+    }
+
+    public static Application toApplication(User user, ApplicationCreateConnectDort request, String appUrl) {
+        Application application = new Application();
+        String appid = ApplicationUuidGenerator.next();
+
+        application.setAppid(appid);
+        application.setOwnerUuid(user.getUuid());
+        application.setCreationMethod("connect");
+        application.setFramework("website");
+        application.setAppName(request.getAppName());
+        application.setAppUrl(appUrl);
+        application.setVisibility(request.getVisibility());
+        application.setAppDescription(request.getAppDescription());
+        application.setOriginalFilename("");
+        application.setOriginalFileType("");
+        application.setOriginalFileSize("0 B");
         return application;
     }
 }

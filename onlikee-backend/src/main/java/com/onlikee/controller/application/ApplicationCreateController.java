@@ -5,9 +5,11 @@ import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.onlikee.pojo.dto.request.ApplicationCreateConnectDort;
 import com.onlikee.pojo.dto.request.ApplicationCreateNewDort;
 import com.onlikee.pojo.dto.response.ApplicationCreateNewDore;
 import com.onlikee.pojo.dto.response.common.ApiResponse;
@@ -34,6 +36,15 @@ public class ApplicationCreateController {
             @Valid @ModelAttribute ApplicationCreateNewDort applicationCreateNewDort) {
         User user = sessionAuthService.getCurrentUser(token);
         ApplicationCreateNewDore applicationCreateNewDore = applicationCreateService.applicationCreateNew(user, applicationCreateNewDort);
+        return ApiResponse.success("应用创建成功！", applicationCreateNewDore);
+    }
+
+    @PostMapping("/connect")
+    public ApiResponse<ApplicationCreateNewDore> applicationCreateConnect(
+            @CookieValue(value = "auth_token", required = false) String token,
+            @Valid @RequestBody ApplicationCreateConnectDort applicationCreateConnectDort) {
+        User user = sessionAuthService.getCurrentUser(token);
+        ApplicationCreateNewDore applicationCreateNewDore = applicationCreateService.applicationCreateConnect(user, applicationCreateConnectDort);
         return ApiResponse.success("应用创建成功！", applicationCreateNewDore);
     }
 }
