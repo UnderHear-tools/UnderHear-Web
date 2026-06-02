@@ -175,14 +175,14 @@ public final class ToEntity {
         application.setAppid(appid);
         application.setOwnerUuid(user.getUuid());
         application.setCreationMethod("connect");
-        application.setFramework("website");
+        application.setFramework("");
         application.setAppName(request.getAppName());
         application.setAppUrl(appUrl);
         application.setVisibility(request.getVisibility());
         application.setAppDescription(request.getAppDescription());
         application.setOriginalFilename("");
         application.setOriginalFileType("");
-        application.setOriginalFileSize("0 B");
+        application.setOriginalFileSize("");
         return application;
     }
 }
