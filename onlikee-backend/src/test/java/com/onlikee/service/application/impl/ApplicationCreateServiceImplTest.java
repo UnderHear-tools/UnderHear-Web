@@ -175,7 +175,7 @@ class ApplicationCreateServiceImplTest {
     void applicationCreateConnectShouldInsertOriginalUrlWithoutLightOss() {
         User user = user();
         ApplicationCreateConnectDort request = connectRequest();
-        when(applicationCreateMapper.countByAppUrl("www.demo.com")).thenReturn(0);
+        when(applicationCreateMapper.countByAppUrl("https://www.demo.com")).thenReturn(0);
         when(applicationCreateMapper.insertApplication(any(Application.class))).thenReturn(1);
 
         ApplicationCreateNewDore result = applicationCreateService.applicationCreateConnect(user, request);
@@ -184,10 +184,10 @@ class ApplicationCreateServiceImplTest {
         verify(applicationCreateMapper).insertApplication(applicationCaptor.capture());
         verifyNoInteractions(lightOssPublishService);
         Application application = applicationCaptor.getValue();
-        assertEquals("www.demo.com", result.getAppUrl());
+        assertEquals("https://www.demo.com", result.getAppUrl());
         assertEquals("connect", application.getCreationMethod());
         assertEquals("website", application.getFramework());
-        assertEquals("www.demo.com", application.getAppUrl());
+        assertEquals("https://www.demo.com", application.getAppUrl());
         assertEquals("", application.getOriginalFilename());
         assertEquals("", application.getOriginalFileType());
         assertEquals("0 B", application.getOriginalFileSize());
@@ -198,7 +198,7 @@ class ApplicationCreateServiceImplTest {
     void applicationCreateConnectShouldThrowWhenAppUrlAlreadyExists() {
         User user = user();
         ApplicationCreateConnectDort request = connectRequest();
-        when(applicationCreateMapper.countByAppUrl("www.demo.com")).thenReturn(1);
+        when(applicationCreateMapper.countByAppUrl("https://www.demo.com")).thenReturn(1);
 
         BizException exception = assertThrows(
                 BizException.class,
@@ -214,7 +214,7 @@ class ApplicationCreateServiceImplTest {
     void applicationCreateConnectShouldThrowWhenInsertThrowsDuplicateKeyException() {
         User user = user();
         ApplicationCreateConnectDort request = connectRequest();
-        when(applicationCreateMapper.countByAppUrl("www.demo.com")).thenReturn(0);
+        when(applicationCreateMapper.countByAppUrl("https://www.demo.com")).thenReturn(0);
         when(applicationCreateMapper.insertApplication(any(Application.class)))
                 .thenThrow(new DuplicateKeyException("duplicate"));
 
@@ -231,7 +231,7 @@ class ApplicationCreateServiceImplTest {
     void applicationCreateConnectShouldThrowWhenInsertReturnsUnexpectedRows() {
         User user = user();
         ApplicationCreateConnectDort request = connectRequest();
-        when(applicationCreateMapper.countByAppUrl("www.demo.com")).thenReturn(0);
+        when(applicationCreateMapper.countByAppUrl("https://www.demo.com")).thenReturn(0);
         when(applicationCreateMapper.insertApplication(any(Application.class))).thenReturn(0);
 
         BizException exception = assertThrows(
@@ -281,7 +281,7 @@ class ApplicationCreateServiceImplTest {
     private ApplicationCreateConnectDort connectRequest() {
         ApplicationCreateConnectDort request = new ApplicationCreateConnectDort();
         request.setAppName("Demo Website");
-        request.setAppUrl("www.demo.com");
+        request.setAppUrl("https://www.demo.com");
         request.setVisibility("public");
         request.setAppDescription("description");
         return request;

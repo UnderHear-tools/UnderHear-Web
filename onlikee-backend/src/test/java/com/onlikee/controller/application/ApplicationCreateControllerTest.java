@@ -86,7 +86,7 @@ class ApplicationCreateControllerTest {
         User user = new User();
         user.setUuid("user-1");
         ApplicationCreateNewDore dore = new ApplicationCreateNewDore();
-        dore.setAppUrl("www.demo.com");
+        dore.setAppUrl("https://www.demo.com");
         when(sessionAuthService.getCurrentUser("token")).thenReturn(user);
         when(applicationCreateService.applicationCreateConnect(eq(user), any(ApplicationCreateConnectDort.class))).thenReturn(dore);
 
@@ -95,7 +95,7 @@ class ApplicationCreateControllerTest {
                         .content("""
                                 {
                                   "appName": "Demo",
-                                  "appUrl": "www.demo.com",
+                                  "appUrl": "https://www.demo.com",
                                   "visibility": "public",
                                   "appDescription": "description"
                                 }
@@ -104,14 +104,14 @@ class ApplicationCreateControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.code").value("OK"))
                 .andExpect(jsonPath("$.message").value("应用创建成功！"))
-                .andExpect(jsonPath("$.data.appUrl").value("www.demo.com"));
+                .andExpect(jsonPath("$.data.appUrl").value("https://www.demo.com"));
 
         ArgumentCaptor<ApplicationCreateConnectDort> dortCaptor = ArgumentCaptor.forClass(ApplicationCreateConnectDort.class);
         verify(applicationCreateService).applicationCreateConnect(eq(user), dortCaptor.capture());
         verify(sessionAuthService).getCurrentUser("token");
         ApplicationCreateConnectDort capturedDort = dortCaptor.getValue();
         assertEquals("Demo", capturedDort.getAppName());
-        assertEquals("www.demo.com", capturedDort.getAppUrl());
+        assertEquals("https://www.demo.com", capturedDort.getAppUrl());
     }
 
     @Test
@@ -158,6 +158,28 @@ class ApplicationCreateControllerTest {
                         .content("""
                                 {
                                   "appName": "Demo",
+                                  "visibility": "public",
+                                  "appDescription": "description"
+                                }
+                                """)
+                        .cookie(new Cookie("auth_token", "token")))
+                .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("$.code").value("VALIDATION_FAILED"))
+                .andExpect(jsonPath("$.message").value("参数校验失败"));
+
+        verify(sessionAuthService, never()).getCurrentUser(any());
+        verify(applicationCreateService, never()).applicationCreateConnect(any(), any());
+    }
+
+    @Test
+    // Connect 的 appUrl 必须是完整 HTTP(S) URL，非法值应在登录态解析前被拦截。
+    void applicationCreateConnectShouldReturnValidationFailedWhenAppUrlIsInvalid() throws Exception {
+        mockMvc.perform(post("/application/create/connect")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content("""
+                                {
+                                  "appName": "Demo",
+                                  "appUrl": "www.demo.com",
                                   "visibility": "public",
                                   "appDescription": "description"
                                 }

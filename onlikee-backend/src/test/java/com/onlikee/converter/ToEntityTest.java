@@ -174,7 +174,7 @@ class ToEntityTest {
         user.setUuid("user-1");
         ApplicationCreateConnectDort request = new ApplicationCreateConnectDort();
         request.setAppName("Demo Website");
-        request.setAppUrl("www.demo.com");
+        request.setAppUrl("https://www.demo.com");
         request.setVisibility("public");
         request.setAppDescription("description");
 

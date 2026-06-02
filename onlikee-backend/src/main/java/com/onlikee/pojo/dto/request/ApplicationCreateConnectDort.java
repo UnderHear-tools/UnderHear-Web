@@ -1,5 +1,8 @@
 package com.onlikee.pojo.dto.request;
 
+import com.onlikee.util.UrlUtils;
+
+import jakarta.validation.constraints.AssertTrue;
 import jakarta.validation.constraints.NotBlank;
 import lombok.Data;
 
@@ -16,4 +19,12 @@ public class ApplicationCreateConnectDort {
 
     @NotBlank(message = "appDescription不能为空")
     private String appDescription;
+
+    @AssertTrue(message = "appUrl格式无效")
+    public boolean isAppUrlValid() {
+        if (appUrl == null || appUrl.isBlank()) {
+            return true;
+        }
+        return UrlUtils.isValid(appUrl);
+    }
 }
