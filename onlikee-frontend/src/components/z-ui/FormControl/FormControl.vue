@@ -35,17 +35,20 @@ const validationVariant = context.validationVariant
 }
 
 .form-control[data-validation-variant='error'] :deep(.input),
+.form-control[data-validation-variant='error'] :deep(.input-wrapper),
 .form-control[data-validation-variant='error'] :deep(.textarea) {
   border-color: var(--borderColor-danger-emphasis, #cf222e);
 }
 
 .form-control[data-validation-variant='error'] :deep(.input:focus),
+.form-control[data-validation-variant='error'] :deep(.input-wrapper:focus-within),
 .form-control[data-validation-variant='error'] :deep(.textarea:focus) {
   outline: 2px solid var(--borderColor-danger-emphasis, #cf222e);
   outline-offset: -1px;
 }
 
 .form-control[data-validation-variant='success'] :deep(.input),
+.form-control[data-validation-variant='success'] :deep(.input-wrapper),
 .form-control[data-validation-variant='success'] :deep(.textarea) {
   border-color: var(--borderColor-success-emphasis, #1a7f37);
 }
