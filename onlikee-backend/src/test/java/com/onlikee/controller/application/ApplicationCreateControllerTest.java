@@ -81,12 +81,12 @@ class ApplicationCreateControllerTest {
     }
 
     @Test
-    // JSON 参数完整时应成功接入已有网站并返回规范化后的 URL。
+    // JSON 参数完整时应成功接入已有网站并返回应用 URL。
     void applicationCreateConnectShouldReturnSuccessResponse() throws Exception {
         User user = new User();
         user.setUuid("user-1");
         ApplicationCreateNewDore dore = new ApplicationCreateNewDore();
-        dore.setAppUrl("https://www.demo.com");
+        dore.setAppUrl("www.demo.com");
         when(sessionAuthService.getCurrentUser("token")).thenReturn(user);
         when(applicationCreateService.applicationCreateConnect(eq(user), any(ApplicationCreateConnectDort.class))).thenReturn(dore);
 
@@ -104,7 +104,7 @@ class ApplicationCreateControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.code").value("OK"))
                 .andExpect(jsonPath("$.message").value("应用创建成功！"))
-                .andExpect(jsonPath("$.data.appUrl").value("https://www.demo.com"));
+                .andExpect(jsonPath("$.data.appUrl").value("www.demo.com"));
 
         ArgumentCaptor<ApplicationCreateConnectDort> dortCaptor = ArgumentCaptor.forClass(ApplicationCreateConnectDort.class);
         verify(applicationCreateService).applicationCreateConnect(eq(user), dortCaptor.capture());

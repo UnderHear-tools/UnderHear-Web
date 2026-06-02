@@ -19,7 +19,6 @@ import com.onlikee.pojo.entity.Application;
 import com.onlikee.pojo.entity.User;
 import com.onlikee.pojo.entity.UserGitee;
 import com.onlikee.pojo.entity.UserGithub;
-import com.onlikee.util.ApplicationUrl;
 
 class ToEntityTest {
 
@@ -152,7 +151,7 @@ class ToEntityTest {
                 "text/html",
                 "<html></html>".getBytes()));
 
-        Application application = ToEntity.toApplication(user, request, ApplicationUrl.parse(request.getAppUrl()));
+        Application application = ToEntity.toApplication(user, request);
 
         assertNotNull(application.getAppid());
         UUID.fromString(application.getAppid());

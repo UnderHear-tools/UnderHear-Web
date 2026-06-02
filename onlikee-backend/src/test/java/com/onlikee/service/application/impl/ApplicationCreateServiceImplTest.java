@@ -59,37 +59,21 @@ class ApplicationCreateServiceImplTest {
     }
 
     @Test
-    // 应用地址不符合站点 URL 规则时应在发布前失败。
-    void applicationCreateNewShouldThrowWhenAppUrlIsInvalid() {
-        User user = user();
-        ApplicationCreateNewDort request = htmlRequest();
-        request.setAppUrl("https://demo.onlikee.cn");
-
-        BizException exception = assertThrows(
-                BizException.class,
-                () -> applicationCreateService.applicationCreateNew(user, request));
-
-        assertEquals(ErrorCode.APP_URL_INVALID.getCode(), exception.getCode());
-        verify(applicationCreateMapper, never()).countByAppUrl(any());
-        verify(lightOssPublishService, never()).ensureBucketExists(any());
-    }
-
-    @Test
     // HTML 应用创建成功时应走单文件发布分支。
     void applicationCreateNewShouldPublishHtmlWhenFrameworkIsHtml() {
         User user = user();
         ApplicationCreateNewDort request = htmlRequest();
         LightOssPublishedSiteDort publishedSite = publishedSite();
         when(applicationCreateMapper.countByAppUrl("https://demo.onlikee.cn/")).thenReturn(0);
-        when(lightOssPublishService.publishHtml(eq("user-1"), eq("demo"), any())).thenReturn(publishedSite);
+        when(lightOssPublishService.publishHtml(eq("user-1"), eq("https://demo.onlikee.cn/"), any())).thenReturn(publishedSite);
         when(applicationCreateMapper.insertApplication(any(Application.class))).thenReturn(1);
 
         ApplicationCreateNewDore result = applicationCreateService.applicationCreateNew(user, request);
 
         ArgumentCaptor<Application> applicationCaptor = ArgumentCaptor.forClass(Application.class);
         verify(applicationCreateMapper).insertApplication(applicationCaptor.capture());
-        verify(lightOssPublishService).publishHtml(eq("user-1"), eq("demo"), any());
-        verify(lightOssPublishService, never()).publishZipSite(eq("user-1"), eq("demo"), any());
+        verify(lightOssPublishService).publishHtml(eq("user-1"), eq("https://demo.onlikee.cn/"), any());
+        verify(lightOssPublishService, never()).publishZipSite(eq("user-1"), eq("https://demo.onlikee.cn/"), any());
         verify(lightOssPublishService, never()).cleanupPublishedSite(any());
         assertEquals("https://demo.onlikee.cn/", result.getAppUrl());
         assertEquals("https://demo.onlikee.cn/", applicationCaptor.getValue().getAppUrl());
@@ -102,13 +86,13 @@ class ApplicationCreateServiceImplTest {
         ApplicationCreateNewDort request = zipRequest();
         LightOssPublishedSiteDort publishedSite = publishedSite();
         when(applicationCreateMapper.countByAppUrl("https://demo-zip.onlikee.cn/")).thenReturn(0);
-        when(lightOssPublishService.publishZipSite(eq("user-1"), eq("demo-zip"), any())).thenReturn(publishedSite);
+        when(lightOssPublishService.publishZipSite(eq("user-1"), eq("https://demo-zip.onlikee.cn/"), any())).thenReturn(publishedSite);
         when(applicationCreateMapper.insertApplication(any(Application.class))).thenReturn(1);
 
         ApplicationCreateNewDore result = applicationCreateService.applicationCreateNew(user, request);
 
-        verify(lightOssPublishService).publishZipSite(eq("user-1"), eq("demo-zip"), any());
-        verify(lightOssPublishService, never()).publishHtml(eq("user-1"), eq("demo-zip"), any());
+        verify(lightOssPublishService).publishZipSite(eq("user-1"), eq("https://demo-zip.onlikee.cn/"), any());
+        verify(lightOssPublishService, never()).publishHtml(eq("user-1"), eq("https://demo-zip.onlikee.cn/"), any());
         assertEquals("https://demo-zip.onlikee.cn/", result.getAppUrl());
     }
 
@@ -119,7 +103,7 @@ class ApplicationCreateServiceImplTest {
         ApplicationCreateNewDort request = htmlRequest();
         LightOssPublishedSiteDort publishedSite = publishedSite();
         when(applicationCreateMapper.countByAppUrl("https://demo.onlikee.cn/")).thenReturn(0);
-        when(lightOssPublishService.publishHtml(eq("user-1"), eq("demo"), any())).thenReturn(publishedSite);
+        when(lightOssPublishService.publishHtml(eq("user-1"), eq("https://demo.onlikee.cn/"), any())).thenReturn(publishedSite);
         when(applicationCreateMapper.insertApplication(any(Application.class))).thenReturn(0);
 
         BizException exception = assertThrows(
@@ -137,7 +121,7 @@ class ApplicationCreateServiceImplTest {
         ApplicationCreateNewDort request = htmlRequest();
         LightOssPublishedSiteDort publishedSite = publishedSite();
         when(applicationCreateMapper.countByAppUrl("https://demo.onlikee.cn/")).thenReturn(0);
-        when(lightOssPublishService.publishHtml(eq("user-1"), eq("demo"), any())).thenReturn(publishedSite);
+        when(lightOssPublishService.publishHtml(eq("user-1"), eq("https://demo.onlikee.cn/"), any())).thenReturn(publishedSite);
         when(applicationCreateMapper.insertApplication(any(Application.class)))
                 .thenThrow(new DuplicateKeyException("duplicate"));
 
@@ -156,7 +140,7 @@ class ApplicationCreateServiceImplTest {
         ApplicationCreateNewDort request = htmlRequest();
         LightOssPublishedSiteDort publishedSite = publishedSite();
         when(applicationCreateMapper.countByAppUrl("https://demo.onlikee.cn/")).thenReturn(0);
-        when(lightOssPublishService.publishHtml(eq("user-1"), eq("demo"), any())).thenReturn(publishedSite);
+        when(lightOssPublishService.publishHtml(eq("user-1"), eq("https://demo.onlikee.cn/"), any())).thenReturn(publishedSite);
         when(applicationCreateMapper.insertApplication(any(Application.class)))
                 .thenThrow(new IllegalStateException("boom"));
 
@@ -175,23 +159,23 @@ class ApplicationCreateServiceImplTest {
         ApplicationCreateNewDort request = htmlRequest();
         LightOssPublishedSiteDort publishedSite = publishedSite();
         when(applicationCreateMapper.countByAppUrl("https://demo.onlikee.cn/")).thenReturn(0);
-        when(lightOssPublishService.publishHtml(eq("user-1"), eq("demo"), any())).thenReturn(publishedSite);
+        when(lightOssPublishService.publishHtml(eq("user-1"), eq("https://demo.onlikee.cn/"), any())).thenReturn(publishedSite);
         when(applicationCreateMapper.insertApplication(any(Application.class))).thenReturn(1);
 
         applicationCreateService.applicationCreateNew(user, request);
 
         InOrder inOrder = inOrder(lightOssPublishService, applicationCreateMapper);
         inOrder.verify(lightOssPublishService).ensureBucketExists("user-1");
-        inOrder.verify(lightOssPublishService).publishHtml(eq("user-1"), eq("demo"), any());
+        inOrder.verify(lightOssPublishService).publishHtml(eq("user-1"), eq("https://demo.onlikee.cn/"), any());
         inOrder.verify(applicationCreateMapper).insertApplication(any(Application.class));
     }
 
     @Test
-    // 接入已有网站时应规范化 URL、只落库，不发布 Light OSS 站点。
-    void applicationCreateConnectShouldNormalizeUrlAndInsertWithoutLightOss() {
+    // 接入已有网站时应按原始 URL 落库，不发布 Light OSS 站点。
+    void applicationCreateConnectShouldInsertOriginalUrlWithoutLightOss() {
         User user = user();
         ApplicationCreateConnectDort request = connectRequest();
-        when(applicationCreateMapper.countByAppUrl("https://www.demo.com")).thenReturn(0);
+        when(applicationCreateMapper.countByAppUrl("www.demo.com")).thenReturn(0);
         when(applicationCreateMapper.insertApplication(any(Application.class))).thenReturn(1);
 
         ApplicationCreateNewDore result = applicationCreateService.applicationCreateConnect(user, request);
@@ -200,30 +184,13 @@ class ApplicationCreateServiceImplTest {
         verify(applicationCreateMapper).insertApplication(applicationCaptor.capture());
         verifyNoInteractions(lightOssPublishService);
         Application application = applicationCaptor.getValue();
-        assertEquals("https://www.demo.com", result.getAppUrl());
+        assertEquals("www.demo.com", result.getAppUrl());
         assertEquals("connect", application.getCreationMethod());
         assertEquals("website", application.getFramework());
-        assertEquals("https://www.demo.com", application.getAppUrl());
+        assertEquals("www.demo.com", application.getAppUrl());
         assertEquals("", application.getOriginalFilename());
         assertEquals("", application.getOriginalFileType());
         assertEquals("0 B", application.getOriginalFileSize());
-    }
-
-    @Test
-    // 接入已有网站时非法 URL 应在查重和落库前失败。
-    void applicationCreateConnectShouldThrowWhenAppUrlIsInvalid() {
-        User user = user();
-        ApplicationCreateConnectDort request = connectRequest();
-        request.setAppUrl("ftp://www.demo.com");
-
-        BizException exception = assertThrows(
-                BizException.class,
-                () -> applicationCreateService.applicationCreateConnect(user, request));
-
-        assertEquals(ErrorCode.APP_URL_INVALID.getCode(), exception.getCode());
-        verify(applicationCreateMapper, never()).countByAppUrl(any());
-        verify(applicationCreateMapper, never()).insertApplication(any());
-        verifyNoInteractions(lightOssPublishService);
     }
 
     @Test
@@ -231,7 +198,7 @@ class ApplicationCreateServiceImplTest {
     void applicationCreateConnectShouldThrowWhenAppUrlAlreadyExists() {
         User user = user();
         ApplicationCreateConnectDort request = connectRequest();
-        when(applicationCreateMapper.countByAppUrl("https://www.demo.com")).thenReturn(1);
+        when(applicationCreateMapper.countByAppUrl("www.demo.com")).thenReturn(1);
 
         BizException exception = assertThrows(
                 BizException.class,
@@ -247,7 +214,7 @@ class ApplicationCreateServiceImplTest {
     void applicationCreateConnectShouldThrowWhenInsertThrowsDuplicateKeyException() {
         User user = user();
         ApplicationCreateConnectDort request = connectRequest();
-        when(applicationCreateMapper.countByAppUrl("https://www.demo.com")).thenReturn(0);
+        when(applicationCreateMapper.countByAppUrl("www.demo.com")).thenReturn(0);
         when(applicationCreateMapper.insertApplication(any(Application.class)))
                 .thenThrow(new DuplicateKeyException("duplicate"));
 
@@ -264,7 +231,7 @@ class ApplicationCreateServiceImplTest {
     void applicationCreateConnectShouldThrowWhenInsertReturnsUnexpectedRows() {
         User user = user();
         ApplicationCreateConnectDort request = connectRequest();
-        when(applicationCreateMapper.countByAppUrl("https://www.demo.com")).thenReturn(0);
+        when(applicationCreateMapper.countByAppUrl("www.demo.com")).thenReturn(0);
         when(applicationCreateMapper.insertApplication(any(Application.class))).thenReturn(0);
 
         BizException exception = assertThrows(

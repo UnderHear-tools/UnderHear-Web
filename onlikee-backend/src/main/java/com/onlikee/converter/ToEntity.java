@@ -11,7 +11,6 @@ import com.onlikee.pojo.entity.Application;
 import com.onlikee.pojo.entity.User;
 import com.onlikee.pojo.entity.UserGitee;
 import com.onlikee.pojo.entity.UserGithub;
-import com.onlikee.util.ApplicationUrl;
 import com.onlikee.util.ApplicationUuidGenerator;
 import com.onlikee.util.FileSizeFormatter;
 import com.onlikee.util.ShortUuidGenerator;
@@ -150,7 +149,7 @@ public final class ToEntity {
         return "OAUTH";
     }
 
-    public static Application toApplication(User user, ApplicationCreateNewDort request, ApplicationUrl applicationUrl) {
+    public static Application toApplication(User user, ApplicationCreateNewDort request) {
         Application application = new Application();
         String appid = ApplicationUuidGenerator.next();
         String originalFilename = request.getAppFile().getOriginalFilename();
@@ -160,7 +159,7 @@ public final class ToEntity {
         application.setCreationMethod("new");
         application.setFramework(request.getFramework());
         application.setAppName(request.getAppName());
-        application.setAppUrl(applicationUrl.value());
+        application.setAppUrl(request.getAppUrl());
         application.setVisibility(request.getVisibility());
         application.setAppDescription(request.getAppDescription());
         application.setOriginalFilename(originalFilename);

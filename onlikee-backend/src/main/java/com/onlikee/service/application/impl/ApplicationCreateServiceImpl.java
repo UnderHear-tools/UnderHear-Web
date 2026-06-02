@@ -17,7 +17,6 @@ import com.onlikee.pojo.entity.Application;
 import com.onlikee.pojo.entity.User;
 import com.onlikee.service.application.ApplicationCreateService;
 import com.onlikee.service.lightoss.LightOssPublishService;
-import com.onlikee.util.ApplicationUrl;
 
 @Service
 public class ApplicationCreateServiceImpl implements ApplicationCreateService {
@@ -30,15 +29,15 @@ public class ApplicationCreateServiceImpl implements ApplicationCreateService {
 
     @Override
     public ApplicationCreateNewDore applicationCreateNew(User user, ApplicationCreateNewDort applicationCreateNewDort) {
-        ApplicationUrl applicationUrl = ApplicationUrl.parse(applicationCreateNewDort.getAppUrl());
-        Application application = ToEntity.toApplication(user, applicationCreateNewDort, applicationUrl);
-        if (applicationCreateMapper.countByAppUrl(applicationUrl.value()) > 0) {
+        String appUrl = applicationCreateNewDort.getAppUrl();
+        Application application = ToEntity.toApplication(user, applicationCreateNewDort);
+        if (applicationCreateMapper.countByAppUrl(appUrl) > 0) {
             throw new BizException(ErrorCode.APP_URL_ALREADY_EXISTS);
         }
 
         // 先发布站点并拿到回滚信息；后续任一步落库失败都要补偿清理已发布内容。
         lightOssPublishService.ensureBucketExists(user.getUuid());
-        LightOssPublishedSiteDort publishedSite = publishApplicationSite(user, applicationUrl, application, applicationCreateNewDort);
+        LightOssPublishedSiteDort publishedSite = publishApplicationSite(user, appUrl, application, applicationCreateNewDort);
 
         int rows;
         try {
@@ -60,7 +59,7 @@ public class ApplicationCreateServiceImpl implements ApplicationCreateService {
 
     @Override
     public ApplicationCreateNewDore applicationCreateConnect(User user, ApplicationCreateConnectDort applicationCreateConnectDort) {
-        String appUrl = ApplicationUrl.normalizeExternal(applicationCreateConnectDort.getAppUrl());
+        String appUrl = applicationCreateConnectDort.getAppUrl();
         Application application = ToEntity.toApplication(user, applicationCreateConnectDort, appUrl);
         if (applicationCreateMapper.countByAppUrl(appUrl) > 0) {
             throw new BizException(ErrorCode.APP_URL_ALREADY_EXISTS);
@@ -81,19 +80,19 @@ public class ApplicationCreateServiceImpl implements ApplicationCreateService {
 
     private LightOssPublishedSiteDort publishApplicationSite(
             User user,
-            ApplicationUrl applicationUrl,
+            String appUrl,
             Application application,
             ApplicationCreateNewDort applicationCreateNewDort) {
         if ("html".equalsIgnoreCase(application.getFramework())) {
             return lightOssPublishService.publishHtml(
                     user.getUuid(),
-                    applicationUrl.sitePrefix(),
+                    appUrl,
                     applicationCreateNewDort.getAppFile());
         }
 
         return lightOssPublishService.publishZipSite(
                 user.getUuid(),
-                applicationUrl.sitePrefix(),
+                appUrl,
                 applicationCreateNewDort.getAppFile());
     }
 }
