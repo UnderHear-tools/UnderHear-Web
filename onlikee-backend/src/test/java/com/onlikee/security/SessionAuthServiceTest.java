@@ -101,13 +101,11 @@ class SessionAuthServiceTest {
     @Test
     // JWT 解析失败时也应统一映射成未登录。
     void getCurrentUserShouldTranslateParseFailureToNotLogin() {
-        IllegalArgumentException cause = new IllegalArgumentException("bad token");
-        when(jwtTokenService.parseToken("bad-token")).thenThrow(cause);
+        when(jwtTokenService.parseToken("bad-token")).thenThrow(new IllegalArgumentException("bad token"));
 
         BizException exception = assertThrows(BizException.class, () -> sessionAuthService.getCurrentUser("bad-token"));
 
         assertEquals(ErrorCode.NOT_LOGIN.getCode(), exception.getCode());
-        assertSame(cause, exception.getCause());
     }
 
     @Test

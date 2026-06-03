@@ -21,7 +21,7 @@ public class GlobalExceptionHandler {
     // 处理业务代码主动抛出的自定义异常。
     @ExceptionHandler(BizException.class)
     public ResponseEntity<ApiResponse<Void>> handleBizException(BizException ex) {
-        log.warn("Business exception: code={}, message={}", ex.getCode(), ex.getMessage(), ex);
+        log.warn("Business exception: {}", ex.getMessage());
         return ResponseEntity.status(ex.getStatus())
                 .body(ApiResponse.fail(ex.getCode(), ex.getMessage()));
     }

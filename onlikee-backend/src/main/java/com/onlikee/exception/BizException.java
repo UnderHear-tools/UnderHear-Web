@@ -18,18 +18,6 @@ public class BizException extends RuntimeException {
         this.status = errorCode.getStatus();
     }
 
-    public BizException(ErrorCode errorCode, Throwable cause) {
-        super(errorCode.getMessage(), cause);
-        this.code = errorCode.getCode();
-        this.status = errorCode.getStatus();
-    }
-
-    public BizException(ErrorCode errorCode, String message, Throwable cause) {
-        super(message, cause);
-        this.code = errorCode.getCode();
-        this.status = errorCode.getStatus();
-    }
-
     public BizException(String code, String message, HttpStatusCode status) {
         super(message);
         this.code = code;

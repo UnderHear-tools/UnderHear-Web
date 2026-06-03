@@ -96,7 +96,7 @@ public class SessionAuthService {
         try {
             return jwtTokenService.parseToken(token);
         } catch (Exception ex) {
-            throw new BizException(ErrorCode.NOT_LOGIN, ex);
+            throw new BizException(ErrorCode.NOT_LOGIN);
         }
     }
 
