@@ -13,18 +13,18 @@ public interface ApplicationCreateMapper {
     @Select("""
             select count(1)
             from `application`
-            where `app_english_name` = #{appEnglishName}
+            where `app_url` = #{appUrl}
             """)
-    int countByAppEnglishName(@Param("appEnglishName") String appEnglishName);
+    int countByAppUrl(@Param("appUrl") String appUrl);
 
     @Insert("""
             insert into `application`
-            (`appid`, `owner_uuid`, `creation_method`, `framework`, `app_name`, `app_english_name`,
-             `app_url`, `visibility`, `app_description`, `original_filename`,
+            (`appid`, `owner_uuid`, `creation_method`, `framework`, `app_name`, `app_url`,
+             `visibility`, `app_description`, `original_filename`,
              `original_file_type`, `original_file_size`)
             values
-            (#{appid}, #{ownerUuid}, #{creationMethod}, #{framework}, #{appName}, #{appEnglishName},
-             #{appUrl}, #{visibility}, #{appDescription}, #{originalFilename},
+            (#{appid}, #{ownerUuid}, #{creationMethod}, #{framework}, #{appName}, #{appUrl},
+             #{visibility}, #{appDescription}, #{originalFilename},
              #{originalFileType}, #{originalFileSize})
             """)
     int insertApplication(Application application);

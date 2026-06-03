@@ -9,8 +9,9 @@ import com.onlikee.converter.ToEntity;
 import com.onlikee.exception.BizException;
 import com.onlikee.exception.ErrorCode;
 import com.onlikee.mapper.application.ApplicationCreateMapper;
-import com.onlikee.pojo.dto.request.LightOssPublishedSiteDort;
+import com.onlikee.pojo.dto.request.ApplicationCreateConnectDort;
 import com.onlikee.pojo.dto.request.ApplicationCreateNewDort;
+import com.onlikee.pojo.dto.request.LightOssPublishedSiteDort;
 import com.onlikee.pojo.dto.response.ApplicationCreateNewDore;
 import com.onlikee.pojo.entity.Application;
 import com.onlikee.pojo.entity.User;
@@ -28,21 +29,22 @@ public class ApplicationCreateServiceImpl implements ApplicationCreateService {
 
     @Override
     public ApplicationCreateNewDore applicationCreateNew(User user, ApplicationCreateNewDort applicationCreateNewDort) {
+        String appUrl = applicationCreateNewDort.getAppUrl();
         Application application = ToEntity.toApplication(user, applicationCreateNewDort);
-        if (applicationCreateMapper.countByAppEnglishName(application.getAppEnglishName()) > 0) {
-            throw new BizException(ErrorCode.APP_ENGLISH_NAME_ALREADY_EXISTS);
+        if (applicationCreateMapper.countByAppUrl(appUrl) > 0) {
+            throw new BizException(ErrorCode.APP_URL_ALREADY_EXISTS);
         }
 
         // 先发布站点并拿到回滚信息；后续任一步落库失败都要补偿清理已发布内容。
         lightOssPublishService.ensureBucketExists(user.getUuid());
-        LightOssPublishedSiteDort publishedSite = publishApplicationSite(user, application, applicationCreateNewDort);
+        LightOssPublishedSiteDort publishedSite = publishApplicationSite(user, appUrl, application, applicationCreateNewDort);
 
         int rows;
         try {
             rows = applicationCreateMapper.insertApplication(application);
         } catch (DuplicateKeyException ex) {
             lightOssPublishService.cleanupPublishedSite(publishedSite);
-            throw new BizException(ErrorCode.APP_ENGLISH_NAME_ALREADY_EXISTS);
+            throw new BizException(ErrorCode.APP_URL_ALREADY_EXISTS);
         } catch (RuntimeException ex) {
             lightOssPublishService.cleanupPublishedSite(publishedSite);
             throw ex;
@@ -55,20 +57,42 @@ public class ApplicationCreateServiceImpl implements ApplicationCreateService {
         return ToDore.toApplicationCreateNewDore(application);
     }
 
+    @Override
+    public ApplicationCreateNewDore applicationCreateConnect(User user, ApplicationCreateConnectDort applicationCreateConnectDort) {
+        String appUrl = applicationCreateConnectDort.getAppUrl();
+        Application application = ToEntity.toApplication(user, applicationCreateConnectDort, appUrl);
+        if (applicationCreateMapper.countByAppUrl(appUrl) > 0) {
+            throw new BizException(ErrorCode.APP_URL_ALREADY_EXISTS);
+        }
+
+        int rows;
+        try {
+            rows = applicationCreateMapper.insertApplication(application);
+        } catch (DuplicateKeyException ex) {
+            throw new BizException(ErrorCode.APP_URL_ALREADY_EXISTS);
+        }
+
+        if (rows != 1) {
+            throw new BizException(ErrorCode.APPLICATION_CREATE_FAILED);
+        }
+        return ToDore.toApplicationCreateNewDore(application);
+    }
+
     private LightOssPublishedSiteDort publishApplicationSite(
             User user,
+            String appUrl,
             Application application,
             ApplicationCreateNewDort applicationCreateNewDort) {
         if ("html".equalsIgnoreCase(application.getFramework())) {
             return lightOssPublishService.publishHtml(
                     user.getUuid(),
-                    application.getAppEnglishName(),
+                    appUrl,
                     applicationCreateNewDort.getAppFile());
         }
 
         return lightOssPublishService.publishZipSite(
                 user.getUuid(),
-                application.getAppEnglishName(),
+                appUrl,
                 applicationCreateNewDort.getAppFile());
     }
 }

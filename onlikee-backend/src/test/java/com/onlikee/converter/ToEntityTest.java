@@ -11,6 +11,7 @@ import java.util.UUID;
 import org.junit.jupiter.api.Test;
 import org.springframework.mock.web.MockMultipartFile;
 
+import com.onlikee.pojo.dto.request.ApplicationCreateConnectDort;
 import com.onlikee.pojo.dto.request.ApplicationCreateNewDort;
 import com.onlikee.pojo.dto.request.UserGiteeDort;
 import com.onlikee.pojo.dto.request.UserGithubDort;
@@ -141,7 +142,7 @@ class ToEntityTest {
         ApplicationCreateNewDort request = new ApplicationCreateNewDort();
         request.setFramework("html");
         request.setAppName("Demo");
-        request.setAppEnglishName("demo");
+        request.setAppUrl("https://demo.onlikee.cn/");
         request.setVisibility("public");
         request.setAppDescription("description");
         request.setAppFile(new MockMultipartFile(
@@ -158,13 +159,39 @@ class ToEntityTest {
         assertEquals("new", application.getCreationMethod());
         assertEquals("html", application.getFramework());
         assertEquals("Demo", application.getAppName());
-        assertEquals("demo", application.getAppEnglishName());
         assertEquals("https://demo.onlikee.cn/", application.getAppUrl());
         assertEquals("public", application.getVisibility());
         assertEquals("description", application.getAppDescription());
         assertEquals("index.html", application.getOriginalFilename());
         assertEquals("text/html", application.getOriginalFileType());
         assertEquals("13 B", application.getOriginalFileSize());
+    }
+
+    @Test
+    // 已有网站接入转换时不应依赖上传文件元信息。
+    void toApplicationShouldBuildConnectApplicationMetadata() {
+        User user = new User();
+        user.setUuid("user-1");
+        ApplicationCreateConnectDort request = new ApplicationCreateConnectDort();
+        request.setAppName("Demo Website");
+        request.setAppUrl("https://www.demo.com");
+        request.setVisibility("public");
+        request.setAppDescription("description");
+
+        Application application = ToEntity.toApplication(user, request, "https://www.demo.com");
+
+        assertNotNull(application.getAppid());
+        UUID.fromString(application.getAppid());
+        assertEquals("user-1", application.getOwnerUuid());
+        assertEquals("connect", application.getCreationMethod());
+        assertEquals("website", application.getFramework());
+        assertEquals("Demo Website", application.getAppName());
+        assertEquals("https://www.demo.com", application.getAppUrl());
+        assertEquals("public", application.getVisibility());
+        assertEquals("description", application.getAppDescription());
+        assertEquals("", application.getOriginalFilename());
+        assertEquals("", application.getOriginalFileType());
+        assertEquals("0 B", application.getOriginalFileSize());
     }
 
     private UserGithubDort githubDort() {

@@ -58,14 +58,14 @@
           </div>
           <ThirdStep
             :app-name="appName"
-            :app-english-name="appEnglishName"
+            :app-url-prefix="appUrlPrefix"
             :visibility="visibility"
             :app-description="appDescription"
             :app-name-error="displayedAppNameError"
-            :app-english-name-error="displayedAppEnglishNameError"
+            :app-url-prefix-error="displayedAppUrlPrefixError"
             :app-description-error="displayedAppDescriptionError"
             @update:app-name="setAppName"
-            @update:app-english-name="setAppEnglishName"
+            @update:app-url-prefix="setAppUrlPrefix"
             @update:visibility="setVisibility"
             @update:app-description="setAppDescription"
           />
@@ -107,13 +107,13 @@ const {
   files,
   htmlSource,
   appName,
-  appEnglishName,
+  appUrlPrefix,
   visibility,
   appDescription,
   frameworkError,
   uploadError,
   displayedAppNameError,
-  displayedAppEnglishNameError,
+  displayedAppUrlPrefixError,
   displayedAppDescriptionError,
   showFrameworkError,
   showUploadError,
@@ -121,7 +121,7 @@ const {
   setFiles,
   setHtmlSource,
   setAppName,
-  setAppEnglishName,
+  setAppUrlPrefix,
   setVisibility,
   setAppDescription,
   prepareSubmit,

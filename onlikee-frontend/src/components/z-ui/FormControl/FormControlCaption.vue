@@ -14,7 +14,7 @@ defineOptions({
 .form-control__caption {
   margin: 0;
   font-size: 12px;
-  line-height: 1.4;
+  line-height: 1.3333333333;
   color: var(--fgColor-muted, #656d76);
 }
 </style>

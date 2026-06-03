@@ -12,7 +12,6 @@ public class Application {
     private String creationMethod;
     private String framework;
     private String appName;
-    private String appEnglishName;
     private String appUrl;
     private String visibility;
     private String appDescription;

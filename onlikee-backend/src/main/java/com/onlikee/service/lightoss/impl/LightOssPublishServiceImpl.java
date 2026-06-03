@@ -80,13 +80,13 @@ public class LightOssPublishServiceImpl implements LightOssPublishService {
     @Override
     // 直接把单个 HTML 文件发布成站点。
     // 这里依赖 Light OSS 的 publish/file 接口自动处理入口文件信息。
-    public LightOssPublishedSiteDort publishHtml(String bucketName, String appEnglishName, MultipartFile appFile) {
+    public LightOssPublishedSiteDort publishHtml(String bucketName, String sitePrefix, MultipartFile appFile) {
         String originalFilename = requireFilename(appFile);
 
         MultipartBodyBuilder builder = new MultipartBodyBuilder();
         builder.part("bucket", bucketName);
-        builder.part("parent_prefix", appEnglishName);
-        builder.part("domains", JSON.toJSONString(List.of(buildDomain(appEnglishName))));
+        builder.part("parent_prefix", sitePrefix);
+        builder.part("domains", JSON.toJSONString(List.of(buildDomain(sitePrefix))));
         builder.part("enabled", "true");
         builder.part("error_document", "");
         builder.part("spa_fallback", "true");
@@ -104,7 +104,7 @@ public class LightOssPublishServiceImpl implements LightOssPublishService {
     // 2. 校验包结构并生成上传清单
     // 3. 调 Light OSS 批量发布接口
     // 4. 无论成功失败都清理本地临时目录
-    public LightOssPublishedSiteDort publishZipSite(String bucketName, String appEnglishName, MultipartFile appFile) {
+    public LightOssPublishedSiteDort publishZipSite(String bucketName, String sitePrefix, MultipartFile appFile) {
         Path tempDir;
         try {
             tempDir = Files.createTempDirectory("onlikee-site-publish-");
@@ -118,8 +118,8 @@ public class LightOssPublishServiceImpl implements LightOssPublishService {
             // Light OSS 批量发布接口要求 manifest 描述每个 multipart 字段和目标相对路径。
             MultipartBodyBuilder builder = new MultipartBodyBuilder();
             builder.part("bucket", bucketName);
-            builder.part("parent_prefix", appEnglishName);
-            builder.part("domains", JSON.toJSONString(List.of(buildDomain(appEnglishName))));
+            builder.part("parent_prefix", sitePrefix);
+            builder.part("domains", JSON.toJSONString(List.of(buildDomain(sitePrefix))));
             builder.part("enabled", "true");
             builder.part("index_document", INDEX_DOCUMENT);
             builder.part("error_document", "");
@@ -449,7 +449,7 @@ public class LightOssPublishServiceImpl implements LightOssPublishService {
     }
 
     // 把 Light OSS 的错误码翻译成后端自己的业务异常：
-    // - 域名冲突 => 应用英文名重复
+    // - 域名冲突 => 应用地址重复
     // - 包校验相关错误 => 应用包无效
     // - 其他错误 => 应用发布失败
     private BizException translatePublishException(RestClientResponseException ex, boolean packageValidationEnabled) {
@@ -458,7 +458,7 @@ public class LightOssPublishServiceImpl implements LightOssPublishService {
         String errorMessage = extractErrorMessage(responseBody);
 
         if ("domain_conflict".equals(errorCode)) {
-            return new BizException(ErrorCode.APP_ENGLISH_NAME_ALREADY_EXISTS);
+            return new BizException(ErrorCode.APP_URL_ALREADY_EXISTS);
         }
 
         if (packageValidationEnabled
@@ -493,9 +493,9 @@ public class LightOssPublishServiceImpl implements LightOssPublishService {
         return envelope.getJSONObject("error");
     }
 
-    // 站点访问域名由应用英文名直接拼接固定后缀得到。
-    private String buildDomain(String appEnglishName) {
-        return appEnglishName + SITE_DOMAIN_SUFFIX;
+    // 站点访问域名由应用 URL 前缀直接拼接固定后缀得到。
+    private String buildDomain(String sitePrefix) {
+        return sitePrefix + SITE_DOMAIN_SUFFIX;
     }
 
     // 发布接口依赖原始文件名；缺少文件名时按无效应用包处理。

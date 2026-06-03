@@ -33,6 +33,8 @@
 - Dort 表示 `Data Object Request`。若一个数据对象不是由 Entity、其转换对象，或这些转换对象继续转换而来，则归类为 Dort。
 - Dore 表示 `Data Object Response`。凡由 Entity、其转换对象，或这些转换对象继续转换得到的数据对象，均归类为 Dore。
 - 新增请求 DTO 放在 `pojo.dto.request`，命名以 `Dort` 结尾。
+- 接口接收到的业务入参默认先绑定到对应 Dort；不要在 controller 方法里直接接收零散业务字段，除非是 Spring 必需的基础入参（如 `@CookieValue`、文件上传绑定对象等）。
+- 一个接口的请求字段、必填性、格式约束和跨字段请求级校验，应优先集中在对应 Dort 中声明，保证请求契约集中可见。
 - 新增响应 DTO 放在 `pojo.dto.response`，命名以 `Dore` 结尾。
 - 实体对象放在 `pojo.entity`，保持与数据库字段语义一致，命名使用单数形式。
 - DTO 与 Entity 之间的转换统一放到 `ToEntity`、`ToDort`、`ToDore` 中；不要把转换逻辑散落在 controller 或 mapper 里。
@@ -69,8 +71,9 @@
 
 ## 参数校验与异常处理
 
-- 请求参数校验放在 Dort 上，优先使用 `jakarta.validation` 注解。
+- 请求参数校验优先放在 Dort 上，优先使用 `jakarta.validation` 注解；controller 只负责通过 `@Valid` / `@Validated` 触发校验，不在 controller 中重复写字段合法性判断。
 - 文件上传这类无法直接用 `@NotBlank` 表达的约束，沿用当前 `@AssertTrue` 自定义校验方法的写法。
+- 仅依赖请求自身数据的规则（如必填、长度、枚举值、URL/邮箱格式、字段组合约束）放在 Dort；依赖当前用户、数据库唯一性、外部服务状态等业务上下文的规则放在 service。
 - 新增业务错误时，先补充 `ErrorCode`，再在业务中抛出 `BizException(ErrorCode.XXX)`。
 - 非必要不要直接 new 通用 `RuntimeException` 表达业务失败。
 - 统一依赖 `GlobalExceptionHandler` 输出错误响应；不要在各个 controller 中重复写 try/catch。

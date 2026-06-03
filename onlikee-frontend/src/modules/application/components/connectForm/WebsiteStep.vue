@@ -1,6 +1,6 @@
 <template>
   <form
-    class="app-info-form"
+    class="website-form"
     @submit.prevent
   >
     <FormControl required>
@@ -23,23 +23,22 @@
 
     <FormControl required>
       <FormControl.Label>
-        应用地址前缀
+        网站地址
       </FormControl.Label>
       <Input
-        :model-value="appUrlPrefix"
-        placeholder="请输入地址前缀"
-        minlength="1"
-        maxlength="63"
-        @update:model-value="value => emit('update:app-url-prefix', value)"
+        :model-value="appUrl"
+        type="url"
+        placeholder="请输入网站地址"
+        @update:model-value="value => emit('update:app-url', value)"
       />
       <FormControl.Validation
-        v-if="appUrlPrefixError"
+        v-if="appUrlError"
         variant="error"
       >
-        {{ appUrlPrefixError }}
+        {{ appUrlError }}
       </FormControl.Validation>
-      <FormControl.Caption v-if="appUrlPrefix.trim()">
-        应用地址：https://{{ appUrlPrefix }}.onlikee.cn/
+      <FormControl.Caption v-if="appUrl.trim() && !appUrlError">
+        发布地址：{{ normalizedAppUrl }}
       </FormControl.Caption>
     </FormControl>
 
@@ -137,23 +136,24 @@ interface VisibilityOption {
 
 interface Props {
   appName: string
-  appUrlPrefix: string
+  appUrl: string
+  normalizedAppUrl: string
   visibility: string
   appDescription: string
   appNameError?: string
-  appUrlPrefixError?: string
+  appUrlError?: string
   appDescriptionError?: string
 }
 
 const props = withDefaults(defineProps<Props>(), {
   appNameError: '',
-  appUrlPrefixError: '',
+  appUrlError: '',
   appDescriptionError: ''
 })
 
 const emit = defineEmits<{
   'update:app-name': [value: string]
-  'update:app-url-prefix': [value: string]
+  'update:app-url': [value: string]
   'update:visibility': [value: string]
   'update:app-description': [value: string]
 }>()
@@ -186,7 +186,7 @@ function selectVisibility(value: string) {
 </script>
 
 <style scoped>
-.app-info-form {
+.website-form {
   display: grid;
   gap: 12px;
 }

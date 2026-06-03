@@ -54,11 +54,27 @@
       </ComponentDocsDemoBlock>
     </ComponentDocsSection>
 
+    <ComponentDocsSection title="前后缀文本">
+      <template #description>
+        使用 <code>leadingText</code> 与 <code>trailingText</code> 展示固定文本，原生 input 属性仍会透传到内部输入框。
+      </template>
+      <ComponentDocsDemoBlock :code="demo4Code">
+        <Input
+          v-model="domainPrefix"
+          class="affix-input"
+          leading-text="https://"
+          trailing-text=".onlikee.cn"
+          placeholder="my-app"
+          maxlength="63"
+        />
+      </ComponentDocsDemoBlock>
+    </ComponentDocsSection>
+
     <ComponentDocsSection title="结合 FormControl">
       <template #description>
         与 <code>FormControl</code> 组合，可快速添加标签、校验信息和辅助文案。
       </template>
-      <ComponentDocsDemoBlock :code="demo4Code">
+      <ComponentDocsDemoBlock :code="demo5Code">
         <FormControl>
           <FormControl.Label>
             Name <span class="required-mark">*</span>
@@ -81,7 +97,7 @@
       <template #description>
         通过 <code>size</code> 属性设置组件大小，支持 <code>small</code>、<code>medium</code> 和 <code>large</code>，默认为 <code>medium</code>。
       </template>
-      <ComponentDocsDemoBlock :code="demo5Code">
+      <ComponentDocsDemoBlock :code="demo6Code">
         <div
           class="demo-row"
           style="align-items: center;"
@@ -151,6 +167,7 @@ const val1 = ref('')
 const val2 = ref('Disabled value')
 const email = ref('')
 const password = ref('')
+const domainPrefix = ref('docs')
 const profileName = ref('Mona L!$a')
 const valSmall = ref('')
 const valMedium = ref('')
@@ -197,6 +214,31 @@ const password = ref('')
 <\/script>`
 
 const demo4Code = `<template>
+  <Input
+    v-model="domainPrefix"
+    class="affix-input"
+    leading-text="https://"
+    trailing-text=".onlikee.cn"
+    placeholder="my-app"
+    maxlength="63"
+  />
+</template>
+
+<script setup lang="ts">
+import { ref } from 'vue'
+import { Input } from '@/components/z-ui/Input'
+
+const domainPrefix = ref('docs')
+<\/script>
+
+<style scoped>
+.affix-input {
+  width: 100%;
+  max-width: 360px;
+}
+<\/style>`
+
+const demo5Code = `<template>
   <FormControl>
     <FormControl.Label>Name <span>*</span></FormControl.Label>
     <Input v-model="name" />
@@ -216,7 +258,7 @@ const name = ref('Mona L!$a')
 const hasInvalidChars = computed(() => /[^a-zA-Z\\s]/.test(name.value))
 <\/script>`
 
-const demo5Code = `<template>
+const demo6Code = `<template>
   <div style="display: flex; gap: 12px; flex-wrap: wrap; align-items: center;">
     <Input v-model="valSmall" size="small" placeholder="small" />
     <Input v-model="valMedium" size="medium" placeholder="medium" />
@@ -242,7 +284,9 @@ const apiCols: TableColumn[] = [
 
 const apiRows = [
   { name: 'modelValue', description: '绑定值（v-model）', type: 'string', default: "''" },
-  { name: 'size', description: '输入框尺寸', type: "'small' | 'medium' | 'large'", default: "'medium'" }
+  { name: 'size', description: '输入框尺寸', type: "'small' | 'medium' | 'large'", default: "'medium'" },
+  { name: 'leadingText', description: '输入框前缀固定文本', type: 'string', default: "''" },
+  { name: 'trailingText', description: '输入框后缀固定文本', type: 'string', default: "''" }
 ]
 
 const nativeRows = [
@@ -280,6 +324,11 @@ const eventRows = [
 
 .required-mark {
   color: var(--fgColor-danger, #d1242f);
+}
+
+.affix-input {
+  width: 100%;
+  max-width: 360px;
 }
 
 @media (max-width: 768px) {
