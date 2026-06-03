@@ -25,7 +25,7 @@
           <div class="creatForm-heading">
             填写网站与基本信息
           </div>
-          <WebsiteStep
+          <FirstStep
             :app-name="appName"
             :app-url="appUrl"
             :normalized-app-url="normalizedAppUrl"
@@ -64,7 +64,7 @@ import { Container } from '@/components/z-ui/Container'
 import { Button } from '@/components/z-ui/Button'
 import { Timeline } from '@/components/z-ui/Timeline'
 import { applicationCreateConnect } from '@/modules/application/api/create-connect'
-import WebsiteStep from '@/modules/application/components/connectForm/WebsiteStep.vue'
+import FirstStep from '@/modules/application/components/connectForm/FirstStep.vue'
 import { useConnectApplicationForm } from '@/modules/application/components/connectForm/useConnectApplicationForm'
 import RocketIcon from '@/components/octicons-vue3/icons/rocket.vue'
 
