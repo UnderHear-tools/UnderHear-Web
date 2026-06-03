@@ -23,11 +23,13 @@
 
     <FormControl required>
       <FormControl.Label>
-        应用地址前缀
+        应用地址
       </FormControl.Label>
       <Input
         :model-value="appUrlPrefix"
-        placeholder="请输入地址前缀"
+        placeholder="请输入应用地址"
+        leading-text="https://"
+        trailing-text=".onlikee.cn"
         minlength="1"
         maxlength="63"
         @update:model-value="value => emit('update:app-url-prefix', value)"

@@ -47,6 +47,10 @@ const validationVariant = context.validationVariant
   outline-offset: -1px;
 }
 
+.form-control[data-validation-variant='error'] :deep(.input-wrapper .input:focus) {
+  outline: none;
+}
+
 .form-control[data-validation-variant='success'] :deep(.input),
 .form-control[data-validation-variant='success'] :deep(.input-wrapper),
 .form-control[data-validation-variant='success'] :deep(.textarea) {

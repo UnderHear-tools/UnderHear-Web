@@ -70,7 +70,7 @@ export function useCreateApplicationForm() {
     const trimmedAppUrlPrefix = appUrlPrefix.value.trim()
 
     if (!trimmedAppUrlPrefix) {
-      return '请输入应用地址前缀。'
+      return '请输入应用地址。'
     }
 
     if (!/^[a-z0-9](?:[a-z0-9-]*[a-z0-9])?$/.test(appUrlPrefix.value)) {
@@ -78,7 +78,7 @@ export function useCreateApplicationForm() {
     }
 
     if (appUrlPrefix.value.length > 63) {
-      return '应用地址前缀不能超过 63 个字符。'
+      return '不能超过 63 个字符。'
     }
 
     return ''
