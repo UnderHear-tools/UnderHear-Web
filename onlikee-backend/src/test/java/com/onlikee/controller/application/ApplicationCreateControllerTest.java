@@ -172,14 +172,14 @@ class ApplicationCreateControllerTest {
     }
 
     @Test
-    // Connect 的 appUrl 必须是完整 HTTP(S) URL，非法值应在登录态解析前被拦截。
+    // Connect 的 appUrl 必须是 HTTP(S) URL 或裸域名，非法值应在登录态解析前被拦截。
     void applicationCreateConnectShouldReturnValidationFailedWhenAppUrlIsInvalid() throws Exception {
         mockMvc.perform(post("/application/create/connect")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content("""
                                 {
                                   "appName": "Demo",
-                                  "appUrl": "www.demo.com",
+                                  "appUrl": "demo",
                                   "visibility": "public",
                                   "appDescription": "description"
                                 }

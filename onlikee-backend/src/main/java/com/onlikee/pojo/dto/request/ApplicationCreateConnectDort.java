@@ -25,6 +25,6 @@ public class ApplicationCreateConnectDort {
         if (appUrl == null || appUrl.isBlank()) {
             return true;
         }
-        return UrlUtils.isValid(appUrl);
+        return UrlUtils.isUrl(appUrl);
     }
 }

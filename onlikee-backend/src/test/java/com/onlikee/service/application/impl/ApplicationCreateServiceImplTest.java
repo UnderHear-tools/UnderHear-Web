@@ -171,8 +171,8 @@ class ApplicationCreateServiceImplTest {
     }
 
     @Test
-    // 接入已有网站时应按原始 URL 落库，不发布 Light OSS 站点。
-    void applicationCreateConnectShouldInsertOriginalUrlWithoutLightOss() {
+    // 接入已有网站时应规范化 URL 后落库，不发布 Light OSS 站点。
+    void applicationCreateConnectShouldNormalizeUrlWithoutLightOss() {
         User user = user();
         ApplicationCreateConnectDort request = connectRequest();
         when(applicationCreateMapper.countByAppUrl("https://www.demo.com")).thenReturn(0);
@@ -281,7 +281,7 @@ class ApplicationCreateServiceImplTest {
     private ApplicationCreateConnectDort connectRequest() {
         ApplicationCreateConnectDort request = new ApplicationCreateConnectDort();
         request.setAppName("Demo Website");
-        request.setAppUrl("https://www.demo.com");
+        request.setAppUrl("HTTPS://WWW.DEMO.COM");
         request.setVisibility("public");
         request.setAppDescription("description");
         return request;

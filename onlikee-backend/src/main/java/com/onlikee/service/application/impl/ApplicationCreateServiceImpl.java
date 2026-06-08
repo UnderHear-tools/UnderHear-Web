@@ -17,6 +17,7 @@ import com.onlikee.pojo.entity.Application;
 import com.onlikee.pojo.entity.User;
 import com.onlikee.service.application.ApplicationCreateService;
 import com.onlikee.service.lightoss.LightOssPublishService;
+import com.onlikee.util.UrlUtils;
 
 @Service
 public class ApplicationCreateServiceImpl implements ApplicationCreateService {
@@ -59,7 +60,7 @@ public class ApplicationCreateServiceImpl implements ApplicationCreateService {
 
     @Override
     public ApplicationCreateNewDore applicationCreateConnect(User user, ApplicationCreateConnectDort applicationCreateConnectDort) {
-        String appUrl = applicationCreateConnectDort.getAppUrl();
+        String appUrl = UrlUtils.normalizeUrl(UrlUtils.smartCompleteUrl(applicationCreateConnectDort.getAppUrl()));
         Application application = ToEntity.toApplication(user, applicationCreateConnectDort, appUrl);
         if (applicationCreateMapper.countByAppUrl(appUrl) > 0) {
             throw new BizException(ErrorCode.APP_URL_ALREADY_EXISTS);
