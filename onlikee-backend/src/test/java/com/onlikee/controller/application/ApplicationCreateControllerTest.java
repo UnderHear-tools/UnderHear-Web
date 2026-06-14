@@ -126,7 +126,7 @@ class ApplicationCreateControllerTest {
                         .cookie(new Cookie("auth_token", "token")))
                 .andExpect(status().isBadRequest())
                 .andExpect(jsonPath("$.code").value("VALIDATION_FAILED"))
-                .andExpect(jsonPath("$.message").value("参数校验失败"));
+                .andExpect(jsonPath("$.message").value("appFile不能为空"));
 
         verify(sessionAuthService, never()).getCurrentUser(any());
         verify(applicationCreateService, never()).applicationCreateNew(any(), any());
@@ -144,7 +144,7 @@ class ApplicationCreateControllerTest {
                         .cookie(new Cookie("auth_token", "token")))
                 .andExpect(status().isBadRequest())
                 .andExpect(jsonPath("$.code").value("VALIDATION_FAILED"))
-                .andExpect(jsonPath("$.message").value("参数校验失败"));
+                .andExpect(jsonPath("$.message").value("appUrl不能为空"));
 
         verify(sessionAuthService, never()).getCurrentUser(any());
         verify(applicationCreateService, never()).applicationCreateNew(any(), any());
@@ -165,7 +165,7 @@ class ApplicationCreateControllerTest {
                         .cookie(new Cookie("auth_token", "token")))
                 .andExpect(status().isBadRequest())
                 .andExpect(jsonPath("$.code").value("VALIDATION_FAILED"))
-                .andExpect(jsonPath("$.message").value("参数校验失败"));
+                .andExpect(jsonPath("$.message").value("appUrl不能为空"));
 
         verify(sessionAuthService, never()).getCurrentUser(any());
         verify(applicationCreateService, never()).applicationCreateConnect(any(), any());
@@ -187,7 +187,7 @@ class ApplicationCreateControllerTest {
                         .cookie(new Cookie("auth_token", "token")))
                 .andExpect(status().isBadRequest())
                 .andExpect(jsonPath("$.code").value("VALIDATION_FAILED"))
-                .andExpect(jsonPath("$.message").value("参数校验失败"));
+                .andExpect(jsonPath("$.message").value("appUrl格式无效"));
 
         verify(sessionAuthService, never()).getCurrentUser(any());
         verify(applicationCreateService, never()).applicationCreateConnect(any(), any());

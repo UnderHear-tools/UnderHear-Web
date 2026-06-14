@@ -4,7 +4,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.validation.BindException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
@@ -26,10 +25,15 @@ public class GlobalExceptionHandler {
                 .body(ApiResponse.fail(ex.getCode(), ex.getMessage()));
     }
 
-    // 处理参数绑定失败和 @Valid 校验失败，统一返回参数校验错误。
-    @ExceptionHandler({ BindException.class, MethodArgumentNotValidException.class })
-    public ResponseEntity<ApiResponse<Void>> handleValidationException(Exception ex) {
-        String message = ErrorCode.VALIDATION_FAILED.getMessage();
+    // 处理 @Valid 校验失败，返回 DTO 注解中的首个校验消息。
+    @ExceptionHandler(MethodArgumentNotValidException.class)
+    public ResponseEntity<ApiResponse<Void>> handleValidationException(MethodArgumentNotValidException ex) {
+        String message = ex.getBindingResult()
+                .getFieldErrors()
+                .stream()
+                .findFirst()
+                .map(error -> error.getDefaultMessage())
+                .orElse(ErrorCode.VALIDATION_FAILED.getMessage());
         log.warn("Validation failed: {}", message);
         return ResponseEntity.status(ErrorCode.VALIDATION_FAILED.getStatus())
                 .body(ApiResponse.fail(ErrorCode.VALIDATION_FAILED.getCode(), message));
