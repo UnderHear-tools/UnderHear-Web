@@ -27,7 +27,6 @@
       </FormControl.Label>
       <Input
         :model-value="appUrl"
-        type="url"
         placeholder="请输入网站地址"
         @update:model-value="value => emit('update:app-url', value)"
       />
@@ -38,7 +37,7 @@
         {{ appUrlError }}
       </FormControl.Validation>
       <FormControl.Caption v-if="appUrl.trim() && !appUrlError">
-        发布地址：{{ normalizedAppUrl }}
+        发布地址：{{ appUrl }}
       </FormControl.Caption>
     </FormControl>
 
@@ -137,7 +136,6 @@ interface VisibilityOption {
 interface Props {
   appName: string
   appUrl: string
-  normalizedAppUrl: string
   visibility: string
   appDescription: string
   appNameError?: string

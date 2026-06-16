@@ -15,10 +15,6 @@ export function useConnectApplicationForm() {
   const touchedAppUrl = ref(false)
   const touchedAppDescription = ref(false)
 
-  const normalizedAppUrl = computed(() => {
-    return normalizeAppUrl(appUrl.value)
-  })
-
   const appNameError = computed(() => {
     if (!appName.value.trim()) {
       return '请输入应用名称。'
@@ -34,10 +30,6 @@ export function useConnectApplicationForm() {
   const appUrlError = computed(() => {
     if (!appUrl.value.trim()) {
       return '请输入网站地址。'
-    }
-
-    if (!isValidHttpUrl(normalizedAppUrl.value)) {
-      return '请输入有效的网站地址，仅支持 http:// 或 https://。'
     }
 
     return ''
@@ -95,7 +87,7 @@ export function useConnectApplicationForm() {
   function buildRequest(): ConnectApplicationRequest {
     return {
       appName: appName.value,
-      appUrl: normalizedAppUrl.value,
+      appUrl: appUrl.value,
       visibility: visibility.value,
       appDescription: appDescription.value
     }
@@ -109,7 +101,6 @@ export function useConnectApplicationForm() {
   return {
     appName,
     appUrl,
-    normalizedAppUrl,
     visibility,
     appDescription,
     displayedAppNameError,
@@ -122,34 +113,4 @@ export function useConnectApplicationForm() {
     prepareSubmit,
     buildRequest
   }
-}
-
-function normalizeAppUrl(value: string) {
-  const trimmedValue = value.trim()
-  if (!trimmedValue) {
-    return ''
-  }
-
-  if (hasScheme(trimmedValue)) {
-    return trimmedValue
-  }
-
-  return `https://${trimmedValue}`
-}
-
-function isValidHttpUrl(value: string) {
-  if (!value || /\s/.test(value)) {
-    return false
-  }
-
-  try {
-    const url = new URL(value)
-    return (url.protocol === 'http:' || url.protocol === 'https:') && Boolean(url.hostname)
-  } catch {
-    return false
-  }
-}
-
-function hasScheme(value: string) {
-  return /^[A-Za-z][A-Za-z0-9+.-]*:/.test(value)
 }

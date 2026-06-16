@@ -28,7 +28,6 @@
           <FirstStep
             :app-name="appName"
             :app-url="appUrl"
-            :normalized-app-url="normalizedAppUrl"
             :visibility="visibility"
             :app-description="appDescription"
             :app-name-error="displayedAppNameError"
@@ -73,7 +72,6 @@ const router = useRouter()
 const {
   appName,
   appUrl,
-  normalizedAppUrl,
   visibility,
   appDescription,
   displayedAppNameError,
