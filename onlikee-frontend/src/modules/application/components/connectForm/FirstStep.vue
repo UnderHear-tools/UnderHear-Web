@@ -36,9 +36,6 @@
       >
         {{ appUrlError }}
       </FormControl.Validation>
-      <FormControl.Caption v-if="appUrl.trim() && !appUrlError">
-        发布地址：{{ appUrl }}
-      </FormControl.Caption>
     </FormControl>
 
     <section class="visibility-panel">
