@@ -4,7 +4,7 @@
       <div class="success-info">
         <CheckCircleIcon :size="32" />
         <h2>
-          应用创建成功
+          应用发布成功
         </h2>
       </div>
       <Link
@@ -29,11 +29,10 @@ const appUrl = ref('')
 
 function getAppUrlQuery() {
   const value = route.query.appUrl
+  const methodList = ['connect', 'new', 'collect'] //发布的方式
 
   if (typeof value === 'string') {
     appUrl.value = value
-  } else if (Array.isArray(value) && typeof value[0] === 'string') {
-    appUrl.value = value[0]
   } else {
     appUrl.value = ''
   }

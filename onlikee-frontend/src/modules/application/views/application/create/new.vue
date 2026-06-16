@@ -145,6 +145,7 @@ async function submit() {
     await router.push({
       path: '/application/create/success',
       query: {
+        method: 'new',
         appUrl: response.appUrl
       }
     })
