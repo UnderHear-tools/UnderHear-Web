@@ -29,7 +29,6 @@ const appUrl = ref('')
 
 function getAppUrlQuery() {
   const value = route.query.appUrl
-  const methodList = ['connect', 'new', 'collect'] //发布的方式
 
   if (typeof value === 'string') {
     appUrl.value = value
