@@ -23,6 +23,7 @@ import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
 
 import com.onlikee.exception.GlobalExceptionHandler;
+import com.onlikee.pojo.dto.request.ApplicationCreateCollectDort;
 import com.onlikee.pojo.dto.request.ApplicationCreateConnectDort;
 import com.onlikee.pojo.dto.request.ApplicationCreateNewDort;
 import com.onlikee.pojo.dto.response.ApplicationCreateNewDore;
@@ -115,6 +116,40 @@ class ApplicationCreateControllerTest {
     }
 
     @Test
+    // JSON 参数完整时应成功收录网站并返回应用 URL。
+    void applicationCreateCollectShouldReturnSuccessResponse() throws Exception {
+        User user = new User();
+        user.setUuid("user-1");
+        ApplicationCreateNewDore dore = new ApplicationCreateNewDore();
+        dore.setAppUrl("https://www.demo.com");
+        when(sessionAuthService.getCurrentUser("token")).thenReturn(user);
+        when(applicationCreateService.applicationCreateCollect(eq(user), any(ApplicationCreateCollectDort.class))).thenReturn(dore);
+
+        mockMvc.perform(post("/application/create/collect")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content("""
+                                {
+                                  "appName": "Demo",
+                                  "appUrl": "https://www.demo.com",
+                                  "visibility": "public",
+                                  "appDescription": "description"
+                                }
+                                """)
+                        .cookie(new Cookie("auth_token", "token")))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.code").value("OK"))
+                .andExpect(jsonPath("$.message").value("应用收录成功！"))
+                .andExpect(jsonPath("$.data.appUrl").value("https://www.demo.com"));
+
+        ArgumentCaptor<ApplicationCreateCollectDort> dortCaptor = ArgumentCaptor.forClass(ApplicationCreateCollectDort.class);
+        verify(applicationCreateService).applicationCreateCollect(eq(user), dortCaptor.capture());
+        verify(sessionAuthService).getCurrentUser("token");
+        ApplicationCreateCollectDort capturedDort = dortCaptor.getValue();
+        assertEquals("Demo", capturedDort.getAppName());
+        assertEquals("https://www.demo.com", capturedDort.getAppUrl());
+    }
+
+    @Test
     // 缺少上传文件时应触发参数校验失败。
     void applicationCreateNewShouldReturnValidationFailedWhenAppFileIsMissing() throws Exception {
         mockMvc.perform(multipart("/application/create/new")
@@ -191,5 +226,48 @@ class ApplicationCreateControllerTest {
 
         verify(sessionAuthService, never()).getCurrentUser(any());
         verify(applicationCreateService, never()).applicationCreateConnect(any(), any());
+    }
+
+    @Test
+    // Collect 缺少必填字段时应在进入登录态解析前触发参数校验失败。
+    void applicationCreateCollectShouldReturnValidationFailedWhenRequiredFieldIsMissing() throws Exception {
+        mockMvc.perform(post("/application/create/collect")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content("""
+                                {
+                                  "appName": "Demo",
+                                  "visibility": "public",
+                                  "appDescription": "description"
+                                }
+                                """)
+                        .cookie(new Cookie("auth_token", "token")))
+                .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("$.code").value("VALIDATION_FAILED"))
+                .andExpect(jsonPath("$.message").value("appUrl不能为空"));
+
+        verify(sessionAuthService, never()).getCurrentUser(any());
+        verify(applicationCreateService, never()).applicationCreateCollect(any(), any());
+    }
+
+    @Test
+    // Collect 的 appUrl 必须是 HTTP(S) URL 或裸域名，非法值应在登录态解析前被拦截。
+    void applicationCreateCollectShouldReturnValidationFailedWhenAppUrlIsInvalid() throws Exception {
+        mockMvc.perform(post("/application/create/collect")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content("""
+                                {
+                                  "appName": "Demo",
+                                  "appUrl": "demo",
+                                  "visibility": "public",
+                                  "appDescription": "description"
+                                }
+                                """)
+                        .cookie(new Cookie("auth_token", "token")))
+                .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("$.code").value("VALIDATION_FAILED"))
+                .andExpect(jsonPath("$.message").value("appUrl格式无效"));
+
+        verify(sessionAuthService, never()).getCurrentUser(any());
+        verify(applicationCreateService, never()).applicationCreateCollect(any(), any());
     }
 }

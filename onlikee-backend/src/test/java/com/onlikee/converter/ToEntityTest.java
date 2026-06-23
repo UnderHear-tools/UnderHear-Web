@@ -11,6 +11,7 @@ import java.util.UUID;
 import org.junit.jupiter.api.Test;
 import org.springframework.mock.web.MockMultipartFile;
 
+import com.onlikee.pojo.dto.request.ApplicationCreateCollectDort;
 import com.onlikee.pojo.dto.request.ApplicationCreateConnectDort;
 import com.onlikee.pojo.dto.request.ApplicationCreateNewDort;
 import com.onlikee.pojo.dto.request.UserGiteeDort;
@@ -184,6 +185,33 @@ class ToEntityTest {
         UUID.fromString(application.getAppid());
         assertEquals("user-1", application.getOwnerUuid());
         assertEquals("connect", application.getCreationMethod());
+        assertEquals("website", application.getFramework());
+        assertEquals("Demo Website", application.getAppName());
+        assertEquals("https://www.demo.com", application.getAppUrl());
+        assertEquals("public", application.getVisibility());
+        assertEquals("description", application.getAppDescription());
+        assertEquals("", application.getOriginalFilename());
+        assertEquals("", application.getOriginalFileType());
+        assertEquals("0 B", application.getOriginalFileSize());
+    }
+
+    @Test
+    // 网站收录转换时应写入 collect 来源，不依赖上传文件元信息。
+    void toApplicationShouldBuildCollectApplicationMetadata() {
+        User user = new User();
+        user.setUuid("user-1");
+        ApplicationCreateCollectDort request = new ApplicationCreateCollectDort();
+        request.setAppName("Demo Website");
+        request.setAppUrl("https://www.demo.com");
+        request.setVisibility("public");
+        request.setAppDescription("description");
+
+        Application application = ToEntity.toApplication(user, request, "https://www.demo.com");
+
+        assertNotNull(application.getAppid());
+        UUID.fromString(application.getAppid());
+        assertEquals("user-1", application.getOwnerUuid());
+        assertEquals("collect", application.getCreationMethod());
         assertEquals("website", application.getFramework());
         assertEquals("Demo Website", application.getAppName());
         assertEquals("https://www.demo.com", application.getAppUrl());

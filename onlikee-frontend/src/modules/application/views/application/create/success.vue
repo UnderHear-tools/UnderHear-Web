@@ -4,7 +4,7 @@
       <div class="success-info">
         <CheckCircleIcon :size="32" />
         <h2>
-          应用发布成功
+          {{ successTitle }}
         </h2>
       </div>
       <Link
@@ -18,7 +18,7 @@
 
 <script setup lang="ts">
 import confetti from 'canvas-confetti'
-import { ref, onMounted } from 'vue'
+import { computed, ref, onMounted } from 'vue'
 import { Container } from '@/components/z-ui/Container'
 import { CheckCircleIcon } from '@/components/octicons-vue3'
 import { Link } from '@/components/z-ui/Link'
@@ -26,6 +26,9 @@ import { useRoute } from 'vue-router'
 
 const route = useRoute()
 const appUrl = ref('')
+const successTitle = computed(() => {
+  return route.query.method === 'collect' ? '应用收录成功' : '应用发布成功'
+})
 
 function getAppUrlQuery() {
   const value = route.query.appUrl

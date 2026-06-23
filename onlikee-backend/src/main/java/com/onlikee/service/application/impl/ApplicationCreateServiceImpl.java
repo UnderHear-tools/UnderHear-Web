@@ -9,6 +9,7 @@ import com.onlikee.converter.ToEntity;
 import com.onlikee.exception.BizException;
 import com.onlikee.exception.ErrorCode;
 import com.onlikee.mapper.application.ApplicationCreateMapper;
+import com.onlikee.pojo.dto.request.ApplicationCreateCollectDort;
 import com.onlikee.pojo.dto.request.ApplicationCreateConnectDort;
 import com.onlikee.pojo.dto.request.ApplicationCreateNewDort;
 import com.onlikee.pojo.dto.request.LightOssPublishedSiteDort;
@@ -62,6 +63,27 @@ public class ApplicationCreateServiceImpl implements ApplicationCreateService {
     public ApplicationCreateNewDore applicationCreateConnect(User user, ApplicationCreateConnectDort applicationCreateConnectDort) {
         String appUrl = UrlUtils.normalizeUrl(UrlUtils.smartCompleteUrl(applicationCreateConnectDort.getAppUrl()));
         Application application = ToEntity.toApplication(user, applicationCreateConnectDort, appUrl);
+        if (applicationCreateMapper.countByAppUrl(appUrl) > 0) {
+            throw new BizException(ErrorCode.APP_URL_ALREADY_EXISTS);
+        }
+
+        int rows;
+        try {
+            rows = applicationCreateMapper.insertApplication(application);
+        } catch (DuplicateKeyException ex) {
+            throw new BizException(ErrorCode.APP_URL_ALREADY_EXISTS);
+        }
+
+        if (rows != 1) {
+            throw new BizException(ErrorCode.APPLICATION_CREATE_FAILED);
+        }
+        return ToDore.toApplicationCreateNewDore(application);
+    }
+
+    @Override
+    public ApplicationCreateNewDore applicationCreateCollect(User user, ApplicationCreateCollectDort applicationCreateCollectDort) {
+        String appUrl = UrlUtils.normalizeUrl(UrlUtils.smartCompleteUrl(applicationCreateCollectDort.getAppUrl()));
+        Application application = ToEntity.toApplication(user, applicationCreateCollectDort, appUrl);
         if (applicationCreateMapper.countByAppUrl(appUrl) > 0) {
             throw new BizException(ErrorCode.APP_URL_ALREADY_EXISTS);
         }

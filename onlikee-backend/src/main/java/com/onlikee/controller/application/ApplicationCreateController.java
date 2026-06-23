@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.onlikee.pojo.dto.request.ApplicationCreateCollectDort;
 import com.onlikee.pojo.dto.request.ApplicationCreateConnectDort;
 import com.onlikee.pojo.dto.request.ApplicationCreateNewDort;
 import com.onlikee.pojo.dto.response.ApplicationCreateNewDore;
@@ -46,5 +47,14 @@ public class ApplicationCreateController {
         User user = sessionAuthService.getCurrentUser(token);
         ApplicationCreateNewDore applicationCreateNewDore = applicationCreateService.applicationCreateConnect(user, applicationCreateConnectDort);
         return ApiResponse.success("应用创建成功！", applicationCreateNewDore);
+    }
+
+    @PostMapping("/collect")
+    public ApiResponse<ApplicationCreateNewDore> applicationCreateCollect(
+            @CookieValue(value = "auth_token", required = false) String token,
+            @Valid @RequestBody ApplicationCreateCollectDort applicationCreateCollectDort) {
+        User user = sessionAuthService.getCurrentUser(token);
+        ApplicationCreateNewDore applicationCreateNewDore = applicationCreateService.applicationCreateCollect(user, applicationCreateCollectDort);
+        return ApiResponse.success("应用收录成功！", applicationCreateNewDore);
     }
 }

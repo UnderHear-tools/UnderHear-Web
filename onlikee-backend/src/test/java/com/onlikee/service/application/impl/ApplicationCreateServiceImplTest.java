@@ -23,6 +23,7 @@ import org.springframework.mock.web.MockMultipartFile;
 import com.onlikee.exception.BizException;
 import com.onlikee.exception.ErrorCode;
 import com.onlikee.mapper.application.ApplicationCreateMapper;
+import com.onlikee.pojo.dto.request.ApplicationCreateCollectDort;
 import com.onlikee.pojo.dto.request.ApplicationCreateConnectDort;
 import com.onlikee.pojo.dto.request.ApplicationCreateNewDort;
 import com.onlikee.pojo.dto.request.LightOssPublishedSiteDort;
@@ -242,6 +243,78 @@ class ApplicationCreateServiceImplTest {
         verifyNoInteractions(lightOssPublishService);
     }
 
+    @Test
+    // 收录网站时应规范化 URL 后落库，不发布 Light OSS 站点。
+    void applicationCreateCollectShouldNormalizeUrlWithoutLightOss() {
+        User user = user();
+        ApplicationCreateCollectDort request = collectRequest();
+        when(applicationCreateMapper.countByAppUrl("https://www.demo.com")).thenReturn(0);
+        when(applicationCreateMapper.insertApplication(any(Application.class))).thenReturn(1);
+
+        ApplicationCreateNewDore result = applicationCreateService.applicationCreateCollect(user, request);
+
+        ArgumentCaptor<Application> applicationCaptor = ArgumentCaptor.forClass(Application.class);
+        verify(applicationCreateMapper).insertApplication(applicationCaptor.capture());
+        verifyNoInteractions(lightOssPublishService);
+        Application application = applicationCaptor.getValue();
+        assertEquals("https://www.demo.com", result.getAppUrl());
+        assertEquals("collect", application.getCreationMethod());
+        assertEquals("website", application.getFramework());
+        assertEquals("https://www.demo.com", application.getAppUrl());
+        assertEquals("", application.getOriginalFilename());
+        assertEquals("", application.getOriginalFileType());
+        assertEquals("0 B", application.getOriginalFileSize());
+    }
+
+    @Test
+    // 收录网站时 URL 已存在不应继续落库。
+    void applicationCreateCollectShouldThrowWhenAppUrlAlreadyExists() {
+        User user = user();
+        ApplicationCreateCollectDort request = collectRequest();
+        when(applicationCreateMapper.countByAppUrl("https://www.demo.com")).thenReturn(1);
+
+        BizException exception = assertThrows(
+                BizException.class,
+                () -> applicationCreateService.applicationCreateCollect(user, request));
+
+        assertEquals(ErrorCode.APP_URL_ALREADY_EXISTS.getCode(), exception.getCode());
+        verify(applicationCreateMapper, never()).insertApplication(any());
+        verifyNoInteractions(lightOssPublishService);
+    }
+
+    @Test
+    // 收录网站时唯一键冲突应翻译成应用地址重复。
+    void applicationCreateCollectShouldThrowWhenInsertThrowsDuplicateKeyException() {
+        User user = user();
+        ApplicationCreateCollectDort request = collectRequest();
+        when(applicationCreateMapper.countByAppUrl("https://www.demo.com")).thenReturn(0);
+        when(applicationCreateMapper.insertApplication(any(Application.class)))
+                .thenThrow(new DuplicateKeyException("duplicate"));
+
+        BizException exception = assertThrows(
+                BizException.class,
+                () -> applicationCreateService.applicationCreateCollect(user, request));
+
+        assertEquals(ErrorCode.APP_URL_ALREADY_EXISTS.getCode(), exception.getCode());
+        verifyNoInteractions(lightOssPublishService);
+    }
+
+    @Test
+    // 收录网站时落库影响行数异常应返回创建失败。
+    void applicationCreateCollectShouldThrowWhenInsertReturnsUnexpectedRows() {
+        User user = user();
+        ApplicationCreateCollectDort request = collectRequest();
+        when(applicationCreateMapper.countByAppUrl("https://www.demo.com")).thenReturn(0);
+        when(applicationCreateMapper.insertApplication(any(Application.class))).thenReturn(0);
+
+        BizException exception = assertThrows(
+                BizException.class,
+                () -> applicationCreateService.applicationCreateCollect(user, request));
+
+        assertEquals(ErrorCode.APPLICATION_CREATE_FAILED.getCode(), exception.getCode());
+        verifyNoInteractions(lightOssPublishService);
+    }
+
     private User user() {
         User user = new User();
         user.setUuid("user-1");
@@ -280,6 +353,15 @@ class ApplicationCreateServiceImplTest {
 
     private ApplicationCreateConnectDort connectRequest() {
         ApplicationCreateConnectDort request = new ApplicationCreateConnectDort();
+        request.setAppName("Demo Website");
+        request.setAppUrl("HTTPS://WWW.DEMO.COM");
+        request.setVisibility("public");
+        request.setAppDescription("description");
+        return request;
+    }
+
+    private ApplicationCreateCollectDort collectRequest() {
+        ApplicationCreateCollectDort request = new ApplicationCreateCollectDort();
         request.setAppName("Demo Website");
         request.setAppUrl("HTTPS://WWW.DEMO.COM");
         request.setVisibility("public");
