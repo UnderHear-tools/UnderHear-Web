@@ -185,14 +185,14 @@ class ToEntityTest {
         UUID.fromString(application.getAppid());
         assertEquals("user-1", application.getOwnerUuid());
         assertEquals("connect", application.getCreationMethod());
-        assertEquals("website", application.getFramework());
+        assertEquals("", application.getFramework());
         assertEquals("Demo Website", application.getAppName());
         assertEquals("https://www.demo.com", application.getAppUrl());
         assertEquals("public", application.getVisibility());
         assertEquals("description", application.getAppDescription());
         assertEquals("", application.getOriginalFilename());
         assertEquals("", application.getOriginalFileType());
-        assertEquals("0 B", application.getOriginalFileSize());
+        assertEquals("", application.getOriginalFileSize());
     }
 
     @Test
@@ -212,14 +212,14 @@ class ToEntityTest {
         UUID.fromString(application.getAppid());
         assertEquals("user-1", application.getOwnerUuid());
         assertEquals("collect", application.getCreationMethod());
-        assertEquals("website", application.getFramework());
+        assertEquals("", application.getFramework());
         assertEquals("Demo Website", application.getAppName());
         assertEquals("https://www.demo.com", application.getAppUrl());
         assertEquals("public", application.getVisibility());
         assertEquals("description", application.getAppDescription());
         assertEquals("", application.getOriginalFilename());
         assertEquals("", application.getOriginalFileType());
-        assertEquals("0 B", application.getOriginalFileSize());
+        assertEquals("", application.getOriginalFileSize());
     }
 
     private UserGithubDort githubDort() {

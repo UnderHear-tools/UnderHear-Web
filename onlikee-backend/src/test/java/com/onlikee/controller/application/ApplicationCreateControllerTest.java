@@ -26,6 +26,8 @@ import com.onlikee.exception.GlobalExceptionHandler;
 import com.onlikee.pojo.dto.request.ApplicationCreateCollectDort;
 import com.onlikee.pojo.dto.request.ApplicationCreateConnectDort;
 import com.onlikee.pojo.dto.request.ApplicationCreateNewDort;
+import com.onlikee.pojo.dto.response.ApplicationCreateCollectDore;
+import com.onlikee.pojo.dto.response.ApplicationCreateConnectDore;
 import com.onlikee.pojo.dto.response.ApplicationCreateNewDore;
 import com.onlikee.pojo.entity.User;
 import com.onlikee.security.SessionAuthService;
@@ -86,7 +88,7 @@ class ApplicationCreateControllerTest {
     void applicationCreateConnectShouldReturnSuccessResponse() throws Exception {
         User user = new User();
         user.setUuid("user-1");
-        ApplicationCreateNewDore dore = new ApplicationCreateNewDore();
+        ApplicationCreateConnectDore dore = new ApplicationCreateConnectDore();
         dore.setAppUrl("https://www.demo.com");
         when(sessionAuthService.getCurrentUser("token")).thenReturn(user);
         when(applicationCreateService.applicationCreateConnect(eq(user), any(ApplicationCreateConnectDort.class))).thenReturn(dore);
@@ -120,7 +122,7 @@ class ApplicationCreateControllerTest {
     void applicationCreateCollectShouldReturnSuccessResponse() throws Exception {
         User user = new User();
         user.setUuid("user-1");
-        ApplicationCreateNewDore dore = new ApplicationCreateNewDore();
+        ApplicationCreateCollectDore dore = new ApplicationCreateCollectDore();
         dore.setAppUrl("https://www.demo.com");
         when(sessionAuthService.getCurrentUser("token")).thenReturn(user);
         when(applicationCreateService.applicationCreateCollect(eq(user), any(ApplicationCreateCollectDort.class))).thenReturn(dore);

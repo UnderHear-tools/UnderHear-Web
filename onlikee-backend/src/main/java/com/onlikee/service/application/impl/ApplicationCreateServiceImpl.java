@@ -13,6 +13,8 @@ import com.onlikee.pojo.dto.request.ApplicationCreateCollectDort;
 import com.onlikee.pojo.dto.request.ApplicationCreateConnectDort;
 import com.onlikee.pojo.dto.request.ApplicationCreateNewDort;
 import com.onlikee.pojo.dto.request.LightOssPublishedSiteDort;
+import com.onlikee.pojo.dto.response.ApplicationCreateCollectDore;
+import com.onlikee.pojo.dto.response.ApplicationCreateConnectDore;
 import com.onlikee.pojo.dto.response.ApplicationCreateNewDore;
 import com.onlikee.pojo.entity.Application;
 import com.onlikee.pojo.entity.User;
@@ -60,7 +62,7 @@ public class ApplicationCreateServiceImpl implements ApplicationCreateService {
     }
 
     @Override
-    public ApplicationCreateNewDore applicationCreateConnect(User user, ApplicationCreateConnectDort applicationCreateConnectDort) {
+    public ApplicationCreateConnectDore applicationCreateConnect(User user, ApplicationCreateConnectDort applicationCreateConnectDort) {
         String appUrl = UrlUtils.normalizeUrl(UrlUtils.smartCompleteUrl(applicationCreateConnectDort.getAppUrl()));
         Application application = ToEntity.toApplication(user, applicationCreateConnectDort, appUrl);
         if (applicationCreateMapper.countByAppUrl(appUrl) > 0) {
@@ -77,11 +79,11 @@ public class ApplicationCreateServiceImpl implements ApplicationCreateService {
         if (rows != 1) {
             throw new BizException(ErrorCode.APPLICATION_CREATE_FAILED);
         }
-        return ToDore.toApplicationCreateNewDore(application);
+        return ToDore.toApplicationCreateConnectDore(application);
     }
 
     @Override
-    public ApplicationCreateNewDore applicationCreateCollect(User user, ApplicationCreateCollectDort applicationCreateCollectDort) {
+    public ApplicationCreateCollectDore applicationCreateCollect(User user, ApplicationCreateCollectDort applicationCreateCollectDort) {
         String appUrl = UrlUtils.normalizeUrl(UrlUtils.smartCompleteUrl(applicationCreateCollectDort.getAppUrl()));
         Application application = ToEntity.toApplication(user, applicationCreateCollectDort, appUrl);
         if (applicationCreateMapper.countByAppUrl(appUrl) > 0) {
@@ -98,7 +100,7 @@ public class ApplicationCreateServiceImpl implements ApplicationCreateService {
         if (rows != 1) {
             throw new BizException(ErrorCode.APPLICATION_CREATE_FAILED);
         }
-        return ToDore.toApplicationCreateNewDore(application);
+        return ToDore.toApplicationCreateCollectDore(application);
     }
 
     private LightOssPublishedSiteDort publishApplicationSite(

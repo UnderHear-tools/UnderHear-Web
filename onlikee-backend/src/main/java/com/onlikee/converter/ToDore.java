@@ -1,5 +1,7 @@
 package com.onlikee.converter;
 
+import com.onlikee.pojo.dto.response.ApplicationCreateCollectDore;
+import com.onlikee.pojo.dto.response.ApplicationCreateConnectDore;
 import com.onlikee.pojo.dto.response.ApplicationCreateNewDore;
 import com.onlikee.pojo.dto.response.OAuthCallbackDore;
 import com.onlikee.pojo.dto.response.OAuthCallbackWithTokenDore;
@@ -80,6 +82,18 @@ public final class ToDore {
         ApplicationCreateNewDore applicationCreateNewDore = new ApplicationCreateNewDore();
         applicationCreateNewDore.setAppUrl(application.getAppUrl());
         return applicationCreateNewDore;
+    }
+
+    public static ApplicationCreateConnectDore toApplicationCreateConnectDore(Application application) {
+        ApplicationCreateConnectDore applicationCreateConnectDore = new ApplicationCreateConnectDore();
+        applicationCreateConnectDore.setAppUrl(application.getAppUrl());
+        return applicationCreateConnectDore;
+    }
+
+    public static ApplicationCreateCollectDore toApplicationCreateCollectDore(Application application) {
+        ApplicationCreateCollectDore applicationCreateCollectDore = new ApplicationCreateCollectDore();
+        applicationCreateCollectDore.setAppUrl(application.getAppUrl());
+        return applicationCreateCollectDore;
     }
     
 }

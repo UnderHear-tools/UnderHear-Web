@@ -5,6 +5,8 @@ import static org.junit.jupiter.api.Assertions.assertSame;
 
 import org.junit.jupiter.api.Test;
 
+import com.onlikee.pojo.dto.response.ApplicationCreateCollectDore;
+import com.onlikee.pojo.dto.response.ApplicationCreateConnectDore;
 import com.onlikee.pojo.dto.response.ApplicationCreateNewDore;
 import com.onlikee.pojo.dto.response.UserInfoDore;
 import com.onlikee.pojo.dto.response.UserLoginDore;
@@ -97,6 +99,28 @@ class ToDoreTest {
         ApplicationCreateNewDore dore = ToDore.toApplicationCreateNewDore(application);
 
         assertEquals("https://demo.onlikee.cn/", dore.getAppUrl());
+    }
+
+    @Test
+    // 接入网站响应对象只需向外暴露应用 URL。
+    void toApplicationCreateConnectDoreShouldCopyAppUrl() {
+        Application application = new Application();
+        application.setAppUrl("https://www.demo.com");
+
+        ApplicationCreateConnectDore dore = ToDore.toApplicationCreateConnectDore(application);
+
+        assertEquals("https://www.demo.com", dore.getAppUrl());
+    }
+
+    @Test
+    // 收录网站响应对象只需向外暴露应用 URL。
+    void toApplicationCreateCollectDoreShouldCopyAppUrl() {
+        Application application = new Application();
+        application.setAppUrl("https://www.demo.com");
+
+        ApplicationCreateCollectDore dore = ToDore.toApplicationCreateCollectDore(application);
+
+        assertEquals("https://www.demo.com", dore.getAppUrl());
     }
 
     private User user() {

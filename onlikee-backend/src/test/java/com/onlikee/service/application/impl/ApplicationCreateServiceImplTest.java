@@ -27,6 +27,8 @@ import com.onlikee.pojo.dto.request.ApplicationCreateCollectDort;
 import com.onlikee.pojo.dto.request.ApplicationCreateConnectDort;
 import com.onlikee.pojo.dto.request.ApplicationCreateNewDort;
 import com.onlikee.pojo.dto.request.LightOssPublishedSiteDort;
+import com.onlikee.pojo.dto.response.ApplicationCreateCollectDore;
+import com.onlikee.pojo.dto.response.ApplicationCreateConnectDore;
 import com.onlikee.pojo.dto.response.ApplicationCreateNewDore;
 import com.onlikee.pojo.entity.Application;
 import com.onlikee.pojo.entity.User;
@@ -179,7 +181,7 @@ class ApplicationCreateServiceImplTest {
         when(applicationCreateMapper.countByAppUrl("https://www.demo.com")).thenReturn(0);
         when(applicationCreateMapper.insertApplication(any(Application.class))).thenReturn(1);
 
-        ApplicationCreateNewDore result = applicationCreateService.applicationCreateConnect(user, request);
+        ApplicationCreateConnectDore result = applicationCreateService.applicationCreateConnect(user, request);
 
         ArgumentCaptor<Application> applicationCaptor = ArgumentCaptor.forClass(Application.class);
         verify(applicationCreateMapper).insertApplication(applicationCaptor.capture());
@@ -187,11 +189,11 @@ class ApplicationCreateServiceImplTest {
         Application application = applicationCaptor.getValue();
         assertEquals("https://www.demo.com", result.getAppUrl());
         assertEquals("connect", application.getCreationMethod());
-        assertEquals("website", application.getFramework());
+        assertEquals("", application.getFramework());
         assertEquals("https://www.demo.com", application.getAppUrl());
         assertEquals("", application.getOriginalFilename());
         assertEquals("", application.getOriginalFileType());
-        assertEquals("0 B", application.getOriginalFileSize());
+        assertEquals("", application.getOriginalFileSize());
     }
 
     @Test
@@ -251,7 +253,7 @@ class ApplicationCreateServiceImplTest {
         when(applicationCreateMapper.countByAppUrl("https://www.demo.com")).thenReturn(0);
         when(applicationCreateMapper.insertApplication(any(Application.class))).thenReturn(1);
 
-        ApplicationCreateNewDore result = applicationCreateService.applicationCreateCollect(user, request);
+        ApplicationCreateCollectDore result = applicationCreateService.applicationCreateCollect(user, request);
 
         ArgumentCaptor<Application> applicationCaptor = ArgumentCaptor.forClass(Application.class);
         verify(applicationCreateMapper).insertApplication(applicationCaptor.capture());
@@ -259,11 +261,11 @@ class ApplicationCreateServiceImplTest {
         Application application = applicationCaptor.getValue();
         assertEquals("https://www.demo.com", result.getAppUrl());
         assertEquals("collect", application.getCreationMethod());
-        assertEquals("website", application.getFramework());
+        assertEquals("", application.getFramework());
         assertEquals("https://www.demo.com", application.getAppUrl());
         assertEquals("", application.getOriginalFilename());
         assertEquals("", application.getOriginalFileType());
-        assertEquals("0 B", application.getOriginalFileSize());
+        assertEquals("", application.getOriginalFileSize());
     }
 
     @Test

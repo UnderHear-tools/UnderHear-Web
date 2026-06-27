@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.RestController;
 import com.onlikee.pojo.dto.request.ApplicationCreateCollectDort;
 import com.onlikee.pojo.dto.request.ApplicationCreateConnectDort;
 import com.onlikee.pojo.dto.request.ApplicationCreateNewDort;
+import com.onlikee.pojo.dto.response.ApplicationCreateCollectDore;
+import com.onlikee.pojo.dto.response.ApplicationCreateConnectDore;
 import com.onlikee.pojo.dto.response.ApplicationCreateNewDore;
 import com.onlikee.pojo.dto.response.common.ApiResponse;
 import com.onlikee.pojo.entity.User;
@@ -41,20 +43,20 @@ public class ApplicationCreateController {
     }
 
     @PostMapping("/connect")
-    public ApiResponse<ApplicationCreateNewDore> applicationCreateConnect(
+    public ApiResponse<ApplicationCreateConnectDore> applicationCreateConnect(
             @CookieValue(value = "auth_token", required = false) String token,
             @Valid @RequestBody ApplicationCreateConnectDort applicationCreateConnectDort) {
         User user = sessionAuthService.getCurrentUser(token);
-        ApplicationCreateNewDore applicationCreateNewDore = applicationCreateService.applicationCreateConnect(user, applicationCreateConnectDort);
-        return ApiResponse.success("应用创建成功！", applicationCreateNewDore);
+        ApplicationCreateConnectDore applicationCreateConnectDore = applicationCreateService.applicationCreateConnect(user, applicationCreateConnectDort);
+        return ApiResponse.success("应用创建成功！", applicationCreateConnectDore);
     }
 
     @PostMapping("/collect")
-    public ApiResponse<ApplicationCreateNewDore> applicationCreateCollect(
+    public ApiResponse<ApplicationCreateCollectDore> applicationCreateCollect(
             @CookieValue(value = "auth_token", required = false) String token,
             @Valid @RequestBody ApplicationCreateCollectDort applicationCreateCollectDort) {
         User user = sessionAuthService.getCurrentUser(token);
-        ApplicationCreateNewDore applicationCreateNewDore = applicationCreateService.applicationCreateCollect(user, applicationCreateCollectDort);
-        return ApiResponse.success("应用收录成功！", applicationCreateNewDore);
+        ApplicationCreateCollectDore applicationCreateCollectDore = applicationCreateService.applicationCreateCollect(user, applicationCreateCollectDort);
+        return ApiResponse.success("应用收录成功！", applicationCreateCollectDore);
     }
 }
