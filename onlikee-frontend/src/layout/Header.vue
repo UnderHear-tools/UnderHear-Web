@@ -67,7 +67,7 @@
                 个人资料
               </ActionList.Item>
               <ActionList.Item
-                @select="navigateToPage('/application')"
+                @select="goToUserApplication"
               >
                 <ActionList.LeadingVisual>
                   <AppsIcon />
@@ -140,6 +140,16 @@ const goToProfile = () => {
 
     const profilePath = `/@${encodeURIComponent(nickname)}`
     await router.push(profilePath)
+  })
+}
+
+const goToUserApplication = () => {
+  void enqueueNavigation(async () => {
+    const nickname = userStore.userInfo?.nickname?.trim()
+    if (!nickname) return
+
+    const applicationPath = `/@${encodeURIComponent(nickname)}/application`
+    await router.push(applicationPath)
   })
 }
 
