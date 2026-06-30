@@ -135,8 +135,4 @@ provideContext(createContext({
 .action-list[data-dividers='true'] :deep(.action-list-group + .action-list-item .action-list-sub-content::before) {
   visibility: hidden;
 }
-
-.action-list :deep(.action-list-divider:first-child) {
-  display: none;
-}
 </style>
