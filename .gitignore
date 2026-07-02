@@ -27,6 +27,7 @@ onlikee-backend/.vscode/
 onlikee-backend/*.log
 onlikee-backend/*.gz
 onlikee-backend/spring.log
+onlikee-backend/src/main/resources/application.properties
 
 # ============================================
 # Frontend (Vue + Vite + Node.js)
