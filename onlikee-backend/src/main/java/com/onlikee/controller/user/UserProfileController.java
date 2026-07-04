@@ -31,12 +31,19 @@ public class UserProfileController {
     @Autowired
     private SessionAuthService sessionAuthService;
 
-    @GetMapping("/{nickname}")
-    // 公开资料页按昵称查询用户，不依赖登录态，保证游客可访问 /@:nickname。
+    @GetMapping("/{nickname}/profile")
+    // 公开资料基础信息按昵称查询用户，不依赖登录态。
     public ApiResponse<UserProfileDore> profile(@PathVariable String nickname) {
         User user = userProfileService.getUserByNickname(nickname);
-        UserProfileMarkdown markdown = userProfileService.getMarkdownByUuid(user.getUuid());
-        return ApiResponse.success(ToDore.toUserProfileDore(user, markdown));
+        return ApiResponse.success(ToDore.toUserProfileDore(user));
+    }
+
+    @GetMapping("/{nickname}/markdown")
+    // 公开 Markdown 按昵称查询，只返回 README 内容本身，不返回其他公开资料字段。
+    public ApiResponse<String> markdown(@PathVariable String nickname) {
+        User user = userProfileService.getUserByNickname(nickname);
+        UserProfileMarkdown userProfileMarkdown = userProfileService.getMarkdownByUuid(user.getUuid());
+        return ApiResponse.success(userProfileMarkdown == null ? null : userProfileMarkdown.getContent());
     }
 
     @PostMapping("/me/markdown")

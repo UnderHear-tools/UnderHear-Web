@@ -11,7 +11,6 @@ import com.onlikee.pojo.dto.response.UserLoginWithTokenDore;
 import com.onlikee.pojo.dto.response.UserProfileDore;
 import com.onlikee.pojo.entity.Application;
 import com.onlikee.pojo.entity.User;
-import com.onlikee.pojo.entity.UserProfileMarkdown;
 
 public final class ToDore {
 
@@ -33,7 +32,7 @@ public final class ToDore {
         return userInfoDore;
     }
 
-    public static UserProfileDore toUserProfileDore(User user, UserProfileMarkdown markdown) {
+    public static UserProfileDore toUserProfileDore(User user) {
         UserProfileDore userProfileDore = new UserProfileDore();
         userProfileDore.setUuid(user.getUuid());
         userProfileDore.setNickname(user.getNickName());
@@ -45,7 +44,6 @@ public final class ToDore {
         userProfileDore.setSocialAccount0(user.getSocialAccount0());
         userProfileDore.setSocialAccount1(user.getSocialAccount1());
         userProfileDore.setSocialAccount2(user.getSocialAccount2());
-        userProfileDore.setMarkdown(markdown == null ? null : markdown.getContent());
         return userProfileDore;
     }
 

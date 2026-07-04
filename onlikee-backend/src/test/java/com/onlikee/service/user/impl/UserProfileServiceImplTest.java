@@ -70,7 +70,7 @@ class UserProfileServiceImplTest {
     }
 
     @Test
-    // Markdown 不存在时返回 null，公开资料接口会将其表现为 markdown: null。
+    // Markdown 不存在时返回 null，公开 Markdown 接口会将其表现为 data: null。
     void getMarkdownByUuidShouldReturnNullWhenMissing() {
         when(userProfileMapper.getMarkdownByUuid("user-1")).thenReturn(null);
 

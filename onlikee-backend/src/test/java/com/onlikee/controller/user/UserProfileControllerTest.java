@@ -48,13 +48,12 @@ class UserProfileControllerTest {
     private CacheManager cacheManager;
 
     @Test
-    // 公开资料查询成功时应返回与 /auth/me 一致的用户信息结构。
+    // 公开资料查询成功时应返回用户信息结构，不内联 Markdown 内容。
     void profileShouldReturnPublicUserInfo() throws Exception {
         User user = user();
         when(userProfileService.getUserByNickname("tester")).thenReturn(user);
-        when(userProfileService.getMarkdownByUuid("user-1")).thenReturn(markdown("# Hello"));
 
-        mockMvc.perform(get("/users/tester"))
+        mockMvc.perform(get("/users/tester/profile"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.code").value("OK"))
                 .andExpect(jsonPath("$.message").value("请求成功"))
@@ -62,29 +61,29 @@ class UserProfileControllerTest {
                 .andExpect(jsonPath("$.data.nickname").value("tester"))
                 .andExpect(jsonPath("$.data.email").value("tester@example.com"))
                 .andExpect(jsonPath("$.data.avatarUrl").value("https://avatar/tester.png"))
-                .andExpect(jsonPath("$.data.markdown").value("# Hello"));
+                .andExpect(jsonPath("$.data.markdown").doesNotExist());
     }
 
     @Test
-    // 未保存 Markdown 时仍返回公开资料，只把 markdown 字段置为空。
-    void profileShouldReturnNullMarkdownWhenMissing() throws Exception {
+    // 公开资料查询不访问 Markdown，Markdown 内容由独立接口返回。
+    void profileShouldNotFetchMarkdown() throws Exception {
         User user = user();
         when(userProfileService.getUserByNickname("tester")).thenReturn(user);
-        when(userProfileService.getMarkdownByUuid("user-1")).thenReturn(null);
 
-        mockMvc.perform(get("/users/tester"))
+        mockMvc.perform(get("/users/tester/profile"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.data.nickname").value("tester"))
-                .andExpect(jsonPath("$.data.markdown").value(nullValue()));
+                .andExpect(jsonPath("$.data.markdown").doesNotExist());
+
+        verify(userProfileService, never()).getMarkdownByUuid("user-1");
     }
 
     @Test
     // 未携带 cookie 时也应走公开查询链路，不触发登录态解析。
     void profileShouldNotRequireAuthenticationCookie() throws Exception {
         when(userProfileService.getUserByNickname("tester")).thenReturn(user());
-        when(userProfileService.getMarkdownByUuid("user-1")).thenReturn(null);
 
-        mockMvc.perform(get("/users/tester"))
+        mockMvc.perform(get("/users/tester/profile"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.code").value("OK"));
 
@@ -96,7 +95,62 @@ class UserProfileControllerTest {
     void profileShouldReturnUserNotFoundWhenMissing() throws Exception {
         when(userProfileService.getUserByNickname("missing")).thenThrow(new BizException(ErrorCode.USER_NOT_FOUND));
 
-        mockMvc.perform(get("/users/missing"))
+        mockMvc.perform(get("/users/missing/profile"))
+                .andExpect(status().isNotFound())
+                .andExpect(jsonPath("$.code").value("USER_NOT_FOUND"))
+                .andExpect(jsonPath("$.message").value("未找到该用户"))
+                .andExpect(jsonPath("$.data").value(nullValue()));
+    }
+
+    @Test
+    // 公开 Markdown 查询只返回 README 内容本身，不返回其他用户资料字段。
+    void markdownShouldReturnOnlyMarkdownContent() throws Exception {
+        User user = user();
+        when(userProfileService.getUserByNickname("tester")).thenReturn(user);
+        when(userProfileService.getMarkdownByUuid("user-1")).thenReturn(markdown("# Hello"));
+
+        mockMvc.perform(get("/users/tester/markdown"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.code").value("OK"))
+                .andExpect(jsonPath("$.message").value("请求成功"))
+                .andExpect(jsonPath("$.data").value("# Hello"))
+                .andExpect(jsonPath("$.data.uuid").doesNotExist())
+                .andExpect(jsonPath("$.data.nickname").doesNotExist());
+    }
+
+    @Test
+    // 未保存 Markdown 时只返回空 data，不补用户资料字段。
+    void markdownShouldReturnNullWhenMissing() throws Exception {
+        User user = user();
+        when(userProfileService.getUserByNickname("tester")).thenReturn(user);
+        when(userProfileService.getMarkdownByUuid("user-1")).thenReturn(null);
+
+        mockMvc.perform(get("/users/tester/markdown"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.code").value("OK"))
+                .andExpect(jsonPath("$.data").value(nullValue()));
+    }
+
+    @Test
+    // 公开 Markdown 查询不依赖登录态。
+    void markdownShouldNotRequireAuthenticationCookie() throws Exception {
+        User user = user();
+        when(userProfileService.getUserByNickname("tester")).thenReturn(user);
+        when(userProfileService.getMarkdownByUuid("user-1")).thenReturn(markdown("# Hello"));
+
+        mockMvc.perform(get("/users/tester/markdown"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.code").value("OK"));
+
+        verify(sessionAuthService, never()).getCurrentUser(null);
+    }
+
+    @Test
+    // 用户不存在时沿用公开资料查询的 USER_NOT_FOUND 响应。
+    void markdownShouldReturnUserNotFoundWhenUserMissing() throws Exception {
+        when(userProfileService.getUserByNickname("missing")).thenThrow(new BizException(ErrorCode.USER_NOT_FOUND));
+
+        mockMvc.perform(get("/users/missing/markdown"))
                 .andExpect(status().isNotFound())
                 .andExpect(jsonPath("$.code").value("USER_NOT_FOUND"))
                 .andExpect(jsonPath("$.message").value("未找到该用户"))

@@ -14,7 +14,6 @@ import com.onlikee.pojo.dto.response.UserLoginWithTokenDore;
 import com.onlikee.pojo.dto.response.UserProfileDore;
 import com.onlikee.pojo.entity.Application;
 import com.onlikee.pojo.entity.User;
-import com.onlikee.pojo.entity.UserProfileMarkdown;
 
 class ToDoreTest {
 
@@ -38,29 +37,22 @@ class ToDoreTest {
     }
 
     @Test
-    // 公开资料响应在基础用户信息之外，还要带上 Markdown 资料页内容。
-    void toUserProfileDoreShouldCopyUserInfoAndMarkdown() {
+    // 公开资料响应只复制基础公开资料字段，Markdown 由独立接口返回。
+    void toUserProfileDoreShouldCopyPublicUserInfo() {
         User user = user();
-        UserProfileMarkdown markdown = new UserProfileMarkdown();
-        markdown.setContent("# Hello");
 
-        UserProfileDore userProfileDore = ToDore.toUserProfileDore(user, markdown);
+        UserProfileDore userProfileDore = ToDore.toUserProfileDore(user);
 
         assertEquals("user-1", userProfileDore.getUuid());
         assertEquals("tester", userProfileDore.getNickname());
         assertEquals("tester@example.com", userProfileDore.getEmail());
         assertEquals("https://avatar/tester.png", userProfileDore.getAvatarUrl());
         assertEquals("bio text", userProfileDore.getBio());
-        assertEquals("# Hello", userProfileDore.getMarkdown());
-    }
-
-    @Test
-    // 没有 Markdown 记录时公开资料响应仍保留用户信息，markdown 字段为空。
-    void toUserProfileDoreShouldUseNullMarkdownWhenMissing() {
-        UserProfileDore userProfileDore = ToDore.toUserProfileDore(user(), null);
-
-        assertEquals("tester", userProfileDore.getNickname());
-        assertEquals(null, userProfileDore.getMarkdown());
+        assertEquals("they/them", userProfileDore.getPronoun());
+        assertEquals("Shanghai", userProfileDore.getLocation());
+        assertEquals("https://github.com/tester", userProfileDore.getSocialAccount0());
+        assertEquals("https://gitee.com/tester", userProfileDore.getSocialAccount1());
+        assertEquals("https://example.com/tester", userProfileDore.getSocialAccount2());
     }
 
     @Test

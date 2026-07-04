@@ -34,7 +34,7 @@ public class UserProfileServiceImpl implements UserProfileService {
     }
 
     @Override
-    // Markdown 属于公开资料页扩展内容，没有记录时由 controller 转换为 markdown: null。
+    // Markdown 属于公开资料页扩展内容，没有记录时由 controller 转换为 data: null。
     public UserProfileMarkdown getMarkdownByUuid(String uuid) {
         if (uuid == null || uuid.isBlank()) {
             throw new BizException(ErrorCode.INTERNAL_ERROR);

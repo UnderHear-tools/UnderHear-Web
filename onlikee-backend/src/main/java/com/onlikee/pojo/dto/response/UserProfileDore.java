@@ -14,5 +14,4 @@ public class UserProfileDore {
     private String socialAccount0;
     private String socialAccount1;
     private String socialAccount2;
-    private String markdown;
 }
