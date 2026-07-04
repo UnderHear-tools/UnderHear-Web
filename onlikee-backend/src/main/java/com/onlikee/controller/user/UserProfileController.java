@@ -14,6 +14,7 @@ import com.onlikee.pojo.dto.request.UserProfileDort;
 import com.onlikee.pojo.dto.request.UserProfileMarkdownDort;
 import com.onlikee.pojo.dto.response.UserInfoDore;
 import com.onlikee.pojo.dto.response.UserProfileDore;
+import com.onlikee.pojo.dto.response.UserProfileMarkdownDore;
 import com.onlikee.pojo.dto.response.common.ApiResponse;
 import com.onlikee.pojo.entity.User;
 import com.onlikee.pojo.entity.UserProfileMarkdown;
@@ -39,11 +40,11 @@ public class UserProfileController {
     }
 
     @GetMapping("/{nickname}/markdown")
-    // 公开 Markdown 按昵称查询，只返回 README 内容本身，不返回其他公开资料字段。
-    public ApiResponse<String> markdown(@PathVariable String nickname) {
+    // 公开 Markdown 按昵称查询，只返回 README 内容字段，不返回其他公开资料字段。
+    public ApiResponse<UserProfileMarkdownDore> markdown(@PathVariable String nickname) {
         User user = userProfileService.getUserByNickname(nickname);
         UserProfileMarkdown userProfileMarkdown = userProfileService.getMarkdownByUuid(user.getUuid());
-        return ApiResponse.success(userProfileMarkdown == null ? null : userProfileMarkdown.getContent());
+        return ApiResponse.success(ToDore.toUserProfileMarkdownDore(userProfileMarkdown));
     }
 
     @PostMapping("/me/markdown")

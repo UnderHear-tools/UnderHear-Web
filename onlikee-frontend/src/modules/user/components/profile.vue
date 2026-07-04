@@ -135,7 +135,8 @@ const markdownSaving = ref(false)
 
 const fetchProfileMarkdown = async () => {
   try {
-    profileMarkdown.value = await getPublicUserMarkdown(props.profile.nickname)
+    const response = await getPublicUserMarkdown(props.profile.nickname)
+    profileMarkdown.value = response.markdown
   } catch {
     profileMarkdown.value = null
   }

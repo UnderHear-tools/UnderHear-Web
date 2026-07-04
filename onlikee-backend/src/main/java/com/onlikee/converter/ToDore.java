@@ -9,8 +9,10 @@ import com.onlikee.pojo.dto.response.UserInfoDore;
 import com.onlikee.pojo.dto.response.UserLoginDore;
 import com.onlikee.pojo.dto.response.UserLoginWithTokenDore;
 import com.onlikee.pojo.dto.response.UserProfileDore;
+import com.onlikee.pojo.dto.response.UserProfileMarkdownDore;
 import com.onlikee.pojo.entity.Application;
 import com.onlikee.pojo.entity.User;
+import com.onlikee.pojo.entity.UserProfileMarkdown;
 
 public final class ToDore {
 
@@ -45,6 +47,12 @@ public final class ToDore {
         userProfileDore.setSocialAccount1(user.getSocialAccount1());
         userProfileDore.setSocialAccount2(user.getSocialAccount2());
         return userProfileDore;
+    }
+
+    public static UserProfileMarkdownDore toUserProfileMarkdownDore(UserProfileMarkdown markdown) {
+        UserProfileMarkdownDore userProfileMarkdownDore = new UserProfileMarkdownDore();
+        userProfileMarkdownDore.setMarkdown(markdown == null ? null : markdown.getContent());
+        return userProfileMarkdownDore;
     }
 
     public static UserLoginWithTokenDore toUserLoginWithTokenDore(User user, String token) {

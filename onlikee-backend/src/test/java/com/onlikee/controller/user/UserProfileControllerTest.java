@@ -103,7 +103,7 @@ class UserProfileControllerTest {
     }
 
     @Test
-    // 公开 Markdown 查询只返回 README 内容本身，不返回其他用户资料字段。
+    // 公开 Markdown 查询只返回 README 内容字段，不返回其他用户资料字段。
     void markdownShouldReturnOnlyMarkdownContent() throws Exception {
         User user = user();
         when(userProfileService.getUserByNickname("tester")).thenReturn(user);
@@ -113,13 +113,13 @@ class UserProfileControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.code").value("OK"))
                 .andExpect(jsonPath("$.message").value("请求成功"))
-                .andExpect(jsonPath("$.data").value("# Hello"))
+                .andExpect(jsonPath("$.data.markdown").value("# Hello"))
                 .andExpect(jsonPath("$.data.uuid").doesNotExist())
                 .andExpect(jsonPath("$.data.nickname").doesNotExist());
     }
 
     @Test
-    // 未保存 Markdown 时只返回空 data，不补用户资料字段。
+    // 未保存 Markdown 时只返回空 markdown 字段，不补用户资料字段。
     void markdownShouldReturnNullWhenMissing() throws Exception {
         User user = user();
         when(userProfileService.getUserByNickname("tester")).thenReturn(user);
@@ -128,7 +128,7 @@ class UserProfileControllerTest {
         mockMvc.perform(get("/users/tester/markdown"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.code").value("OK"))
-                .andExpect(jsonPath("$.data").value(nullValue()));
+                .andExpect(jsonPath("$.data.markdown").value(nullValue()));
     }
 
     @Test

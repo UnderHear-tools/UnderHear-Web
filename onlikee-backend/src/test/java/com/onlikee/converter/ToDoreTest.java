@@ -1,6 +1,7 @@
 package com.onlikee.converter;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertSame;
 
 import org.junit.jupiter.api.Test;
@@ -12,8 +13,10 @@ import com.onlikee.pojo.dto.response.UserInfoDore;
 import com.onlikee.pojo.dto.response.UserLoginDore;
 import com.onlikee.pojo.dto.response.UserLoginWithTokenDore;
 import com.onlikee.pojo.dto.response.UserProfileDore;
+import com.onlikee.pojo.dto.response.UserProfileMarkdownDore;
 import com.onlikee.pojo.entity.Application;
 import com.onlikee.pojo.entity.User;
+import com.onlikee.pojo.entity.UserProfileMarkdown;
 
 class ToDoreTest {
 
@@ -53,6 +56,25 @@ class ToDoreTest {
         assertEquals("https://github.com/tester", userProfileDore.getSocialAccount0());
         assertEquals("https://gitee.com/tester", userProfileDore.getSocialAccount1());
         assertEquals("https://example.com/tester", userProfileDore.getSocialAccount2());
+    }
+
+    @Test
+    // 公开 Markdown 响应只暴露 markdown 字段。
+    void toUserProfileMarkdownDoreShouldCopyMarkdownContent() {
+        UserProfileMarkdown markdown = new UserProfileMarkdown();
+        markdown.setContent("# Hello");
+
+        UserProfileMarkdownDore userProfileMarkdownDore = ToDore.toUserProfileMarkdownDore(markdown);
+
+        assertEquals("# Hello", userProfileMarkdownDore.getMarkdown());
+    }
+
+    @Test
+    // 没有 Markdown 记录时保留响应对象，只把 markdown 字段置空。
+    void toUserProfileMarkdownDoreShouldUseNullMarkdownWhenMissing() {
+        UserProfileMarkdownDore userProfileMarkdownDore = ToDore.toUserProfileMarkdownDore(null);
+
+        assertNull(userProfileMarkdownDore.getMarkdown());
     }
 
     @Test
