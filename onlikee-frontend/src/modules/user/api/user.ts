@@ -1,6 +1,6 @@
 import { get, post } from '@/api'
 
-export type PublicUserProfile = {
+export type UserProfile = {
   uuid: string
   nickname: string
   email: string
@@ -41,7 +41,7 @@ export type SaveCurrentUserProfileRequest = {
 }
 
 export const getPublicUserProfile = (nickname: string) =>
-  get<PublicUserProfile>(`/users/${encodeURIComponent(nickname)}`)
+  get<UserProfile>(`/users/${encodeURIComponent(nickname)}`)
 
 export const saveCurrentUserMarkdown = (request: SaveCurrentUserMarkdownRequest) =>
   post<void>('/users/me/markdown', request, { withCredentials: true })
