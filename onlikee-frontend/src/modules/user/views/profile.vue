@@ -583,11 +583,11 @@ onMounted(async () => {
   display: flex;
   align-items: flex-start;
   min-width: 0;
-  margin-bottom: 12px;
+  margin-bottom: 8px;
   color: var(--fgColor-default);
   gap: 8px;
   font-size: 14px;
-  line-height: 1.45;
+  line-height: 21px;
 }
 
 .links li svg {
