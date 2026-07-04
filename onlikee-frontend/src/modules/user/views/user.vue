@@ -306,10 +306,7 @@ const saveProfileEdit = async () => {
       socialAccount1: profileEditDraft.socialAccount1,
       socialAccount2: profileEditDraft.socialAccount2
     })
-    profile.value = {
-      ...updatedProfile,
-      markdown: profile.value.markdown
-    }
+    profile.value = updatedProfile
     userStore.setUserInfo(updatedProfile)
     profileEditing.value = false
     Banner.success('保存成功。')

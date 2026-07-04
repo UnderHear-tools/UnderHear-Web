@@ -11,7 +11,6 @@ export type UserProfile = {
   socialAccount0: string | null
   socialAccount1: string | null
   socialAccount2: string | null
-  markdown: string | null
 }
 
 export type SaveCurrentUserMarkdownRequest = {
@@ -41,7 +40,10 @@ export type SaveCurrentUserProfileRequest = {
 }
 
 export const getPublicUserProfile = (nickname: string) =>
-  get<UserProfile>(`/users/${encodeURIComponent(nickname)}`)
+  get<UserProfile>(`/users/${encodeURIComponent(nickname)}/profile`)
+
+export const getPublicUserMarkdown = (nickname: string) =>
+  get<string | null>(`/users/${encodeURIComponent(nickname)}/markdown`)
 
 export const saveCurrentUserMarkdown = (request: SaveCurrentUserMarkdownRequest) =>
   post<void>('/users/me/markdown', request, { withCredentials: true })

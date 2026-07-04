@@ -3,7 +3,7 @@
     <div class="markdown-header">
       <div>{{ profile.nickname }} / README.md</div>
       <Button
-        v-if="isOwn && profileMarkdown !== null"
+        v-if="isOwn && profileMarkdown !== undefined && profileMarkdown !== null"
         variant="link"
         @click="openMarkdownDialog"
       >
@@ -13,13 +13,13 @@
     <div class="markdown-content">
       <!-- eslint-disable vue/no-v-html -->
       <div
-        v-if="profileMarkdown !== null && profileMarkdown !== ''"
+        v-if="typeof profileMarkdown === 'string' && profileMarkdown !== ''"
         class="markdown-body profile-readme"
         v-html="renderedProfileMarkdown"
       />
       <!-- eslint-enable vue/no-v-html -->
       <Blankslate
-        v-else
+        v-else-if="profileMarkdown !== undefined"
         narrow
       >
         <Blankslate.Visual>
@@ -112,7 +112,7 @@
 <script setup lang="ts">
 import DOMPurify from 'dompurify'
 import { marked } from 'marked'
-import { computed, ref } from 'vue'
+import { computed, onMounted, ref } from 'vue'
 import 'github-markdown-css/github-markdown-light.css'
 import { Blankslate } from '@/components/z-ui/Blankslate'
 import { Banner } from '@/components/z-ui/Banner'
@@ -120,18 +120,26 @@ import { Button } from '@/components/z-ui/Button'
 import { Dialog } from '@/components/z-ui/Dialog'
 import { Textarea } from '@/components/z-ui/Textarea'
 import { RepoTemplateIcon } from '@/components/octicons-vue3'
-import { saveCurrentUserMarkdown, type UserProfile } from '../api/user'
+import { getPublicUserMarkdown, saveCurrentUserMarkdown, type UserProfile } from '../api/user'
 
 const props = defineProps<{
   profile: UserProfile
   isOwn: boolean
 }>()
 
-const profileMarkdown = ref<string | null>(props.profile.markdown)
+const profileMarkdown = ref<string | null | undefined>(undefined)
 const markdownDialogOpen = ref(false)
 const markdownDraft = ref('')
 const markdownMode = ref<'edit' | 'preview'>('edit')
 const markdownSaving = ref(false)
+
+const fetchProfileMarkdown = async () => {
+  try {
+    profileMarkdown.value = await getPublicUserMarkdown(props.profile.nickname)
+  } catch {
+    profileMarkdown.value = null
+  }
+}
 
 const renderMarkdown = (content: string) => {
   const html = marked.parse(content, {
@@ -171,6 +179,10 @@ const saveMarkdown = async () => {
     markdownSaving.value = false
   }
 }
+
+onMounted(async () => {
+  await fetchProfileMarkdown()
+})
 </script>
 
 <style scoped>
