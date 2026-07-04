@@ -1,5 +1,5 @@
 <template>
-  <div class="profile-markdown">
+  <div class="profile-markdown" v-if="profileMarkdown !== undefined">
     <div class="markdown-header">
       <div>{{ profile.nickname }} / README.md</div>
       <Button
@@ -203,6 +203,7 @@ onMounted(async () => {
   font-size: 12px;
   justify-content: space-between;
   align-items: center;
+  line-height: 20px;
 }
 
 .markdown-content {
