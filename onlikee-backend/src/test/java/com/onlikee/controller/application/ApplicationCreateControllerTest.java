@@ -188,6 +188,25 @@ class ApplicationCreateControllerTest {
     }
 
     @Test
+    // 自建应用只允许 onlikee.cn 下的单标签 HTTPS 地址。
+    void applicationCreateNewShouldReturnValidationFailedWhenAppUrlIsInvalid() throws Exception {
+        mockMvc.perform(multipart("/application/create/new")
+                        .file(new MockMultipartFile("appFile", "index.html", "text/html", "<html></html>".getBytes()))
+                        .param("framework", "html")
+                        .param("appName", "Demo")
+                        .param("appUrl", "https://nested.demo.onlikee.cn/")
+                        .param("visibility", "public")
+                        .param("appDescription", "description")
+                        .cookie(new Cookie("auth_token", "token")))
+                .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("$.code").value("VALIDATION_FAILED"))
+                .andExpect(jsonPath("$.message").value("appUrl格式无效"));
+
+        verify(sessionAuthService, never()).getCurrentUser(any());
+        verify(applicationCreateService, never()).applicationCreateNew(any(), any());
+    }
+
+    @Test
     // Connect 缺少必填字段时应在进入登录态解析前触发参数校验失败。
     void applicationCreateConnectShouldReturnValidationFailedWhenRequiredFieldIsMissing() throws Exception {
         mockMvc.perform(post("/application/create/connect")

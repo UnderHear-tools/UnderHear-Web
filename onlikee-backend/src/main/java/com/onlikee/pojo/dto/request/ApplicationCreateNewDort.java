@@ -6,6 +6,8 @@ import jakarta.validation.constraints.AssertTrue;
 import jakarta.validation.constraints.NotBlank;
 import lombok.Data;
 
+import com.onlikee.util.UrlUtils;
+
 @Data
 public class ApplicationCreateNewDort {
     @NotBlank(message = "framework不能为空")
@@ -28,5 +30,18 @@ public class ApplicationCreateNewDort {
     @AssertTrue(message = "appFile不能为空")
     public boolean isAppFileValid() {
         return appFile != null && !appFile.isEmpty();
+    }
+
+    @AssertTrue(message = "appUrl格式无效")
+    public boolean isAppUrlValid() {
+        if (appUrl == null || appUrl.isBlank()) {
+            return true;
+        }
+        try {
+            UrlUtils.extractOnlikeeAppUrlPrefix(appUrl);
+            return true;
+        } catch (IllegalArgumentException exception) {
+            return false;
+        }
     }
 }

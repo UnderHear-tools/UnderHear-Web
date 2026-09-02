@@ -26,13 +26,13 @@ import com.onlikee.mapper.application.ApplicationCreateMapper;
 import com.onlikee.pojo.dto.request.ApplicationCreateCollectDort;
 import com.onlikee.pojo.dto.request.ApplicationCreateConnectDort;
 import com.onlikee.pojo.dto.request.ApplicationCreateNewDort;
-import com.onlikee.pojo.dto.request.LightOssPublishedSiteDort;
 import com.onlikee.pojo.dto.response.ApplicationCreateCollectDore;
 import com.onlikee.pojo.dto.response.ApplicationCreateConnectDore;
 import com.onlikee.pojo.dto.response.ApplicationCreateNewDore;
 import com.onlikee.pojo.entity.Application;
 import com.onlikee.pojo.entity.User;
-import com.onlikee.service.lightoss.LightOssPublishService;
+import com.onlikee.service.application.ApplicationSitePublishService;
+import com.onlikee.service.application.ApplicationSitePublishService.PublishedSite;
 
 @ExtendWith(MockitoExtension.class)
 class ApplicationCreateServiceImplTest {
@@ -41,7 +41,7 @@ class ApplicationCreateServiceImplTest {
     private ApplicationCreateMapper applicationCreateMapper;
 
     @Mock
-    private LightOssPublishService lightOssPublishService;
+    private ApplicationSitePublishService applicationSitePublishService;
 
     @InjectMocks
     private ApplicationCreateServiceImpl applicationCreateService;
@@ -58,7 +58,7 @@ class ApplicationCreateServiceImplTest {
                 () -> applicationCreateService.applicationCreateNew(user, request));
 
         assertEquals(ErrorCode.APP_URL_ALREADY_EXISTS.getCode(), exception.getCode());
-        verify(lightOssPublishService, never()).ensureBucketExists(any());
+        verifyNoInteractions(applicationSitePublishService);
     }
 
     @Test
@@ -66,18 +66,18 @@ class ApplicationCreateServiceImplTest {
     void applicationCreateNewShouldPublishHtmlWhenFrameworkIsHtml() {
         User user = user();
         ApplicationCreateNewDort request = htmlRequest();
-        LightOssPublishedSiteDort publishedSite = publishedSite();
+        PublishedSite publishedSite = publishedSite();
         when(applicationCreateMapper.countByAppUrl("https://demo.onlikee.cn/")).thenReturn(0);
-        when(lightOssPublishService.publishHtml(eq("user-1"), eq("https://demo.onlikee.cn/"), any())).thenReturn(publishedSite);
+        when(applicationSitePublishService.publish(eq("user-1"), eq("demo"), eq("html"), any()))
+                .thenReturn(publishedSite);
         when(applicationCreateMapper.insertApplication(any(Application.class))).thenReturn(1);
 
         ApplicationCreateNewDore result = applicationCreateService.applicationCreateNew(user, request);
 
         ArgumentCaptor<Application> applicationCaptor = ArgumentCaptor.forClass(Application.class);
         verify(applicationCreateMapper).insertApplication(applicationCaptor.capture());
-        verify(lightOssPublishService).publishHtml(eq("user-1"), eq("https://demo.onlikee.cn/"), any());
-        verify(lightOssPublishService, never()).publishZipSite(eq("user-1"), eq("https://demo.onlikee.cn/"), any());
-        verify(lightOssPublishService, never()).cleanupPublishedSite(any());
+        verify(applicationSitePublishService).publish(eq("user-1"), eq("demo"), eq("html"), any());
+        verify(applicationSitePublishService, never()).cleanupPublishedSite(any());
         assertEquals("https://demo.onlikee.cn/", result.getAppUrl());
         assertEquals("https://demo.onlikee.cn/", applicationCaptor.getValue().getAppUrl());
     }
@@ -87,15 +87,15 @@ class ApplicationCreateServiceImplTest {
     void applicationCreateNewShouldPublishZipSiteWhenFrameworkIsNotHtml() {
         User user = user();
         ApplicationCreateNewDort request = zipRequest();
-        LightOssPublishedSiteDort publishedSite = publishedSite();
+        PublishedSite publishedSite = publishedSite();
         when(applicationCreateMapper.countByAppUrl("https://demo-zip.onlikee.cn/")).thenReturn(0);
-        when(lightOssPublishService.publishZipSite(eq("user-1"), eq("https://demo-zip.onlikee.cn/"), any())).thenReturn(publishedSite);
+        when(applicationSitePublishService.publish(eq("user-1"), eq("demo-zip"), eq("vue"), any()))
+                .thenReturn(publishedSite);
         when(applicationCreateMapper.insertApplication(any(Application.class))).thenReturn(1);
 
         ApplicationCreateNewDore result = applicationCreateService.applicationCreateNew(user, request);
 
-        verify(lightOssPublishService).publishZipSite(eq("user-1"), eq("https://demo-zip.onlikee.cn/"), any());
-        verify(lightOssPublishService, never()).publishHtml(eq("user-1"), eq("https://demo-zip.onlikee.cn/"), any());
+        verify(applicationSitePublishService).publish(eq("user-1"), eq("demo-zip"), eq("vue"), any());
         assertEquals("https://demo-zip.onlikee.cn/", result.getAppUrl());
     }
 
@@ -104,9 +104,10 @@ class ApplicationCreateServiceImplTest {
     void applicationCreateNewShouldCleanupSiteWhenInsertReturnsUnexpectedRows() {
         User user = user();
         ApplicationCreateNewDort request = htmlRequest();
-        LightOssPublishedSiteDort publishedSite = publishedSite();
+        PublishedSite publishedSite = publishedSite();
         when(applicationCreateMapper.countByAppUrl("https://demo.onlikee.cn/")).thenReturn(0);
-        when(lightOssPublishService.publishHtml(eq("user-1"), eq("https://demo.onlikee.cn/"), any())).thenReturn(publishedSite);
+        when(applicationSitePublishService.publish(eq("user-1"), eq("demo"), eq("html"), any()))
+                .thenReturn(publishedSite);
         when(applicationCreateMapper.insertApplication(any(Application.class))).thenReturn(0);
 
         BizException exception = assertThrows(
@@ -114,7 +115,7 @@ class ApplicationCreateServiceImplTest {
                 () -> applicationCreateService.applicationCreateNew(user, request));
 
         assertEquals(ErrorCode.APPLICATION_CREATE_FAILED.getCode(), exception.getCode());
-        verify(lightOssPublishService).cleanupPublishedSite(publishedSite);
+        verify(applicationSitePublishService).cleanupPublishedSite(publishedSite);
     }
 
     @Test
@@ -122,9 +123,10 @@ class ApplicationCreateServiceImplTest {
     void applicationCreateNewShouldCleanupSiteWhenInsertThrowsDuplicateKeyException() {
         User user = user();
         ApplicationCreateNewDort request = htmlRequest();
-        LightOssPublishedSiteDort publishedSite = publishedSite();
+        PublishedSite publishedSite = publishedSite();
         when(applicationCreateMapper.countByAppUrl("https://demo.onlikee.cn/")).thenReturn(0);
-        when(lightOssPublishService.publishHtml(eq("user-1"), eq("https://demo.onlikee.cn/"), any())).thenReturn(publishedSite);
+        when(applicationSitePublishService.publish(eq("user-1"), eq("demo"), eq("html"), any()))
+                .thenReturn(publishedSite);
         when(applicationCreateMapper.insertApplication(any(Application.class)))
                 .thenThrow(new DuplicateKeyException("duplicate"));
 
@@ -133,7 +135,7 @@ class ApplicationCreateServiceImplTest {
                 () -> applicationCreateService.applicationCreateNew(user, request));
 
         assertEquals(ErrorCode.APP_URL_ALREADY_EXISTS.getCode(), exception.getCode());
-        verify(lightOssPublishService).cleanupPublishedSite(publishedSite);
+        verify(applicationSitePublishService).cleanupPublishedSite(publishedSite);
     }
 
     @Test
@@ -141,9 +143,10 @@ class ApplicationCreateServiceImplTest {
     void applicationCreateNewShouldCleanupSiteWhenInsertThrowsRuntimeException() {
         User user = user();
         ApplicationCreateNewDort request = htmlRequest();
-        LightOssPublishedSiteDort publishedSite = publishedSite();
+        PublishedSite publishedSite = publishedSite();
         when(applicationCreateMapper.countByAppUrl("https://demo.onlikee.cn/")).thenReturn(0);
-        when(lightOssPublishService.publishHtml(eq("user-1"), eq("https://demo.onlikee.cn/"), any())).thenReturn(publishedSite);
+        when(applicationSitePublishService.publish(eq("user-1"), eq("demo"), eq("html"), any()))
+                .thenReturn(publishedSite);
         when(applicationCreateMapper.insertApplication(any(Application.class)))
                 .thenThrow(new IllegalStateException("boom"));
 
@@ -152,7 +155,7 @@ class ApplicationCreateServiceImplTest {
                 () -> applicationCreateService.applicationCreateNew(user, request));
 
         assertEquals("boom", exception.getMessage());
-        verify(lightOssPublishService).cleanupPublishedSite(publishedSite);
+        verify(applicationSitePublishService).cleanupPublishedSite(publishedSite);
     }
 
     @Test
@@ -160,16 +163,16 @@ class ApplicationCreateServiceImplTest {
     void applicationCreateNewShouldCallCollaboratorsInExpectedOrder() {
         User user = user();
         ApplicationCreateNewDort request = htmlRequest();
-        LightOssPublishedSiteDort publishedSite = publishedSite();
+        PublishedSite publishedSite = publishedSite();
         when(applicationCreateMapper.countByAppUrl("https://demo.onlikee.cn/")).thenReturn(0);
-        when(lightOssPublishService.publishHtml(eq("user-1"), eq("https://demo.onlikee.cn/"), any())).thenReturn(publishedSite);
+        when(applicationSitePublishService.publish(eq("user-1"), eq("demo"), eq("html"), any()))
+                .thenReturn(publishedSite);
         when(applicationCreateMapper.insertApplication(any(Application.class))).thenReturn(1);
 
         applicationCreateService.applicationCreateNew(user, request);
 
-        InOrder inOrder = inOrder(lightOssPublishService, applicationCreateMapper);
-        inOrder.verify(lightOssPublishService).ensureBucketExists("user-1");
-        inOrder.verify(lightOssPublishService).publishHtml(eq("user-1"), eq("https://demo.onlikee.cn/"), any());
+        InOrder inOrder = inOrder(applicationSitePublishService, applicationCreateMapper);
+        inOrder.verify(applicationSitePublishService).publish(eq("user-1"), eq("demo"), eq("html"), any());
         inOrder.verify(applicationCreateMapper).insertApplication(any(Application.class));
     }
 
@@ -185,7 +188,7 @@ class ApplicationCreateServiceImplTest {
 
         ArgumentCaptor<Application> applicationCaptor = ArgumentCaptor.forClass(Application.class);
         verify(applicationCreateMapper).insertApplication(applicationCaptor.capture());
-        verifyNoInteractions(lightOssPublishService);
+        verifyNoInteractions(applicationSitePublishService);
         Application application = applicationCaptor.getValue();
         assertEquals("https://www.demo.com", result.getAppUrl());
         assertEquals("connect", application.getCreationMethod());
@@ -209,7 +212,7 @@ class ApplicationCreateServiceImplTest {
 
         assertEquals(ErrorCode.APP_URL_ALREADY_EXISTS.getCode(), exception.getCode());
         verify(applicationCreateMapper, never()).insertApplication(any());
-        verifyNoInteractions(lightOssPublishService);
+        verifyNoInteractions(applicationSitePublishService);
     }
 
     @Test
@@ -226,7 +229,7 @@ class ApplicationCreateServiceImplTest {
                 () -> applicationCreateService.applicationCreateConnect(user, request));
 
         assertEquals(ErrorCode.APP_URL_ALREADY_EXISTS.getCode(), exception.getCode());
-        verifyNoInteractions(lightOssPublishService);
+        verifyNoInteractions(applicationSitePublishService);
     }
 
     @Test
@@ -242,7 +245,7 @@ class ApplicationCreateServiceImplTest {
                 () -> applicationCreateService.applicationCreateConnect(user, request));
 
         assertEquals(ErrorCode.APPLICATION_CREATE_FAILED.getCode(), exception.getCode());
-        verifyNoInteractions(lightOssPublishService);
+        verifyNoInteractions(applicationSitePublishService);
     }
 
     @Test
@@ -257,7 +260,7 @@ class ApplicationCreateServiceImplTest {
 
         ArgumentCaptor<Application> applicationCaptor = ArgumentCaptor.forClass(Application.class);
         verify(applicationCreateMapper).insertApplication(applicationCaptor.capture());
-        verifyNoInteractions(lightOssPublishService);
+        verifyNoInteractions(applicationSitePublishService);
         Application application = applicationCaptor.getValue();
         assertEquals("https://www.demo.com", result.getAppUrl());
         assertEquals("collect", application.getCreationMethod());
@@ -281,7 +284,7 @@ class ApplicationCreateServiceImplTest {
 
         assertEquals(ErrorCode.APP_URL_ALREADY_EXISTS.getCode(), exception.getCode());
         verify(applicationCreateMapper, never()).insertApplication(any());
-        verifyNoInteractions(lightOssPublishService);
+        verifyNoInteractions(applicationSitePublishService);
     }
 
     @Test
@@ -298,7 +301,7 @@ class ApplicationCreateServiceImplTest {
                 () -> applicationCreateService.applicationCreateCollect(user, request));
 
         assertEquals(ErrorCode.APP_URL_ALREADY_EXISTS.getCode(), exception.getCode());
-        verifyNoInteractions(lightOssPublishService);
+        verifyNoInteractions(applicationSitePublishService);
     }
 
     @Test
@@ -314,7 +317,7 @@ class ApplicationCreateServiceImplTest {
                 () -> applicationCreateService.applicationCreateCollect(user, request));
 
         assertEquals(ErrorCode.APPLICATION_CREATE_FAILED.getCode(), exception.getCode());
-        verifyNoInteractions(lightOssPublishService);
+        verifyNoInteractions(applicationSitePublishService);
     }
 
     private User user() {
@@ -371,11 +374,7 @@ class ApplicationCreateServiceImplTest {
         return request;
     }
 
-    private LightOssPublishedSiteDort publishedSite() {
-        LightOssPublishedSiteDort publishedSite = new LightOssPublishedSiteDort();
-        publishedSite.setSiteId(1L);
-        publishedSite.setBucketName("user-1");
-        publishedSite.setRootPrefix("demo/");
-        return publishedSite;
+    private PublishedSite publishedSite() {
+        return new PublishedSite(1L, "user-1", "demo/", "demo/index.html");
     }
 }

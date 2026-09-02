@@ -1,19 +1,20 @@
 package com.onlikee.config;
 
-import org.springframework.beans.factory.annotation.Qualifier;
+import java.net.URI;
+
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.util.StringUtils;
-import org.springframework.web.client.RestClient;
+
+import com.onlikee.lightoss.LightOssClient;
 
 @Configuration
 public class LightOssConfig {
 
-    // 为 Light OSS API 创建独立的 RestClient，避免和站内其他 HTTP 调用混用配置。
-    @Bean
-    @Qualifier("lightOssRestClient")
-    public RestClient lightOssRestClient(
+    // 共享不可变的 SDK 客户端，并在 Spring 容器关闭时释放它创建的 HTTP 资源。
+    @Bean(destroyMethod = "close")
+    public LightOssClient lightOssClient(
             @Value("${light-oss.api-base-url}") String apiBaseUrl,
             @Value("${light-oss.bearer-token}") String bearerToken) {
         String normalizedApiBaseUrl = apiBaseUrl == null ? "" : apiBaseUrl.trim();
@@ -27,9 +28,8 @@ public class LightOssConfig {
             throw new IllegalStateException("light-oss.bearer-token must not be blank");
         }
 
-        return RestClient.builder()
-                .baseUrl(normalizedApiBaseUrl)
-                .defaultHeader("Authorization", "Bearer " + normalizedBearerToken)
+        return LightOssClient.builder(URI.create(normalizedApiBaseUrl))
+                .bearerToken(normalizedBearerToken)
                 .build();
     }
 }

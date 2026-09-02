@@ -3,9 +3,11 @@ package com.onlikee.util;
 import java.io.IOException;
 import java.net.HttpURLConnection;
 import java.net.URI;
+import java.net.URISyntaxException;
 import java.util.Locale;
 
 public class UrlUtils {
+    private static final String ONLIKEE_APP_DOMAIN_SUFFIX = ".onlikee.cn";
 
     /**
      * 判断给定字符串是否为 HTTP/HTTPS URL 或裸域名。
@@ -126,5 +128,49 @@ public class UrlUtils {
                 + (uri.getRawPath() == null ? "" : uri.getRawPath())
                 + (uri.getRawQuery() == null ? "" : "?" + uri.getRawQuery())
                 + (uri.getRawFragment() == null ? "" : "#" + uri.getRawFragment());
+    }
+
+    /**
+     * 从 onlikee 自建应用的完整访问 URL 中提取单标签前缀。
+     *
+     * 只允许 HTTPS、无端口且路径为空或 /、不带查询和锚点的
+     * {@code https://<prefix>.onlikee.cn/}。
+     */
+    public static String extractOnlikeeAppUrlPrefix(String appUrl) {
+        if (appUrl == null || appUrl.isBlank()) {
+            throw new IllegalArgumentException("appUrl must not be blank");
+        }
+
+        try {
+            URI uri = new URI(appUrl);
+            String host = uri.getHost();
+            String path = uri.getRawPath();
+            if (!"https".equalsIgnoreCase(uri.getScheme())
+                    || host == null
+                    || !host.equalsIgnoreCase(uri.getRawAuthority())
+                    || uri.getUserInfo() != null
+                    || uri.getPort() != -1
+                    || uri.getRawQuery() != null
+                    || uri.getRawFragment() != null
+                    || (path != null && !path.isEmpty() && !"/".equals(path))) {
+                throw new IllegalArgumentException("appUrl must be an onlikee application URL");
+            }
+
+            String normalizedHost = host.toLowerCase(Locale.ROOT);
+            if (!normalizedHost.endsWith(ONLIKEE_APP_DOMAIN_SUFFIX)) {
+                throw new IllegalArgumentException("appUrl must use the onlikee.cn domain");
+            }
+
+            String prefix = normalizedHost.substring(
+                    0,
+                    normalizedHost.length() - ONLIKEE_APP_DOMAIN_SUFFIX.length());
+            if (prefix.length() > 63
+                    || !prefix.matches("[a-z0-9](?:[a-z0-9-]*[a-z0-9])?")) {
+                throw new IllegalArgumentException("appUrl must contain one valid application prefix");
+            }
+            return prefix;
+        } catch (URISyntaxException exception) {
+            throw new IllegalArgumentException("appUrl must be an onlikee application URL", exception);
+        }
     }
 }
