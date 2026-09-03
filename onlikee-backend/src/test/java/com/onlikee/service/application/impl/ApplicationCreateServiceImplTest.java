@@ -29,7 +29,9 @@ import com.onlikee.pojo.dto.request.ApplicationCreateNewDort;
 import com.onlikee.pojo.dto.response.ApplicationCreateCollectDore;
 import com.onlikee.pojo.dto.response.ApplicationCreateConnectDore;
 import com.onlikee.pojo.dto.response.ApplicationCreateNewDore;
-import com.onlikee.pojo.entity.Application;
+import com.onlikee.pojo.entity.ApplicationCollect;
+import com.onlikee.pojo.entity.ApplicationConnect;
+import com.onlikee.pojo.entity.ApplicationNew;
 import com.onlikee.pojo.entity.User;
 import com.onlikee.service.application.ApplicationSitePublishService;
 import com.onlikee.service.application.ApplicationSitePublishService.PublishedSite;
@@ -51,7 +53,7 @@ class ApplicationCreateServiceImplTest {
     void applicationCreateNewShouldThrowWhenAppUrlAlreadyExists() {
         User user = user();
         ApplicationCreateNewDort request = htmlRequest();
-        when(applicationCreateMapper.countByAppUrl("https://demo.onlikee.cn/")).thenReturn(1);
+        when(applicationCreateMapper.countNewByAppSubDomain("demo")).thenReturn(1);
 
         BizException exception = assertThrows(
                 BizException.class,
@@ -67,19 +69,19 @@ class ApplicationCreateServiceImplTest {
         User user = user();
         ApplicationCreateNewDort request = htmlRequest();
         PublishedSite publishedSite = publishedSite();
-        when(applicationCreateMapper.countByAppUrl("https://demo.onlikee.cn/")).thenReturn(0);
+        when(applicationCreateMapper.countNewByAppSubDomain("demo")).thenReturn(0);
         when(applicationSitePublishService.publish(eq("user-1"), eq("demo"), eq("html"), any()))
                 .thenReturn(publishedSite);
-        when(applicationCreateMapper.insertApplication(any(Application.class))).thenReturn(1);
+        when(applicationCreateMapper.insertApplicationNew(any(ApplicationNew.class))).thenReturn(1);
 
         ApplicationCreateNewDore result = applicationCreateService.applicationCreateNew(user, request);
 
-        ArgumentCaptor<Application> applicationCaptor = ArgumentCaptor.forClass(Application.class);
-        verify(applicationCreateMapper).insertApplication(applicationCaptor.capture());
+        ArgumentCaptor<ApplicationNew> applicationCaptor = ArgumentCaptor.forClass(ApplicationNew.class);
+        verify(applicationCreateMapper).insertApplicationNew(applicationCaptor.capture());
         verify(applicationSitePublishService).publish(eq("user-1"), eq("demo"), eq("html"), any());
         verify(applicationSitePublishService, never()).cleanupPublishedSite(any());
         assertEquals("https://demo.onlikee.cn/", result.getAppUrl());
-        assertEquals("https://demo.onlikee.cn/", applicationCaptor.getValue().getAppUrl());
+        assertEquals("demo", applicationCaptor.getValue().getAppSubDomain());
     }
 
     @Test
@@ -88,10 +90,10 @@ class ApplicationCreateServiceImplTest {
         User user = user();
         ApplicationCreateNewDort request = zipRequest();
         PublishedSite publishedSite = publishedSite();
-        when(applicationCreateMapper.countByAppUrl("https://demo-zip.onlikee.cn/")).thenReturn(0);
+        when(applicationCreateMapper.countNewByAppSubDomain("demo-zip")).thenReturn(0);
         when(applicationSitePublishService.publish(eq("user-1"), eq("demo-zip"), eq("vue"), any()))
                 .thenReturn(publishedSite);
-        when(applicationCreateMapper.insertApplication(any(Application.class))).thenReturn(1);
+        when(applicationCreateMapper.insertApplicationNew(any(ApplicationNew.class))).thenReturn(1);
 
         ApplicationCreateNewDore result = applicationCreateService.applicationCreateNew(user, request);
 
@@ -105,10 +107,10 @@ class ApplicationCreateServiceImplTest {
         User user = user();
         ApplicationCreateNewDort request = htmlRequest();
         PublishedSite publishedSite = publishedSite();
-        when(applicationCreateMapper.countByAppUrl("https://demo.onlikee.cn/")).thenReturn(0);
+        when(applicationCreateMapper.countNewByAppSubDomain("demo")).thenReturn(0);
         when(applicationSitePublishService.publish(eq("user-1"), eq("demo"), eq("html"), any()))
                 .thenReturn(publishedSite);
-        when(applicationCreateMapper.insertApplication(any(Application.class))).thenReturn(0);
+        when(applicationCreateMapper.insertApplicationNew(any(ApplicationNew.class))).thenReturn(0);
 
         BizException exception = assertThrows(
                 BizException.class,
@@ -124,10 +126,10 @@ class ApplicationCreateServiceImplTest {
         User user = user();
         ApplicationCreateNewDort request = htmlRequest();
         PublishedSite publishedSite = publishedSite();
-        when(applicationCreateMapper.countByAppUrl("https://demo.onlikee.cn/")).thenReturn(0);
+        when(applicationCreateMapper.countNewByAppSubDomain("demo")).thenReturn(0);
         when(applicationSitePublishService.publish(eq("user-1"), eq("demo"), eq("html"), any()))
                 .thenReturn(publishedSite);
-        when(applicationCreateMapper.insertApplication(any(Application.class)))
+        when(applicationCreateMapper.insertApplicationNew(any(ApplicationNew.class)))
                 .thenThrow(new DuplicateKeyException("duplicate"));
 
         BizException exception = assertThrows(
@@ -144,10 +146,10 @@ class ApplicationCreateServiceImplTest {
         User user = user();
         ApplicationCreateNewDort request = htmlRequest();
         PublishedSite publishedSite = publishedSite();
-        when(applicationCreateMapper.countByAppUrl("https://demo.onlikee.cn/")).thenReturn(0);
+        when(applicationCreateMapper.countNewByAppSubDomain("demo")).thenReturn(0);
         when(applicationSitePublishService.publish(eq("user-1"), eq("demo"), eq("html"), any()))
                 .thenReturn(publishedSite);
-        when(applicationCreateMapper.insertApplication(any(Application.class)))
+        when(applicationCreateMapper.insertApplicationNew(any(ApplicationNew.class)))
                 .thenThrow(new IllegalStateException("boom"));
 
         IllegalStateException exception = assertThrows(
@@ -164,16 +166,16 @@ class ApplicationCreateServiceImplTest {
         User user = user();
         ApplicationCreateNewDort request = htmlRequest();
         PublishedSite publishedSite = publishedSite();
-        when(applicationCreateMapper.countByAppUrl("https://demo.onlikee.cn/")).thenReturn(0);
+        when(applicationCreateMapper.countNewByAppSubDomain("demo")).thenReturn(0);
         when(applicationSitePublishService.publish(eq("user-1"), eq("demo"), eq("html"), any()))
                 .thenReturn(publishedSite);
-        when(applicationCreateMapper.insertApplication(any(Application.class))).thenReturn(1);
+        when(applicationCreateMapper.insertApplicationNew(any(ApplicationNew.class))).thenReturn(1);
 
         applicationCreateService.applicationCreateNew(user, request);
 
         InOrder inOrder = inOrder(applicationSitePublishService, applicationCreateMapper);
         inOrder.verify(applicationSitePublishService).publish(eq("user-1"), eq("demo"), eq("html"), any());
-        inOrder.verify(applicationCreateMapper).insertApplication(any(Application.class));
+        inOrder.verify(applicationCreateMapper).insertApplicationNew(any(ApplicationNew.class));
     }
 
     @Test
@@ -181,22 +183,17 @@ class ApplicationCreateServiceImplTest {
     void applicationCreateConnectShouldNormalizeUrlWithoutLightOss() {
         User user = user();
         ApplicationCreateConnectDort request = connectRequest();
-        when(applicationCreateMapper.countByAppUrl("https://www.demo.com")).thenReturn(0);
-        when(applicationCreateMapper.insertApplication(any(Application.class))).thenReturn(1);
+        when(applicationCreateMapper.countConnectByAppUrl("https://www.demo.com")).thenReturn(0);
+        when(applicationCreateMapper.insertApplicationConnect(any(ApplicationConnect.class))).thenReturn(1);
 
         ApplicationCreateConnectDore result = applicationCreateService.applicationCreateConnect(user, request);
 
-        ArgumentCaptor<Application> applicationCaptor = ArgumentCaptor.forClass(Application.class);
-        verify(applicationCreateMapper).insertApplication(applicationCaptor.capture());
+        ArgumentCaptor<ApplicationConnect> applicationCaptor = ArgumentCaptor.forClass(ApplicationConnect.class);
+        verify(applicationCreateMapper).insertApplicationConnect(applicationCaptor.capture());
         verifyNoInteractions(applicationSitePublishService);
-        Application application = applicationCaptor.getValue();
+        ApplicationConnect application = applicationCaptor.getValue();
         assertEquals("https://www.demo.com", result.getAppUrl());
-        assertEquals("connect", application.getCreationMethod());
-        assertEquals("", application.getFramework());
         assertEquals("https://www.demo.com", application.getAppUrl());
-        assertEquals("", application.getOriginalFilename());
-        assertEquals("", application.getOriginalFileType());
-        assertEquals("", application.getOriginalFileSize());
     }
 
     @Test
@@ -204,14 +201,14 @@ class ApplicationCreateServiceImplTest {
     void applicationCreateConnectShouldThrowWhenAppUrlAlreadyExists() {
         User user = user();
         ApplicationCreateConnectDort request = connectRequest();
-        when(applicationCreateMapper.countByAppUrl("https://www.demo.com")).thenReturn(1);
+        when(applicationCreateMapper.countConnectByAppUrl("https://www.demo.com")).thenReturn(1);
 
         BizException exception = assertThrows(
                 BizException.class,
                 () -> applicationCreateService.applicationCreateConnect(user, request));
 
         assertEquals(ErrorCode.APP_URL_ALREADY_EXISTS.getCode(), exception.getCode());
-        verify(applicationCreateMapper, never()).insertApplication(any());
+        verify(applicationCreateMapper, never()).insertApplicationConnect(any());
         verifyNoInteractions(applicationSitePublishService);
     }
 
@@ -220,8 +217,8 @@ class ApplicationCreateServiceImplTest {
     void applicationCreateConnectShouldThrowWhenInsertThrowsDuplicateKeyException() {
         User user = user();
         ApplicationCreateConnectDort request = connectRequest();
-        when(applicationCreateMapper.countByAppUrl("https://www.demo.com")).thenReturn(0);
-        when(applicationCreateMapper.insertApplication(any(Application.class)))
+        when(applicationCreateMapper.countConnectByAppUrl("https://www.demo.com")).thenReturn(0);
+        when(applicationCreateMapper.insertApplicationConnect(any(ApplicationConnect.class)))
                 .thenThrow(new DuplicateKeyException("duplicate"));
 
         BizException exception = assertThrows(
@@ -237,8 +234,8 @@ class ApplicationCreateServiceImplTest {
     void applicationCreateConnectShouldThrowWhenInsertReturnsUnexpectedRows() {
         User user = user();
         ApplicationCreateConnectDort request = connectRequest();
-        when(applicationCreateMapper.countByAppUrl("https://www.demo.com")).thenReturn(0);
-        when(applicationCreateMapper.insertApplication(any(Application.class))).thenReturn(0);
+        when(applicationCreateMapper.countConnectByAppUrl("https://www.demo.com")).thenReturn(0);
+        when(applicationCreateMapper.insertApplicationConnect(any(ApplicationConnect.class))).thenReturn(0);
 
         BizException exception = assertThrows(
                 BizException.class,
@@ -253,22 +250,17 @@ class ApplicationCreateServiceImplTest {
     void applicationCreateCollectShouldNormalizeUrlWithoutLightOss() {
         User user = user();
         ApplicationCreateCollectDort request = collectRequest();
-        when(applicationCreateMapper.countByAppUrl("https://www.demo.com")).thenReturn(0);
-        when(applicationCreateMapper.insertApplication(any(Application.class))).thenReturn(1);
+        when(applicationCreateMapper.countCollectByAppUrl("https://www.demo.com")).thenReturn(0);
+        when(applicationCreateMapper.insertApplicationCollect(any(ApplicationCollect.class))).thenReturn(1);
 
         ApplicationCreateCollectDore result = applicationCreateService.applicationCreateCollect(user, request);
 
-        ArgumentCaptor<Application> applicationCaptor = ArgumentCaptor.forClass(Application.class);
-        verify(applicationCreateMapper).insertApplication(applicationCaptor.capture());
+        ArgumentCaptor<ApplicationCollect> applicationCaptor = ArgumentCaptor.forClass(ApplicationCollect.class);
+        verify(applicationCreateMapper).insertApplicationCollect(applicationCaptor.capture());
         verifyNoInteractions(applicationSitePublishService);
-        Application application = applicationCaptor.getValue();
+        ApplicationCollect application = applicationCaptor.getValue();
         assertEquals("https://www.demo.com", result.getAppUrl());
-        assertEquals("collect", application.getCreationMethod());
-        assertEquals("", application.getFramework());
         assertEquals("https://www.demo.com", application.getAppUrl());
-        assertEquals("", application.getOriginalFilename());
-        assertEquals("", application.getOriginalFileType());
-        assertEquals("", application.getOriginalFileSize());
     }
 
     @Test
@@ -276,14 +268,14 @@ class ApplicationCreateServiceImplTest {
     void applicationCreateCollectShouldThrowWhenAppUrlAlreadyExists() {
         User user = user();
         ApplicationCreateCollectDort request = collectRequest();
-        when(applicationCreateMapper.countByAppUrl("https://www.demo.com")).thenReturn(1);
+        when(applicationCreateMapper.countCollectByAppUrl("https://www.demo.com")).thenReturn(1);
 
         BizException exception = assertThrows(
                 BizException.class,
                 () -> applicationCreateService.applicationCreateCollect(user, request));
 
         assertEquals(ErrorCode.APP_URL_ALREADY_EXISTS.getCode(), exception.getCode());
-        verify(applicationCreateMapper, never()).insertApplication(any());
+        verify(applicationCreateMapper, never()).insertApplicationCollect(any());
         verifyNoInteractions(applicationSitePublishService);
     }
 
@@ -292,8 +284,8 @@ class ApplicationCreateServiceImplTest {
     void applicationCreateCollectShouldThrowWhenInsertThrowsDuplicateKeyException() {
         User user = user();
         ApplicationCreateCollectDort request = collectRequest();
-        when(applicationCreateMapper.countByAppUrl("https://www.demo.com")).thenReturn(0);
-        when(applicationCreateMapper.insertApplication(any(Application.class)))
+        when(applicationCreateMapper.countCollectByAppUrl("https://www.demo.com")).thenReturn(0);
+        when(applicationCreateMapper.insertApplicationCollect(any(ApplicationCollect.class)))
                 .thenThrow(new DuplicateKeyException("duplicate"));
 
         BizException exception = assertThrows(
@@ -309,8 +301,8 @@ class ApplicationCreateServiceImplTest {
     void applicationCreateCollectShouldThrowWhenInsertReturnsUnexpectedRows() {
         User user = user();
         ApplicationCreateCollectDort request = collectRequest();
-        when(applicationCreateMapper.countByAppUrl("https://www.demo.com")).thenReturn(0);
-        when(applicationCreateMapper.insertApplication(any(Application.class))).thenReturn(0);
+        when(applicationCreateMapper.countCollectByAppUrl("https://www.demo.com")).thenReturn(0);
+        when(applicationCreateMapper.insertApplicationCollect(any(ApplicationCollect.class))).thenReturn(0);
 
         BizException exception = assertThrows(
                 BizException.class,
@@ -330,7 +322,7 @@ class ApplicationCreateServiceImplTest {
         ApplicationCreateNewDort request = new ApplicationCreateNewDort();
         request.setFramework("html");
         request.setAppName("Demo");
-        request.setAppUrl("https://demo.onlikee.cn/");
+        request.setAppSubDomain("demo");
         request.setVisibility("public");
         request.setAppDescription("description");
         request.setAppFile(new MockMultipartFile(
@@ -345,7 +337,7 @@ class ApplicationCreateServiceImplTest {
         ApplicationCreateNewDort request = new ApplicationCreateNewDort();
         request.setFramework("vue");
         request.setAppName("Demo Zip");
-        request.setAppUrl("https://demo-zip.onlikee.cn/");
+        request.setAppSubDomain("demo-zip");
         request.setVisibility("public");
         request.setAppDescription("description");
         request.setAppFile(new MockMultipartFile(

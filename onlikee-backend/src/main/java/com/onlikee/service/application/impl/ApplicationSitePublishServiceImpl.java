@@ -33,13 +33,13 @@ import com.onlikee.lightoss.exception.LightOssException;
 import com.onlikee.lightoss.exception.LightOssValidationException;
 import com.onlikee.lightoss.transfer.UploadSource;
 import com.onlikee.service.application.ApplicationSitePublishService;
+import com.onlikee.util.UrlUtils;
 
 @Service
 // 负责应用站点的 Light OSS 发布适配：保留应用包规则和补偿语义，HTTP 细节交给 SDK。
 public class ApplicationSitePublishServiceImpl implements ApplicationSitePublishService {
     private static final Logger log = LoggerFactory.getLogger(ApplicationSitePublishServiceImpl.class);
 
-    private static final String SITE_DOMAIN_SUFFIX = ".onlikee.cn";
     private static final String INDEX_DOCUMENT = "index.html";
 
     private final LightOssClient lightOssClient;
@@ -50,12 +50,12 @@ public class ApplicationSitePublishServiceImpl implements ApplicationSitePublish
     }
 
     @Override
-    public PublishedSite publish(String bucketName, String appUrlPrefix, String framework, MultipartFile appFile) {
+    public PublishedSite publish(String bucketName, String appSubDomain, String framework, MultipartFile appFile) {
         ensureBucketExists(bucketName);
         if ("html".equalsIgnoreCase(framework)) {
-            return publishHtml(bucketName, appUrlPrefix, appFile);
+            return publishHtml(bucketName, appSubDomain, appFile);
         }
-        return publishZipSite(bucketName, appUrlPrefix, appFile);
+        return publishZipSite(bucketName, appSubDomain, appFile);
     }
 
     @Override
@@ -96,7 +96,7 @@ public class ApplicationSitePublishServiceImpl implements ApplicationSitePublish
     }
 
     // 单文件发布保留原始文件名和已知长度，且不把整个文件读入内存。
-    private PublishedSite publishHtml(String bucketName, String appUrlPrefix, MultipartFile appFile) {
+    private PublishedSite publishHtml(String bucketName, String appSubDomain, MultipartFile appFile) {
         String originalFilename = requireFilename(appFile);
         try {
             UploadSource source = UploadSource.fromInputStream(
@@ -106,9 +106,9 @@ public class ApplicationSitePublishServiceImpl implements ApplicationSitePublish
                     () -> openMultipartFile(appFile));
             SiteClient.PublishFileRequest request = SiteClient.PublishFileRequest.builder(
                             bucketName,
-                            List.of(buildDomain(appUrlPrefix)),
+                            List.of(UrlUtils.buildOnlikeeAppDomain(appSubDomain)),
                             source)
-                    .parentPrefix(appUrlPrefix)
+                    .parentPrefix(appSubDomain)
                     .enabled(true)
                     .errorDocument("")
                     .spaFallback(true)
@@ -122,7 +122,7 @@ public class ApplicationSitePublishServiceImpl implements ApplicationSitePublish
     }
 
     // ZIP 上传需先解压和校验，同步 SDK 调用完成前临时文件不能删除。
-    private PublishedSite publishZipSite(String bucketName, String appUrlPrefix, MultipartFile appFile) {
+    private PublishedSite publishZipSite(String bucketName, String appSubDomain, MultipartFile appFile) {
         Path tempDir;
         try {
             tempDir = Files.createTempDirectory("onlikee-site-publish-");
@@ -134,9 +134,9 @@ public class ApplicationSitePublishServiceImpl implements ApplicationSitePublish
             List<ObjectClient.UploadItem> items = prepareZipUploadItems(appFile, tempDir);
             SiteClient.PublishRequest request = SiteClient.PublishRequest.builder(
                             bucketName,
-                            List.of(buildDomain(appUrlPrefix)),
+                            List.of(UrlUtils.buildOnlikeeAppDomain(appSubDomain)),
                             items)
-                    .parentPrefix(appUrlPrefix)
+                    .parentPrefix(appSubDomain)
                     .enabled(true)
                     .indexDocument(INDEX_DOCUMENT)
                     .errorDocument("")
@@ -367,10 +367,6 @@ public class ApplicationSitePublishServiceImpl implements ApplicationSitePublish
             return new BizException(ErrorCode.APPLICATION_PUBLISH_FAILED, apiException.serviceMessage());
         }
         return new BizException(ErrorCode.APPLICATION_PUBLISH_FAILED);
-    }
-
-    private String buildDomain(String appUrlPrefix) {
-        return appUrlPrefix + SITE_DOMAIN_SUFFIX;
     }
 
     private String requireFilename(MultipartFile appFile) {

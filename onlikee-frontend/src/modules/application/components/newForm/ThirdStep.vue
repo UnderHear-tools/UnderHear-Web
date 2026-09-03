@@ -26,22 +26,22 @@
         应用地址
       </FormControl.Label>
       <Input
-        :model-value="appUrlPrefix"
+        :model-value="appSubDomain"
         placeholder="请输入应用地址"
         leading-text="https://"
         trailing-text=".onlikee.cn"
         minlength="1"
         maxlength="63"
-        @update:model-value="value => emit('update:app-url-prefix', value)"
+        @update:model-value="value => emit('update:app-sub-domain', value)"
       />
       <FormControl.Validation
-        v-if="appUrlPrefixError"
+        v-if="appSubDomainError"
         variant="error"
       >
-        {{ appUrlPrefixError }}
+        {{ appSubDomainError }}
       </FormControl.Validation>
-      <FormControl.Caption v-if="appUrlPrefix.trim()">
-        应用地址：https://{{ appUrlPrefix }}.onlikee.cn/
+      <FormControl.Caption v-if="appSubDomain.trim()">
+        应用地址：https://{{ appSubDomain }}.onlikee.cn/
       </FormControl.Caption>
     </FormControl>
 
@@ -139,23 +139,23 @@ interface VisibilityOption {
 
 interface Props {
   appName: string
-  appUrlPrefix: string
+  appSubDomain: string
   visibility: string
   appDescription: string
   appNameError?: string
-  appUrlPrefixError?: string
+  appSubDomainError?: string
   appDescriptionError?: string
 }
 
 const props = withDefaults(defineProps<Props>(), {
   appNameError: '',
-  appUrlPrefixError: '',
+  appSubDomainError: '',
   appDescriptionError: ''
 })
 
 const emit = defineEmits<{
   'update:app-name': [value: string]
-  'update:app-url-prefix': [value: string]
+  'update:app-sub-domain': [value: string]
   'update:visibility': [value: string]
   'update:app-description': [value: string]
 }>()

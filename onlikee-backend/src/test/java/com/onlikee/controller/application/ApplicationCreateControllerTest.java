@@ -65,7 +65,7 @@ class ApplicationCreateControllerTest {
                         .file(new MockMultipartFile("appFile", "index.html", "text/html", "<html></html>".getBytes()))
                         .param("framework", "html")
                         .param("appName", "Demo")
-                        .param("appUrl", "https://demo.onlikee.cn/")
+                        .param("appSubDomain", " Demo ")
                         .param("visibility", "public")
                         .param("appDescription", "description")
                         .cookie(new Cookie("auth_token", "token")))
@@ -80,7 +80,7 @@ class ApplicationCreateControllerTest {
         ApplicationCreateNewDort capturedDort = dortCaptor.getValue();
         assertEquals("html", capturedDort.getFramework());
         assertEquals("Demo", capturedDort.getAppName());
-        assertEquals("https://demo.onlikee.cn/", capturedDort.getAppUrl());
+        assertEquals("demo", capturedDort.getAppSubDomain());
     }
 
     @Test
@@ -157,7 +157,7 @@ class ApplicationCreateControllerTest {
         mockMvc.perform(multipart("/application/create/new")
                         .param("framework", "html")
                         .param("appName", "Demo")
-                        .param("appUrl", "https://demo.onlikee.cn/")
+                        .param("appSubDomain", "demo")
                         .param("visibility", "public")
                         .param("appDescription", "description")
                         .cookie(new Cookie("auth_token", "token")))
@@ -171,7 +171,7 @@ class ApplicationCreateControllerTest {
 
     @Test
     // 缺少必填文本字段时应触发参数校验失败。
-    void applicationCreateNewShouldReturnValidationFailedWhenAppUrlIsMissing() throws Exception {
+    void applicationCreateNewShouldReturnValidationFailedWhenAppSubDomainIsMissing() throws Exception {
         mockMvc.perform(multipart("/application/create/new")
                         .file(new MockMultipartFile("appFile", "index.html", "text/html", "<html></html>".getBytes()))
                         .param("framework", "html")
@@ -181,26 +181,45 @@ class ApplicationCreateControllerTest {
                         .cookie(new Cookie("auth_token", "token")))
                 .andExpect(status().isBadRequest())
                 .andExpect(jsonPath("$.code").value("VALIDATION_FAILED"))
-                .andExpect(jsonPath("$.message").value("appUrl不能为空"));
+                .andExpect(jsonPath("$.message").value("appSubDomain不能为空"));
 
         verify(sessionAuthService, never()).getCurrentUser(any());
         verify(applicationCreateService, never()).applicationCreateNew(any(), any());
     }
 
     @Test
-    // 自建应用只允许 onlikee.cn 下的单标签 HTTPS 地址。
-    void applicationCreateNewShouldReturnValidationFailedWhenAppUrlIsInvalid() throws Exception {
+    // 自建应用只允许单标签 DNS 子域名。
+    void applicationCreateNewShouldReturnValidationFailedWhenAppSubDomainIsInvalid() throws Exception {
         mockMvc.perform(multipart("/application/create/new")
                         .file(new MockMultipartFile("appFile", "index.html", "text/html", "<html></html>".getBytes()))
                         .param("framework", "html")
                         .param("appName", "Demo")
-                        .param("appUrl", "https://nested.demo.onlikee.cn/")
+                        .param("appSubDomain", "nested.demo")
                         .param("visibility", "public")
                         .param("appDescription", "description")
                         .cookie(new Cookie("auth_token", "token")))
                 .andExpect(status().isBadRequest())
                 .andExpect(jsonPath("$.code").value("VALIDATION_FAILED"))
-                .andExpect(jsonPath("$.message").value("appUrl格式无效"));
+                .andExpect(jsonPath("$.message").value("appSubDomain格式无效"));
+
+        verify(sessionAuthService, never()).getCurrentUser(any());
+        verify(applicationCreateService, never()).applicationCreateNew(any(), any());
+    }
+
+    @Test
+    // 子域名的单个 DNS 标签不能超过 63 个字符。
+    void applicationCreateNewShouldReturnValidationFailedWhenAppSubDomainIsTooLong() throws Exception {
+        mockMvc.perform(multipart("/application/create/new")
+                        .file(new MockMultipartFile("appFile", "index.html", "text/html", "<html></html>".getBytes()))
+                        .param("framework", "html")
+                        .param("appName", "Demo")
+                        .param("appSubDomain", "a".repeat(64))
+                        .param("visibility", "public")
+                        .param("appDescription", "description")
+                        .cookie(new Cookie("auth_token", "token")))
+                .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("$.code").value("VALIDATION_FAILED"))
+                .andExpect(jsonPath("$.message").value("appSubDomain格式无效"));
 
         verify(sessionAuthService, never()).getCurrentUser(any());
         verify(applicationCreateService, never()).applicationCreateNew(any(), any());

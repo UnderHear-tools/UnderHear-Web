@@ -12,7 +12,7 @@ export function useCreateApplicationForm() {
   const htmlSource = ref('<div>hello, world!</div>')
 
   const appName = ref('')
-  const appUrlPrefix = ref('')
+  const appSubDomain = ref('')
   const visibility = ref('公开的')
   const appDescription = ref('')
 
@@ -20,7 +20,7 @@ export function useCreateApplicationForm() {
   const touchedFile = ref(false)
   const touchedHtmlSource = ref(false)
   const touchedAppName = ref(false)
-  const touchedAppUrlPrefix = ref(false)
+  const touchedAppSubDomain = ref(false)
   const touchedAppDescription = ref(false)
 
   const frameworkError = computed(() => {
@@ -66,18 +66,18 @@ export function useCreateApplicationForm() {
     return ''
   })
 
-  const appUrlPrefixError = computed(() => {
-    const trimmedAppUrlPrefix = appUrlPrefix.value.trim()
+  const appSubDomainError = computed(() => {
+    const trimmedAppSubDomain = appSubDomain.value.trim()
 
-    if (!trimmedAppUrlPrefix) {
+    if (!trimmedAppSubDomain) {
       return '请输入应用地址。'
     }
 
-    if (!/^[a-z0-9](?:[a-z0-9-]*[a-z0-9])?$/.test(appUrlPrefix.value)) {
+    if (!/^[a-z0-9](?:[a-z0-9-]*[a-z0-9])?$/.test(appSubDomain.value)) {
       return '仅支持小写字母、数字和连字符（-），且不能以连字符开头或结尾。'
     }
 
-    if (appUrlPrefix.value.length > 63) {
+    if (appSubDomain.value.length > 63) {
       return '不能超过 63 个字符。'
     }
 
@@ -100,8 +100,8 @@ export function useCreateApplicationForm() {
     return submitAttempted.value || touchedAppName.value ? appNameError.value : ''
   })
 
-  const displayedAppUrlPrefixError = computed(() => {
-    return submitAttempted.value || touchedAppUrlPrefix.value ? appUrlPrefixError.value : ''
+  const displayedAppSubDomainError = computed(() => {
+    return submitAttempted.value || touchedAppSubDomain.value ? appSubDomainError.value : ''
   })
 
   const displayedAppDescriptionError = computed(() => {
@@ -128,7 +128,7 @@ export function useCreateApplicationForm() {
     return !frameworkError.value
       && !uploadError.value
       && !appNameError.value
-      && !appUrlPrefixError.value
+      && !appSubDomainError.value
       && !appDescriptionError.value
   })
 
@@ -160,9 +160,9 @@ export function useCreateApplicationForm() {
     appName.value = value
   }
 
-  function setAppUrlPrefix(value: string) {
-    touchedAppUrlPrefix.value = true
-    appUrlPrefix.value = value
+  function setAppSubDomain(value: string) {
+    touchedAppSubDomain.value = true
+    appSubDomain.value = value
   }
 
   function setVisibility(value: string) {
@@ -184,7 +184,7 @@ export function useCreateApplicationForm() {
       framework,
       appFile,
       appName: appName.value,
-      appUrl: `https://${appUrlPrefix.value}.onlikee.cn/`,
+      appSubDomain: appSubDomain.value,
       visibility: visibility.value,
       appDescription: appDescription.value
     }
@@ -200,13 +200,13 @@ export function useCreateApplicationForm() {
     files,
     htmlSource,
     appName,
-    appUrlPrefix,
+    appSubDomain,
     visibility,
     appDescription,
     frameworkError,
     uploadError,
     displayedAppNameError,
-    displayedAppUrlPrefixError,
+    displayedAppSubDomainError,
     displayedAppDescriptionError,
     showFrameworkError,
     showUploadError,
@@ -214,7 +214,7 @@ export function useCreateApplicationForm() {
     setFiles,
     setHtmlSource,
     setAppName,
-    setAppUrlPrefix,
+    setAppSubDomain,
     setVisibility,
     setAppDescription,
     prepareSubmit,

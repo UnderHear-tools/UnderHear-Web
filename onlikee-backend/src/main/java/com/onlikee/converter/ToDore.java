@@ -10,9 +10,12 @@ import com.onlikee.pojo.dto.response.UserLoginDore;
 import com.onlikee.pojo.dto.response.UserLoginWithTokenDore;
 import com.onlikee.pojo.dto.response.UserProfileDore;
 import com.onlikee.pojo.dto.response.UserProfileMarkdownDore;
-import com.onlikee.pojo.entity.Application;
+import com.onlikee.pojo.entity.ApplicationCollect;
+import com.onlikee.pojo.entity.ApplicationConnect;
+import com.onlikee.pojo.entity.ApplicationNew;
 import com.onlikee.pojo.entity.User;
 import com.onlikee.pojo.entity.UserProfileMarkdown;
+import com.onlikee.util.UrlUtils;
 
 public final class ToDore {
 
@@ -84,19 +87,19 @@ public final class ToDore {
         return callback;
     }
 
-    public static ApplicationCreateNewDore toApplicationCreateNewDore(Application application) {
+    public static ApplicationCreateNewDore toApplicationCreateNewDore(ApplicationNew application) {
         ApplicationCreateNewDore applicationCreateNewDore = new ApplicationCreateNewDore();
-        applicationCreateNewDore.setAppUrl(application.getAppUrl());
+        applicationCreateNewDore.setAppUrl(UrlUtils.buildOnlikeeAppUrl(application.getAppSubDomain()));
         return applicationCreateNewDore;
     }
 
-    public static ApplicationCreateConnectDore toApplicationCreateConnectDore(Application application) {
+    public static ApplicationCreateConnectDore toApplicationCreateConnectDore(ApplicationConnect application) {
         ApplicationCreateConnectDore applicationCreateConnectDore = new ApplicationCreateConnectDore();
         applicationCreateConnectDore.setAppUrl(application.getAppUrl());
         return applicationCreateConnectDore;
     }
 
-    public static ApplicationCreateCollectDore toApplicationCreateCollectDore(Application application) {
+    public static ApplicationCreateCollectDore toApplicationCreateCollectDore(ApplicationCollect application) {
         ApplicationCreateCollectDore applicationCreateCollectDore = new ApplicationCreateCollectDore();
         applicationCreateCollectDore.setAppUrl(application.getAppUrl());
         return applicationCreateCollectDore;

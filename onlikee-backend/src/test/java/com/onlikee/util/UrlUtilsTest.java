@@ -2,7 +2,6 @@ package com.onlikee.util;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.junit.jupiter.api.Test;
@@ -54,32 +53,9 @@ class UrlUtilsTest {
     }
 
     @Test
-    // 自建应用 URL 只提取 onlikee.cn 下的单标签前缀，域名大小写归一化。
-    void extractOnlikeeAppUrlPrefixShouldReturnNormalizedPrefix() {
-        assertEquals("demo", UrlUtils.extractOnlikeeAppUrlPrefix("https://demo.onlikee.cn/"));
-        assertEquals("demo", UrlUtils.extractOnlikeeAppUrlPrefix("HTTPS://DEMO.ONLIKEE.CN"));
-    }
-
-    @Test
-    // 非 HTTPS、多级子域、额外 URL 部件或非法标签都不能作为自建应用地址。
-    void extractOnlikeeAppUrlPrefixShouldRejectInvalidApplicationUrls() {
-        String[] invalidUrls = {
-                "http://demo.onlikee.cn/",
-                "https://nested.demo.onlikee.cn/",
-                "https://demo.example.com/",
-                "https://demo.onlikee.cn:8443/",
-                "https://demo.onlikee.cn:/",
-                "https://demo.onlikee.cn/path",
-                "https://demo.onlikee.cn/?from=test",
-                "https://demo.onlikee.cn/#top",
-                "https://-demo.onlikee.cn/",
-                " https://demo.onlikee.cn/"
-        };
-
-        for (String invalidUrl : invalidUrls) {
-            assertThrows(IllegalArgumentException.class,
-                    () -> UrlUtils.extractOnlikeeAppUrlPrefix(invalidUrl),
-                    invalidUrl);
-        }
+    // 已验证的子域名由后端统一构造为发布域名和对外 URL。
+    void buildOnlikeeAppAddressShouldReturnCanonicalValues() {
+        assertEquals("demo.onlikee.cn", UrlUtils.buildOnlikeeAppDomain("demo"));
+        assertEquals("https://demo.onlikee.cn/", UrlUtils.buildOnlikeeAppUrl("demo"));
     }
 }

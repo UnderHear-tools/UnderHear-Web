@@ -16,7 +16,9 @@ import com.onlikee.pojo.dto.request.ApplicationCreateConnectDort;
 import com.onlikee.pojo.dto.request.ApplicationCreateNewDort;
 import com.onlikee.pojo.dto.request.UserGiteeDort;
 import com.onlikee.pojo.dto.request.UserGithubDort;
-import com.onlikee.pojo.entity.Application;
+import com.onlikee.pojo.entity.ApplicationCollect;
+import com.onlikee.pojo.entity.ApplicationConnect;
+import com.onlikee.pojo.entity.ApplicationNew;
 import com.onlikee.pojo.entity.User;
 import com.onlikee.pojo.entity.UserGitee;
 import com.onlikee.pojo.entity.UserGithub;
@@ -136,14 +138,14 @@ class ToEntityTest {
     }
 
     @Test
-    // 应用创建转换时应生成 appid、URL 和原始文件元信息。
-    void toApplicationShouldBuildApplicationMetadata() {
+    // 自建应用转换时应生成 appid、子域名和原始文件元信息。
+    void toApplicationNewShouldBuildApplicationMetadata() {
         User user = new User();
         user.setUuid("user-1");
         ApplicationCreateNewDort request = new ApplicationCreateNewDort();
         request.setFramework("html");
         request.setAppName("Demo");
-        request.setAppUrl("https://demo.onlikee.cn/");
+        request.setAppSubDomain("demo");
         request.setVisibility("public");
         request.setAppDescription("description");
         request.setAppFile(new MockMultipartFile(
@@ -152,15 +154,14 @@ class ToEntityTest {
                 "text/html",
                 "<html></html>".getBytes()));
 
-        Application application = ToEntity.toApplication(user, request);
+        ApplicationNew application = ToEntity.toApplicationNew(user, request);
 
         assertNotNull(application.getAppid());
         UUID.fromString(application.getAppid());
         assertEquals("user-1", application.getOwnerUuid());
-        assertEquals("new", application.getCreationMethod());
         assertEquals("html", application.getFramework());
         assertEquals("Demo", application.getAppName());
-        assertEquals("https://demo.onlikee.cn/", application.getAppUrl());
+        assertEquals("demo", application.getAppSubDomain());
         assertEquals("public", application.getVisibility());
         assertEquals("description", application.getAppDescription());
         assertEquals("index.html", application.getOriginalFilename());
@@ -170,7 +171,7 @@ class ToEntityTest {
 
     @Test
     // 已有网站接入转换时不应依赖上传文件元信息。
-    void toApplicationShouldBuildConnectApplicationMetadata() {
+    void toApplicationConnectShouldBuildApplicationMetadata() {
         User user = new User();
         user.setUuid("user-1");
         ApplicationCreateConnectDort request = new ApplicationCreateConnectDort();
@@ -179,25 +180,20 @@ class ToEntityTest {
         request.setVisibility("public");
         request.setAppDescription("description");
 
-        Application application = ToEntity.toApplication(user, request, "https://www.demo.com");
+        ApplicationConnect application = ToEntity.toApplicationConnect(user, request, "https://www.demo.com");
 
         assertNotNull(application.getAppid());
         UUID.fromString(application.getAppid());
         assertEquals("user-1", application.getOwnerUuid());
-        assertEquals("connect", application.getCreationMethod());
-        assertEquals("", application.getFramework());
         assertEquals("Demo Website", application.getAppName());
         assertEquals("https://www.demo.com", application.getAppUrl());
         assertEquals("public", application.getVisibility());
         assertEquals("description", application.getAppDescription());
-        assertEquals("", application.getOriginalFilename());
-        assertEquals("", application.getOriginalFileType());
-        assertEquals("", application.getOriginalFileSize());
     }
 
     @Test
     // 网站收录转换时应写入 collect 来源，不依赖上传文件元信息。
-    void toApplicationShouldBuildCollectApplicationMetadata() {
+    void toApplicationCollectShouldBuildApplicationMetadata() {
         User user = new User();
         user.setUuid("user-1");
         ApplicationCreateCollectDort request = new ApplicationCreateCollectDort();
@@ -206,20 +202,15 @@ class ToEntityTest {
         request.setVisibility("public");
         request.setAppDescription("description");
 
-        Application application = ToEntity.toApplication(user, request, "https://www.demo.com");
+        ApplicationCollect application = ToEntity.toApplicationCollect(user, request, "https://www.demo.com");
 
         assertNotNull(application.getAppid());
         UUID.fromString(application.getAppid());
         assertEquals("user-1", application.getOwnerUuid());
-        assertEquals("collect", application.getCreationMethod());
-        assertEquals("", application.getFramework());
         assertEquals("Demo Website", application.getAppName());
         assertEquals("https://www.demo.com", application.getAppUrl());
         assertEquals("public", application.getVisibility());
         assertEquals("description", application.getAppDescription());
-        assertEquals("", application.getOriginalFilename());
-        assertEquals("", application.getOriginalFileType());
-        assertEquals("", application.getOriginalFileSize());
     }
 
     private UserGithubDort githubDort() {

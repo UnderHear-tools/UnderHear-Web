@@ -15,7 +15,9 @@ import com.onlikee.pojo.dto.request.ApplicationCreateNewDort;
 import com.onlikee.pojo.dto.response.ApplicationCreateCollectDore;
 import com.onlikee.pojo.dto.response.ApplicationCreateConnectDore;
 import com.onlikee.pojo.dto.response.ApplicationCreateNewDore;
-import com.onlikee.pojo.entity.Application;
+import com.onlikee.pojo.entity.ApplicationCollect;
+import com.onlikee.pojo.entity.ApplicationConnect;
+import com.onlikee.pojo.entity.ApplicationNew;
 import com.onlikee.pojo.entity.User;
 import com.onlikee.service.application.ApplicationCreateService;
 import com.onlikee.service.application.ApplicationSitePublishService;
@@ -33,23 +35,22 @@ public class ApplicationCreateServiceImpl implements ApplicationCreateService {
 
     @Override
     public ApplicationCreateNewDore applicationCreateNew(User user, ApplicationCreateNewDort applicationCreateNewDort) {
-        String appUrl = applicationCreateNewDort.getAppUrl();
-        String appUrlPrefix = UrlUtils.extractOnlikeeAppUrlPrefix(appUrl);
-        Application application = ToEntity.toApplication(user, applicationCreateNewDort);
-        if (applicationCreateMapper.countByAppUrl(appUrl) > 0) {
+        String appSubDomain = applicationCreateNewDort.getAppSubDomain();
+        ApplicationNew application = ToEntity.toApplicationNew(user, applicationCreateNewDort);
+        if (applicationCreateMapper.countNewByAppSubDomain(appSubDomain) > 0) {
             throw new BizException(ErrorCode.APP_URL_ALREADY_EXISTS);
         }
 
         // 先发布站点并拿到回滚信息；后续任一步落库失败都要补偿清理已发布内容。
         PublishedSite publishedSite = applicationSitePublishService.publish(
                 user.getUuid(),
-                appUrlPrefix,
+                appSubDomain,
                 application.getFramework(),
                 applicationCreateNewDort.getAppFile());
 
         int rows;
         try {
-            rows = applicationCreateMapper.insertApplication(application);
+            rows = applicationCreateMapper.insertApplicationNew(application);
         } catch (DuplicateKeyException ex) {
             applicationSitePublishService.cleanupPublishedSite(publishedSite);
             throw new BizException(ErrorCode.APP_URL_ALREADY_EXISTS);
@@ -68,14 +69,14 @@ public class ApplicationCreateServiceImpl implements ApplicationCreateService {
     @Override
     public ApplicationCreateConnectDore applicationCreateConnect(User user, ApplicationCreateConnectDort applicationCreateConnectDort) {
         String appUrl = UrlUtils.normalizeUrl(UrlUtils.smartCompleteUrl(applicationCreateConnectDort.getAppUrl()));
-        Application application = ToEntity.toApplication(user, applicationCreateConnectDort, appUrl);
-        if (applicationCreateMapper.countByAppUrl(appUrl) > 0) {
+        ApplicationConnect application = ToEntity.toApplicationConnect(user, applicationCreateConnectDort, appUrl);
+        if (applicationCreateMapper.countConnectByAppUrl(appUrl) > 0) {
             throw new BizException(ErrorCode.APP_URL_ALREADY_EXISTS);
         }
 
         int rows;
         try {
-            rows = applicationCreateMapper.insertApplication(application);
+            rows = applicationCreateMapper.insertApplicationConnect(application);
         } catch (DuplicateKeyException ex) {
             throw new BizException(ErrorCode.APP_URL_ALREADY_EXISTS);
         }
@@ -89,14 +90,14 @@ public class ApplicationCreateServiceImpl implements ApplicationCreateService {
     @Override
     public ApplicationCreateCollectDore applicationCreateCollect(User user, ApplicationCreateCollectDort applicationCreateCollectDort) {
         String appUrl = UrlUtils.normalizeUrl(UrlUtils.smartCompleteUrl(applicationCreateCollectDort.getAppUrl()));
-        Application application = ToEntity.toApplication(user, applicationCreateCollectDort, appUrl);
-        if (applicationCreateMapper.countByAppUrl(appUrl) > 0) {
+        ApplicationCollect application = ToEntity.toApplicationCollect(user, applicationCreateCollectDort, appUrl);
+        if (applicationCreateMapper.countCollectByAppUrl(appUrl) > 0) {
             throw new BizException(ErrorCode.APP_URL_ALREADY_EXISTS);
         }
 
         int rows;
         try {
-            rows = applicationCreateMapper.insertApplication(application);
+            rows = applicationCreateMapper.insertApplicationCollect(application);
         } catch (DuplicateKeyException ex) {
             throw new BizException(ErrorCode.APP_URL_ALREADY_EXISTS);
         }

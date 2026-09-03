@@ -8,7 +8,9 @@ import com.onlikee.pojo.dto.request.ApplicationCreateNewDort;
 import com.onlikee.pojo.dto.request.OAuthPendingSignupDort;
 import com.onlikee.pojo.dto.request.UserGiteeDort;
 import com.onlikee.pojo.dto.request.UserGithubDort;
-import com.onlikee.pojo.entity.Application;
+import com.onlikee.pojo.entity.ApplicationCollect;
+import com.onlikee.pojo.entity.ApplicationConnect;
+import com.onlikee.pojo.entity.ApplicationNew;
 import com.onlikee.pojo.entity.User;
 import com.onlikee.pojo.entity.UserGitee;
 import com.onlikee.pojo.entity.UserGithub;
@@ -150,17 +152,16 @@ public final class ToEntity {
         return "OAUTH";
     }
 
-    public static Application toApplication(User user, ApplicationCreateNewDort request) {
-        Application application = new Application();
+    public static ApplicationNew toApplicationNew(User user, ApplicationCreateNewDort request) {
+        ApplicationNew application = new ApplicationNew();
         String appid = ApplicationUuidGenerator.next();
         String originalFilename = request.getAppFile().getOriginalFilename();
 
         application.setAppid(appid);
         application.setOwnerUuid(user.getUuid());
-        application.setCreationMethod("new");
         application.setFramework(request.getFramework());
         application.setAppName(request.getAppName());
-        application.setAppUrl(request.getAppUrl());
+        application.setAppSubDomain(request.getAppSubDomain());
         application.setVisibility(request.getVisibility());
         application.setAppDescription(request.getAppDescription());
         application.setOriginalFilename(originalFilename);
@@ -169,39 +170,35 @@ public final class ToEntity {
         return application;
     }
 
-    public static Application toApplication(User user, ApplicationCreateConnectDort request, String appUrl) {
-        Application application = new Application();
+    public static ApplicationConnect toApplicationConnect(
+            User user,
+            ApplicationCreateConnectDort request,
+            String appUrl) {
+        ApplicationConnect application = new ApplicationConnect();
         String appid = ApplicationUuidGenerator.next();
 
         application.setAppid(appid);
         application.setOwnerUuid(user.getUuid());
-        application.setCreationMethod("connect");
-        application.setFramework("");
         application.setAppName(request.getAppName());
         application.setAppUrl(appUrl);
         application.setVisibility(request.getVisibility());
         application.setAppDescription(request.getAppDescription());
-        application.setOriginalFilename("");
-        application.setOriginalFileType("");
-        application.setOriginalFileSize("");
         return application;
     }
 
-    public static Application toApplication(User user, ApplicationCreateCollectDort request, String appUrl) {
-        Application application = new Application();
+    public static ApplicationCollect toApplicationCollect(
+            User user,
+            ApplicationCreateCollectDort request,
+            String appUrl) {
+        ApplicationCollect application = new ApplicationCollect();
         String appid = ApplicationUuidGenerator.next();
 
         application.setAppid(appid);
         application.setOwnerUuid(user.getUuid());
-        application.setCreationMethod("collect");
-        application.setFramework("");
         application.setAppName(request.getAppName());
         application.setAppUrl(appUrl);
         application.setVisibility(request.getVisibility());
         application.setAppDescription(request.getAppDescription());
-        application.setOriginalFilename("");
-        application.setOriginalFileType("");
-        application.setOriginalFileSize("");
         return application;
     }
 }

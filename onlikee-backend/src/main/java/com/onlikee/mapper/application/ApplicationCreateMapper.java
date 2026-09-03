@@ -5,27 +5,59 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 
-import com.onlikee.pojo.entity.Application;
+import com.onlikee.pojo.entity.ApplicationCollect;
+import com.onlikee.pojo.entity.ApplicationConnect;
+import com.onlikee.pojo.entity.ApplicationNew;
 
 @Mapper
 public interface ApplicationCreateMapper {
 
     @Select("""
             select count(1)
-            from `application`
-            where `app_url` = #{appUrl}
+            from `application_new`
+            where `app_subdomain` = #{appSubDomain}
             """)
-    int countByAppUrl(@Param("appUrl") String appUrl);
+    int countNewByAppSubDomain(@Param("appSubDomain") String appSubDomain);
 
     @Insert("""
-            insert into `application`
-            (`appid`, `owner_uuid`, `creation_method`, `framework`, `app_name`, `app_url`,
+            insert into `application_new`
+            (`appid`, `owner_uuid`, `framework`, `app_name`, `app_subdomain`,
              `visibility`, `app_description`, `original_filename`,
              `original_file_type`, `original_file_size`)
             values
-            (#{appid}, #{ownerUuid}, #{creationMethod}, #{framework}, #{appName}, #{appUrl},
+            (#{appid}, #{ownerUuid}, #{framework}, #{appName}, #{appSubDomain},
              #{visibility}, #{appDescription}, #{originalFilename},
              #{originalFileType}, #{originalFileSize})
             """)
-    int insertApplication(Application application);
+    int insertApplicationNew(ApplicationNew application);
+
+    @Select("""
+            select count(1)
+            from `application_connect`
+            where `app_url` = #{appUrl}
+            """)
+    int countConnectByAppUrl(@Param("appUrl") String appUrl);
+
+    @Insert("""
+            insert into `application_connect`
+            (`appid`, `owner_uuid`, `app_name`, `app_url`, `visibility`, `app_description`)
+            values
+            (#{appid}, #{ownerUuid}, #{appName}, #{appUrl}, #{visibility}, #{appDescription})
+            """)
+    int insertApplicationConnect(ApplicationConnect application);
+
+    @Select("""
+            select count(1)
+            from `application_collect`
+            where `app_url` = #{appUrl}
+            """)
+    int countCollectByAppUrl(@Param("appUrl") String appUrl);
+
+    @Insert("""
+            insert into `application_collect`
+            (`appid`, `owner_uuid`, `app_name`, `app_url`, `visibility`, `app_description`)
+            values
+            (#{appid}, #{ownerUuid}, #{appName}, #{appUrl}, #{visibility}, #{appDescription})
+            """)
+    int insertApplicationCollect(ApplicationCollect application);
 }

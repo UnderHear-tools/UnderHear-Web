@@ -14,7 +14,9 @@ import com.onlikee.pojo.dto.response.UserLoginDore;
 import com.onlikee.pojo.dto.response.UserLoginWithTokenDore;
 import com.onlikee.pojo.dto.response.UserProfileDore;
 import com.onlikee.pojo.dto.response.UserProfileMarkdownDore;
-import com.onlikee.pojo.entity.Application;
+import com.onlikee.pojo.entity.ApplicationCollect;
+import com.onlikee.pojo.entity.ApplicationConnect;
+import com.onlikee.pojo.entity.ApplicationNew;
 import com.onlikee.pojo.entity.User;
 import com.onlikee.pojo.entity.UserProfileMarkdown;
 
@@ -106,9 +108,9 @@ class ToDoreTest {
 
     @Test
     // 应用创建响应对象只需向外暴露应用 URL。
-    void toApplicationCreateNewDoreShouldCopyAppUrl() {
-        Application application = new Application();
-        application.setAppUrl("https://demo.onlikee.cn/");
+    void toApplicationCreateNewDoreShouldBuildAppUrl() {
+        ApplicationNew application = new ApplicationNew();
+        application.setAppSubDomain("demo");
 
         ApplicationCreateNewDore dore = ToDore.toApplicationCreateNewDore(application);
 
@@ -118,7 +120,7 @@ class ToDoreTest {
     @Test
     // 接入网站响应对象只需向外暴露应用 URL。
     void toApplicationCreateConnectDoreShouldCopyAppUrl() {
-        Application application = new Application();
+        ApplicationConnect application = new ApplicationConnect();
         application.setAppUrl("https://www.demo.com");
 
         ApplicationCreateConnectDore dore = ToDore.toApplicationCreateConnectDore(application);
@@ -129,7 +131,7 @@ class ToDoreTest {
     @Test
     // 收录网站响应对象只需向外暴露应用 URL。
     void toApplicationCreateCollectDoreShouldCopyAppUrl() {
-        Application application = new Application();
+        ApplicationCollect application = new ApplicationCollect();
         application.setAppUrl("https://www.demo.com");
 
         ApplicationCreateCollectDore dore = ToDore.toApplicationCreateCollectDore(application);

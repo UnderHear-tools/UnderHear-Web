@@ -1,12 +1,12 @@
 package com.onlikee.pojo.dto.request;
 
+import java.util.Locale;
+
 import org.springframework.web.multipart.MultipartFile;
 
 import jakarta.validation.constraints.AssertTrue;
 import jakarta.validation.constraints.NotBlank;
 import lombok.Data;
-
-import com.onlikee.util.UrlUtils;
 
 @Data
 public class ApplicationCreateNewDort {
@@ -18,8 +18,8 @@ public class ApplicationCreateNewDort {
     @NotBlank(message = "appName不能为空")
     private String appName;
 
-    @NotBlank(message = "appUrl不能为空")
-    private String appUrl;
+    @NotBlank(message = "appSubDomain不能为空")
+    private String appSubDomain;
 
     @NotBlank(message = "visibility不能为空")
     private String visibility;
@@ -32,16 +32,18 @@ public class ApplicationCreateNewDort {
         return appFile != null && !appFile.isEmpty();
     }
 
-    @AssertTrue(message = "appUrl格式无效")
-    public boolean isAppUrlValid() {
-        if (appUrl == null || appUrl.isBlank()) {
+    @AssertTrue(message = "appSubDomain格式无效")
+    public boolean isAppSubDomainValid() {
+        if (appSubDomain == null || appSubDomain.isBlank()) {
             return true;
         }
-        try {
-            UrlUtils.extractOnlikeeAppUrlPrefix(appUrl);
-            return true;
-        } catch (IllegalArgumentException exception) {
-            return false;
-        }
+        return appSubDomain.length() <= 63
+                && appSubDomain.matches("[a-z0-9](?:[a-z0-9-]*[a-z0-9])?");
+    }
+
+    public void setAppSubDomain(String appSubDomain) {
+        this.appSubDomain = appSubDomain == null
+                ? null
+                : appSubDomain.trim().toLowerCase(Locale.ROOT);
     }
 }
