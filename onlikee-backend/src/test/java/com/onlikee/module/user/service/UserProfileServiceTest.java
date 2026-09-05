@@ -1,4 +1,4 @@
-package com.onlikee.module.user.service.impl;
+package com.onlikee.module.user.service;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertSame;
@@ -21,13 +21,13 @@ import com.onlikee.module.user.model.entity.UserEntity;
 import com.onlikee.module.user.model.entity.UserProfileMarkdownEntity;
 
 @ExtendWith(MockitoExtension.class)
-class UserProfileServiceImplTest {
+class UserProfileServiceTest {
 
     @Mock
     private UserProfileMapper userProfileMapper;
 
     @InjectMocks
-    private UserProfileServiceImpl userProfileService;
+    private UserProfileService userProfileService;
 
     @Test
     // 根据昵称查询成功时应直接返回 profile mapper 结果。

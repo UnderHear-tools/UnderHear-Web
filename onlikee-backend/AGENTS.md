@@ -17,7 +17,7 @@
 ## 项目定位
 
 - 技术栈以仓库当前内容为准：Spring Boot 4.0.2、Java 25、Maven、MyBatis、MySQL、Redis、JWT、JustAuth、Lombok。
-- 当前后端的业务模块统一放在 `com.onlikee.module` 下：`module.application`、`module.user`、`module.auth`，业务内部按 `controller`、`service/impl`、`mapper`、`converter`、`model` 分层。OAuth 登录注册放在 `module.auth.oauth`。
+- 当前后端的业务模块统一放在 `com.onlikee.module` 下：`module.application`、`module.user`、`module.auth`，业务内部按 `controller`、`service`（按需设置 `impl`）、`mapper`、`converter`、`model` 分层。OAuth 登录注册放在 `module.auth.oauth`。
 - `infrastructure.cache/storage/web` 分别放 Redis、Light OSS 客户端和 Web 配置；`common.response/exception/util` 放统一响应、异常和通用工具。只创建已有实现需要的目录。
 
 ## 分层职责
@@ -53,7 +53,9 @@
 
 ## Service 约定
 
-- service 接口与实现分开放置，实现在对应业务子包的 `impl` 下。
+- Service 按实际职责选择接口或具体类，不强制为每个 Service 创建接口。只有一个实现且没有明确契约抽象需求的服务，直接以 `@Service` 具体类放在 `service` 下。
+- 需要明确的模块对外能力契约或可替换实现时，接口放在 `service` 下，实现放在 `service.impl` 下；不要仅为未来可能扩展而新增接口。
+- 当前 `UserService` 保留用户模块对外能力契约，`ApplicationSitePublishService` 保留隔离 SDK 模型的发布及补偿契约；应用创建、用户资料和 OAuth 登录注册服务使用具体类。JWT、Cookie、会话服务沿用具体类。
 - service 负责业务主流程、跨表操作、外部系统调用与必要的失败补偿。
 - 多步数据库写入或“写库 + 写外部系统”的流程，按现有模式在 service 层组织；需要事务时显式加 `@Transactional`。
 - 对外部副作用先执行、数据库后落库的流程，必须考虑回滚或清理。例如已发布站点但数据库写入失败时，要执行清理逻辑。

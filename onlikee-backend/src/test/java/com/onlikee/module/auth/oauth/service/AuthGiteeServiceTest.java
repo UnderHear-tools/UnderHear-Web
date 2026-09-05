@@ -1,4 +1,4 @@
-package com.onlikee.module.auth.oauth.service.impl;
+package com.onlikee.module.auth.oauth.service;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -17,12 +17,12 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import com.alibaba.fastjson.JSONObject;
 import com.onlikee.common.exception.BizException;
 import com.onlikee.common.exception.ErrorCode;
-import com.onlikee.module.auth.oauth.mapper.AuthGithubMapper;
-import com.onlikee.module.auth.oauth.model.dto.UserGithubDTO;
+import com.onlikee.module.auth.oauth.mapper.AuthGiteeMapper;
+import com.onlikee.module.auth.oauth.model.dto.UserGiteeDTO;
 import com.onlikee.module.auth.oauth.model.dto.OAuthCallbackWithTokenDTO;
 import com.onlikee.module.auth.oauth.model.dto.OAuthPendingSignupResultDTO;
 import com.onlikee.module.user.model.entity.UserEntity;
-import com.onlikee.module.auth.oauth.model.entity.UserGithubEntity;
+import com.onlikee.module.auth.oauth.model.entity.UserGiteeEntity;
 import com.onlikee.module.auth.service.JwtTokenService;
 import com.onlikee.module.auth.service.SessionAuthService;
 import com.onlikee.module.auth.oauth.service.OAuthSignupService;
@@ -33,10 +33,10 @@ import me.zhyd.oauth.model.AuthToken;
 import me.zhyd.oauth.model.AuthUser;
 
 @ExtendWith(MockitoExtension.class)
-class AuthGithubServiceImplTest {
+class AuthGiteeServiceTest {
 
     @Mock
-    private AuthGithubMapper authGithubMapper;
+    private AuthGiteeMapper authGiteeMapper;
 
     @Mock
     private UserService userService;
@@ -51,98 +51,98 @@ class AuthGithubServiceImplTest {
     private OAuthSignupService oauthSignupService;
 
     @InjectMocks
-    private AuthGithubServiceImpl authGithubService;
+    private AuthGiteeService authGiteeService;
 
     @Test
     // 授权结果无效时应直接按授权失败处理。
     void loginShouldThrowWhenAuthorizationFails() {
-        BizException exception = assertThrows(BizException.class, () -> authGithubService.login(null));
+        BizException exception = assertThrows(BizException.class, () -> authGiteeService.login(null));
 
         assertEquals(ErrorCode.BAD_AUTHORIZED.getCode(), exception.getCode());
     }
 
     @Test
     // 第一次登录时只应创建 pending signup，不应直接创建完整用户。
-    void loginShouldReturnPendingSignupWhenGithubAccountDoesNotExist() {
-        AuthResponse<AuthUser> authResponse = successGithubResponse();
-        when(authGithubMapper.countByGithubId(1001L)).thenReturn(0);
-        when(oauthSignupService.createGithubPendingSignup(any(UserGithubDTO.class))).thenReturn(pendingSignup());
+    void loginShouldReturnPendingSignupWhenGiteeAccountDoesNotExist() {
+        AuthResponse<AuthUser> authResponse = successGiteeResponse();
+        when(authGiteeMapper.countByGiteeId(2002L)).thenReturn(0);
+        when(oauthSignupService.createGiteePendingSignup(any(UserGiteeDTO.class))).thenReturn(pendingSignup());
 
-        OAuthCallbackWithTokenDTO result = authGithubService.login(authResponse);
+        OAuthCallbackWithTokenDTO result = authGiteeService.login(authResponse);
 
-        verify(oauthSignupService).createGithubPendingSignup(any(UserGithubDTO.class));
-        verify(authGithubMapper, never()).saveUserGithubAndUser(any(), any());
+        verify(oauthSignupService).createGiteePendingSignup(any(UserGiteeDTO.class));
+        verify(authGiteeMapper, never()).saveUserGiteeAndUser(any(), any());
         verify(jwtTokenService, never()).generateToken(any());
         verify(sessionAuthService, never()).whitelistToken(any());
         assertEquals(OAuthCallbackWithTokenDTO.SIGNUP_REQUIRED, result.getStatus());
         assertEquals("pending-token", result.getPendingSignupToken());
-        assertEquals("github", result.getProvider());
-        assertEquals("github-user", result.getSuggestedNickname());
+        assertEquals("gitee", result.getProvider());
+        assertEquals("gitee-user", result.getSuggestedNickname());
     }
 
     @Test
     // 已存在用户再次登录时应更新第三方资料并刷新登录态。
-    void loginShouldUpdateExistingUserWhenGithubAccountExists() {
-        AuthResponse<AuthUser> authResponse = successGithubResponse();
+    void loginShouldUpdateExistingUserWhenGiteeAccountExists() {
+        AuthResponse<AuthUser> authResponse = successGiteeResponse();
         UserEntity existingUser = existingUser();
-        when(authGithubMapper.countByGithubId(1001L)).thenReturn(1);
-        when(userService.getUserByGithubId(1001L)).thenReturn(existingUser);
+        when(authGiteeMapper.countByGiteeId(2002L)).thenReturn(1);
+        when(userService.getUserByGiteeId(2002L)).thenReturn(existingUser);
         when(jwtTokenService.generateToken("user-1")).thenReturn("jwt-token");
 
-        OAuthCallbackWithTokenDTO result = authGithubService.login(authResponse);
+        OAuthCallbackWithTokenDTO result = authGiteeService.login(authResponse);
 
-        verify(authGithubMapper).updateUserGithubByGithubId(any(UserGithubEntity.class));
-        verify(userService).updateUserLastLoginByUuid(eq("user-1"), any(), eq("GITHUB_OAUTH"));
+        verify(authGiteeMapper).updateUserGiteeByGiteeId(any(UserGiteeEntity.class));
+        verify(userService).updateUserLastLoginByUuid(eq("user-1"), any(), eq("GITEE_OAUTH"));
         verify(sessionAuthService).whitelistToken("jwt-token");
-        verify(userService).insertUserLoginRecord("user-1", "GITHUB_OAUTH");
+        verify(userService).insertUserLoginRecord("user-1", "GITEE_OAUTH");
         assertEquals(OAuthCallbackWithTokenDTO.LOGIN_SUCCESS, result.getStatus());
         assertEquals("jwt-token", result.getToken());
-        assertEquals("GITHUB_OAUTH", result.getLoginSource());
+        assertEquals("GITEE_OAUTH", result.getLoginSource());
         assertEquals("existing-user", result.getUserInfo().getNickname());
     }
 
     @Test
-    // 授权成功但缺少 GitHub ID 时也应拒绝后续登录流程。
-    void loginShouldThrowWhenGithubIdIsMissing() {
-        AuthResponse<AuthUser> authResponse = successGithubResponse();
+    // 授权成功但缺少 Gitee ID 时也应拒绝后续登录流程。
+    void loginShouldThrowWhenGiteeIdIsMissing() {
+        AuthResponse<AuthUser> authResponse = successGiteeResponse();
         authResponse.getData().getRawUserInfo().remove("id");
 
-        BizException exception = assertThrows(BizException.class, () -> authGithubService.login(authResponse));
+        BizException exception = assertThrows(BizException.class, () -> authGiteeService.login(authResponse));
 
         assertEquals(ErrorCode.BAD_AUTHORIZED.getCode(), exception.getCode());
-        verify(authGithubMapper, never()).saveUserGithubAndUser(any(), any());
-        verify(oauthSignupService, never()).createGithubPendingSignup(any());
+        verify(authGiteeMapper, never()).saveUserGiteeAndUser(any(), any());
+        verify(oauthSignupService, never()).createGiteePendingSignup(any());
     }
 
     @Test
     // exists 对空入参应直接返回 false。
     void existsShouldReturnFalseWhenInputIsNull() {
-        assertEquals(false, authGithubService.exists(null));
+        assertEquals(false, authGiteeService.exists(null));
     }
 
     @Test
     // exists 应根据 mapper 查询结果判断第三方账号是否存在。
-    void existsShouldReturnMapperResultWhenGithubIdIsPresent() {
-        UserGithubDTO dto = new UserGithubDTO();
-        dto.setGithubId(1001L);
-        when(authGithubMapper.countByGithubId(1001L)).thenReturn(1);
+    void existsShouldReturnMapperResultWhenGiteeIdIsPresent() {
+        UserGiteeDTO dto = new UserGiteeDTO();
+        dto.setGiteeId(2002L);
+        when(authGiteeMapper.countByGiteeId(2002L)).thenReturn(1);
 
-        boolean exists = authGithubService.exists(dto);
+        boolean exists = authGiteeService.exists(dto);
 
         assertEquals(true, exists);
     }
 
-    private AuthResponse<AuthUser> successGithubResponse() {
+    private AuthResponse<AuthUser> successGiteeResponse() {
         AuthToken token = new AuthToken();
-        token.setAccessToken("github-token");
+        token.setAccessToken("gitee-token");
 
         JSONObject rawUserInfo = new JSONObject();
-        rawUserInfo.put("id", 1001L);
-        rawUserInfo.put("name", "github-user");
-        rawUserInfo.put("avatar_url", "https://avatar/github.png");
-        rawUserInfo.put("email", "github@example.com");
-        rawUserInfo.put("bio", "github bio");
-        rawUserInfo.put("html_url", "https://github.com/demo");
+        rawUserInfo.put("id", 2002L);
+        rawUserInfo.put("name", "gitee-user");
+        rawUserInfo.put("avatar_url", "https://avatar/gitee.png");
+        rawUserInfo.put("email", "gitee@example.com");
+        rawUserInfo.put("bio", "gitee bio");
+        rawUserInfo.put("html_url", "https://gitee.com/demo");
 
         AuthUser authUser = new AuthUser();
         authUser.setToken(token);
@@ -164,10 +164,10 @@ class AuthGithubServiceImplTest {
     private OAuthPendingSignupResultDTO pendingSignup() {
         OAuthPendingSignupResultDTO pendingSignup = new OAuthPendingSignupResultDTO();
         pendingSignup.setPendingSignupToken("pending-token");
-        pendingSignup.setProvider("github");
-        pendingSignup.setAvatarUrl("https://avatar/github.png");
-        pendingSignup.setSuggestedNickname("github-user");
-        pendingSignup.setEmail("github@example.com");
+        pendingSignup.setProvider("gitee");
+        pendingSignup.setAvatarUrl("https://avatar/gitee.png");
+        pendingSignup.setSuggestedNickname("gitee-user");
+        pendingSignup.setEmail("gitee@example.com");
         return pendingSignup;
     }
 }

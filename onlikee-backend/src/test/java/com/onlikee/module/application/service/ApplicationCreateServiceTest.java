@@ -1,4 +1,4 @@
-package com.onlikee.module.application.service.impl;
+package com.onlikee.module.application.service;
 
 import org.springframework.test.util.ReflectionTestUtils;
 import org.junit.jupiter.api.AfterEach;
@@ -41,7 +41,7 @@ import com.onlikee.module.application.service.ApplicationSitePublishService;
 import com.onlikee.module.application.service.ApplicationSitePublishService.PublishedSite;
 
 @ExtendWith(MockitoExtension.class)
-class ApplicationCreateServiceImplTest {
+class ApplicationCreateServiceTest {
 
     private Object previousAppDomainSuffix;
 
@@ -64,7 +64,7 @@ class ApplicationCreateServiceImplTest {
     private ApplicationSitePublishService applicationSitePublishService;
 
     @InjectMocks
-    private ApplicationCreateServiceImpl applicationCreateService;
+    private ApplicationCreateService applicationCreateService;
 
     @Test
     // 应用地址已存在时不应继续发布站点。

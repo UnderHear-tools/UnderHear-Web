@@ -1,4 +1,4 @@
-package com.onlikee.module.auth.oauth.service.impl;
+package com.onlikee.module.auth.oauth.service;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -39,7 +39,7 @@ import com.onlikee.module.auth.service.SessionAuthService;
 import com.onlikee.module.user.service.UserService;
 
 @ExtendWith(MockitoExtension.class)
-class OAuthSignupServiceImplTest {
+class OAuthSignupServiceTest {
 
     @Mock
     private StringRedisTemplate stringRedisTemplate;
@@ -66,7 +66,7 @@ class OAuthSignupServiceImplTest {
     private UserService userService;
 
     @InjectMocks
-    private OAuthSignupServiceImpl oauthSignupService;
+    private OAuthSignupService oauthSignupService;
 
     @BeforeEach
     void setUp() {
