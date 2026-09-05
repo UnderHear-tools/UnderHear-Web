@@ -84,13 +84,13 @@
               v-model="domainPrefix"
               placeholder="my-app"
             />
-            <span class="domain-affix">.onlikee.cn</span>
+            <span class="domain-affix">.onlikee.com</span>
           </div>
           <FormControl.Caption>
             你可以在结构块之间插入任意自定义内容。
           </FormControl.Caption>
           <p class="demo-preview">
-            预览地址：https://{{ domainPrefix || 'your-app' }}.onlikee.cn
+            预览地址：https://{{ domainPrefix || 'your-app' }}.onlikee.com
           </p>
         </FormControl>
       </ComponentDocsDemoBlock>
@@ -207,10 +207,10 @@ const compositionDemoCode = `<template>
     <div class="domain-row">
       <span class="domain-affix">https://</span>
       <Input v-model="domainPrefix" placeholder="my-app" />
-      <span class="domain-affix">.onlikee.cn</span>
+      <span class="domain-affix">.onlikee.com</span>
     </div>
     <FormControl.Caption>你可以在结构块之间插入任意自定义内容。</FormControl.Caption>
-    <p class="demo-preview">预览地址：https://{{ domainPrefix || 'your-app' }}.onlikee.cn</p>
+    <p class="demo-preview">预览地址：https://{{ domainPrefix || 'your-app' }}.onlikee.com</p>
   </FormControl>
 </template>
 

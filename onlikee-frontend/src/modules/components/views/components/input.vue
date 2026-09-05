@@ -63,7 +63,7 @@
           v-model="domainPrefix"
           class="affix-input"
           leading-text="https://"
-          trailing-text=".onlikee.cn"
+          trailing-text=".onlikee.com"
           placeholder="my-app"
           maxlength="63"
         />
@@ -218,7 +218,7 @@ const demo4Code = `<template>
     v-model="domainPrefix"
     class="affix-input"
     leading-text="https://"
-    trailing-text=".onlikee.cn"
+    trailing-text=".onlikee.com"
     placeholder="my-app"
     maxlength="63"
   />

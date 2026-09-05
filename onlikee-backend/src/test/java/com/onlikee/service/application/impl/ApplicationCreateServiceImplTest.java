@@ -80,7 +80,7 @@ class ApplicationCreateServiceImplTest {
         verify(applicationCreateMapper).insertApplicationNew(applicationCaptor.capture());
         verify(applicationSitePublishService).publish(eq("user-1"), eq("demo"), any());
         verify(applicationSitePublishService, never()).cleanupPublishedSite(any());
-        assertEquals("https://demo.onlikee.cn/", result.getAppUrl());
+        assertEquals("https://demo.onlikee.com/", result.getAppUrl());
         assertEquals("demo", applicationCaptor.getValue().getAppSubDomain());
     }
 
@@ -98,7 +98,7 @@ class ApplicationCreateServiceImplTest {
         ApplicationCreateNewDore result = applicationCreateService.applicationCreateNew(user, request);
 
         verify(applicationSitePublishService).publish(eq("user-1"), eq("demo-zip"), any());
-        assertEquals("https://demo-zip.onlikee.cn/", result.getAppUrl());
+        assertEquals("https://demo-zip.onlikee.com/", result.getAppUrl());
     }
 
     @Test

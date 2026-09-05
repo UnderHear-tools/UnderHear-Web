@@ -6,7 +6,7 @@ import java.net.URI;
 import java.util.Locale;
 
 public class UrlUtils {
-    private static final String ONLIKEE_APP_DOMAIN_SUFFIX = ".onlikee.cn";
+    private static final String ONLIKEE_APP_DOMAIN_SUFFIX = ".onlikee.com";
 
     /**
      * 判断给定字符串是否为 HTTP/HTTPS URL 或裸域名。

@@ -70,7 +70,7 @@ class LightOssConfigTest {
             byte[] body = ("{\"request_id\":\"" + requestId + "\",\"data\":{"
                     + "\"id\":1,\"bucket\":\"user-1\",\"root_prefix\":\"demo/\","
                     + "\"enabled\":true,\"index_document\":\"index.html\",\"error_document\":\"\","
-                    + "\"spa_fallback\":true,\"domains\":[\"demo.onlikee.cn\"],"
+                    + "\"spa_fallback\":true,\"domains\":[\"demo.onlikee.com\"],"
                     + "\"created_at\":\"2026-01-01T00:00:00Z\","
                     + "\"updated_at\":\"2026-01-01T00:00:00Z\"}}")
                     .getBytes(StandardCharsets.UTF_8);
@@ -90,7 +90,7 @@ class LightOssConfigTest {
                     "<html></html>".getBytes(StandardCharsets.UTF_8));
             SiteClient.PublishFileRequest request = SiteClient.PublishFileRequest.builder(
                             "user-1",
-                            List.of("demo.onlikee.cn"),
+                            List.of("demo.onlikee.com"),
                             source)
                     .parentPrefix("demo")
                     .build();
@@ -101,7 +101,7 @@ class LightOssConfigTest {
             assertEquals("demo/", site.rootPrefix());
             assertEquals("Bearer light-oss", authorization.get());
             assertTrue(requestBody.get().contains("name=\"parent_prefix\""));
-            assertTrue(requestBody.get().contains("demo.onlikee.cn"));
+            assertTrue(requestBody.get().contains("demo.onlikee.com"));
             assertTrue(requestBody.get().contains("filename=\"index.html\""));
         } finally {
             server.stop(0);

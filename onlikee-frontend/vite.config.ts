@@ -14,7 +14,7 @@ export default defineConfig({
     },
   },
   server: {
-    allowedHosts: ['www.onlikee.cn', 'onlikee.cn'],
+    allowedHosts: ['www.onlikee.com', 'onlikee.com'],
     host: '0.0.0.0',
     port: 5173,
   },

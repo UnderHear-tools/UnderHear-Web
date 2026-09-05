@@ -29,7 +29,7 @@
         :model-value="appSubDomain"
         placeholder="请输入应用地址"
         leading-text="https://"
-        trailing-text=".onlikee.cn"
+        trailing-text=".onlikee.com"
         minlength="1"
         maxlength="63"
         @update:model-value="value => emit('update:app-sub-domain', value)"
@@ -41,7 +41,7 @@
         {{ appSubDomainError }}
       </FormControl.Validation>
       <FormControl.Caption v-if="appSubDomain.trim()">
-        应用地址：https://{{ appSubDomain }}.onlikee.cn/
+        应用地址：https://{{ appSubDomain }}.onlikee.com/
       </FormControl.Caption>
     </FormControl>
 

@@ -59,7 +59,7 @@ class ApplicationCreateControllerTest {
         User user = new User();
         user.setUuid("user-1");
         ApplicationCreateNewDore dore = new ApplicationCreateNewDore();
-        dore.setAppUrl("https://demo.onlikee.cn/");
+        dore.setAppUrl("https://demo.onlikee.com/");
         when(sessionAuthService.getCurrentUser("token")).thenReturn(user);
         when(applicationCreateService.applicationCreateNew(eq(user), any(ApplicationCreateNewDort.class))).thenReturn(dore);
 
@@ -75,7 +75,7 @@ class ApplicationCreateControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.code").value("OK"))
                 .andExpect(jsonPath("$.message").value("应用创建成功！"))
-                .andExpect(jsonPath("$.data.appUrl").value("https://demo.onlikee.cn/"));
+                .andExpect(jsonPath("$.data.appUrl").value("https://demo.onlikee.com/"));
 
         ArgumentCaptor<ApplicationCreateNewDort> dortCaptor = ArgumentCaptor.forClass(ApplicationCreateNewDort.class);
         verify(applicationCreateService).applicationCreateNew(eq(user), dortCaptor.capture());

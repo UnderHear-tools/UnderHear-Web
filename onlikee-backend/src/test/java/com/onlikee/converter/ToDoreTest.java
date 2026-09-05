@@ -114,7 +114,7 @@ class ToDoreTest {
 
         ApplicationCreateNewDore dore = ToDore.toApplicationCreateNewDore(application);
 
-        assertEquals("https://demo.onlikee.cn/", dore.getAppUrl());
+        assertEquals("https://demo.onlikee.com/", dore.getAppUrl());
     }
 
     @Test

@@ -97,7 +97,7 @@ class ApplicationSitePublishServiceImplTest {
         verify(siteClient).publish(captor.capture());
         SiteClient.PublishRequest request = captor.getValue();
         assertEquals("demo", request.parentPrefix());
-        assertEquals(List.of("demo.onlikee.cn"), request.domains());
+        assertEquals(List.of("demo.onlikee.com"), request.domains());
         assertEquals(
                 List.of("dist/assets/app.js", "dist/assets/logo.svg", "dist/index.html"),
                 relativePaths(request.items()));
@@ -302,7 +302,7 @@ class ApplicationSitePublishServiceImplTest {
                 indexDocument,
                 "",
                 true,
-                List.of("demo.onlikee.cn"),
+                List.of("demo.onlikee.com"),
                 TIME,
                 TIME);
     }

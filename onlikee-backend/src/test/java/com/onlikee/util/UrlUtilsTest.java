@@ -55,7 +55,7 @@ class UrlUtilsTest {
     @Test
     // 已验证的子域名由后端统一构造为发布域名和对外 URL。
     void buildOnlikeeAppAddressShouldReturnCanonicalValues() {
-        assertEquals("demo.onlikee.cn", UrlUtils.buildOnlikeeAppDomain("demo"));
-        assertEquals("https://demo.onlikee.cn/", UrlUtils.buildOnlikeeAppUrl("demo"));
+        assertEquals("demo.onlikee.com", UrlUtils.buildOnlikeeAppDomain("demo"));
+        assertEquals("https://demo.onlikee.com/", UrlUtils.buildOnlikeeAppUrl("demo"));
     }
 }
