@@ -4,8 +4,8 @@ import org.springframework.web.multipart.MultipartFile;
 
 public interface ApplicationSitePublishService {
 
-    // 确保用户 bucket 存在，并按应用框架发布 HTML 或 ZIP 站点。
-    PublishedSite publish(String bucketName, String appSubDomain, String framework, MultipartFile appFile);
+    // 确保用户 bucket 存在，并从 ZIP 应用包发布静态站点。
+    PublishedSite publish(String bucketName, String appSubDomain, MultipartFile appFile);
 
     // 应用落库失败时，按发布结果尽力清理站点及其对象。
     void cleanupPublishedSite(PublishedSite publishedSite);

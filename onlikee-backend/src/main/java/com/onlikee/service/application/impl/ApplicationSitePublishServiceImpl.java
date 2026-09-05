@@ -2,7 +2,6 @@ package com.onlikee.service.application.impl;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.UncheckedIOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -50,11 +49,8 @@ public class ApplicationSitePublishServiceImpl implements ApplicationSitePublish
     }
 
     @Override
-    public PublishedSite publish(String bucketName, String appSubDomain, String framework, MultipartFile appFile) {
+    public PublishedSite publish(String bucketName, String appSubDomain, MultipartFile appFile) {
         ensureBucketExists(bucketName);
-        if ("html".equalsIgnoreCase(framework)) {
-            return publishHtml(bucketName, appSubDomain, appFile);
-        }
         return publishZipSite(bucketName, appSubDomain, appFile);
     }
 
@@ -89,32 +85,6 @@ public class ApplicationSitePublishServiceImpl implements ApplicationSitePublish
             if ("bucket_exists".equals(exception.code())) {
                 return;
             }
-            throw translateApiException(exception, false);
-        } catch (LightOssException exception) {
-            throw publishFailed(exception);
-        }
-    }
-
-    // 单文件发布保留原始文件名和已知长度，且不把整个文件读入内存。
-    private PublishedSite publishHtml(String bucketName, String appSubDomain, MultipartFile appFile) {
-        String originalFilename = requireFilename(appFile);
-        try {
-            UploadSource source = UploadSource.fromInputStream(
-                    originalFilename,
-                    resolveContentType(appFile.getContentType()),
-                    appFile.getSize(),
-                    () -> openMultipartFile(appFile));
-            SiteClient.PublishFileRequest request = SiteClient.PublishFileRequest.builder(
-                            bucketName,
-                            List.of(UrlUtils.buildOnlikeeAppDomain(appSubDomain)),
-                            source)
-                    .parentPrefix(appSubDomain)
-                    .enabled(true)
-                    .errorDocument("")
-                    .spaFallback(true)
-                    .build();
-            return toPublishedSite(lightOssClient.sites().publishFile(request).data());
-        } catch (LightOssApiException exception) {
             throw translateApiException(exception, false);
         } catch (LightOssException exception) {
             throw publishFailed(exception);
@@ -375,14 +345,6 @@ public class ApplicationSitePublishServiceImpl implements ApplicationSitePublish
             throw new BizException(ErrorCode.APPLICATION_PACKAGE_INVALID, "上传文件缺少文件名");
         }
         return originalFilename;
-    }
-
-    private InputStream openMultipartFile(MultipartFile appFile) {
-        try {
-            return appFile.getInputStream();
-        } catch (IOException exception) {
-            throw new UncheckedIOException(exception);
-        }
     }
 
     private String buildObjectKey(String rootPrefix, String indexDocument) {

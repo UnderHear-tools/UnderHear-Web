@@ -26,6 +26,15 @@ mvn spring-boot:run
 
 后端默认端口为 `8080`。
 
+### 创建并发布应用
+
+`POST /application/create/new` 使用 `multipart/form-data` 接收应用信息与 `appFile`。`appFile` 必须是 ZIP 应用包，HTML、Vue、React 使用同一上传格式：
+
+- ZIP 根目录直接包含 `index.html`；或
+- ZIP 只包含一个顶层构建目录，并由该目录包含 `index.html`。
+
+HTML 创建页面继续提供代码编辑器，提交时由浏览器自动生成包含根目录 `index.html` 的 `dist.zip`；Vue 和 React 上传包含构建产物的 ZIP。接口不再接受单独的 `.html` 文件。
+
 ### 前端
 
 ```bash

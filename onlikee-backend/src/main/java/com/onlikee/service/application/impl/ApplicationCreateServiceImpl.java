@@ -45,7 +45,6 @@ public class ApplicationCreateServiceImpl implements ApplicationCreateService {
         PublishedSite publishedSite = applicationSitePublishService.publish(
                 user.getUuid(),
                 appSubDomain,
-                application.getFramework(),
                 applicationCreateNewDort.getAppFile());
 
         int rows;

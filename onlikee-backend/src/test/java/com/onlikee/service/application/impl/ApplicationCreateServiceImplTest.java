@@ -64,13 +64,13 @@ class ApplicationCreateServiceImplTest {
     }
 
     @Test
-    // HTML 应用创建成功时应走单文件发布分支。
-    void applicationCreateNewShouldPublishHtmlWhenFrameworkIsHtml() {
+    // HTML 框架信息应正常入库，发布服务只接收统一的 ZIP 应用包。
+    void applicationCreateNewShouldPublishZipWithoutPassingFramework() {
         User user = user();
         ApplicationCreateNewDort request = htmlRequest();
         PublishedSite publishedSite = publishedSite();
         when(applicationCreateMapper.countNewByAppSubDomain("demo")).thenReturn(0);
-        when(applicationSitePublishService.publish(eq("user-1"), eq("demo"), eq("html"), any()))
+        when(applicationSitePublishService.publish(eq("user-1"), eq("demo"), any()))
                 .thenReturn(publishedSite);
         when(applicationCreateMapper.insertApplicationNew(any(ApplicationNew.class))).thenReturn(1);
 
@@ -78,26 +78,26 @@ class ApplicationCreateServiceImplTest {
 
         ArgumentCaptor<ApplicationNew> applicationCaptor = ArgumentCaptor.forClass(ApplicationNew.class);
         verify(applicationCreateMapper).insertApplicationNew(applicationCaptor.capture());
-        verify(applicationSitePublishService).publish(eq("user-1"), eq("demo"), eq("html"), any());
+        verify(applicationSitePublishService).publish(eq("user-1"), eq("demo"), any());
         verify(applicationSitePublishService, never()).cleanupPublishedSite(any());
         assertEquals("https://demo.onlikee.cn/", result.getAppUrl());
         assertEquals("demo", applicationCaptor.getValue().getAppSubDomain());
     }
 
     @Test
-    // 非 HTML 应用创建成功时应走 ZIP 发布分支。
-    void applicationCreateNewShouldPublishZipSiteWhenFrameworkIsNotHtml() {
+    // 其他框架应使用相同的 ZIP 发布入口。
+    void applicationCreateNewShouldPublishZipForOtherFrameworks() {
         User user = user();
         ApplicationCreateNewDort request = zipRequest();
         PublishedSite publishedSite = publishedSite();
         when(applicationCreateMapper.countNewByAppSubDomain("demo-zip")).thenReturn(0);
-        when(applicationSitePublishService.publish(eq("user-1"), eq("demo-zip"), eq("vue"), any()))
+        when(applicationSitePublishService.publish(eq("user-1"), eq("demo-zip"), any()))
                 .thenReturn(publishedSite);
         when(applicationCreateMapper.insertApplicationNew(any(ApplicationNew.class))).thenReturn(1);
 
         ApplicationCreateNewDore result = applicationCreateService.applicationCreateNew(user, request);
 
-        verify(applicationSitePublishService).publish(eq("user-1"), eq("demo-zip"), eq("vue"), any());
+        verify(applicationSitePublishService).publish(eq("user-1"), eq("demo-zip"), any());
         assertEquals("https://demo-zip.onlikee.cn/", result.getAppUrl());
     }
 
@@ -108,7 +108,7 @@ class ApplicationCreateServiceImplTest {
         ApplicationCreateNewDort request = htmlRequest();
         PublishedSite publishedSite = publishedSite();
         when(applicationCreateMapper.countNewByAppSubDomain("demo")).thenReturn(0);
-        when(applicationSitePublishService.publish(eq("user-1"), eq("demo"), eq("html"), any()))
+        when(applicationSitePublishService.publish(eq("user-1"), eq("demo"), any()))
                 .thenReturn(publishedSite);
         when(applicationCreateMapper.insertApplicationNew(any(ApplicationNew.class))).thenReturn(0);
 
@@ -127,7 +127,7 @@ class ApplicationCreateServiceImplTest {
         ApplicationCreateNewDort request = htmlRequest();
         PublishedSite publishedSite = publishedSite();
         when(applicationCreateMapper.countNewByAppSubDomain("demo")).thenReturn(0);
-        when(applicationSitePublishService.publish(eq("user-1"), eq("demo"), eq("html"), any()))
+        when(applicationSitePublishService.publish(eq("user-1"), eq("demo"), any()))
                 .thenReturn(publishedSite);
         when(applicationCreateMapper.insertApplicationNew(any(ApplicationNew.class)))
                 .thenThrow(new DuplicateKeyException("duplicate"));
@@ -147,7 +147,7 @@ class ApplicationCreateServiceImplTest {
         ApplicationCreateNewDort request = htmlRequest();
         PublishedSite publishedSite = publishedSite();
         when(applicationCreateMapper.countNewByAppSubDomain("demo")).thenReturn(0);
-        when(applicationSitePublishService.publish(eq("user-1"), eq("demo"), eq("html"), any()))
+        when(applicationSitePublishService.publish(eq("user-1"), eq("demo"), any()))
                 .thenReturn(publishedSite);
         when(applicationCreateMapper.insertApplicationNew(any(ApplicationNew.class)))
                 .thenThrow(new IllegalStateException("boom"));
@@ -167,14 +167,14 @@ class ApplicationCreateServiceImplTest {
         ApplicationCreateNewDort request = htmlRequest();
         PublishedSite publishedSite = publishedSite();
         when(applicationCreateMapper.countNewByAppSubDomain("demo")).thenReturn(0);
-        when(applicationSitePublishService.publish(eq("user-1"), eq("demo"), eq("html"), any()))
+        when(applicationSitePublishService.publish(eq("user-1"), eq("demo"), any()))
                 .thenReturn(publishedSite);
         when(applicationCreateMapper.insertApplicationNew(any(ApplicationNew.class))).thenReturn(1);
 
         applicationCreateService.applicationCreateNew(user, request);
 
         InOrder inOrder = inOrder(applicationSitePublishService, applicationCreateMapper);
-        inOrder.verify(applicationSitePublishService).publish(eq("user-1"), eq("demo"), eq("html"), any());
+        inOrder.verify(applicationSitePublishService).publish(eq("user-1"), eq("demo"), any());
         inOrder.verify(applicationCreateMapper).insertApplicationNew(any(ApplicationNew.class));
     }
 
@@ -327,9 +327,9 @@ class ApplicationCreateServiceImplTest {
         request.setAppDescription("description");
         request.setAppFile(new MockMultipartFile(
                 "appFile",
-                "index.html",
-                "text/html",
-                "<html></html>".getBytes()));
+                "dist.zip",
+                "application/zip",
+                "zip-content".getBytes()));
         return request;
     }
 
@@ -367,6 +367,6 @@ class ApplicationCreateServiceImplTest {
     }
 
     private PublishedSite publishedSite() {
-        return new PublishedSite(1L, "user-1", "demo/", "demo/index.html");
+        return new PublishedSite(1L, "user-1", "demo/dist/", "demo/dist/index.html");
     }
 }

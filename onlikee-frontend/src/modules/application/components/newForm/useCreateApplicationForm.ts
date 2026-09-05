@@ -3,6 +3,7 @@ import { computed, ref } from 'vue'
 import type {
   CreateApplicationRequest
 } from '@/modules/application/api/create-new'
+import { createHtmlZip } from '@/modules/application/utils/zip-utils'
 
 export type FrameworkValue = 'html' | 'vue' | 'react'
 
@@ -174,19 +175,24 @@ export function useCreateApplicationForm() {
     appDescription.value = value
   }
 
-  function buildRequest(): CreateApplicationRequest {
+  async function buildRequest(): Promise<CreateApplicationRequest> {
     const framework = selectedFramework.value as FrameworkValue
-    const appFile = framework === 'html'
-      ? new File([htmlSource.value], 'index.html', { type: 'text/html;charset=utf-8' })
-      : (files.value[0] as File)
-
-    return {
+    const htmlSourceSnapshot = htmlSource.value
+    const selectedFile = files.value[0] as File
+    const requestSnapshot = {
       framework,
-      appFile,
       appName: appName.value,
       appSubDomain: appSubDomain.value,
       visibility: visibility.value,
       appDescription: appDescription.value
+    }
+    const appFile = framework === 'html'
+      ? await createHtmlZip(htmlSourceSnapshot)
+      : selectedFile
+
+    return {
+      ...requestSnapshot,
+      appFile,
     }
   }
 

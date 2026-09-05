@@ -10,7 +10,6 @@ import static org.mockito.Mockito.verifyNoInteractions;
 import static org.mockito.Mockito.when;
 
 import java.io.ByteArrayOutputStream;
-import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
 import java.time.Instant;
 import java.util.LinkedHashMap;
@@ -66,44 +65,17 @@ class ApplicationSitePublishServiceImplTest {
     }
 
     @Test
-    // HTML 发布应保留原始文件信息，并发送已提取的前缀和域名。
-    void publishShouldCreateBucketAndPublishHtml() throws Exception {
-        usePublishClients();
-        SiteClient.Site site = site("demo/", "index.html");
-        when(siteClient.publishFile(any())).thenReturn(response(site));
-        MockMultipartFile file = new MockMultipartFile(
-                "appFile", "index.html", "text/html", "<html></html>".getBytes(StandardCharsets.UTF_8));
-
-        PublishedSite publishedSite = publishService.publish("user-1", "demo", "html", file);
-
-        verify(bucketClient).create("user-1");
-        ArgumentCaptor<SiteClient.PublishFileRequest> captor =
-                ArgumentCaptor.forClass(SiteClient.PublishFileRequest.class);
-        verify(siteClient).publishFile(captor.capture());
-        SiteClient.PublishFileRequest request = captor.getValue();
-        assertEquals("user-1", request.bucket());
-        assertEquals("demo", request.parentPrefix());
-        assertEquals(List.of("demo.onlikee.cn"), request.domains());
-        assertEquals("index.html", request.source().filename());
-        assertEquals("text/html", request.source().contentType());
-        assertEquals(file.getSize(), request.source().contentLength().orElseThrow());
-        try (InputStream inputStream = request.source().openStream()) {
-            assertEquals("<html></html>", new String(inputStream.readAllBytes(), StandardCharsets.UTF_8));
-        }
-        assertEquals(new PublishedSite(1L, "user-1", "demo/", "demo/index.html"), publishedSite);
-    }
-
-    @Test
     // bucket_exists 是创建应用时的幂等成功，不应阻断后续发布。
-    void publishShouldContinueWhenBucketAlreadyExists() {
+    void publishShouldContinueWhenBucketAlreadyExists() throws Exception {
         usePublishClients();
         when(bucketClient.create("user-1"))
                 .thenThrow(apiException(409, "bucket_exists", "bucket already exists"));
-        when(siteClient.publishFile(any())).thenReturn(response(site("demo/", "index.html")));
+        when(siteClient.publish(any())).thenReturn(response(
+                new SiteClient.PublishResult(1, site("demo/dist/", "index.html"))));
 
-        publishService.publish("user-1", "demo", "html", htmlFile());
+        publishService.publish("user-1", "demo", zipFile(Map.of("index.html", "home")));
 
-        verify(siteClient).publishFile(any());
+        verify(siteClient).publish(any());
     }
 
     @Test
@@ -111,20 +83,29 @@ class ApplicationSitePublishServiceImplTest {
     void publishShouldMapRootZipFilesUnderDistFolder() throws Exception {
         usePublishClients();
         Map<String, String> entries = new LinkedHashMap<>();
-        entries.put("index.html", "home");
+        entries.put("index.html", "<html lang=\"zh-CN\">中文内容</html>");
         entries.put("assets/app.js", "app");
+        entries.put("assets/logo.svg", "<svg></svg>");
         entries.put("__MACOSX/._index.html", "metadata");
         when(siteClient.publish(any())).thenReturn(response(
                 new SiteClient.PublishResult(2, site("demo/dist/", "index.html"))));
 
-        PublishedSite publishedSite = publishService.publish("user-1", "demo", "vue", zipFile(entries));
+        PublishedSite publishedSite = publishService.publish("user-1", "demo", zipFile(entries));
 
+        verify(bucketClient).create("user-1");
         ArgumentCaptor<SiteClient.PublishRequest> captor = ArgumentCaptor.forClass(SiteClient.PublishRequest.class);
         verify(siteClient).publish(captor.capture());
         SiteClient.PublishRequest request = captor.getValue();
         assertEquals("demo", request.parentPrefix());
         assertEquals(List.of("demo.onlikee.cn"), request.domains());
-        assertEquals(List.of("dist/assets/app.js", "dist/index.html"), relativePaths(request.items()));
+        assertEquals(
+                List.of("dist/assets/app.js", "dist/assets/logo.svg", "dist/index.html"),
+                relativePaths(request.items()));
+        ObjectClient.UploadItem indexItem = request.items().stream()
+                .filter(item -> "dist/index.html".equals(item.relativePath()))
+                .findFirst()
+                .orElseThrow();
+        assertEquals("text/html", indexItem.source().contentType());
         assertEquals(new PublishedSite(1L, "user-1", "demo/dist/", "demo/dist/index.html"), publishedSite);
     }
 
@@ -138,7 +119,7 @@ class ApplicationSitePublishServiceImplTest {
         when(siteClient.publish(any())).thenReturn(response(
                 new SiteClient.PublishResult(2, site("demo/build/", "index.html"))));
 
-        publishService.publish("user-1", "demo", "vue", zipFile(entries));
+        publishService.publish("user-1", "demo", zipFile(entries));
 
         ArgumentCaptor<SiteClient.PublishRequest> captor = ArgumentCaptor.forClass(SiteClient.PublishRequest.class);
         verify(siteClient).publish(captor.capture());
@@ -149,17 +130,27 @@ class ApplicationSitePublishServiceImplTest {
     // 非 zip 文件或缺少 index.html 的包应在发起 SDK 发布请求前被拒绝。
     void publishShouldRejectInvalidZipPackage() throws Exception {
         when(lightOssClient.buckets()).thenReturn(bucketClient);
-        BizException wrongExtension = assertThrows(
+        BizException htmlFile = assertThrows(
                 BizException.class,
-                () -> publishService.publish("user-1", "demo", "vue", htmlFile()));
-        assertEquals(ErrorCode.APPLICATION_PACKAGE_INVALID.getCode(), wrongExtension.getCode());
+                () -> publishService.publish("user-1", "demo", htmlFile()));
+        assertEquals(ErrorCode.APPLICATION_PACKAGE_INVALID.getCode(), htmlFile.getCode());
+
+        BizException fakeZip = assertThrows(
+                BizException.class,
+                () -> publishService.publish("user-1", "demo", new MockMultipartFile(
+                        "appFile", "site.zip", "application/zip", "not-a-zip".getBytes(StandardCharsets.UTF_8))));
+        assertEquals(ErrorCode.APPLICATION_PACKAGE_INVALID.getCode(), fakeZip.getCode());
+
+        BizException emptyZip = assertThrows(
+                BizException.class,
+                () -> publishService.publish("user-1", "demo", zipFile(Map.of())));
+        assertEquals(ErrorCode.APPLICATION_PACKAGE_INVALID.getCode(), emptyZip.getCode());
 
         BizException missingIndex = assertThrows(
                 BizException.class,
                 () -> publishService.publish(
                         "user-1",
                         "demo",
-                        "vue",
                         zipFile(Map.of("assets/app.js", "app"))));
         assertEquals(ErrorCode.APPLICATION_PACKAGE_INVALID.getCode(), missingIndex.getCode());
         verifyNoInteractions(siteClient);
@@ -175,7 +166,7 @@ class ApplicationSitePublishServiceImplTest {
 
         BizException exception = assertThrows(
                 BizException.class,
-                () -> publishService.publish("user-1", "demo", "vue", zipFile(entries)));
+                () -> publishService.publish("user-1", "demo", zipFile(entries)));
 
         assertEquals(ErrorCode.APPLICATION_PACKAGE_INVALID.getCode(), exception.getCode());
         verifyNoInteractions(siteClient);
@@ -183,14 +174,14 @@ class ApplicationSitePublishServiceImplTest {
 
     @Test
     // 域名冲突应翻译成 onlikee 的应用地址重复错误。
-    void publishShouldTranslateDomainConflict() {
+    void publishShouldTranslateDomainConflict() throws Exception {
         usePublishClients();
-        when(siteClient.publishFile(any()))
+        when(siteClient.publish(any()))
                 .thenThrow(apiException(409, "domain_conflict", "domain already exists"));
 
         BizException exception = assertThrows(
                 BizException.class,
-                () -> publishService.publish("user-1", "demo", "html", htmlFile()));
+                () -> publishService.publish("user-1", "demo", zipFile(Map.of("index.html", "home"))));
 
         assertEquals(ErrorCode.APP_URL_ALREADY_EXISTS.getCode(), exception.getCode());
     }
@@ -207,7 +198,6 @@ class ApplicationSitePublishServiceImplTest {
                 () -> publishService.publish(
                         "user-1",
                         "demo",
-                        "vue",
                         zipFile(Map.of("index.html", "home"))));
 
         assertEquals(ErrorCode.APPLICATION_PACKAGE_INVALID.getCode(), exception.getCode());
@@ -216,14 +206,14 @@ class ApplicationSitePublishServiceImplTest {
 
     @Test
     // 传输故障不应泄漏 SDK 异常，对外统一为应用发布失败。
-    void publishShouldTranslateTransportFailure() {
+    void publishShouldTranslateTransportFailure() throws Exception {
         usePublishClients();
-        when(siteClient.publishFile(any()))
+        when(siteClient.publish(any()))
                 .thenThrow(new LightOssTransportException("network failed", "request-1", null));
 
         BizException exception = assertThrows(
                 BizException.class,
-                () -> publishService.publish("user-1", "demo", "html", htmlFile()));
+                () -> publishService.publish("user-1", "demo", zipFile(Map.of("index.html", "home"))));
 
         assertEquals(ErrorCode.APPLICATION_PUBLISH_FAILED.getCode(), exception.getCode());
     }

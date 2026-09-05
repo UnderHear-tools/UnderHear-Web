@@ -22,6 +22,8 @@ import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
 
+import com.onlikee.exception.BizException;
+import com.onlikee.exception.ErrorCode;
 import com.onlikee.exception.GlobalExceptionHandler;
 import com.onlikee.pojo.dto.request.ApplicationCreateCollectDort;
 import com.onlikee.pojo.dto.request.ApplicationCreateConnectDort;
@@ -62,7 +64,8 @@ class ApplicationCreateControllerTest {
         when(applicationCreateService.applicationCreateNew(eq(user), any(ApplicationCreateNewDort.class))).thenReturn(dore);
 
         mockMvc.perform(multipart("/application/create/new")
-                        .file(new MockMultipartFile("appFile", "index.html", "text/html", "<html></html>".getBytes()))
+                        .file(new MockMultipartFile(
+                                "appFile", "dist.zip", "application/zip", "zip-content".getBytes()))
                         .param("framework", "html")
                         .param("appName", "Demo")
                         .param("appSubDomain", " Demo ")
@@ -79,8 +82,32 @@ class ApplicationCreateControllerTest {
         verify(sessionAuthService).getCurrentUser("token");
         ApplicationCreateNewDort capturedDort = dortCaptor.getValue();
         assertEquals("html", capturedDort.getFramework());
+        assertEquals("dist.zip", capturedDort.getAppFile().getOriginalFilename());
         assertEquals("Demo", capturedDort.getAppName());
         assertEquals("demo", capturedDort.getAppSubDomain());
+    }
+
+    @Test
+    // 旧的单 HTML 上传应按统一 ZIP 合同返回应用包无效。
+    void applicationCreateNewShouldRejectSingleHtmlUpload() throws Exception {
+        User user = new User();
+        user.setUuid("user-1");
+        when(sessionAuthService.getCurrentUser("token")).thenReturn(user);
+        when(applicationCreateService.applicationCreateNew(eq(user), any(ApplicationCreateNewDort.class)))
+                .thenThrow(new BizException(ErrorCode.APPLICATION_PACKAGE_INVALID, "应用包必须是 zip 压缩包"));
+
+        mockMvc.perform(multipart("/application/create/new")
+                        .file(new MockMultipartFile(
+                                "appFile", "index.html", "text/html", "<html></html>".getBytes()))
+                        .param("framework", "html")
+                        .param("appName", "Demo")
+                        .param("appSubDomain", "demo")
+                        .param("visibility", "public")
+                        .param("appDescription", "description")
+                        .cookie(new Cookie("auth_token", "token")))
+                .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("$.code").value("APPLICATION_PACKAGE_INVALID"))
+                .andExpect(jsonPath("$.message").value("应用包必须是 zip 压缩包"));
     }
 
     @Test
@@ -173,7 +200,8 @@ class ApplicationCreateControllerTest {
     // 缺少必填文本字段时应触发参数校验失败。
     void applicationCreateNewShouldReturnValidationFailedWhenAppSubDomainIsMissing() throws Exception {
         mockMvc.perform(multipart("/application/create/new")
-                        .file(new MockMultipartFile("appFile", "index.html", "text/html", "<html></html>".getBytes()))
+                        .file(new MockMultipartFile(
+                                "appFile", "dist.zip", "application/zip", "zip-content".getBytes()))
                         .param("framework", "html")
                         .param("appName", "Demo")
                         .param("visibility", "public")
@@ -191,7 +219,8 @@ class ApplicationCreateControllerTest {
     // 自建应用只允许单标签 DNS 子域名。
     void applicationCreateNewShouldReturnValidationFailedWhenAppSubDomainIsInvalid() throws Exception {
         mockMvc.perform(multipart("/application/create/new")
-                        .file(new MockMultipartFile("appFile", "index.html", "text/html", "<html></html>".getBytes()))
+                        .file(new MockMultipartFile(
+                                "appFile", "dist.zip", "application/zip", "zip-content".getBytes()))
                         .param("framework", "html")
                         .param("appName", "Demo")
                         .param("appSubDomain", "nested.demo")
@@ -210,7 +239,8 @@ class ApplicationCreateControllerTest {
     // 子域名的单个 DNS 标签不能超过 63 个字符。
     void applicationCreateNewShouldReturnValidationFailedWhenAppSubDomainIsTooLong() throws Exception {
         mockMvc.perform(multipart("/application/create/new")
-                        .file(new MockMultipartFile("appFile", "index.html", "text/html", "<html></html>".getBytes()))
+                        .file(new MockMultipartFile(
+                                "appFile", "dist.zip", "application/zip", "zip-content".getBytes()))
                         .param("framework", "html")
                         .param("appName", "Demo")
                         .param("appSubDomain", "a".repeat(64))

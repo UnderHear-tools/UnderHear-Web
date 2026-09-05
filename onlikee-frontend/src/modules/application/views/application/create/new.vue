@@ -92,6 +92,7 @@ import { ref } from 'vue'
 import { useRouter } from 'vue-router'
 import { Container } from '@/components/z-ui/Container'
 import { Button } from '@/components/z-ui/Button'
+import { Banner } from '@/components/z-ui/Banner'
 import { Timeline } from '@/components/z-ui/Timeline'
 import { applicationCreateNew } from '@/modules/application/api/create-new'
 import FirstStep from '@/modules/application/components/newForm/FirstStep.vue'
@@ -141,7 +142,15 @@ async function submit() {
 
   isUploading.value = true
   try {
-    const response = await applicationCreateNew(buildRequest())
+    let request
+    try {
+      request = await buildRequest()
+    } catch {
+      Banner.error('HTML 应用打包失败，请重试。')
+      return
+    }
+
+    const response = await applicationCreateNew(request)
     await router.push({
       path: '/application/create/success',
       query: {
