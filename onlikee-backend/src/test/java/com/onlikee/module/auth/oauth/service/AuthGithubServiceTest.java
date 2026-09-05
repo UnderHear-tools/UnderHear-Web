@@ -25,7 +25,6 @@ import com.onlikee.module.user.model.entity.UserEntity;
 import com.onlikee.module.auth.oauth.model.entity.UserGithubEntity;
 import com.onlikee.module.auth.service.JwtTokenService;
 import com.onlikee.module.auth.service.SessionAuthService;
-import com.onlikee.module.auth.oauth.service.OAuthSignupService;
 import com.onlikee.module.user.service.UserService;
 
 import me.zhyd.oauth.model.AuthResponse;

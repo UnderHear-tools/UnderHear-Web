@@ -37,7 +37,6 @@ import com.onlikee.module.application.model.entity.ApplicationCollectEntity;
 import com.onlikee.module.application.model.entity.ApplicationConnectEntity;
 import com.onlikee.module.application.model.entity.ApplicationNewEntity;
 import com.onlikee.module.user.model.entity.UserEntity;
-import com.onlikee.module.application.service.ApplicationSitePublishService;
 import com.onlikee.module.application.service.ApplicationSitePublishService.PublishedSite;
 
 @ExtendWith(MockitoExtension.class)

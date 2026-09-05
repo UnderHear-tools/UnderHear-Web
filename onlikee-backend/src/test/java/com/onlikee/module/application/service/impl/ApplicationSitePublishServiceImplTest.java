@@ -308,7 +308,7 @@ class ApplicationSitePublishServiceImplTest {
     }
 
     private List<String> relativePaths(List<ObjectClient.UploadItem> items) {
-        return items.stream().map(ObjectClient.UploadItem::relativePath).toList();
+        return items.stream().map(item -> item.relativePath()).toList();
     }
 
     private SiteClient.Site site(String rootPrefix, String indexDocument) {
