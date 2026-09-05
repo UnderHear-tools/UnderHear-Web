@@ -17,7 +17,7 @@
 ## 项目定位
 
 - 技术栈以仓库当前内容为准：Spring Boot 4.0.2、Java 25、Maven、MyBatis、MySQL、Redis、JWT、JustAuth、Lombok。
-- 当前后端按业务域分包：`application`、`user`、`auth`，业务内部按 `controller`、`service/impl`、`mapper`、`converter`、`model` 分层。OAuth 登录注册放在 `auth.oauth`。
+- 当前后端的业务模块统一放在 `com.onlikee.module` 下：`module.application`、`module.user`、`module.auth`，业务内部按 `controller`、`service/impl`、`mapper`、`converter`、`model` 分层。OAuth 登录注册放在 `module.auth.oauth`。
 - `infrastructure.cache/storage/web` 分别放 Redis、Light OSS 客户端和 Web 配置；`common.response/exception/util` 放统一响应、异常和通用工具。只创建已有实现需要的目录。
 
 ## 分层职责
@@ -27,7 +27,7 @@
 - `mapper` 负责数据库访问，当前项目统一使用 MyBatis 注解 SQL，不使用 XML mapper。
 - `converter` 只负责对象转换，保持纯静态工具类，不放数据库、网络、缓存等副作用逻辑。
 - 所属业务包的 `model.entity` 放实体对象，`model.dto` 放跨层、跨服务及外部接口传输数据对象，`model.vo` 放向前端返回的展示数据对象；模型目录不再按 request/response 嵌套。
-- `auth.service` 放 JWT、Cookie、会话白名单等认证相关能力；新增鉴权逻辑优先复用这一层。
+- `module.auth.service` 放 JWT、Cookie、会话白名单等认证相关能力；新增鉴权逻辑优先复用这一层。
 
 ## DTO、VO、Entity 与转换规则
 
@@ -96,7 +96,7 @@
 - 涉及数据库、Redis、OAuth、JWT、Light OSS 的配置键名时，优先复用已有命名，不要发明新的同义配置。
 - 除非任务明确要求，不要顺手改动现有敏感配置值，也不要在提交说明里重复抄出密钥内容。
 - 应用发布保持 `ApplicationCreateService → ApplicationSitePublishService → LightOssClient`：业务服务负责 ZIP 规则、SDK 错误翻译与失败补偿，`infrastructure.storage.LightOssConfig` 提供共享 SDK 客户端。
-- 应用域名配置和地址构建放在 `application.util.ApplicationUrlUtils`；通用 URL 校验、协议补全和规范化放在 `common.util.UrlUtils`。
+- 应用域名配置和地址构建放在 `module.application.util.ApplicationUrlUtils`；通用 URL 校验、协议补全和规范化放在 `common.util.UrlUtils`。
 
 ## 注释与代码风格
 

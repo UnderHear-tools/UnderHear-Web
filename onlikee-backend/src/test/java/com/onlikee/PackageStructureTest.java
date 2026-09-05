@@ -21,20 +21,20 @@ import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping;
 
-import com.onlikee.application.mapper.ApplicationCreateMapper;
-import com.onlikee.application.service.ApplicationCreateService;
-import com.onlikee.application.service.ApplicationSitePublishService;
-import com.onlikee.application.util.ApplicationUrlUtils;
-import com.onlikee.auth.oauth.mapper.AuthGiteeMapper;
-import com.onlikee.auth.oauth.mapper.AuthGithubMapper;
-import com.onlikee.auth.service.SessionAuthService;
+import com.onlikee.module.application.mapper.ApplicationCreateMapper;
+import com.onlikee.module.application.service.ApplicationCreateService;
+import com.onlikee.module.application.service.ApplicationSitePublishService;
+import com.onlikee.module.application.util.ApplicationUrlUtils;
+import com.onlikee.module.auth.oauth.mapper.AuthGiteeMapper;
+import com.onlikee.module.auth.oauth.mapper.AuthGithubMapper;
+import com.onlikee.module.auth.service.SessionAuthService;
 import com.onlikee.common.exception.GlobalExceptionHandler;
 import com.onlikee.infrastructure.cache.RedisConfig;
 import com.onlikee.infrastructure.storage.LightOssConfig;
 import com.onlikee.infrastructure.web.CorsConfig;
 import com.onlikee.lightoss.LightOssClient;
-import com.onlikee.user.mapper.UserMapper;
-import com.onlikee.user.mapper.UserProfileMapper;
+import com.onlikee.module.user.mapper.UserMapper;
+import com.onlikee.module.user.mapper.UserProfileMapper;
 
 // 使用真实根包扫描与自动配置，只替换外部连接，验证迁移后的装配不依赖旧包。
 @SpringBootTest(properties = {
