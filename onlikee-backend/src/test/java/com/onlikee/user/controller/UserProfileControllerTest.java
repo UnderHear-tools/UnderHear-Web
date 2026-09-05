@@ -22,10 +22,10 @@ import org.springframework.test.web.servlet.MockMvc;
 import com.onlikee.common.exception.BizException;
 import com.onlikee.common.exception.ErrorCode;
 import com.onlikee.common.exception.GlobalExceptionHandler;
-import com.onlikee.user.model.dto.request.UserProfileDort;
-import com.onlikee.user.model.dto.request.UserProfileMarkdownDort;
-import com.onlikee.user.model.entity.User;
-import com.onlikee.user.model.entity.UserProfileMarkdown;
+import com.onlikee.user.model.dto.UserProfileDTO;
+import com.onlikee.user.model.dto.UserProfileMarkdownDTO;
+import com.onlikee.user.model.entity.UserEntity;
+import com.onlikee.user.model.entity.UserProfileMarkdownEntity;
 import com.onlikee.auth.service.SessionAuthService;
 import com.onlikee.user.service.UserProfileService;
 
@@ -50,7 +50,7 @@ class UserProfileControllerTest {
     @Test
     // 公开资料查询成功时应返回用户信息结构，不内联 Markdown 内容。
     void profileShouldReturnPublicUserInfo() throws Exception {
-        User user = user();
+        UserEntity user = user();
         when(userProfileService.getUserByNickname("tester")).thenReturn(user);
 
         mockMvc.perform(get("/users/tester/profile"))
@@ -67,7 +67,7 @@ class UserProfileControllerTest {
     @Test
     // 公开资料查询不访问 Markdown，Markdown 内容由独立接口返回。
     void profileShouldNotFetchMarkdown() throws Exception {
-        User user = user();
+        UserEntity user = user();
         when(userProfileService.getUserByNickname("tester")).thenReturn(user);
 
         mockMvc.perform(get("/users/tester/profile"))
@@ -105,7 +105,7 @@ class UserProfileControllerTest {
     @Test
     // 公开 Markdown 查询只返回 README 内容字段，不返回其他用户资料字段。
     void markdownShouldReturnOnlyMarkdownContent() throws Exception {
-        User user = user();
+        UserEntity user = user();
         when(userProfileService.getUserByNickname("tester")).thenReturn(user);
         when(userProfileService.getMarkdownByUuid("user-1")).thenReturn(markdown("# Hello"));
 
@@ -121,7 +121,7 @@ class UserProfileControllerTest {
     @Test
     // 未保存 Markdown 时只返回空 markdown 字段，不补用户资料字段。
     void markdownShouldReturnNullWhenMissing() throws Exception {
-        User user = user();
+        UserEntity user = user();
         when(userProfileService.getUserByNickname("tester")).thenReturn(user);
         when(userProfileService.getMarkdownByUuid("user-1")).thenReturn(null);
 
@@ -134,7 +134,7 @@ class UserProfileControllerTest {
     @Test
     // 公开 Markdown 查询不依赖登录态。
     void markdownShouldNotRequireAuthenticationCookie() throws Exception {
-        User user = user();
+        UserEntity user = user();
         when(userProfileService.getUserByNickname("tester")).thenReturn(user);
         when(userProfileService.getMarkdownByUuid("user-1")).thenReturn(markdown("# Hello"));
 
@@ -160,7 +160,7 @@ class UserProfileControllerTest {
     @Test
     // 保存 Markdown 时通过 cookie 登录态定位当前用户，不接受请求体传入 uuid。
     void saveMarkdownShouldUseCurrentUserFromCookie() throws Exception {
-        User user = user();
+        UserEntity user = user();
         when(sessionAuthService.getCurrentUser("token")).thenReturn(user);
 
         mockMvc.perform(post("/users/me/markdown")
@@ -176,7 +176,7 @@ class UserProfileControllerTest {
                 .andExpect(jsonPath("$.message").value("请求成功"))
                 .andExpect(jsonPath("$.data").value(nullValue()));
 
-        verify(userProfileService).saveCurrentUserMarkdown(any(User.class), any(UserProfileMarkdownDort.class));
+        verify(userProfileService).saveCurrentUserMarkdown(any(UserEntity.class), any(UserProfileMarkdownDTO.class));
     }
 
     @Test
@@ -201,9 +201,9 @@ class UserProfileControllerTest {
     @Test
     // 保存基础资料时通过 cookie 登录态定位当前用户，并返回更新后的当前用户资料。
     void saveProfileShouldUseCurrentUserFromCookieAndReturnUpdatedProfile() throws Exception {
-        User user = user();
+        UserEntity user = user();
         when(sessionAuthService.getCurrentUser("token")).thenReturn(user);
-        when(userProfileService.saveCurrentUserProfile(any(User.class), any(UserProfileDort.class)))
+        when(userProfileService.saveCurrentUserProfile(any(UserEntity.class), any(UserProfileDTO.class)))
                 .thenReturn(updatedUser());
 
         mockMvc.perform(post("/users/me/profile")
@@ -231,7 +231,7 @@ class UserProfileControllerTest {
                 .andExpect(jsonPath("$.data.socialAccount1").value(nullValue()))
                 .andExpect(jsonPath("$.data.socialAccount2").value(nullValue()));
 
-        verify(userProfileService).saveCurrentUserProfile(any(User.class), any(UserProfileDort.class));
+        verify(userProfileService).saveCurrentUserProfile(any(UserEntity.class), any(UserProfileDTO.class));
     }
 
     @Test
@@ -253,8 +253,8 @@ class UserProfileControllerTest {
                 .andExpect(jsonPath("$.data").value(nullValue()));
     }
 
-    private User user() {
-        User user = new User();
+    private UserEntity user() {
+        UserEntity user = new UserEntity();
         user.setUuid("user-1");
         user.setNickName("tester");
         user.setEmail("tester@example.com");
@@ -262,8 +262,8 @@ class UserProfileControllerTest {
         return user;
     }
 
-    private User updatedUser() {
-        User user = user();
+    private UserEntity updatedUser() {
+        UserEntity user = user();
         user.setBio("updated bio");
         user.setPronoun("they/them");
         user.setLocation("Hangzhou");
@@ -273,8 +273,8 @@ class UserProfileControllerTest {
         return user;
     }
 
-    private UserProfileMarkdown markdown(String content) {
-        UserProfileMarkdown markdown = new UserProfileMarkdown();
+    private UserProfileMarkdownEntity markdown(String content) {
+        UserProfileMarkdownEntity markdown = new UserProfileMarkdownEntity();
         markdown.setUuid("user-1");
         markdown.setContent(content);
         return markdown;

@@ -1,18 +1,18 @@
 package com.onlikee.application.service;
 
-import com.onlikee.application.model.dto.request.ApplicationCreateConnectDort;
-import com.onlikee.application.model.dto.request.ApplicationCreateCollectDort;
-import com.onlikee.application.model.dto.request.ApplicationCreateNewDort;
-import com.onlikee.application.model.dto.response.ApplicationCreateCollectDore;
-import com.onlikee.application.model.dto.response.ApplicationCreateConnectDore;
-import com.onlikee.application.model.dto.response.ApplicationCreateNewDore;
-import com.onlikee.user.model.entity.User;
+import com.onlikee.application.model.dto.ApplicationCreateConnectDTO;
+import com.onlikee.application.model.dto.ApplicationCreateCollectDTO;
+import com.onlikee.application.model.dto.ApplicationCreateNewDTO;
+import com.onlikee.application.model.vo.ApplicationCreateCollectVO;
+import com.onlikee.application.model.vo.ApplicationCreateConnectVO;
+import com.onlikee.application.model.vo.ApplicationCreateNewVO;
+import com.onlikee.user.model.entity.UserEntity;
 
 public interface ApplicationCreateService {
 
-    ApplicationCreateNewDore applicationCreateNew(User user, ApplicationCreateNewDort request);
+    ApplicationCreateNewVO applicationCreateNew(UserEntity user, ApplicationCreateNewDTO request);
 
-    ApplicationCreateConnectDore applicationCreateConnect(User user, ApplicationCreateConnectDort request);
+    ApplicationCreateConnectVO applicationCreateConnect(UserEntity user, ApplicationCreateConnectDTO request);
 
-    ApplicationCreateCollectDore applicationCreateCollect(User user, ApplicationCreateCollectDort request);
+    ApplicationCreateCollectVO applicationCreateCollect(UserEntity user, ApplicationCreateCollectDTO request);
 }

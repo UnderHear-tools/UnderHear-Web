@@ -6,8 +6,8 @@ import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
 
-import com.onlikee.user.model.entity.User;
-import com.onlikee.auth.oauth.model.entity.UserGithub;
+import com.onlikee.user.model.entity.UserEntity;
+import com.onlikee.auth.oauth.model.entity.UserGithubEntity;
 
 @Mapper
 public interface AuthGithubMapper {
@@ -23,7 +23,7 @@ public interface AuthGithubMapper {
             values
             (#{uuid}, #{githubId}, #{name}, #{avatarUrl}, #{email}, #{bio}, #{htmlUrl}, #{githubToken})
             """)
-    int insertUserGithub(UserGithub userGithub);
+    int insertUserGithub(UserGithubEntity userGithub);
 
     @Insert("""
             insert into `user`
@@ -31,9 +31,9 @@ public interface AuthGithubMapper {
             values
             (#{uuid}, #{nickName}, #{email}, #{avatarUrl}, #{lastLoginSource})
             """)
-    int insertUser(User user);
+    int insertUser(UserEntity user);
 
-    default void saveUserGithubAndUser(UserGithub userGithub, User user) {
+    default void saveUserGithubAndUser(UserGithubEntity userGithub, UserEntity user) {
         insertUserGithub(userGithub);
         insertUser(user);
     }
@@ -48,5 +48,5 @@ public interface AuthGithubMapper {
                 `github_token` = #{githubToken}
             where `github_id` = #{githubId}
             """)
-    int updateUserGithubByGithubId(UserGithub userGithub);
+    int updateUserGithubByGithubId(UserGithubEntity userGithub);
 }

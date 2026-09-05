@@ -1,6 +1,6 @@
 package com.onlikee.auth.oauth.controller;
 
-import com.onlikee.auth.oauth.converter.ToDore;
+import com.onlikee.auth.oauth.converter.ToVO;
 import me.zhyd.oauth.config.AuthConfig;
 import me.zhyd.oauth.model.AuthResponse;
 import me.zhyd.oauth.model.AuthUser;
@@ -16,8 +16,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.onlikee.auth.oauth.model.dto.response.OAuthCallbackDore;
-import com.onlikee.auth.oauth.model.dto.response.OAuthCallbackWithTokenDore;
+import com.onlikee.auth.oauth.model.vo.OAuthCallbackVO;
+import com.onlikee.auth.oauth.model.dto.OAuthCallbackWithTokenDTO;
 import com.onlikee.common.response.ApiResponse;
 import com.onlikee.auth.service.AuthCookieService;
 import com.onlikee.auth.service.SessionAuthService;
@@ -55,7 +55,7 @@ public class AuthGiteeController {
     }
 
     @GetMapping("/callback")
-    public ApiResponse<OAuthCallbackDore> login(
+    public ApiResponse<OAuthCallbackVO> login(
             AuthCallback callback,
             @CookieValue(value = "auth_token", required = false) String oldToken,
             HttpServletResponse response) {
@@ -64,11 +64,11 @@ public class AuthGiteeController {
         
         AuthRequest authRequest = getAuthRequest();
         AuthResponse<AuthUser> authResponse = authRequest.login(callback);
-        OAuthCallbackWithTokenDore callbackWithToken = authGiteeService.login(authResponse);
-        if (OAuthCallbackWithTokenDore.LOGIN_SUCCESS.equals(callbackWithToken.getStatus())) {
+        OAuthCallbackWithTokenDTO callbackWithToken = authGiteeService.login(authResponse);
+        if (OAuthCallbackWithTokenDTO.LOGIN_SUCCESS.equals(callbackWithToken.getStatus())) {
             authCookieService.writeToken(response, callbackWithToken.getToken());
         }
-        return ApiResponse.success(ToDore.toOAuthCallbackDore(callbackWithToken));
+        return ApiResponse.success(ToVO.toOAuthCallbackVO(callbackWithToken));
     }
 
     private AuthRequest getAuthRequest() {

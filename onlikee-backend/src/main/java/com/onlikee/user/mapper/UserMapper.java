@@ -8,7 +8,7 @@ import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
 
-import com.onlikee.user.model.entity.User;
+import com.onlikee.user.model.entity.UserEntity;
 
 @Mapper
 public interface UserMapper {
@@ -18,7 +18,7 @@ public interface UserMapper {
             from `user`
             where uuid = #{uuid}
             """)
-    User getUserByUuid(@Param("uuid") String uuid);
+    UserEntity getUserByUuid(@Param("uuid") String uuid);
 
     @Select("""
             select u.*
@@ -26,7 +26,7 @@ public interface UserMapper {
             join user_github ug on u.uuid = ug.uuid
             where ug.github_id = #{githubId}
             """)
-    User getUserByGithubId(@Param("githubId") Long githubId);
+    UserEntity getUserByGithubId(@Param("githubId") Long githubId);
 
     @Select("""
             select u.*
@@ -34,7 +34,7 @@ public interface UserMapper {
             join user_gitee ug on u.uuid = ug.uuid
             where ug.gitee_id = #{giteeId}
             """)
-    User getUserByGiteeId(@Param("giteeId") Long giteeId);
+    UserEntity getUserByGiteeId(@Param("giteeId") Long giteeId);
 
     @Select("""
             select count(1)
@@ -56,7 +56,7 @@ public interface UserMapper {
             values
             (#{uuid}, #{nickName}, #{email}, #{avatarUrl}, #{lastLoginSource})
             """)
-    int insertUser(User user);
+    int insertUser(UserEntity user);
 
     @Update("""
             update `user`

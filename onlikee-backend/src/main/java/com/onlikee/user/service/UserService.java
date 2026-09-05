@@ -1,17 +1,17 @@
 package com.onlikee.user.service;
 
-import com.onlikee.user.model.entity.User;
+import com.onlikee.user.model.entity.UserEntity;
 
 public interface UserService {
 
     // 根据 UUID 查询用户信息。
-    User getUserByUuid(String uuid);
+    UserEntity getUserByUuid(String uuid);
 
     // 根据 GitHub ID 查询用户信息。
-    User getUserByGithubId(Long githubId);
+    UserEntity getUserByGithubId(Long githubId);
 
     // 根据 Gitee ID 查询用户信息。
-    User getUserByGiteeId(Long giteeId);
+    UserEntity getUserByGiteeId(Long giteeId);
 
     // 更新用户最后登录信息。
     void updateUserLastLoginByUuid(String uuid, java.time.LocalDateTime lastLoginAt, String lastLoginSource);

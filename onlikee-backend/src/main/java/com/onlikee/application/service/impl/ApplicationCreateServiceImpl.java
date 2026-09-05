@@ -4,21 +4,21 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DuplicateKeyException;
 import org.springframework.stereotype.Service;
 
-import com.onlikee.application.converter.ToDore;
+import com.onlikee.application.converter.ToVO;
 import com.onlikee.application.converter.ToEntity;
 import com.onlikee.common.exception.BizException;
 import com.onlikee.common.exception.ErrorCode;
 import com.onlikee.application.mapper.ApplicationCreateMapper;
-import com.onlikee.application.model.dto.request.ApplicationCreateCollectDort;
-import com.onlikee.application.model.dto.request.ApplicationCreateConnectDort;
-import com.onlikee.application.model.dto.request.ApplicationCreateNewDort;
-import com.onlikee.application.model.dto.response.ApplicationCreateCollectDore;
-import com.onlikee.application.model.dto.response.ApplicationCreateConnectDore;
-import com.onlikee.application.model.dto.response.ApplicationCreateNewDore;
-import com.onlikee.application.model.entity.ApplicationCollect;
-import com.onlikee.application.model.entity.ApplicationConnect;
-import com.onlikee.application.model.entity.ApplicationNew;
-import com.onlikee.user.model.entity.User;
+import com.onlikee.application.model.dto.ApplicationCreateCollectDTO;
+import com.onlikee.application.model.dto.ApplicationCreateConnectDTO;
+import com.onlikee.application.model.dto.ApplicationCreateNewDTO;
+import com.onlikee.application.model.vo.ApplicationCreateCollectVO;
+import com.onlikee.application.model.vo.ApplicationCreateConnectVO;
+import com.onlikee.application.model.vo.ApplicationCreateNewVO;
+import com.onlikee.application.model.entity.ApplicationCollectEntity;
+import com.onlikee.application.model.entity.ApplicationConnectEntity;
+import com.onlikee.application.model.entity.ApplicationNewEntity;
+import com.onlikee.user.model.entity.UserEntity;
 import com.onlikee.application.service.ApplicationCreateService;
 import com.onlikee.application.service.ApplicationSitePublishService;
 import com.onlikee.application.service.ApplicationSitePublishService.PublishedSite;
@@ -34,9 +34,9 @@ public class ApplicationCreateServiceImpl implements ApplicationCreateService {
     private ApplicationSitePublishService applicationSitePublishService;
 
     @Override
-    public ApplicationCreateNewDore applicationCreateNew(User user, ApplicationCreateNewDort applicationCreateNewDort) {
-        String appSubDomain = applicationCreateNewDort.getAppSubDomain();
-        ApplicationNew application = ToEntity.toApplicationNew(user, applicationCreateNewDort);
+    public ApplicationCreateNewVO applicationCreateNew(UserEntity user, ApplicationCreateNewDTO applicationCreateNewDTO) {
+        String appSubDomain = applicationCreateNewDTO.getAppSubDomain();
+        ApplicationNewEntity application = ToEntity.toApplicationNewEntity(user, applicationCreateNewDTO);
         if (applicationCreateMapper.countNewByAppSubDomain(appSubDomain) > 0) {
             throw new BizException(ErrorCode.APP_URL_ALREADY_EXISTS);
         }
@@ -45,7 +45,7 @@ public class ApplicationCreateServiceImpl implements ApplicationCreateService {
         PublishedSite publishedSite = applicationSitePublishService.publish(
                 user.getUuid(),
                 appSubDomain,
-                applicationCreateNewDort.getAppFile());
+                applicationCreateNewDTO.getAppFile());
 
         int rows;
         try {
@@ -62,13 +62,13 @@ public class ApplicationCreateServiceImpl implements ApplicationCreateService {
             applicationSitePublishService.cleanupPublishedSite(publishedSite);
             throw new BizException(ErrorCode.APPLICATION_CREATE_FAILED);
         }
-        return ToDore.toApplicationCreateNewDore(application);
+        return ToVO.toApplicationCreateNewVO(application);
     }
 
     @Override
-    public ApplicationCreateConnectDore applicationCreateConnect(User user, ApplicationCreateConnectDort applicationCreateConnectDort) {
-        String appUrl = UrlUtils.normalizeUrl(UrlUtils.smartCompleteUrl(applicationCreateConnectDort.getAppUrl()));
-        ApplicationConnect application = ToEntity.toApplicationConnect(user, applicationCreateConnectDort, appUrl);
+    public ApplicationCreateConnectVO applicationCreateConnect(UserEntity user, ApplicationCreateConnectDTO applicationCreateConnectDTO) {
+        String appUrl = UrlUtils.normalizeUrl(UrlUtils.smartCompleteUrl(applicationCreateConnectDTO.getAppUrl()));
+        ApplicationConnectEntity application = ToEntity.toApplicationConnectEntity(user, applicationCreateConnectDTO, appUrl);
         if (applicationCreateMapper.countConnectByAppUrl(appUrl) > 0) {
             throw new BizException(ErrorCode.APP_URL_ALREADY_EXISTS);
         }
@@ -83,13 +83,13 @@ public class ApplicationCreateServiceImpl implements ApplicationCreateService {
         if (rows != 1) {
             throw new BizException(ErrorCode.APPLICATION_CREATE_FAILED);
         }
-        return ToDore.toApplicationCreateConnectDore(application);
+        return ToVO.toApplicationCreateConnectVO(application);
     }
 
     @Override
-    public ApplicationCreateCollectDore applicationCreateCollect(User user, ApplicationCreateCollectDort applicationCreateCollectDort) {
-        String appUrl = UrlUtils.normalizeUrl(UrlUtils.smartCompleteUrl(applicationCreateCollectDort.getAppUrl()));
-        ApplicationCollect application = ToEntity.toApplicationCollect(user, applicationCreateCollectDort, appUrl);
+    public ApplicationCreateCollectVO applicationCreateCollect(UserEntity user, ApplicationCreateCollectDTO applicationCreateCollectDTO) {
+        String appUrl = UrlUtils.normalizeUrl(UrlUtils.smartCompleteUrl(applicationCreateCollectDTO.getAppUrl()));
+        ApplicationCollectEntity application = ToEntity.toApplicationCollectEntity(user, applicationCreateCollectDTO, appUrl);
         if (applicationCreateMapper.countCollectByAppUrl(appUrl) > 0) {
             throw new BizException(ErrorCode.APP_URL_ALREADY_EXISTS);
         }
@@ -104,7 +104,7 @@ public class ApplicationCreateServiceImpl implements ApplicationCreateService {
         if (rows != 1) {
             throw new BizException(ErrorCode.APPLICATION_CREATE_FAILED);
         }
-        return ToDore.toApplicationCreateCollectDore(application);
+        return ToVO.toApplicationCreateCollectVO(application);
     }
 
 }

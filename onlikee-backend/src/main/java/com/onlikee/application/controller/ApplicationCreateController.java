@@ -9,14 +9,14 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.onlikee.application.model.dto.request.ApplicationCreateCollectDort;
-import com.onlikee.application.model.dto.request.ApplicationCreateConnectDort;
-import com.onlikee.application.model.dto.request.ApplicationCreateNewDort;
-import com.onlikee.application.model.dto.response.ApplicationCreateCollectDore;
-import com.onlikee.application.model.dto.response.ApplicationCreateConnectDore;
-import com.onlikee.application.model.dto.response.ApplicationCreateNewDore;
+import com.onlikee.application.model.dto.ApplicationCreateCollectDTO;
+import com.onlikee.application.model.dto.ApplicationCreateConnectDTO;
+import com.onlikee.application.model.dto.ApplicationCreateNewDTO;
+import com.onlikee.application.model.vo.ApplicationCreateCollectVO;
+import com.onlikee.application.model.vo.ApplicationCreateConnectVO;
+import com.onlikee.application.model.vo.ApplicationCreateNewVO;
 import com.onlikee.common.response.ApiResponse;
-import com.onlikee.user.model.entity.User;
+import com.onlikee.user.model.entity.UserEntity;
 import com.onlikee.auth.service.SessionAuthService;
 import com.onlikee.application.service.ApplicationCreateService;
 
@@ -34,29 +34,29 @@ public class ApplicationCreateController {
     //consumes = MediaType.MULTIPART_FORM_DATA_VALUE
     //非 multipart/form-data 的请求会在映射阶段就被挡住，通常返回 415 Unsupported Media Type
     @PostMapping(value = "/new", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    public ApiResponse<ApplicationCreateNewDore> applicationCreateNew(
+    public ApiResponse<ApplicationCreateNewVO> applicationCreateNew(
             @CookieValue(value = "auth_token", required = false) String token,
-            @Valid @ModelAttribute ApplicationCreateNewDort applicationCreateNewDort) {
-        User user = sessionAuthService.getCurrentUser(token);
-        ApplicationCreateNewDore applicationCreateNewDore = applicationCreateService.applicationCreateNew(user, applicationCreateNewDort);
-        return ApiResponse.success("应用创建成功！", applicationCreateNewDore);
+            @Valid @ModelAttribute ApplicationCreateNewDTO applicationCreateNewDTO) {
+        UserEntity user = sessionAuthService.getCurrentUser(token);
+        ApplicationCreateNewVO applicationCreateNewVO = applicationCreateService.applicationCreateNew(user, applicationCreateNewDTO);
+        return ApiResponse.success("应用创建成功！", applicationCreateNewVO);
     }
 
     @PostMapping("/connect")
-    public ApiResponse<ApplicationCreateConnectDore> applicationCreateConnect(
+    public ApiResponse<ApplicationCreateConnectVO> applicationCreateConnect(
             @CookieValue(value = "auth_token", required = false) String token,
-            @Valid @RequestBody ApplicationCreateConnectDort applicationCreateConnectDort) {
-        User user = sessionAuthService.getCurrentUser(token);
-        ApplicationCreateConnectDore applicationCreateConnectDore = applicationCreateService.applicationCreateConnect(user, applicationCreateConnectDort);
-        return ApiResponse.success("应用创建成功！", applicationCreateConnectDore);
+            @Valid @RequestBody ApplicationCreateConnectDTO applicationCreateConnectDTO) {
+        UserEntity user = sessionAuthService.getCurrentUser(token);
+        ApplicationCreateConnectVO applicationCreateConnectVO = applicationCreateService.applicationCreateConnect(user, applicationCreateConnectDTO);
+        return ApiResponse.success("应用创建成功！", applicationCreateConnectVO);
     }
 
     @PostMapping("/collect")
-    public ApiResponse<ApplicationCreateCollectDore> applicationCreateCollect(
+    public ApiResponse<ApplicationCreateCollectVO> applicationCreateCollect(
             @CookieValue(value = "auth_token", required = false) String token,
-            @Valid @RequestBody ApplicationCreateCollectDort applicationCreateCollectDort) {
-        User user = sessionAuthService.getCurrentUser(token);
-        ApplicationCreateCollectDore applicationCreateCollectDore = applicationCreateService.applicationCreateCollect(user, applicationCreateCollectDort);
-        return ApiResponse.success("应用收录成功！", applicationCreateCollectDore);
+            @Valid @RequestBody ApplicationCreateCollectDTO applicationCreateCollectDTO) {
+        UserEntity user = sessionAuthService.getCurrentUser(token);
+        ApplicationCreateCollectVO applicationCreateCollectVO = applicationCreateService.applicationCreateCollect(user, applicationCreateCollectDTO);
+        return ApiResponse.success("应用收录成功！", applicationCreateCollectVO);
     }
 }

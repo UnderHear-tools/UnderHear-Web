@@ -1,11 +1,11 @@
 package com.onlikee.auth.oauth.converter;
 
-import com.onlikee.auth.oauth.model.dto.request.OAuthPendingSignupDort;
-import com.onlikee.auth.oauth.model.dto.request.UserGiteeDort;
-import com.onlikee.auth.oauth.model.dto.request.UserGithubDort;
-import com.onlikee.user.model.entity.User;
-import com.onlikee.auth.oauth.model.entity.UserGitee;
-import com.onlikee.auth.oauth.model.entity.UserGithub;
+import com.onlikee.auth.oauth.model.dto.OAuthPendingSignupDTO;
+import com.onlikee.auth.oauth.model.dto.UserGiteeDTO;
+import com.onlikee.auth.oauth.model.dto.UserGithubDTO;
+import com.onlikee.user.model.entity.UserEntity;
+import com.onlikee.auth.oauth.model.entity.UserGiteeEntity;
+import com.onlikee.auth.oauth.model.entity.UserGithubEntity;
 import com.onlikee.common.util.ShortUuidGenerator;
 
 public final class ToEntity {
@@ -14,35 +14,35 @@ public final class ToEntity {
     }
 
     //github第一次登录时用到
-    public static UserGithub toUserGithub(UserGithubDort userGithubDort) {
-        UserGithub userGithub = new UserGithub();
+    public static UserGithubEntity toUserGithubEntity(UserGithubDTO userGithubDTO) {
+        UserGithubEntity userGithub = new UserGithubEntity();
         userGithub.setUuid(ShortUuidGenerator.next());
-        userGithub.setGithubId(userGithubDort.getGithubId());
-        userGithub.setName(userGithubDort.getName());
-        userGithub.setAvatarUrl(userGithubDort.getAvatarUrl());
-        userGithub.setEmail(userGithubDort.getEmail());
-        userGithub.setBio(userGithubDort.getBio());
-        userGithub.setHtmlUrl(userGithubDort.getHtmlUrl());
-        userGithub.setGithubToken(userGithubDort.getGithubToken());
+        userGithub.setGithubId(userGithubDTO.getGithubId());
+        userGithub.setName(userGithubDTO.getName());
+        userGithub.setAvatarUrl(userGithubDTO.getAvatarUrl());
+        userGithub.setEmail(userGithubDTO.getEmail());
+        userGithub.setBio(userGithubDTO.getBio());
+        userGithub.setHtmlUrl(userGithubDTO.getHtmlUrl());
+        userGithub.setGithubToken(userGithubDTO.getGithubToken());
         return userGithub;
     }
 
     //github非第一次登录时用到
-    public static UserGithub toUpdateUserGithub(UserGithubDort userGithubDort) {
-        UserGithub userGithub = new UserGithub();
-        userGithub.setGithubId(userGithubDort.getGithubId());
-        userGithub.setName(userGithubDort.getName());
-        userGithub.setAvatarUrl(userGithubDort.getAvatarUrl());
-        userGithub.setEmail(userGithubDort.getEmail());
-        userGithub.setBio(userGithubDort.getBio());
-        userGithub.setHtmlUrl(userGithubDort.getHtmlUrl());
-        userGithub.setGithubToken(userGithubDort.getGithubToken());
+    public static UserGithubEntity toUpdateUserGithubEntity(UserGithubDTO userGithubDTO) {
+        UserGithubEntity userGithub = new UserGithubEntity();
+        userGithub.setGithubId(userGithubDTO.getGithubId());
+        userGithub.setName(userGithubDTO.getName());
+        userGithub.setAvatarUrl(userGithubDTO.getAvatarUrl());
+        userGithub.setEmail(userGithubDTO.getEmail());
+        userGithub.setBio(userGithubDTO.getBio());
+        userGithub.setHtmlUrl(userGithubDTO.getHtmlUrl());
+        userGithub.setGithubToken(userGithubDTO.getGithubToken());
         return userGithub;
     }
 
     //github第一次登录时用到
-    public static User toUser(UserGithub userGithub) {
-        User user = new User();
+    public static UserEntity toUserEntity(UserGithubEntity userGithub) {
+        UserEntity user = new UserEntity();
         user.setUuid(userGithub.getUuid());
         user.setNickName(userGithub.getName());
         user.setEmail(userGithub.getEmail());
@@ -52,35 +52,35 @@ public final class ToEntity {
     }
 
     //gitee第一次登录时用到
-    public static UserGitee toUserGitee(UserGiteeDort userGiteeDort) {
-        UserGitee userGitee = new UserGitee();
+    public static UserGiteeEntity toUserGiteeEntity(UserGiteeDTO userGiteeDTO) {
+        UserGiteeEntity userGitee = new UserGiteeEntity();
         userGitee.setUuid(ShortUuidGenerator.next());
-        userGitee.setGiteeId(userGiteeDort.getGiteeId());
-        userGitee.setName(userGiteeDort.getName());
-        userGitee.setAvatarUrl(userGiteeDort.getAvatarUrl());
-        userGitee.setEmail(userGiteeDort.getEmail());
-        userGitee.setBio(userGiteeDort.getBio());
-        userGitee.setHtmlUrl(userGiteeDort.getHtmlUrl());
-        userGitee.setGiteeToken(userGiteeDort.getGiteeToken());
+        userGitee.setGiteeId(userGiteeDTO.getGiteeId());
+        userGitee.setName(userGiteeDTO.getName());
+        userGitee.setAvatarUrl(userGiteeDTO.getAvatarUrl());
+        userGitee.setEmail(userGiteeDTO.getEmail());
+        userGitee.setBio(userGiteeDTO.getBio());
+        userGitee.setHtmlUrl(userGiteeDTO.getHtmlUrl());
+        userGitee.setGiteeToken(userGiteeDTO.getGiteeToken());
         return userGitee;
     }
 
     //gitee非第一次登录时用到
-    public static UserGitee toUpdateUserGitee(UserGiteeDort userGiteeDort) {
-        UserGitee userGitee = new UserGitee();
-        userGitee.setGiteeId(userGiteeDort.getGiteeId());
-        userGitee.setName(userGiteeDort.getName());
-        userGitee.setAvatarUrl(userGiteeDort.getAvatarUrl());
-        userGitee.setEmail(userGiteeDort.getEmail());
-        userGitee.setBio(userGiteeDort.getBio());
-        userGitee.setHtmlUrl(userGiteeDort.getHtmlUrl());
-        userGitee.setGiteeToken(userGiteeDort.getGiteeToken());
+    public static UserGiteeEntity toUpdateUserGiteeEntity(UserGiteeDTO userGiteeDTO) {
+        UserGiteeEntity userGitee = new UserGiteeEntity();
+        userGitee.setGiteeId(userGiteeDTO.getGiteeId());
+        userGitee.setName(userGiteeDTO.getName());
+        userGitee.setAvatarUrl(userGiteeDTO.getAvatarUrl());
+        userGitee.setEmail(userGiteeDTO.getEmail());
+        userGitee.setBio(userGiteeDTO.getBio());
+        userGitee.setHtmlUrl(userGiteeDTO.getHtmlUrl());
+        userGitee.setGiteeToken(userGiteeDTO.getGiteeToken());
         return userGitee;
     }
 
     //gitee第一次登录时用到
-    public static User toUser(UserGitee userGitee) {
-        User user = new User();
+    public static UserEntity toUserEntity(UserGiteeEntity userGitee) {
+        UserEntity user = new UserEntity();
         user.setUuid(userGitee.getUuid());
         user.setNickName(userGitee.getName());
         user.setEmail(userGitee.getEmail());
@@ -89,8 +89,8 @@ public final class ToEntity {
         return user;
     }
 
-    public static User toOAuthSignupUser(OAuthPendingSignupDort pendingSignup, String uuid, String nickname, String email) {
-        User user = new User();
+    public static UserEntity toOAuthSignupUserEntity(OAuthPendingSignupDTO pendingSignup, String uuid, String nickname, String email) {
+        UserEntity user = new UserEntity();
         user.setUuid(uuid);
         user.setNickName(nickname);
         user.setEmail(email);
@@ -99,8 +99,8 @@ public final class ToEntity {
         return user;
     }
 
-    public static UserGithub toUserGithub(OAuthPendingSignupDort pendingSignup, String uuid) {
-        UserGithub userGithub = new UserGithub();
+    public static UserGithubEntity toUserGithubEntity(OAuthPendingSignupDTO pendingSignup, String uuid) {
+        UserGithubEntity userGithub = new UserGithubEntity();
         userGithub.setUuid(uuid);
         userGithub.setGithubId(pendingSignup.getProviderUserId());
         userGithub.setName(pendingSignup.getName());
@@ -112,8 +112,8 @@ public final class ToEntity {
         return userGithub;
     }
 
-    public static UserGitee toUserGitee(OAuthPendingSignupDort pendingSignup, String uuid) {
-        UserGitee userGitee = new UserGitee();
+    public static UserGiteeEntity toUserGiteeEntity(OAuthPendingSignupDTO pendingSignup, String uuid) {
+        UserGiteeEntity userGitee = new UserGiteeEntity();
         userGitee.setUuid(uuid);
         userGitee.setGiteeId(pendingSignup.getProviderUserId());
         userGitee.setName(pendingSignup.getName());

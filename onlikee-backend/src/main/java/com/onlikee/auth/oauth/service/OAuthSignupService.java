@@ -1,16 +1,16 @@
 package com.onlikee.auth.oauth.service;
 
-import com.onlikee.auth.oauth.model.dto.request.OAuthSignupCompleteDort;
-import com.onlikee.auth.oauth.model.dto.request.UserGiteeDort;
-import com.onlikee.auth.oauth.model.dto.request.UserGithubDort;
-import com.onlikee.auth.oauth.model.dto.response.OAuthPendingSignupDore;
-import com.onlikee.auth.model.dto.response.UserLoginWithTokenDore;
+import com.onlikee.auth.oauth.model.dto.OAuthSignupCompleteDTO;
+import com.onlikee.auth.oauth.model.dto.UserGiteeDTO;
+import com.onlikee.auth.oauth.model.dto.UserGithubDTO;
+import com.onlikee.auth.oauth.model.dto.OAuthPendingSignupResultDTO;
+import com.onlikee.auth.model.dto.UserLoginWithTokenDTO;
 
 public interface OAuthSignupService {
 
-    OAuthPendingSignupDore createGithubPendingSignup(UserGithubDort userGithubDort);
+    OAuthPendingSignupResultDTO createGithubPendingSignup(UserGithubDTO userGithubDTO);
 
-    OAuthPendingSignupDore createGiteePendingSignup(UserGiteeDort userGiteeDort);
+    OAuthPendingSignupResultDTO createGiteePendingSignup(UserGiteeDTO userGiteeDTO);
 
-    UserLoginWithTokenDore complete(OAuthSignupCompleteDort request);
+    UserLoginWithTokenDTO complete(OAuthSignupCompleteDTO request);
 }

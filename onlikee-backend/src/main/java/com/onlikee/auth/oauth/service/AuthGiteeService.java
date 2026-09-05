@@ -1,15 +1,15 @@
 package com.onlikee.auth.oauth.service;
 
-import com.onlikee.auth.oauth.model.dto.request.UserGiteeDort;
-import com.onlikee.auth.oauth.model.dto.response.OAuthCallbackWithTokenDore;
+import com.onlikee.auth.oauth.model.dto.UserGiteeDTO;
+import com.onlikee.auth.oauth.model.dto.OAuthCallbackWithTokenDTO;
 
 import me.zhyd.oauth.model.AuthResponse;
 import me.zhyd.oauth.model.AuthUser;
 
 public interface AuthGiteeService {
 
-    OAuthCallbackWithTokenDore login(AuthResponse<AuthUser> authResponse);
+    OAuthCallbackWithTokenDTO login(AuthResponse<AuthUser> authResponse);
 
     //在oauth_gitee表中检测该用户是否存在
-    boolean exists(UserGiteeDort userGiteeDort);
+    boolean exists(UserGiteeDTO userGiteeDTO);
 }

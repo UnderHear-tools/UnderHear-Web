@@ -25,13 +25,13 @@ import org.springframework.test.web.servlet.MockMvc;
 import com.onlikee.common.exception.BizException;
 import com.onlikee.common.exception.ErrorCode;
 import com.onlikee.common.exception.GlobalExceptionHandler;
-import com.onlikee.application.model.dto.request.ApplicationCreateCollectDort;
-import com.onlikee.application.model.dto.request.ApplicationCreateConnectDort;
-import com.onlikee.application.model.dto.request.ApplicationCreateNewDort;
-import com.onlikee.application.model.dto.response.ApplicationCreateCollectDore;
-import com.onlikee.application.model.dto.response.ApplicationCreateConnectDore;
-import com.onlikee.application.model.dto.response.ApplicationCreateNewDore;
-import com.onlikee.user.model.entity.User;
+import com.onlikee.application.model.dto.ApplicationCreateCollectDTO;
+import com.onlikee.application.model.dto.ApplicationCreateConnectDTO;
+import com.onlikee.application.model.dto.ApplicationCreateNewDTO;
+import com.onlikee.application.model.vo.ApplicationCreateCollectVO;
+import com.onlikee.application.model.vo.ApplicationCreateConnectVO;
+import com.onlikee.application.model.vo.ApplicationCreateNewVO;
+import com.onlikee.user.model.entity.UserEntity;
 import com.onlikee.auth.service.SessionAuthService;
 import com.onlikee.application.service.ApplicationCreateService;
 
@@ -56,12 +56,12 @@ class ApplicationCreateControllerTest {
     @Test
     // multipart 参数完整时应成功创建应用并返回 URL。
     void applicationCreateNewShouldReturnSuccessResponse() throws Exception {
-        User user = new User();
+        UserEntity user = new UserEntity();
         user.setUuid("user-1");
-        ApplicationCreateNewDore dore = new ApplicationCreateNewDore();
-        dore.setAppUrl("https://demo.onlikee.com/");
+        ApplicationCreateNewVO vo = new ApplicationCreateNewVO();
+        vo.setAppUrl("https://demo.onlikee.com/");
         when(sessionAuthService.getCurrentUser("token")).thenReturn(user);
-        when(applicationCreateService.applicationCreateNew(eq(user), any(ApplicationCreateNewDort.class))).thenReturn(dore);
+        when(applicationCreateService.applicationCreateNew(eq(user), any(ApplicationCreateNewDTO.class))).thenReturn(vo);
 
         mockMvc.perform(multipart("/application/create/new")
                         .file(new MockMultipartFile(
@@ -77,23 +77,23 @@ class ApplicationCreateControllerTest {
                 .andExpect(jsonPath("$.message").value("应用创建成功！"))
                 .andExpect(jsonPath("$.data.appUrl").value("https://demo.onlikee.com/"));
 
-        ArgumentCaptor<ApplicationCreateNewDort> dortCaptor = ArgumentCaptor.forClass(ApplicationCreateNewDort.class);
-        verify(applicationCreateService).applicationCreateNew(eq(user), dortCaptor.capture());
+        ArgumentCaptor<ApplicationCreateNewDTO> dtoCaptor = ArgumentCaptor.forClass(ApplicationCreateNewDTO.class);
+        verify(applicationCreateService).applicationCreateNew(eq(user), dtoCaptor.capture());
         verify(sessionAuthService).getCurrentUser("token");
-        ApplicationCreateNewDort capturedDort = dortCaptor.getValue();
-        assertEquals("html", capturedDort.getFramework());
-        assertEquals("dist.zip", capturedDort.getAppFile().getOriginalFilename());
-        assertEquals("Demo", capturedDort.getAppName());
-        assertEquals("demo", capturedDort.getAppSubDomain());
+        ApplicationCreateNewDTO capturedDTO = dtoCaptor.getValue();
+        assertEquals("html", capturedDTO.getFramework());
+        assertEquals("dist.zip", capturedDTO.getAppFile().getOriginalFilename());
+        assertEquals("Demo", capturedDTO.getAppName());
+        assertEquals("demo", capturedDTO.getAppSubDomain());
     }
 
     @Test
     // 旧的单 HTML 上传应按统一 ZIP 合同返回应用包无效。
     void applicationCreateNewShouldRejectSingleHtmlUpload() throws Exception {
-        User user = new User();
+        UserEntity user = new UserEntity();
         user.setUuid("user-1");
         when(sessionAuthService.getCurrentUser("token")).thenReturn(user);
-        when(applicationCreateService.applicationCreateNew(eq(user), any(ApplicationCreateNewDort.class)))
+        when(applicationCreateService.applicationCreateNew(eq(user), any(ApplicationCreateNewDTO.class)))
                 .thenThrow(new BizException(ErrorCode.APPLICATION_PACKAGE_INVALID, "应用包必须是 zip 压缩包"));
 
         mockMvc.perform(multipart("/application/create/new")
@@ -113,12 +113,12 @@ class ApplicationCreateControllerTest {
     @Test
     // JSON 参数完整时应成功接入已有网站并返回应用 URL。
     void applicationCreateConnectShouldReturnSuccessResponse() throws Exception {
-        User user = new User();
+        UserEntity user = new UserEntity();
         user.setUuid("user-1");
-        ApplicationCreateConnectDore dore = new ApplicationCreateConnectDore();
-        dore.setAppUrl("https://www.demo.com");
+        ApplicationCreateConnectVO vo = new ApplicationCreateConnectVO();
+        vo.setAppUrl("https://www.demo.com");
         when(sessionAuthService.getCurrentUser("token")).thenReturn(user);
-        when(applicationCreateService.applicationCreateConnect(eq(user), any(ApplicationCreateConnectDort.class))).thenReturn(dore);
+        when(applicationCreateService.applicationCreateConnect(eq(user), any(ApplicationCreateConnectDTO.class))).thenReturn(vo);
 
         mockMvc.perform(post("/application/create/connect")
                         .contentType(MediaType.APPLICATION_JSON)
@@ -136,23 +136,23 @@ class ApplicationCreateControllerTest {
                 .andExpect(jsonPath("$.message").value("应用创建成功！"))
                 .andExpect(jsonPath("$.data.appUrl").value("https://www.demo.com"));
 
-        ArgumentCaptor<ApplicationCreateConnectDort> dortCaptor = ArgumentCaptor.forClass(ApplicationCreateConnectDort.class);
-        verify(applicationCreateService).applicationCreateConnect(eq(user), dortCaptor.capture());
+        ArgumentCaptor<ApplicationCreateConnectDTO> dtoCaptor = ArgumentCaptor.forClass(ApplicationCreateConnectDTO.class);
+        verify(applicationCreateService).applicationCreateConnect(eq(user), dtoCaptor.capture());
         verify(sessionAuthService).getCurrentUser("token");
-        ApplicationCreateConnectDort capturedDort = dortCaptor.getValue();
-        assertEquals("Demo", capturedDort.getAppName());
-        assertEquals("https://www.demo.com", capturedDort.getAppUrl());
+        ApplicationCreateConnectDTO capturedDTO = dtoCaptor.getValue();
+        assertEquals("Demo", capturedDTO.getAppName());
+        assertEquals("https://www.demo.com", capturedDTO.getAppUrl());
     }
 
     @Test
     // JSON 参数完整时应成功收录网站并返回应用 URL。
     void applicationCreateCollectShouldReturnSuccessResponse() throws Exception {
-        User user = new User();
+        UserEntity user = new UserEntity();
         user.setUuid("user-1");
-        ApplicationCreateCollectDore dore = new ApplicationCreateCollectDore();
-        dore.setAppUrl("https://www.demo.com");
+        ApplicationCreateCollectVO vo = new ApplicationCreateCollectVO();
+        vo.setAppUrl("https://www.demo.com");
         when(sessionAuthService.getCurrentUser("token")).thenReturn(user);
-        when(applicationCreateService.applicationCreateCollect(eq(user), any(ApplicationCreateCollectDort.class))).thenReturn(dore);
+        when(applicationCreateService.applicationCreateCollect(eq(user), any(ApplicationCreateCollectDTO.class))).thenReturn(vo);
 
         mockMvc.perform(post("/application/create/collect")
                         .contentType(MediaType.APPLICATION_JSON)
@@ -170,12 +170,12 @@ class ApplicationCreateControllerTest {
                 .andExpect(jsonPath("$.message").value("应用收录成功！"))
                 .andExpect(jsonPath("$.data.appUrl").value("https://www.demo.com"));
 
-        ArgumentCaptor<ApplicationCreateCollectDort> dortCaptor = ArgumentCaptor.forClass(ApplicationCreateCollectDort.class);
-        verify(applicationCreateService).applicationCreateCollect(eq(user), dortCaptor.capture());
+        ArgumentCaptor<ApplicationCreateCollectDTO> dtoCaptor = ArgumentCaptor.forClass(ApplicationCreateCollectDTO.class);
+        verify(applicationCreateService).applicationCreateCollect(eq(user), dtoCaptor.capture());
         verify(sessionAuthService).getCurrentUser("token");
-        ApplicationCreateCollectDort capturedDort = dortCaptor.getValue();
-        assertEquals("Demo", capturedDort.getAppName());
-        assertEquals("https://www.demo.com", capturedDort.getAppUrl());
+        ApplicationCreateCollectDTO capturedDTO = dtoCaptor.getValue();
+        assertEquals("Demo", capturedDTO.getAppName());
+        assertEquals("https://www.demo.com", capturedDTO.getAppUrl());
     }
 
     @Test

@@ -5,22 +5,22 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 import java.util.UUID;
 import org.junit.jupiter.api.Test;
 import org.springframework.mock.web.MockMultipartFile;
-import com.onlikee.application.model.dto.request.ApplicationCreateCollectDort;
-import com.onlikee.application.model.dto.request.ApplicationCreateConnectDort;
-import com.onlikee.application.model.dto.request.ApplicationCreateNewDort;
-import com.onlikee.application.model.entity.ApplicationCollect;
-import com.onlikee.application.model.entity.ApplicationConnect;
-import com.onlikee.application.model.entity.ApplicationNew;
-import com.onlikee.user.model.entity.User;
+import com.onlikee.application.model.dto.ApplicationCreateCollectDTO;
+import com.onlikee.application.model.dto.ApplicationCreateConnectDTO;
+import com.onlikee.application.model.dto.ApplicationCreateNewDTO;
+import com.onlikee.application.model.entity.ApplicationCollectEntity;
+import com.onlikee.application.model.entity.ApplicationConnectEntity;
+import com.onlikee.application.model.entity.ApplicationNewEntity;
+import com.onlikee.user.model.entity.UserEntity;
 
 class ToEntityTest {
 
     @Test
     // 自建应用转换时应生成 appid、子域名和原始文件元信息。
-    void toApplicationNewShouldBuildApplicationMetadata() {
-        User user = new User();
+    void toApplicationNewEntityShouldBuildApplicationMetadata() {
+        UserEntity user = new UserEntity();
         user.setUuid("user-1");
-        ApplicationCreateNewDort request = new ApplicationCreateNewDort();
+        ApplicationCreateNewDTO request = new ApplicationCreateNewDTO();
         request.setFramework("html");
         request.setAppName("Demo");
         request.setAppSubDomain("demo");
@@ -32,7 +32,7 @@ class ToEntityTest {
                 "text/html",
                 "<html></html>".getBytes()));
 
-        ApplicationNew application = ToEntity.toApplicationNew(user, request);
+        ApplicationNewEntity application = ToEntity.toApplicationNewEntity(user, request);
 
         assertNotNull(application.getAppid());
         UUID.fromString(application.getAppid());
@@ -49,16 +49,16 @@ class ToEntityTest {
 
     @Test
     // 已有网站接入转换时不应依赖上传文件元信息。
-    void toApplicationConnectShouldBuildApplicationMetadata() {
-        User user = new User();
+    void toApplicationConnectEntityShouldBuildApplicationMetadata() {
+        UserEntity user = new UserEntity();
         user.setUuid("user-1");
-        ApplicationCreateConnectDort request = new ApplicationCreateConnectDort();
+        ApplicationCreateConnectDTO request = new ApplicationCreateConnectDTO();
         request.setAppName("Demo Website");
         request.setAppUrl("https://www.demo.com");
         request.setVisibility("public");
         request.setAppDescription("description");
 
-        ApplicationConnect application = ToEntity.toApplicationConnect(user, request, "https://www.demo.com");
+        ApplicationConnectEntity application = ToEntity.toApplicationConnectEntity(user, request, "https://www.demo.com");
 
         assertNotNull(application.getAppid());
         UUID.fromString(application.getAppid());
@@ -71,16 +71,16 @@ class ToEntityTest {
 
     @Test
     // 网站收录转换时应写入 collect 来源，不依赖上传文件元信息。
-    void toApplicationCollectShouldBuildApplicationMetadata() {
-        User user = new User();
+    void toApplicationCollectEntityShouldBuildApplicationMetadata() {
+        UserEntity user = new UserEntity();
         user.setUuid("user-1");
-        ApplicationCreateCollectDort request = new ApplicationCreateCollectDort();
+        ApplicationCreateCollectDTO request = new ApplicationCreateCollectDTO();
         request.setAppName("Demo Website");
         request.setAppUrl("https://www.demo.com");
         request.setVisibility("public");
         request.setAppDescription("description");
 
-        ApplicationCollect application = ToEntity.toApplicationCollect(user, request, "https://www.demo.com");
+        ApplicationCollectEntity application = ToEntity.toApplicationCollectEntity(user, request, "https://www.demo.com");
 
         assertNotNull(application.getAppid());
         UUID.fromString(application.getAppid());

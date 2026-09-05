@@ -6,8 +6,8 @@ import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
 
-import com.onlikee.user.model.entity.User;
-import com.onlikee.user.model.entity.UserProfileMarkdown;
+import com.onlikee.user.model.entity.UserEntity;
+import com.onlikee.user.model.entity.UserProfileMarkdownEntity;
 
 @Mapper
 public interface UserProfileMapper {
@@ -17,14 +17,14 @@ public interface UserProfileMapper {
             from `user`
             where `nickname` = #{nickname}
             """)
-    User getUserByNickname(@Param("nickname") String nickname);
+    UserEntity getUserByNickname(@Param("nickname") String nickname);
 
     @Select("""
             select *
             from `user_profile_markdown`
             where `uuid` = #{uuid}
             """)
-    UserProfileMarkdown getMarkdownByUuid(@Param("uuid") String uuid);
+    UserProfileMarkdownEntity getMarkdownByUuid(@Param("uuid") String uuid);
 
     @Insert("""
             insert into `user_profile_markdown`

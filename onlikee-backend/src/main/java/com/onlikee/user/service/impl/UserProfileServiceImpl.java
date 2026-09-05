@@ -7,10 +7,10 @@ import org.springframework.stereotype.Service;
 import com.onlikee.common.exception.BizException;
 import com.onlikee.common.exception.ErrorCode;
 import com.onlikee.user.mapper.UserProfileMapper;
-import com.onlikee.user.model.dto.request.UserProfileDort;
-import com.onlikee.user.model.dto.request.UserProfileMarkdownDort;
-import com.onlikee.user.model.entity.User;
-import com.onlikee.user.model.entity.UserProfileMarkdown;
+import com.onlikee.user.model.dto.UserProfileDTO;
+import com.onlikee.user.model.dto.UserProfileMarkdownDTO;
+import com.onlikee.user.model.entity.UserEntity;
+import com.onlikee.user.model.entity.UserProfileMarkdownEntity;
 import com.onlikee.user.service.UserProfileService;
 import com.onlikee.common.util.StringNormalizer;
 
@@ -22,11 +22,11 @@ public class UserProfileServiceImpl implements UserProfileService {
 
     @Override
     // 公开资料页使用昵称作为稳定入口，查询不到时复用用户不存在业务错误。
-    public User getUserByNickname(String nickname) {
+    public UserEntity getUserByNickname(String nickname) {
         if (nickname == null || nickname.isBlank()) {
             throw new BizException(ErrorCode.INTERNAL_ERROR);
         }
-        User user = userProfileMapper.getUserByNickname(nickname);
+        UserEntity user = userProfileMapper.getUserByNickname(nickname);
         if (user == null) {
             throw new BizException(ErrorCode.USER_NOT_FOUND);
         }
@@ -35,7 +35,7 @@ public class UserProfileServiceImpl implements UserProfileService {
 
     @Override
     // Markdown 属于公开资料页扩展内容，没有记录时由 controller 转换为 data: null。
-    public UserProfileMarkdown getMarkdownByUuid(String uuid) {
+    public UserProfileMarkdownEntity getMarkdownByUuid(String uuid) {
         if (uuid == null || uuid.isBlank()) {
             throw new BizException(ErrorCode.INTERNAL_ERROR);
         }
@@ -44,7 +44,7 @@ public class UserProfileServiceImpl implements UserProfileService {
 
     @Override
     // 保存时只使用登录态用户 uuid，避免请求体越权写入其他用户资料。
-    public void saveCurrentUserMarkdown(User user, UserProfileMarkdownDort request) {
+    public void saveCurrentUserMarkdown(UserEntity user, UserProfileMarkdownDTO request) {
         if (user == null || user.getUuid() == null || user.getUuid().isBlank() || request == null) {
             throw new BizException(ErrorCode.INTERNAL_ERROR);
         }
@@ -57,7 +57,7 @@ public class UserProfileServiceImpl implements UserProfileService {
     @Override
     @CacheEvict(cacheNames = "user:info", key = "#user.uuid")
     // 保存时只使用登录态用户 uuid，资料字段统一裁剪空白，空字符串存为 null。
-    public User saveCurrentUserProfile(User user, UserProfileDort request) {
+    public UserEntity saveCurrentUserProfile(UserEntity user, UserProfileDTO request) {
         if (user == null || user.getUuid() == null || user.getUuid().isBlank() || request == null) {
             throw new BizException(ErrorCode.INTERNAL_ERROR);
         }

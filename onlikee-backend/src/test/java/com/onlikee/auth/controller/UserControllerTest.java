@@ -20,7 +20,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import com.onlikee.common.exception.BizException;
 import com.onlikee.common.exception.ErrorCode;
 import com.onlikee.common.exception.GlobalExceptionHandler;
-import com.onlikee.user.model.entity.User;
+import com.onlikee.user.model.entity.UserEntity;
 import com.onlikee.auth.service.AuthCookieService;
 import com.onlikee.auth.service.SessionAuthService;
 
@@ -46,7 +46,7 @@ class UserControllerTest {
     @Test
     // 查询当前用户成功时应返回统一响应结构。
     void meShouldReturnCurrentUserInfo() throws Exception {
-        User user = new User();
+        UserEntity user = new UserEntity();
         user.setUuid("user-1");
         user.setNickName("tester");
         user.setEmail("tester@example.com");

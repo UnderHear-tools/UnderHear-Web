@@ -1,14 +1,14 @@
 package com.onlikee.user.converter;
 
 import java.time.LocalDateTime;
-import com.onlikee.user.model.entity.User;
+import com.onlikee.user.model.entity.UserEntity;
 
 public final class ToEntity {
 
     private ToEntity() {
     }
 
-    public static User toUpdateUser(User user, LocalDateTime lastLoginAt, String lastLoginSource) {
+    public static UserEntity toUpdateUserEntity(UserEntity user, LocalDateTime lastLoginAt, String lastLoginSource) {
         user.setLastLoginAt(lastLoginAt);
         user.setLastLoginSource(lastLoginSource);
         return user;

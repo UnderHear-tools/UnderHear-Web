@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
 
 import com.onlikee.common.exception.BizException;
 import com.onlikee.common.exception.ErrorCode;
-import com.onlikee.user.model.entity.User;
+import com.onlikee.user.model.entity.UserEntity;
 import com.onlikee.user.service.UserService;
 
 @Service
@@ -52,7 +52,7 @@ public class SessionAuthService {
     }
 
     // 根据 token 获取当前用户 要求 token 合法且仍在白名单里
-    public User getCurrentUser(String token) {
+    public UserEntity getCurrentUser(String token) {
         JwtTokenService.JwtTokenPayload payload = parseToken(token);
         String tokenId = payload.getTokenId();
         String uuid = stringRedisTemplate.opsForValue().get(tokensKey(tokenId));

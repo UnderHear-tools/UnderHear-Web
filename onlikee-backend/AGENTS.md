@@ -26,19 +26,20 @@
 - `service` 负责业务编排、事务、调用 mapper、调用外部服务、失败补偿。
 - `mapper` 负责数据库访问，当前项目统一使用 MyBatis 注解 SQL，不使用 XML mapper。
 - `converter` 只负责对象转换，保持纯静态工具类，不放数据库、网络、缓存等副作用逻辑。
-- 所属业务包的 `model.entity` 放实体对象，所属业务包的 `model.dto.request` / `model.dto.response` 放接口 DTO。
+- 所属业务包的 `model.entity` 放实体对象，`model.dto` 放跨层、跨服务及外部接口传输数据对象，`model.vo` 放向前端返回的展示数据对象；模型目录不再按 request/response 嵌套。
 - `auth.service` 放 JWT、Cookie、会话白名单等认证相关能力；新增鉴权逻辑优先复用这一层。
 
-## DTO、Entity 与转换规则
+## DTO、VO、Entity 与转换规则
 
-- Dort 表示 `Data Object Request`。若一个数据对象不是由 Entity、其转换对象，或这些转换对象继续转换而来，则归类为 Dort。
-- Dore 表示 `Data Object Response`。凡由 Entity、其转换对象，或这些转换对象继续转换得到的数据对象，均归类为 Dore。
-- 新增请求 DTO 放在所属业务包的 `model.dto.request`，命名以 `Dort` 结尾。
-- 接口接收到的业务入参默认先绑定到对应 Dort；不要在 controller 方法里直接接收零散业务字段，除非是 Spring 必需的基础入参（如 `@CookieValue`、文件上传绑定对象等）。
-- 一个接口的请求字段、必填性、格式约束和跨字段请求级校验，应优先集中在对应 Dort 中声明，保证请求契约集中可见。
-- 新增响应 DTO 放在所属业务包的 `model.dto.response`，命名以 `Dore` 结尾。
-- 实体对象放在所属业务包的 `model.entity`，保持与数据库字段语义一致，命名使用单数形式。
-- DTO 与 Entity 之间的转换放到所属业务 `converter` 包的 `ToEntity`、`ToDort`、`ToDore` 中，跨业务复用所属模块的转换方法；不要把转换逻辑散落在 controller 或 mapper 里。
+- DTO 表示 `Data Transfer Object`，用于 Controller 接收参数、Service 之间传递数据、微服务之间传输数据及第三方接口数据封装；既可表示输入，也可表示内部处理结果。
+- VO 表示 `View Object`（视图对象），用于向前端返回展示数据，通常是接口最终响应结构或其嵌套展示对象；不用于仅在服务之间传递的中间结果。
+- 新增传输对象放在所属业务包的 `model.dto`，命名以 `DTO` 结尾。
+- 接口接收到的业务入参默认先绑定到对应 DTO；不要在 controller 方法里直接接收零散业务字段，除非是 Spring 必需的基础入参（如 `@CookieValue`、文件上传绑定对象等）。
+- 一个接口的请求字段、必填性、格式约束和跨字段请求级校验，应优先集中在对应 DTO 中声明，保证请求契约集中可见。
+- 新增前端展示对象放在所属业务包的 `model.vo`，命名以 `VO` 结尾。
+- VO 可以由 Service 构建并直接作为最终响应返回；仅因它由 Service 返回，不必额外复制一层 DTO。内部登录 token、OAuth 中间结果及待注册流程结果使用 DTO，在响应边界转换为 VO。
+- 实体对象放在所属业务包的 `model.entity`，保持与数据库字段语义一致，类名使用单数形式并以 `Entity` 结尾。
+- 模型转换按目标类型放到所属业务 `converter` 包的 `ToEntity`、`ToDTO`、`ToVO` 中，跨业务复用所属模块的转换方法；不要把转换逻辑散落在 controller 或 mapper 里。
 - 当前简单数据对象普遍使用 Lombok `@Data`；新增同类对象时沿用这一模式。
 
 ## Controller 约定
@@ -72,9 +73,9 @@
 
 ## 参数校验与异常处理
 
-- 请求参数校验优先放在 Dort 上，优先使用 `jakarta.validation` 注解；controller 只负责通过 `@Valid` / `@Validated` 触发校验，不在 controller 中重复写字段合法性判断。
+- 请求参数校验优先放在 DTO 上，优先使用 `jakarta.validation` 注解；controller 只负责通过 `@Valid` / `@Validated` 触发校验，不在 controller 中重复写字段合法性判断。
 - 文件上传这类无法直接用 `@NotBlank` 表达的约束，沿用当前 `@AssertTrue` 自定义校验方法的写法。
-- 仅依赖请求自身数据的规则（如必填、长度、枚举值、URL/邮箱格式、字段组合约束）放在 Dort；依赖当前用户、数据库唯一性、外部服务状态等业务上下文的规则放在 service。
+- 仅依赖请求自身数据的规则（如必填、长度、枚举值、URL/邮箱格式、字段组合约束）放在 DTO；依赖当前用户、数据库唯一性、外部服务状态等业务上下文的规则放在 service。
 - 新增业务错误时，先补充 `ErrorCode`，再在业务中抛出 `BizException(ErrorCode.XXX)`。
 - 非必要不要直接 new 通用 `RuntimeException` 表达业务失败。
 - 统一依赖 `GlobalExceptionHandler` 输出错误响应；不要在各个 controller 中重复写 try/catch。
@@ -107,6 +108,6 @@
 ## 修改边界
 
 - 不要把当前 MyBatis 注解 SQL 改造成 JPA、MyBatis XML 或 Repository 体系，除非任务明确要求。
-- 不要把现有 `Dort/Dore/Entity` 命名体系改名成其他 DTO/VO/BO 体系。
+- 统一使用 `DTO/VO/Entity` 后缀，与 `model.dto/vo/entity` 目录对应；不要引入其他并行命名体系。
 - 不要擅自修改统一响应结构 `{ code, message, data }`。
 - 不要在无明确需求时修改登录态载体、Cookie 名、JWT 结构、Redis key 规则、应用 URL 拼接规则等既有契约。

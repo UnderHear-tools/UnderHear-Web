@@ -7,10 +7,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.onlikee.user.converter.ToDore;
-import com.onlikee.user.model.dto.response.UserInfoDore;
+import com.onlikee.user.converter.ToVO;
+import com.onlikee.user.model.vo.UserInfoVO;
 import com.onlikee.common.response.ApiResponse;
-import com.onlikee.user.model.entity.User;
+import com.onlikee.user.model.entity.UserEntity;
 import com.onlikee.auth.service.AuthCookieService;
 import com.onlikee.auth.service.SessionAuthService;
 
@@ -26,9 +26,9 @@ public class UserController {
     private AuthCookieService authCookieService;
 
     @GetMapping("/me")
-    public ApiResponse<UserInfoDore> me(@CookieValue(value = "auth_token", required = false) String token) {
-        User user = sessionAuthService.getCurrentUser(token);
-        return ApiResponse.success(ToDore.toUserInfoDore(user));
+    public ApiResponse<UserInfoVO> me(@CookieValue(value = "auth_token", required = false) String token) {
+        UserEntity user = sessionAuthService.getCurrentUser(token);
+        return ApiResponse.success(ToVO.toUserInfoVO(user));
     }
 
     @PostMapping("/logout")

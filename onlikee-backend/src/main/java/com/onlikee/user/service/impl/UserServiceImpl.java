@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 import com.onlikee.common.exception.BizException;
 import com.onlikee.common.exception.ErrorCode;
 import com.onlikee.user.mapper.UserMapper;
-import com.onlikee.user.model.entity.User;
+import com.onlikee.user.model.entity.UserEntity;
 import com.onlikee.user.service.UserService;
 
 @Service
@@ -19,11 +19,11 @@ public class UserServiceImpl implements UserService {
     @Override
     @Cacheable(cacheNames = "user:info", key = "#uuid")
     // 根据 UUID 查询用户信息，命中 Redis 缓存时可减少数据库访问。
-    public User getUserByUuid(String uuid) {
+    public UserEntity getUserByUuid(String uuid) {
         if (uuid == null || uuid.isBlank()) {
             throw new BizException(ErrorCode.INTERNAL_ERROR);
         }
-        User user = userMapper.getUserByUuid(uuid);
+        UserEntity user = userMapper.getUserByUuid(uuid);
         if (user == null) {
             throw new BizException(ErrorCode.USER_NOT_FOUND);
         }
@@ -32,11 +32,11 @@ public class UserServiceImpl implements UserService {
 
     @Override
     // 根据 GitHub ID 查询用户信息。
-    public User getUserByGithubId(Long githubId) {
+    public UserEntity getUserByGithubId(Long githubId) {
         if (githubId == null) {
             throw new BizException(ErrorCode.INTERNAL_ERROR);
         }
-        User user = userMapper.getUserByGithubId(githubId);
+        UserEntity user = userMapper.getUserByGithubId(githubId);
         if (user == null) {
             throw new BizException(ErrorCode.USER_NOT_FOUND);
         }
@@ -45,11 +45,11 @@ public class UserServiceImpl implements UserService {
 
     @Override
     // 根据 Gitee ID 查询用户信息。
-    public User getUserByGiteeId(Long giteeId) {
+    public UserEntity getUserByGiteeId(Long giteeId) {
         if (giteeId == null) {
             throw new BizException(ErrorCode.INTERNAL_ERROR);
         }
-        User user = userMapper.getUserByGiteeId(giteeId);
+        UserEntity user = userMapper.getUserByGiteeId(giteeId);
         if (user == null) {
             throw new BizException(ErrorCode.USER_NOT_FOUND);
         }

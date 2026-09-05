@@ -27,16 +27,16 @@ import com.onlikee.application.util.ApplicationUrlUtils;
 import com.onlikee.common.exception.BizException;
 import com.onlikee.common.exception.ErrorCode;
 import com.onlikee.application.mapper.ApplicationCreateMapper;
-import com.onlikee.application.model.dto.request.ApplicationCreateCollectDort;
-import com.onlikee.application.model.dto.request.ApplicationCreateConnectDort;
-import com.onlikee.application.model.dto.request.ApplicationCreateNewDort;
-import com.onlikee.application.model.dto.response.ApplicationCreateCollectDore;
-import com.onlikee.application.model.dto.response.ApplicationCreateConnectDore;
-import com.onlikee.application.model.dto.response.ApplicationCreateNewDore;
-import com.onlikee.application.model.entity.ApplicationCollect;
-import com.onlikee.application.model.entity.ApplicationConnect;
-import com.onlikee.application.model.entity.ApplicationNew;
-import com.onlikee.user.model.entity.User;
+import com.onlikee.application.model.dto.ApplicationCreateCollectDTO;
+import com.onlikee.application.model.dto.ApplicationCreateConnectDTO;
+import com.onlikee.application.model.dto.ApplicationCreateNewDTO;
+import com.onlikee.application.model.vo.ApplicationCreateCollectVO;
+import com.onlikee.application.model.vo.ApplicationCreateConnectVO;
+import com.onlikee.application.model.vo.ApplicationCreateNewVO;
+import com.onlikee.application.model.entity.ApplicationCollectEntity;
+import com.onlikee.application.model.entity.ApplicationConnectEntity;
+import com.onlikee.application.model.entity.ApplicationNewEntity;
+import com.onlikee.user.model.entity.UserEntity;
 import com.onlikee.application.service.ApplicationSitePublishService;
 import com.onlikee.application.service.ApplicationSitePublishService.PublishedSite;
 
@@ -69,8 +69,8 @@ class ApplicationCreateServiceImplTest {
     @Test
     // 应用地址已存在时不应继续发布站点。
     void applicationCreateNewShouldThrowWhenAppUrlAlreadyExists() {
-        User user = user();
-        ApplicationCreateNewDort request = htmlRequest();
+        UserEntity user = user();
+        ApplicationCreateNewDTO request = htmlRequest();
         when(applicationCreateMapper.countNewByAppSubDomain("demo")).thenReturn(1);
 
         BizException exception = assertThrows(
@@ -84,17 +84,17 @@ class ApplicationCreateServiceImplTest {
     @Test
     // HTML 框架信息应正常入库，发布服务只接收统一的 ZIP 应用包。
     void applicationCreateNewShouldPublishZipWithoutPassingFramework() {
-        User user = user();
-        ApplicationCreateNewDort request = htmlRequest();
+        UserEntity user = user();
+        ApplicationCreateNewDTO request = htmlRequest();
         PublishedSite publishedSite = publishedSite();
         when(applicationCreateMapper.countNewByAppSubDomain("demo")).thenReturn(0);
         when(applicationSitePublishService.publish(eq("user-1"), eq("demo"), any()))
                 .thenReturn(publishedSite);
-        when(applicationCreateMapper.insertApplicationNew(any(ApplicationNew.class))).thenReturn(1);
+        when(applicationCreateMapper.insertApplicationNew(any(ApplicationNewEntity.class))).thenReturn(1);
 
-        ApplicationCreateNewDore result = applicationCreateService.applicationCreateNew(user, request);
+        ApplicationCreateNewVO result = applicationCreateService.applicationCreateNew(user, request);
 
-        ArgumentCaptor<ApplicationNew> applicationCaptor = ArgumentCaptor.forClass(ApplicationNew.class);
+        ArgumentCaptor<ApplicationNewEntity> applicationCaptor = ArgumentCaptor.forClass(ApplicationNewEntity.class);
         verify(applicationCreateMapper).insertApplicationNew(applicationCaptor.capture());
         verify(applicationSitePublishService).publish(eq("user-1"), eq("demo"), any());
         verify(applicationSitePublishService, never()).cleanupPublishedSite(any());
@@ -105,15 +105,15 @@ class ApplicationCreateServiceImplTest {
     @Test
     // 其他框架应使用相同的 ZIP 发布入口。
     void applicationCreateNewShouldPublishZipForOtherFrameworks() {
-        User user = user();
-        ApplicationCreateNewDort request = zipRequest();
+        UserEntity user = user();
+        ApplicationCreateNewDTO request = zipRequest();
         PublishedSite publishedSite = publishedSite();
         when(applicationCreateMapper.countNewByAppSubDomain("demo-zip")).thenReturn(0);
         when(applicationSitePublishService.publish(eq("user-1"), eq("demo-zip"), any()))
                 .thenReturn(publishedSite);
-        when(applicationCreateMapper.insertApplicationNew(any(ApplicationNew.class))).thenReturn(1);
+        when(applicationCreateMapper.insertApplicationNew(any(ApplicationNewEntity.class))).thenReturn(1);
 
-        ApplicationCreateNewDore result = applicationCreateService.applicationCreateNew(user, request);
+        ApplicationCreateNewVO result = applicationCreateService.applicationCreateNew(user, request);
 
         verify(applicationSitePublishService).publish(eq("user-1"), eq("demo-zip"), any());
         assertEquals("https://demo-zip.onlikee.com/", result.getAppUrl());
@@ -122,13 +122,13 @@ class ApplicationCreateServiceImplTest {
     @Test
     // 落库影响行数异常时应执行已发布站点的补偿清理。
     void applicationCreateNewShouldCleanupSiteWhenInsertReturnsUnexpectedRows() {
-        User user = user();
-        ApplicationCreateNewDort request = htmlRequest();
+        UserEntity user = user();
+        ApplicationCreateNewDTO request = htmlRequest();
         PublishedSite publishedSite = publishedSite();
         when(applicationCreateMapper.countNewByAppSubDomain("demo")).thenReturn(0);
         when(applicationSitePublishService.publish(eq("user-1"), eq("demo"), any()))
                 .thenReturn(publishedSite);
-        when(applicationCreateMapper.insertApplicationNew(any(ApplicationNew.class))).thenReturn(0);
+        when(applicationCreateMapper.insertApplicationNew(any(ApplicationNewEntity.class))).thenReturn(0);
 
         BizException exception = assertThrows(
                 BizException.class,
@@ -141,13 +141,13 @@ class ApplicationCreateServiceImplTest {
     @Test
     // 唯一键冲突时应翻译成应用地址重复，并清理已发布站点。
     void applicationCreateNewShouldCleanupSiteWhenInsertThrowsDuplicateKeyException() {
-        User user = user();
-        ApplicationCreateNewDort request = htmlRequest();
+        UserEntity user = user();
+        ApplicationCreateNewDTO request = htmlRequest();
         PublishedSite publishedSite = publishedSite();
         when(applicationCreateMapper.countNewByAppSubDomain("demo")).thenReturn(0);
         when(applicationSitePublishService.publish(eq("user-1"), eq("demo"), any()))
                 .thenReturn(publishedSite);
-        when(applicationCreateMapper.insertApplicationNew(any(ApplicationNew.class)))
+        when(applicationCreateMapper.insertApplicationNew(any(ApplicationNewEntity.class)))
                 .thenThrow(new DuplicateKeyException("duplicate"));
 
         BizException exception = assertThrows(
@@ -161,13 +161,13 @@ class ApplicationCreateServiceImplTest {
     @Test
     // 其他运行时异常应原样抛出，并清理已发布站点。
     void applicationCreateNewShouldCleanupSiteWhenInsertThrowsRuntimeException() {
-        User user = user();
-        ApplicationCreateNewDort request = htmlRequest();
+        UserEntity user = user();
+        ApplicationCreateNewDTO request = htmlRequest();
         PublishedSite publishedSite = publishedSite();
         when(applicationCreateMapper.countNewByAppSubDomain("demo")).thenReturn(0);
         when(applicationSitePublishService.publish(eq("user-1"), eq("demo"), any()))
                 .thenReturn(publishedSite);
-        when(applicationCreateMapper.insertApplicationNew(any(ApplicationNew.class)))
+        when(applicationCreateMapper.insertApplicationNew(any(ApplicationNewEntity.class)))
                 .thenThrow(new IllegalStateException("boom"));
 
         IllegalStateException exception = assertThrows(
@@ -181,35 +181,35 @@ class ApplicationCreateServiceImplTest {
     @Test
     // 正常创建时应按先建 bucket、再发布、最后落库的顺序执行。
     void applicationCreateNewShouldCallCollaboratorsInExpectedOrder() {
-        User user = user();
-        ApplicationCreateNewDort request = htmlRequest();
+        UserEntity user = user();
+        ApplicationCreateNewDTO request = htmlRequest();
         PublishedSite publishedSite = publishedSite();
         when(applicationCreateMapper.countNewByAppSubDomain("demo")).thenReturn(0);
         when(applicationSitePublishService.publish(eq("user-1"), eq("demo"), any()))
                 .thenReturn(publishedSite);
-        when(applicationCreateMapper.insertApplicationNew(any(ApplicationNew.class))).thenReturn(1);
+        when(applicationCreateMapper.insertApplicationNew(any(ApplicationNewEntity.class))).thenReturn(1);
 
         applicationCreateService.applicationCreateNew(user, request);
 
         InOrder inOrder = inOrder(applicationSitePublishService, applicationCreateMapper);
         inOrder.verify(applicationSitePublishService).publish(eq("user-1"), eq("demo"), any());
-        inOrder.verify(applicationCreateMapper).insertApplicationNew(any(ApplicationNew.class));
+        inOrder.verify(applicationCreateMapper).insertApplicationNew(any(ApplicationNewEntity.class));
     }
 
     @Test
     // 接入已有网站时应规范化 URL 后落库，不发布 Light OSS 站点。
     void applicationCreateConnectShouldNormalizeUrlWithoutLightOss() {
-        User user = user();
-        ApplicationCreateConnectDort request = connectRequest();
+        UserEntity user = user();
+        ApplicationCreateConnectDTO request = connectRequest();
         when(applicationCreateMapper.countConnectByAppUrl("https://www.demo.com")).thenReturn(0);
-        when(applicationCreateMapper.insertApplicationConnect(any(ApplicationConnect.class))).thenReturn(1);
+        when(applicationCreateMapper.insertApplicationConnect(any(ApplicationConnectEntity.class))).thenReturn(1);
 
-        ApplicationCreateConnectDore result = applicationCreateService.applicationCreateConnect(user, request);
+        ApplicationCreateConnectVO result = applicationCreateService.applicationCreateConnect(user, request);
 
-        ArgumentCaptor<ApplicationConnect> applicationCaptor = ArgumentCaptor.forClass(ApplicationConnect.class);
+        ArgumentCaptor<ApplicationConnectEntity> applicationCaptor = ArgumentCaptor.forClass(ApplicationConnectEntity.class);
         verify(applicationCreateMapper).insertApplicationConnect(applicationCaptor.capture());
         verifyNoInteractions(applicationSitePublishService);
-        ApplicationConnect application = applicationCaptor.getValue();
+        ApplicationConnectEntity application = applicationCaptor.getValue();
         assertEquals("https://www.demo.com", result.getAppUrl());
         assertEquals("https://www.demo.com", application.getAppUrl());
     }
@@ -217,8 +217,8 @@ class ApplicationCreateServiceImplTest {
     @Test
     // 接入已有网站时 URL 已存在不应继续落库。
     void applicationCreateConnectShouldThrowWhenAppUrlAlreadyExists() {
-        User user = user();
-        ApplicationCreateConnectDort request = connectRequest();
+        UserEntity user = user();
+        ApplicationCreateConnectDTO request = connectRequest();
         when(applicationCreateMapper.countConnectByAppUrl("https://www.demo.com")).thenReturn(1);
 
         BizException exception = assertThrows(
@@ -233,10 +233,10 @@ class ApplicationCreateServiceImplTest {
     @Test
     // 接入已有网站时唯一键冲突应翻译成应用地址重复。
     void applicationCreateConnectShouldThrowWhenInsertThrowsDuplicateKeyException() {
-        User user = user();
-        ApplicationCreateConnectDort request = connectRequest();
+        UserEntity user = user();
+        ApplicationCreateConnectDTO request = connectRequest();
         when(applicationCreateMapper.countConnectByAppUrl("https://www.demo.com")).thenReturn(0);
-        when(applicationCreateMapper.insertApplicationConnect(any(ApplicationConnect.class)))
+        when(applicationCreateMapper.insertApplicationConnect(any(ApplicationConnectEntity.class)))
                 .thenThrow(new DuplicateKeyException("duplicate"));
 
         BizException exception = assertThrows(
@@ -250,10 +250,10 @@ class ApplicationCreateServiceImplTest {
     @Test
     // 接入已有网站时落库影响行数异常应返回创建失败。
     void applicationCreateConnectShouldThrowWhenInsertReturnsUnexpectedRows() {
-        User user = user();
-        ApplicationCreateConnectDort request = connectRequest();
+        UserEntity user = user();
+        ApplicationCreateConnectDTO request = connectRequest();
         when(applicationCreateMapper.countConnectByAppUrl("https://www.demo.com")).thenReturn(0);
-        when(applicationCreateMapper.insertApplicationConnect(any(ApplicationConnect.class))).thenReturn(0);
+        when(applicationCreateMapper.insertApplicationConnect(any(ApplicationConnectEntity.class))).thenReturn(0);
 
         BizException exception = assertThrows(
                 BizException.class,
@@ -266,17 +266,17 @@ class ApplicationCreateServiceImplTest {
     @Test
     // 收录网站时应规范化 URL 后落库，不发布 Light OSS 站点。
     void applicationCreateCollectShouldNormalizeUrlWithoutLightOss() {
-        User user = user();
-        ApplicationCreateCollectDort request = collectRequest();
+        UserEntity user = user();
+        ApplicationCreateCollectDTO request = collectRequest();
         when(applicationCreateMapper.countCollectByAppUrl("https://www.demo.com")).thenReturn(0);
-        when(applicationCreateMapper.insertApplicationCollect(any(ApplicationCollect.class))).thenReturn(1);
+        when(applicationCreateMapper.insertApplicationCollect(any(ApplicationCollectEntity.class))).thenReturn(1);
 
-        ApplicationCreateCollectDore result = applicationCreateService.applicationCreateCollect(user, request);
+        ApplicationCreateCollectVO result = applicationCreateService.applicationCreateCollect(user, request);
 
-        ArgumentCaptor<ApplicationCollect> applicationCaptor = ArgumentCaptor.forClass(ApplicationCollect.class);
+        ArgumentCaptor<ApplicationCollectEntity> applicationCaptor = ArgumentCaptor.forClass(ApplicationCollectEntity.class);
         verify(applicationCreateMapper).insertApplicationCollect(applicationCaptor.capture());
         verifyNoInteractions(applicationSitePublishService);
-        ApplicationCollect application = applicationCaptor.getValue();
+        ApplicationCollectEntity application = applicationCaptor.getValue();
         assertEquals("https://www.demo.com", result.getAppUrl());
         assertEquals("https://www.demo.com", application.getAppUrl());
     }
@@ -284,8 +284,8 @@ class ApplicationCreateServiceImplTest {
     @Test
     // 收录网站时 URL 已存在不应继续落库。
     void applicationCreateCollectShouldThrowWhenAppUrlAlreadyExists() {
-        User user = user();
-        ApplicationCreateCollectDort request = collectRequest();
+        UserEntity user = user();
+        ApplicationCreateCollectDTO request = collectRequest();
         when(applicationCreateMapper.countCollectByAppUrl("https://www.demo.com")).thenReturn(1);
 
         BizException exception = assertThrows(
@@ -300,10 +300,10 @@ class ApplicationCreateServiceImplTest {
     @Test
     // 收录网站时唯一键冲突应翻译成应用地址重复。
     void applicationCreateCollectShouldThrowWhenInsertThrowsDuplicateKeyException() {
-        User user = user();
-        ApplicationCreateCollectDort request = collectRequest();
+        UserEntity user = user();
+        ApplicationCreateCollectDTO request = collectRequest();
         when(applicationCreateMapper.countCollectByAppUrl("https://www.demo.com")).thenReturn(0);
-        when(applicationCreateMapper.insertApplicationCollect(any(ApplicationCollect.class)))
+        when(applicationCreateMapper.insertApplicationCollect(any(ApplicationCollectEntity.class)))
                 .thenThrow(new DuplicateKeyException("duplicate"));
 
         BizException exception = assertThrows(
@@ -317,10 +317,10 @@ class ApplicationCreateServiceImplTest {
     @Test
     // 收录网站时落库影响行数异常应返回创建失败。
     void applicationCreateCollectShouldThrowWhenInsertReturnsUnexpectedRows() {
-        User user = user();
-        ApplicationCreateCollectDort request = collectRequest();
+        UserEntity user = user();
+        ApplicationCreateCollectDTO request = collectRequest();
         when(applicationCreateMapper.countCollectByAppUrl("https://www.demo.com")).thenReturn(0);
-        when(applicationCreateMapper.insertApplicationCollect(any(ApplicationCollect.class))).thenReturn(0);
+        when(applicationCreateMapper.insertApplicationCollect(any(ApplicationCollectEntity.class))).thenReturn(0);
 
         BizException exception = assertThrows(
                 BizException.class,
@@ -330,14 +330,14 @@ class ApplicationCreateServiceImplTest {
         verifyNoInteractions(applicationSitePublishService);
     }
 
-    private User user() {
-        User user = new User();
+    private UserEntity user() {
+        UserEntity user = new UserEntity();
         user.setUuid("user-1");
         return user;
     }
 
-    private ApplicationCreateNewDort htmlRequest() {
-        ApplicationCreateNewDort request = new ApplicationCreateNewDort();
+    private ApplicationCreateNewDTO htmlRequest() {
+        ApplicationCreateNewDTO request = new ApplicationCreateNewDTO();
         request.setFramework("html");
         request.setAppName("Demo");
         request.setAppSubDomain("demo");
@@ -351,8 +351,8 @@ class ApplicationCreateServiceImplTest {
         return request;
     }
 
-    private ApplicationCreateNewDort zipRequest() {
-        ApplicationCreateNewDort request = new ApplicationCreateNewDort();
+    private ApplicationCreateNewDTO zipRequest() {
+        ApplicationCreateNewDTO request = new ApplicationCreateNewDTO();
         request.setFramework("vue");
         request.setAppName("Demo Zip");
         request.setAppSubDomain("demo-zip");
@@ -366,8 +366,8 @@ class ApplicationCreateServiceImplTest {
         return request;
     }
 
-    private ApplicationCreateConnectDort connectRequest() {
-        ApplicationCreateConnectDort request = new ApplicationCreateConnectDort();
+    private ApplicationCreateConnectDTO connectRequest() {
+        ApplicationCreateConnectDTO request = new ApplicationCreateConnectDTO();
         request.setAppName("Demo Website");
         request.setAppUrl("HTTPS://WWW.DEMO.COM");
         request.setVisibility("public");
@@ -375,8 +375,8 @@ class ApplicationCreateServiceImplTest {
         return request;
     }
 
-    private ApplicationCreateCollectDort collectRequest() {
-        ApplicationCreateCollectDort request = new ApplicationCreateCollectDort();
+    private ApplicationCreateCollectDTO collectRequest() {
+        ApplicationCreateCollectDTO request = new ApplicationCreateCollectDTO();
         request.setAppName("Demo Website");
         request.setAppUrl("HTTPS://WWW.DEMO.COM");
         request.setVisibility("public");

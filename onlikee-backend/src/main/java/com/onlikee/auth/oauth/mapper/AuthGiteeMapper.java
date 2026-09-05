@@ -6,8 +6,8 @@ import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
 
-import com.onlikee.user.model.entity.User;
-import com.onlikee.auth.oauth.model.entity.UserGitee;
+import com.onlikee.user.model.entity.UserEntity;
+import com.onlikee.auth.oauth.model.entity.UserGiteeEntity;
 
 @Mapper
 public interface AuthGiteeMapper {
@@ -23,7 +23,7 @@ public interface AuthGiteeMapper {
             values
             (#{uuid}, #{giteeId}, #{name}, #{avatarUrl}, #{email}, #{bio}, #{htmlUrl}, #{giteeToken})
             """)
-    int insertUserGitee(UserGitee userGitee);
+    int insertUserGitee(UserGiteeEntity userGitee);
 
     @Insert("""
             insert into `user`
@@ -31,9 +31,9 @@ public interface AuthGiteeMapper {
             values
             (#{uuid}, #{nickName}, #{email}, #{avatarUrl}, #{lastLoginSource})
             """)
-    int insertUser(User user);
+    int insertUser(UserEntity user);
 
-    default void saveUserGiteeAndUser(UserGitee userGitee, User user) {
+    default void saveUserGiteeAndUser(UserGiteeEntity userGitee, UserEntity user) {
         insertUserGitee(userGitee);
         insertUser(user);
     }
@@ -48,5 +48,5 @@ public interface AuthGiteeMapper {
                 `gitee_token` = #{giteeToken}
             where `gitee_id` = #{giteeId}
             """)
-    int updateUserGiteeByGiteeId(UserGitee userGitee);
+    int updateUserGiteeByGiteeId(UserGiteeEntity userGitee);
 }

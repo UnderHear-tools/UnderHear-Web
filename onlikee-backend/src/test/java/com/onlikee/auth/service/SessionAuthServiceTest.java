@@ -27,7 +27,7 @@ import org.springframework.data.redis.core.ValueOperations;
 
 import com.onlikee.common.exception.BizException;
 import com.onlikee.common.exception.ErrorCode;
-import com.onlikee.user.model.entity.User;
+import com.onlikee.user.model.entity.UserEntity;
 import com.onlikee.user.service.UserService;
 
 @ExtendWith(MockitoExtension.class)
@@ -75,12 +75,12 @@ class SessionAuthServiceTest {
     // 白名单命中时应返回当前登录用户。
     void getCurrentUserShouldReturnUserWhenTokenIsWhitelisted() {
         JwtTokenService.JwtTokenPayload payload = tokenPayload();
-        User user = user();
+        UserEntity user = user();
         when(jwtTokenService.parseToken("token")).thenReturn(payload);
         when(valueOperations.get("auth:token:token-id")).thenReturn("user-1");
         when(userService.getUserByUuid("user-1")).thenReturn(user);
 
-        User currentUser = sessionAuthService.getCurrentUser("token");
+        UserEntity currentUser = sessionAuthService.getCurrentUser("token");
 
         assertSame(user, currentUser);
     }
@@ -164,8 +164,8 @@ class SessionAuthServiceTest {
                 Instant.parse("2026-04-13T00:01:00Z"));
     }
 
-    private User user() {
-        User user = new User();
+    private UserEntity user() {
+        UserEntity user = new UserEntity();
         user.setUuid("user-1");
         user.setNickName("tester");
         return user;

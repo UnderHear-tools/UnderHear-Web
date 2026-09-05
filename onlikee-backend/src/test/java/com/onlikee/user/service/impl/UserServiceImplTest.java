@@ -17,7 +17,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import com.onlikee.common.exception.BizException;
 import com.onlikee.common.exception.ErrorCode;
 import com.onlikee.user.mapper.UserMapper;
-import com.onlikee.user.model.entity.User;
+import com.onlikee.user.model.entity.UserEntity;
 
 @ExtendWith(MockitoExtension.class)
 class UserServiceImplTest {
@@ -31,10 +31,10 @@ class UserServiceImplTest {
     @Test
     // 根据 uuid 查询成功时应直接返回 mapper 结果。
     void getUserByUuidShouldReturnUserWhenFound() {
-        User user = user();
+        UserEntity user = user();
         when(userMapper.getUserByUuid("user-1")).thenReturn(user);
 
-        User result = userService.getUserByUuid("user-1");
+        UserEntity result = userService.getUserByUuid("user-1");
 
         assertSame(user, result);
     }
@@ -60,10 +60,10 @@ class UserServiceImplTest {
     @Test
     // GitHub 关联用户存在时应返回查询结果。
     void getUserByGithubIdShouldReturnUserWhenFound() {
-        User user = user();
+        UserEntity user = user();
         when(userMapper.getUserByGithubId(1001L)).thenReturn(user);
 
-        User result = userService.getUserByGithubId(1001L);
+        UserEntity result = userService.getUserByGithubId(1001L);
 
         assertSame(user, result);
     }
@@ -132,8 +132,8 @@ class UserServiceImplTest {
         assertEquals(ErrorCode.INTERNAL_ERROR.getCode(), exception.getCode());
     }
 
-    private User user() {
-        User user = new User();
+    private UserEntity user() {
+        UserEntity user = new UserEntity();
         user.setUuid("user-1");
         user.setNickName("tester");
         user.setEmail("tester@example.com");

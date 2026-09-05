@@ -18,11 +18,11 @@ import com.alibaba.fastjson.JSONObject;
 import com.onlikee.common.exception.BizException;
 import com.onlikee.common.exception.ErrorCode;
 import com.onlikee.auth.oauth.mapper.AuthGithubMapper;
-import com.onlikee.auth.oauth.model.dto.request.UserGithubDort;
-import com.onlikee.auth.oauth.model.dto.response.OAuthCallbackWithTokenDore;
-import com.onlikee.auth.oauth.model.dto.response.OAuthPendingSignupDore;
-import com.onlikee.user.model.entity.User;
-import com.onlikee.auth.oauth.model.entity.UserGithub;
+import com.onlikee.auth.oauth.model.dto.UserGithubDTO;
+import com.onlikee.auth.oauth.model.dto.OAuthCallbackWithTokenDTO;
+import com.onlikee.auth.oauth.model.dto.OAuthPendingSignupResultDTO;
+import com.onlikee.user.model.entity.UserEntity;
+import com.onlikee.auth.oauth.model.entity.UserGithubEntity;
 import com.onlikee.auth.service.JwtTokenService;
 import com.onlikee.auth.service.SessionAuthService;
 import com.onlikee.auth.oauth.service.OAuthSignupService;
@@ -66,15 +66,15 @@ class AuthGithubServiceImplTest {
     void loginShouldReturnPendingSignupWhenGithubAccountDoesNotExist() {
         AuthResponse<AuthUser> authResponse = successGithubResponse();
         when(authGithubMapper.countByGithubId(1001L)).thenReturn(0);
-        when(oauthSignupService.createGithubPendingSignup(any(UserGithubDort.class))).thenReturn(pendingSignup());
+        when(oauthSignupService.createGithubPendingSignup(any(UserGithubDTO.class))).thenReturn(pendingSignup());
 
-        OAuthCallbackWithTokenDore result = authGithubService.login(authResponse);
+        OAuthCallbackWithTokenDTO result = authGithubService.login(authResponse);
 
-        verify(oauthSignupService).createGithubPendingSignup(any(UserGithubDort.class));
+        verify(oauthSignupService).createGithubPendingSignup(any(UserGithubDTO.class));
         verify(authGithubMapper, never()).saveUserGithubAndUser(any(), any());
         verify(jwtTokenService, never()).generateToken(any());
         verify(sessionAuthService, never()).whitelistToken(any());
-        assertEquals(OAuthCallbackWithTokenDore.SIGNUP_REQUIRED, result.getStatus());
+        assertEquals(OAuthCallbackWithTokenDTO.SIGNUP_REQUIRED, result.getStatus());
         assertEquals("pending-token", result.getPendingSignupToken());
         assertEquals("github", result.getProvider());
         assertEquals("github-user", result.getSuggestedNickname());
@@ -84,18 +84,18 @@ class AuthGithubServiceImplTest {
     // 已存在用户再次登录时应更新第三方资料并刷新登录态。
     void loginShouldUpdateExistingUserWhenGithubAccountExists() {
         AuthResponse<AuthUser> authResponse = successGithubResponse();
-        User existingUser = existingUser();
+        UserEntity existingUser = existingUser();
         when(authGithubMapper.countByGithubId(1001L)).thenReturn(1);
         when(userService.getUserByGithubId(1001L)).thenReturn(existingUser);
         when(jwtTokenService.generateToken("user-1")).thenReturn("jwt-token");
 
-        OAuthCallbackWithTokenDore result = authGithubService.login(authResponse);
+        OAuthCallbackWithTokenDTO result = authGithubService.login(authResponse);
 
-        verify(authGithubMapper).updateUserGithubByGithubId(any(UserGithub.class));
+        verify(authGithubMapper).updateUserGithubByGithubId(any(UserGithubEntity.class));
         verify(userService).updateUserLastLoginByUuid(eq("user-1"), any(), eq("GITHUB_OAUTH"));
         verify(sessionAuthService).whitelistToken("jwt-token");
         verify(userService).insertUserLoginRecord("user-1", "GITHUB_OAUTH");
-        assertEquals(OAuthCallbackWithTokenDore.LOGIN_SUCCESS, result.getStatus());
+        assertEquals(OAuthCallbackWithTokenDTO.LOGIN_SUCCESS, result.getStatus());
         assertEquals("jwt-token", result.getToken());
         assertEquals("GITHUB_OAUTH", result.getLoginSource());
         assertEquals("existing-user", result.getUserInfo().getNickname());
@@ -123,11 +123,11 @@ class AuthGithubServiceImplTest {
     @Test
     // exists 应根据 mapper 查询结果判断第三方账号是否存在。
     void existsShouldReturnMapperResultWhenGithubIdIsPresent() {
-        UserGithubDort dort = new UserGithubDort();
-        dort.setGithubId(1001L);
+        UserGithubDTO dto = new UserGithubDTO();
+        dto.setGithubId(1001L);
         when(authGithubMapper.countByGithubId(1001L)).thenReturn(1);
 
-        boolean exists = authGithubService.exists(dort);
+        boolean exists = authGithubService.exists(dto);
 
         assertEquals(true, exists);
     }
@@ -151,8 +151,8 @@ class AuthGithubServiceImplTest {
         return new AuthResponse<>(2000, "ok", authUser);
     }
 
-    private User existingUser() {
-        User user = new User();
+    private UserEntity existingUser() {
+        UserEntity user = new UserEntity();
         user.setUuid("user-1");
         user.setNickName("existing-user");
         user.setEmail("existing@example.com");
@@ -161,8 +161,8 @@ class AuthGithubServiceImplTest {
         return user;
     }
 
-    private OAuthPendingSignupDore pendingSignup() {
-        OAuthPendingSignupDore pendingSignup = new OAuthPendingSignupDore();
+    private OAuthPendingSignupResultDTO pendingSignup() {
+        OAuthPendingSignupResultDTO pendingSignup = new OAuthPendingSignupResultDTO();
         pendingSignup.setPendingSignupToken("pending-token");
         pendingSignup.setProvider("github");
         pendingSignup.setAvatarUrl("https://avatar/github.png");

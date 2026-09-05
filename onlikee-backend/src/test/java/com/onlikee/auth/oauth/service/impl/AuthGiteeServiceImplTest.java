@@ -18,11 +18,11 @@ import com.alibaba.fastjson.JSONObject;
 import com.onlikee.common.exception.BizException;
 import com.onlikee.common.exception.ErrorCode;
 import com.onlikee.auth.oauth.mapper.AuthGiteeMapper;
-import com.onlikee.auth.oauth.model.dto.request.UserGiteeDort;
-import com.onlikee.auth.oauth.model.dto.response.OAuthCallbackWithTokenDore;
-import com.onlikee.auth.oauth.model.dto.response.OAuthPendingSignupDore;
-import com.onlikee.user.model.entity.User;
-import com.onlikee.auth.oauth.model.entity.UserGitee;
+import com.onlikee.auth.oauth.model.dto.UserGiteeDTO;
+import com.onlikee.auth.oauth.model.dto.OAuthCallbackWithTokenDTO;
+import com.onlikee.auth.oauth.model.dto.OAuthPendingSignupResultDTO;
+import com.onlikee.user.model.entity.UserEntity;
+import com.onlikee.auth.oauth.model.entity.UserGiteeEntity;
 import com.onlikee.auth.service.JwtTokenService;
 import com.onlikee.auth.service.SessionAuthService;
 import com.onlikee.auth.oauth.service.OAuthSignupService;
@@ -66,15 +66,15 @@ class AuthGiteeServiceImplTest {
     void loginShouldReturnPendingSignupWhenGiteeAccountDoesNotExist() {
         AuthResponse<AuthUser> authResponse = successGiteeResponse();
         when(authGiteeMapper.countByGiteeId(2002L)).thenReturn(0);
-        when(oauthSignupService.createGiteePendingSignup(any(UserGiteeDort.class))).thenReturn(pendingSignup());
+        when(oauthSignupService.createGiteePendingSignup(any(UserGiteeDTO.class))).thenReturn(pendingSignup());
 
-        OAuthCallbackWithTokenDore result = authGiteeService.login(authResponse);
+        OAuthCallbackWithTokenDTO result = authGiteeService.login(authResponse);
 
-        verify(oauthSignupService).createGiteePendingSignup(any(UserGiteeDort.class));
+        verify(oauthSignupService).createGiteePendingSignup(any(UserGiteeDTO.class));
         verify(authGiteeMapper, never()).saveUserGiteeAndUser(any(), any());
         verify(jwtTokenService, never()).generateToken(any());
         verify(sessionAuthService, never()).whitelistToken(any());
-        assertEquals(OAuthCallbackWithTokenDore.SIGNUP_REQUIRED, result.getStatus());
+        assertEquals(OAuthCallbackWithTokenDTO.SIGNUP_REQUIRED, result.getStatus());
         assertEquals("pending-token", result.getPendingSignupToken());
         assertEquals("gitee", result.getProvider());
         assertEquals("gitee-user", result.getSuggestedNickname());
@@ -84,18 +84,18 @@ class AuthGiteeServiceImplTest {
     // 已存在用户再次登录时应更新第三方资料并刷新登录态。
     void loginShouldUpdateExistingUserWhenGiteeAccountExists() {
         AuthResponse<AuthUser> authResponse = successGiteeResponse();
-        User existingUser = existingUser();
+        UserEntity existingUser = existingUser();
         when(authGiteeMapper.countByGiteeId(2002L)).thenReturn(1);
         when(userService.getUserByGiteeId(2002L)).thenReturn(existingUser);
         when(jwtTokenService.generateToken("user-1")).thenReturn("jwt-token");
 
-        OAuthCallbackWithTokenDore result = authGiteeService.login(authResponse);
+        OAuthCallbackWithTokenDTO result = authGiteeService.login(authResponse);
 
-        verify(authGiteeMapper).updateUserGiteeByGiteeId(any(UserGitee.class));
+        verify(authGiteeMapper).updateUserGiteeByGiteeId(any(UserGiteeEntity.class));
         verify(userService).updateUserLastLoginByUuid(eq("user-1"), any(), eq("GITEE_OAUTH"));
         verify(sessionAuthService).whitelistToken("jwt-token");
         verify(userService).insertUserLoginRecord("user-1", "GITEE_OAUTH");
-        assertEquals(OAuthCallbackWithTokenDore.LOGIN_SUCCESS, result.getStatus());
+        assertEquals(OAuthCallbackWithTokenDTO.LOGIN_SUCCESS, result.getStatus());
         assertEquals("jwt-token", result.getToken());
         assertEquals("GITEE_OAUTH", result.getLoginSource());
         assertEquals("existing-user", result.getUserInfo().getNickname());
@@ -123,11 +123,11 @@ class AuthGiteeServiceImplTest {
     @Test
     // exists 应根据 mapper 查询结果判断第三方账号是否存在。
     void existsShouldReturnMapperResultWhenGiteeIdIsPresent() {
-        UserGiteeDort dort = new UserGiteeDort();
-        dort.setGiteeId(2002L);
+        UserGiteeDTO dto = new UserGiteeDTO();
+        dto.setGiteeId(2002L);
         when(authGiteeMapper.countByGiteeId(2002L)).thenReturn(1);
 
-        boolean exists = authGiteeService.exists(dort);
+        boolean exists = authGiteeService.exists(dto);
 
         assertEquals(true, exists);
     }
@@ -151,8 +151,8 @@ class AuthGiteeServiceImplTest {
         return new AuthResponse<>(2000, "ok", authUser);
     }
 
-    private User existingUser() {
-        User user = new User();
+    private UserEntity existingUser() {
+        UserEntity user = new UserEntity();
         user.setUuid("user-1");
         user.setNickName("existing-user");
         user.setEmail("existing@example.com");
@@ -161,8 +161,8 @@ class AuthGiteeServiceImplTest {
         return user;
     }
 
-    private OAuthPendingSignupDore pendingSignup() {
-        OAuthPendingSignupDore pendingSignup = new OAuthPendingSignupDore();
+    private OAuthPendingSignupResultDTO pendingSignup() {
+        OAuthPendingSignupResultDTO pendingSignup = new OAuthPendingSignupResultDTO();
         pendingSignup.setPendingSignupToken("pending-token");
         pendingSignup.setProvider("gitee");
         pendingSignup.setAvatarUrl("https://avatar/gitee.png");

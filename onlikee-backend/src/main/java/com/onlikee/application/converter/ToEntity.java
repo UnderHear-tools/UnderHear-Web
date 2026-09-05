@@ -1,12 +1,12 @@
 package com.onlikee.application.converter;
 
-import com.onlikee.application.model.dto.request.ApplicationCreateCollectDort;
-import com.onlikee.application.model.dto.request.ApplicationCreateConnectDort;
-import com.onlikee.application.model.dto.request.ApplicationCreateNewDort;
-import com.onlikee.application.model.entity.ApplicationCollect;
-import com.onlikee.application.model.entity.ApplicationConnect;
-import com.onlikee.application.model.entity.ApplicationNew;
-import com.onlikee.user.model.entity.User;
+import com.onlikee.application.model.dto.ApplicationCreateCollectDTO;
+import com.onlikee.application.model.dto.ApplicationCreateConnectDTO;
+import com.onlikee.application.model.dto.ApplicationCreateNewDTO;
+import com.onlikee.application.model.entity.ApplicationCollectEntity;
+import com.onlikee.application.model.entity.ApplicationConnectEntity;
+import com.onlikee.application.model.entity.ApplicationNewEntity;
+import com.onlikee.user.model.entity.UserEntity;
 import com.onlikee.application.util.ApplicationUuidGenerator;
 import com.onlikee.common.util.FileSizeFormatter;
 
@@ -15,8 +15,8 @@ public final class ToEntity {
     private ToEntity() {
     }
 
-    public static ApplicationNew toApplicationNew(User user, ApplicationCreateNewDort request) {
-        ApplicationNew application = new ApplicationNew();
+    public static ApplicationNewEntity toApplicationNewEntity(UserEntity user, ApplicationCreateNewDTO request) {
+        ApplicationNewEntity application = new ApplicationNewEntity();
         String appid = ApplicationUuidGenerator.next();
         String originalFilename = request.getAppFile().getOriginalFilename();
 
@@ -33,11 +33,11 @@ public final class ToEntity {
         return application;
     }
 
-    public static ApplicationConnect toApplicationConnect(
-            User user,
-            ApplicationCreateConnectDort request,
+    public static ApplicationConnectEntity toApplicationConnectEntity(
+            UserEntity user,
+            ApplicationCreateConnectDTO request,
             String appUrl) {
-        ApplicationConnect application = new ApplicationConnect();
+        ApplicationConnectEntity application = new ApplicationConnectEntity();
         String appid = ApplicationUuidGenerator.next();
 
         application.setAppid(appid);
@@ -49,11 +49,11 @@ public final class ToEntity {
         return application;
     }
 
-    public static ApplicationCollect toApplicationCollect(
-            User user,
-            ApplicationCreateCollectDort request,
+    public static ApplicationCollectEntity toApplicationCollectEntity(
+            UserEntity user,
+            ApplicationCreateCollectDTO request,
             String appUrl) {
-        ApplicationCollect application = new ApplicationCollect();
+        ApplicationCollectEntity application = new ApplicationCollectEntity();
         String appid = ApplicationUuidGenerator.next();
 
         application.setAppid(appid);

@@ -5,9 +5,9 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 
-import com.onlikee.application.model.entity.ApplicationCollect;
-import com.onlikee.application.model.entity.ApplicationConnect;
-import com.onlikee.application.model.entity.ApplicationNew;
+import com.onlikee.application.model.entity.ApplicationCollectEntity;
+import com.onlikee.application.model.entity.ApplicationConnectEntity;
+import com.onlikee.application.model.entity.ApplicationNewEntity;
 
 @Mapper
 public interface ApplicationCreateMapper {
@@ -29,7 +29,7 @@ public interface ApplicationCreateMapper {
              #{visibility}, #{appDescription}, #{originalFilename},
              #{originalFileType}, #{originalFileSize})
             """)
-    int insertApplicationNew(ApplicationNew application);
+    int insertApplicationNew(ApplicationNewEntity application);
 
     @Select("""
             select count(1)
@@ -44,7 +44,7 @@ public interface ApplicationCreateMapper {
             values
             (#{appid}, #{ownerUuid}, #{appName}, #{appUrl}, #{visibility}, #{appDescription})
             """)
-    int insertApplicationConnect(ApplicationConnect application);
+    int insertApplicationConnect(ApplicationConnectEntity application);
 
     @Select("""
             select count(1)
@@ -59,5 +59,5 @@ public interface ApplicationCreateMapper {
             values
             (#{appid}, #{ownerUuid}, #{appName}, #{appUrl}, #{visibility}, #{appDescription})
             """)
-    int insertApplicationCollect(ApplicationCollect application);
+    int insertApplicationCollect(ApplicationCollectEntity application);
 }

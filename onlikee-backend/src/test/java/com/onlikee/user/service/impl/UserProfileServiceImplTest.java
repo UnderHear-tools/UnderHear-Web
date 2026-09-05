@@ -15,10 +15,10 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import com.onlikee.common.exception.BizException;
 import com.onlikee.common.exception.ErrorCode;
 import com.onlikee.user.mapper.UserProfileMapper;
-import com.onlikee.user.model.dto.request.UserProfileDort;
-import com.onlikee.user.model.dto.request.UserProfileMarkdownDort;
-import com.onlikee.user.model.entity.User;
-import com.onlikee.user.model.entity.UserProfileMarkdown;
+import com.onlikee.user.model.dto.UserProfileDTO;
+import com.onlikee.user.model.dto.UserProfileMarkdownDTO;
+import com.onlikee.user.model.entity.UserEntity;
+import com.onlikee.user.model.entity.UserProfileMarkdownEntity;
 
 @ExtendWith(MockitoExtension.class)
 class UserProfileServiceImplTest {
@@ -32,10 +32,10 @@ class UserProfileServiceImplTest {
     @Test
     // 根据昵称查询成功时应直接返回 profile mapper 结果。
     void getUserByNicknameShouldReturnUserWhenFound() {
-        User user = user();
+        UserEntity user = user();
         when(userProfileMapper.getUserByNickname("tester")).thenReturn(user);
 
-        User result = userProfileService.getUserByNickname("tester");
+        UserEntity result = userProfileService.getUserByNickname("tester");
 
         assertSame(user, result);
     }
@@ -61,10 +61,10 @@ class UserProfileServiceImplTest {
     @Test
     // 查询 Markdown 时直接按 uuid 读取资料页扩展表。
     void getMarkdownByUuidShouldReturnMapperResult() {
-        UserProfileMarkdown markdown = markdown("# Hello");
+        UserProfileMarkdownEntity markdown = markdown("# Hello");
         when(userProfileMapper.getMarkdownByUuid("user-1")).thenReturn(markdown);
 
-        UserProfileMarkdown result = userProfileService.getMarkdownByUuid("user-1");
+        UserProfileMarkdownEntity result = userProfileService.getMarkdownByUuid("user-1");
 
         assertSame(markdown, result);
     }
@@ -74,7 +74,7 @@ class UserProfileServiceImplTest {
     void getMarkdownByUuidShouldReturnNullWhenMissing() {
         when(userProfileMapper.getMarkdownByUuid("user-1")).thenReturn(null);
 
-        UserProfileMarkdown result = userProfileService.getMarkdownByUuid("user-1");
+        UserProfileMarkdownEntity result = userProfileService.getMarkdownByUuid("user-1");
 
         assertEquals(null, result);
     }
@@ -82,7 +82,7 @@ class UserProfileServiceImplTest {
     @Test
     // 保存 Markdown 时只使用登录态用户 uuid，并允许空字符串清空内容。
     void saveCurrentUserMarkdownShouldUpsertByCurrentUserUuid() {
-        UserProfileMarkdownDort request = request("# Hello");
+        UserProfileMarkdownDTO request = request("# Hello");
         when(userProfileMapper.upsertMarkdown("user-1", "# Hello")).thenReturn(1);
 
         userProfileService.saveCurrentUserMarkdown(user(), request);
@@ -93,7 +93,7 @@ class UserProfileServiceImplTest {
     @Test
     // 写入失败时按内部错误处理，避免调用方误以为资料页已保存。
     void saveCurrentUserMarkdownShouldThrowWhenUpsertFails() {
-        UserProfileMarkdownDort request = request("");
+        UserProfileMarkdownDTO request = request("");
         when(userProfileMapper.upsertMarkdown("user-1", "")).thenReturn(0);
 
         BizException exception = assertThrows(BizException.class,
@@ -105,7 +105,7 @@ class UserProfileServiceImplTest {
     @Test
     // 保存基础资料时只使用登录态用户 uuid，并返回同步后的用户对象。
     void saveCurrentUserProfileShouldUpdateByCurrentUserUuid() {
-        UserProfileDort request = profileRequest(" updated bio ", " they/them ", " Hangzhou ",
+        UserProfileDTO request = profileRequest(" updated bio ", " they/them ", " Hangzhou ",
                 " https://github.com/tester ", " https://gitee.com/tester ", " https://example.com/tester ");
         when(userProfileMapper.updateCurrentUserProfile(
                 "user-1",
@@ -116,7 +116,7 @@ class UserProfileServiceImplTest {
                 "https://gitee.com/tester",
                 "https://example.com/tester")).thenReturn(1);
 
-        User result = userProfileService.saveCurrentUserProfile(user(), request);
+        UserEntity result = userProfileService.saveCurrentUserProfile(user(), request);
 
         assertEquals("updated bio", result.getBio());
         assertEquals("they/them", result.getPronoun());
@@ -129,10 +129,10 @@ class UserProfileServiceImplTest {
     @Test
     // 空字符串资料字段应统一转为 null，方便公开资料展示时按空值处理。
     void saveCurrentUserProfileShouldNormalizeBlankFieldsToNull() {
-        UserProfileDort request = profileRequest(" ", "", null, "   ", null, "");
+        UserProfileDTO request = profileRequest(" ", "", null, "   ", null, "");
         when(userProfileMapper.updateCurrentUserProfile("user-1", null, null, null, null, null, null)).thenReturn(1);
 
-        User result = userProfileService.saveCurrentUserProfile(user(), request);
+        UserEntity result = userProfileService.saveCurrentUserProfile(user(), request);
 
         assertEquals(null, result.getBio());
         assertEquals(null, result.getPronoun());
@@ -145,7 +145,7 @@ class UserProfileServiceImplTest {
     @Test
     // 基础资料更新失败时按内部错误处理，避免调用方误以为资料已保存。
     void saveCurrentUserProfileShouldThrowWhenUpdateFails() {
-        UserProfileDort request = profileRequest("bio", null, null, null, null, null);
+        UserProfileDTO request = profileRequest("bio", null, null, null, null, null);
         when(userProfileMapper.updateCurrentUserProfile("user-1", "bio", null, null, null, null, null)).thenReturn(0);
 
         BizException exception = assertThrows(BizException.class,
@@ -154,27 +154,27 @@ class UserProfileServiceImplTest {
         assertEquals(ErrorCode.INTERNAL_ERROR.getCode(), exception.getCode());
     }
 
-    private User user() {
-        User user = new User();
+    private UserEntity user() {
+        UserEntity user = new UserEntity();
         user.setUuid("user-1");
         user.setNickName("tester");
         user.setEmail("tester@example.com");
         return user;
     }
 
-    private UserProfileMarkdownDort request(String content) {
-        UserProfileMarkdownDort request = new UserProfileMarkdownDort();
+    private UserProfileMarkdownDTO request(String content) {
+        UserProfileMarkdownDTO request = new UserProfileMarkdownDTO();
         request.setContent(content);
         return request;
     }
 
-    private UserProfileDort profileRequest(String bio,
+    private UserProfileDTO profileRequest(String bio,
                                            String pronoun,
                                            String location,
                                            String socialAccount0,
                                            String socialAccount1,
                                            String socialAccount2) {
-        UserProfileDort request = new UserProfileDort();
+        UserProfileDTO request = new UserProfileDTO();
         request.setBio(bio);
         request.setPronoun(pronoun);
         request.setLocation(location);
@@ -184,8 +184,8 @@ class UserProfileServiceImplTest {
         return request;
     }
 
-    private UserProfileMarkdown markdown(String content) {
-        UserProfileMarkdown markdown = new UserProfileMarkdown();
+    private UserProfileMarkdownEntity markdown(String content) {
+        UserProfileMarkdownEntity markdown = new UserProfileMarkdownEntity();
         markdown.setUuid("user-1");
         markdown.setContent(content);
         return markdown;

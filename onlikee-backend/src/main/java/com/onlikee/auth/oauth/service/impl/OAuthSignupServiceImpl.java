@@ -11,22 +11,22 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.alibaba.fastjson.JSON;
-import com.onlikee.auth.converter.ToDore;
+import com.onlikee.auth.converter.ToDTO;
 import com.onlikee.auth.oauth.converter.ToEntity;
 import com.onlikee.common.exception.BizException;
 import com.onlikee.common.exception.ErrorCode;
 import com.onlikee.auth.oauth.mapper.AuthGiteeMapper;
 import com.onlikee.auth.oauth.mapper.AuthGithubMapper;
 import com.onlikee.user.mapper.UserMapper;
-import com.onlikee.auth.oauth.model.dto.request.OAuthPendingSignupDort;
-import com.onlikee.auth.oauth.model.dto.request.OAuthSignupCompleteDort;
-import com.onlikee.auth.oauth.model.dto.request.UserGiteeDort;
-import com.onlikee.auth.oauth.model.dto.request.UserGithubDort;
-import com.onlikee.auth.oauth.model.dto.response.OAuthPendingSignupDore;
-import com.onlikee.auth.model.dto.response.UserLoginWithTokenDore;
-import com.onlikee.user.model.entity.User;
-import com.onlikee.auth.oauth.model.entity.UserGitee;
-import com.onlikee.auth.oauth.model.entity.UserGithub;
+import com.onlikee.auth.oauth.model.dto.OAuthPendingSignupDTO;
+import com.onlikee.auth.oauth.model.dto.OAuthSignupCompleteDTO;
+import com.onlikee.auth.oauth.model.dto.UserGiteeDTO;
+import com.onlikee.auth.oauth.model.dto.UserGithubDTO;
+import com.onlikee.auth.oauth.model.dto.OAuthPendingSignupResultDTO;
+import com.onlikee.auth.model.dto.UserLoginWithTokenDTO;
+import com.onlikee.user.model.entity.UserEntity;
+import com.onlikee.auth.oauth.model.entity.UserGiteeEntity;
+import com.onlikee.auth.oauth.model.entity.UserGithubEntity;
 import com.onlikee.auth.service.JwtTokenService;
 import com.onlikee.auth.service.SessionAuthService;
 import com.onlikee.auth.oauth.service.OAuthSignupService;
@@ -67,42 +67,42 @@ public class OAuthSignupServiceImpl implements OAuthSignupService {
     private UserService userService;
 
     @Override
-    public OAuthPendingSignupDore createGithubPendingSignup(UserGithubDort userGithubDort) {
-        if (userGithubDort == null || userGithubDort.getGithubId() == null) {
+    public OAuthPendingSignupResultDTO createGithubPendingSignup(UserGithubDTO userGithubDTO) {
+        if (userGithubDTO == null || userGithubDTO.getGithubId() == null) {
             throw new BizException(ErrorCode.BAD_AUTHORIZED);
         }
-        OAuthPendingSignupDort pendingSignup = new OAuthPendingSignupDort();
+        OAuthPendingSignupDTO pendingSignup = new OAuthPendingSignupDTO();
         pendingSignup.setProvider(PROVIDER_GITHUB);
-        pendingSignup.setProviderUserId(userGithubDort.getGithubId());
-        pendingSignup.setName(userGithubDort.getName());
-        pendingSignup.setAvatarUrl(userGithubDort.getAvatarUrl());
-        pendingSignup.setEmail(userGithubDort.getEmail());
-        pendingSignup.setBio(userGithubDort.getBio());
-        pendingSignup.setHtmlUrl(userGithubDort.getHtmlUrl());
-        pendingSignup.setProviderToken(userGithubDort.getGithubToken());
+        pendingSignup.setProviderUserId(userGithubDTO.getGithubId());
+        pendingSignup.setName(userGithubDTO.getName());
+        pendingSignup.setAvatarUrl(userGithubDTO.getAvatarUrl());
+        pendingSignup.setEmail(userGithubDTO.getEmail());
+        pendingSignup.setBio(userGithubDTO.getBio());
+        pendingSignup.setHtmlUrl(userGithubDTO.getHtmlUrl());
+        pendingSignup.setProviderToken(userGithubDTO.getGithubToken());
         return savePendingSignup(pendingSignup);
     }
 
     @Override
-    public OAuthPendingSignupDore createGiteePendingSignup(UserGiteeDort userGiteeDort) {
-        if (userGiteeDort == null || userGiteeDort.getGiteeId() == null) {
+    public OAuthPendingSignupResultDTO createGiteePendingSignup(UserGiteeDTO userGiteeDTO) {
+        if (userGiteeDTO == null || userGiteeDTO.getGiteeId() == null) {
             throw new BizException(ErrorCode.BAD_AUTHORIZED);
         }
-        OAuthPendingSignupDort pendingSignup = new OAuthPendingSignupDort();
+        OAuthPendingSignupDTO pendingSignup = new OAuthPendingSignupDTO();
         pendingSignup.setProvider(PROVIDER_GITEE);
-        pendingSignup.setProviderUserId(userGiteeDort.getGiteeId());
-        pendingSignup.setName(userGiteeDort.getName());
-        pendingSignup.setAvatarUrl(userGiteeDort.getAvatarUrl());
-        pendingSignup.setEmail(userGiteeDort.getEmail());
-        pendingSignup.setBio(userGiteeDort.getBio());
-        pendingSignup.setHtmlUrl(userGiteeDort.getHtmlUrl());
-        pendingSignup.setProviderToken(userGiteeDort.getGiteeToken());
+        pendingSignup.setProviderUserId(userGiteeDTO.getGiteeId());
+        pendingSignup.setName(userGiteeDTO.getName());
+        pendingSignup.setAvatarUrl(userGiteeDTO.getAvatarUrl());
+        pendingSignup.setEmail(userGiteeDTO.getEmail());
+        pendingSignup.setBio(userGiteeDTO.getBio());
+        pendingSignup.setHtmlUrl(userGiteeDTO.getHtmlUrl());
+        pendingSignup.setProviderToken(userGiteeDTO.getGiteeToken());
         return savePendingSignup(pendingSignup);
     }
 
     @Override
     @Transactional
-    public UserLoginWithTokenDore complete(OAuthSignupCompleteDort request) {
+    public UserLoginWithTokenDTO complete(OAuthSignupCompleteDTO request) {
         String pendingSignupToken = normalize(request.getPendingSignupToken());
         String lockKey = lockKey(pendingSignupToken);
         Boolean locked = stringRedisTemplate.opsForValue().setIfAbsent(lockKey, "1", LOCK_EXPIRE_SECONDS, TimeUnit.SECONDS);
@@ -112,14 +112,14 @@ public class OAuthSignupServiceImpl implements OAuthSignupService {
 
         boolean completed = false;
         try {
-            OAuthPendingSignupDort pendingSignup = getPendingSignup(pendingSignupToken);
+            OAuthPendingSignupDTO pendingSignup = getPendingSignup(pendingSignupToken);
             String nickname = normalizeNickname(request.getNickname());
             String email = normalizeEmail(request.getEmail());
             ensureUniqueUserFields(nickname, email);
             ensureOAuthAccountAvailable(pendingSignup);
 
             String uuid = ShortUuidGenerator.next();
-            User user = ToEntity.toOAuthSignupUser(pendingSignup, uuid, nickname, email);
+            UserEntity user = ToEntity.toOAuthSignupUserEntity(pendingSignup, uuid, nickname, email);
             insertUserAndOAuthBinding(pendingSignup, user);
 
             String token = jwtTokenService.generateToken(user.getUuid());
@@ -127,7 +127,7 @@ public class OAuthSignupServiceImpl implements OAuthSignupService {
             userService.insertUserLoginRecord(user.getUuid(), user.getLastLoginSource());
             stringRedisTemplate.delete(pendingKey(pendingSignupToken));
             completed = true;
-            return ToDore.toUserLoginWithTokenDore(user, token);
+            return ToDTO.toUserLoginWithTokenDTO(user, token);
         } finally {
             // 成功时保留短锁到 TTL，避免事务提交前出现第二次提交；失败时允许用户修改后重试。
             if (!completed) {
@@ -136,7 +136,7 @@ public class OAuthSignupServiceImpl implements OAuthSignupService {
         }
     }
 
-    private OAuthPendingSignupDore savePendingSignup(OAuthPendingSignupDort pendingSignup) {
+    private OAuthPendingSignupResultDTO savePendingSignup(OAuthPendingSignupDTO pendingSignup) {
         String pendingSignupToken = UUID.randomUUID().toString().replace("-", "");
         stringRedisTemplate.opsForValue().set(
                 pendingKey(pendingSignupToken),
@@ -144,7 +144,7 @@ public class OAuthSignupServiceImpl implements OAuthSignupService {
                 PENDING_EXPIRE_SECONDS,
                 TimeUnit.SECONDS);
 
-        OAuthPendingSignupDore response = new OAuthPendingSignupDore();
+        OAuthPendingSignupResultDTO response = new OAuthPendingSignupResultDTO();
         response.setPendingSignupToken(pendingSignupToken);
         response.setProvider(pendingSignup.getProvider());
         response.setAvatarUrl(pendingSignup.getAvatarUrl());
@@ -153,32 +153,32 @@ public class OAuthSignupServiceImpl implements OAuthSignupService {
         return response;
     }
 
-    private OAuthPendingSignupDort getPendingSignup(String pendingSignupToken) {
+    private OAuthPendingSignupDTO getPendingSignup(String pendingSignupToken) {
         String pendingJson = stringRedisTemplate.opsForValue().get(pendingKey(pendingSignupToken));
         if (pendingJson == null || pendingJson.isBlank()) {
             throw new BizException(ErrorCode.PENDING_SIGNUP_INVALID);
         }
         try {
-            return JSON.parseObject(pendingJson, OAuthPendingSignupDort.class);
+            return JSON.parseObject(pendingJson, OAuthPendingSignupDTO.class);
         } catch (RuntimeException ex) {
             throw new BizException(ErrorCode.PENDING_SIGNUP_INVALID);
         }
     }
 
-    private void insertUserAndOAuthBinding(OAuthPendingSignupDort pendingSignup, User user) {
+    private void insertUserAndOAuthBinding(OAuthPendingSignupDTO pendingSignup, UserEntity user) {
         try {
             if (userMapper.insertUser(user) != 1) {
                 throw new BizException(ErrorCode.INTERNAL_ERROR);
             }
             if (PROVIDER_GITHUB.equals(pendingSignup.getProvider())) {
-                UserGithub userGithub = ToEntity.toUserGithub(pendingSignup, user.getUuid());
+                UserGithubEntity userGithub = ToEntity.toUserGithubEntity(pendingSignup, user.getUuid());
                 if (authGithubMapper.insertUserGithub(userGithub) != 1) {
                     throw new BizException(ErrorCode.INTERNAL_ERROR);
                 }
                 return;
             }
             if (PROVIDER_GITEE.equals(pendingSignup.getProvider())) {
-                UserGitee userGitee = ToEntity.toUserGitee(pendingSignup, user.getUuid());
+                UserGiteeEntity userGitee = ToEntity.toUserGiteeEntity(pendingSignup, user.getUuid());
                 if (authGiteeMapper.insertUserGitee(userGitee) != 1) {
                     throw new BizException(ErrorCode.INTERNAL_ERROR);
                 }
@@ -199,7 +199,7 @@ public class OAuthSignupServiceImpl implements OAuthSignupService {
         }
     }
 
-    private void ensureOAuthAccountAvailable(OAuthPendingSignupDort pendingSignup) {
+    private void ensureOAuthAccountAvailable(OAuthPendingSignupDTO pendingSignup) {
         if (PROVIDER_GITHUB.equals(pendingSignup.getProvider())
                 && authGithubMapper.countByGithubId(pendingSignup.getProviderUserId()) > 0) {
             throw new BizException(ErrorCode.OAUTH_ACCOUNT_ALREADY_BOUND);
@@ -233,7 +233,7 @@ public class OAuthSignupServiceImpl implements OAuthSignupService {
         return value.trim();
     }
 
-    private String suggestNickname(OAuthPendingSignupDort pendingSignup) {
+    private String suggestNickname(OAuthPendingSignupDTO pendingSignup) {
         String base = normalize(pendingSignup.getName()).replaceAll("[^A-Za-z0-9_-]", "");
         if (base.isBlank()) {
             base = pendingSignup.getProvider() + pendingSignup.getProviderUserId();
