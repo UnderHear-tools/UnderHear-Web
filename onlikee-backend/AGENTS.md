@@ -17,7 +17,8 @@
 ## 项目定位
 
 - 技术栈以仓库当前内容为准：Spring Boot 4.0.2、Java 25、Maven、MyBatis、MySQL、Redis、JWT、JustAuth、Lombok。
-- 当前后端是典型的分层结构：`controller`、`service`、`mapper`、`converter`、`pojo`、`security`、`config`、`util`。
+- 当前后端按业务域分包：`application`、`user`、`auth`，业务内部按 `controller`、`service/impl`、`mapper`、`converter`、`model` 分层。OAuth 登录注册放在 `auth.oauth`。
+- `infrastructure.cache/storage/web` 分别放 Redis、Light OSS 客户端和 Web 配置；`common.response/exception/util` 放统一响应、异常和通用工具。只创建已有实现需要的目录。
 
 ## 分层职责
 
@@ -25,19 +26,19 @@
 - `service` 负责业务编排、事务、调用 mapper、调用外部服务、失败补偿。
 - `mapper` 负责数据库访问，当前项目统一使用 MyBatis 注解 SQL，不使用 XML mapper。
 - `converter` 只负责对象转换，保持纯静态工具类，不放数据库、网络、缓存等副作用逻辑。
-- `pojo.entity` 放实体对象，`pojo.dto.request` / `pojo.dto.response` 放接口 DTO。
-- `security` 放 JWT、Cookie、会话白名单等认证相关能力；新增鉴权逻辑优先复用这一层。
+- 所属业务包的 `model.entity` 放实体对象，所属业务包的 `model.dto.request` / `model.dto.response` 放接口 DTO。
+- `auth.service` 放 JWT、Cookie、会话白名单等认证相关能力；新增鉴权逻辑优先复用这一层。
 
 ## DTO、Entity 与转换规则
 
 - Dort 表示 `Data Object Request`。若一个数据对象不是由 Entity、其转换对象，或这些转换对象继续转换而来，则归类为 Dort。
 - Dore 表示 `Data Object Response`。凡由 Entity、其转换对象，或这些转换对象继续转换得到的数据对象，均归类为 Dore。
-- 新增请求 DTO 放在 `pojo.dto.request`，命名以 `Dort` 结尾。
+- 新增请求 DTO 放在所属业务包的 `model.dto.request`，命名以 `Dort` 结尾。
 - 接口接收到的业务入参默认先绑定到对应 Dort；不要在 controller 方法里直接接收零散业务字段，除非是 Spring 必需的基础入参（如 `@CookieValue`、文件上传绑定对象等）。
 - 一个接口的请求字段、必填性、格式约束和跨字段请求级校验，应优先集中在对应 Dort 中声明，保证请求契约集中可见。
-- 新增响应 DTO 放在 `pojo.dto.response`，命名以 `Dore` 结尾。
-- 实体对象放在 `pojo.entity`，保持与数据库字段语义一致，命名使用单数形式。
-- DTO 与 Entity 之间的转换统一放到 `ToEntity`、`ToDort`、`ToDore` 中；不要把转换逻辑散落在 controller 或 mapper 里。
+- 新增响应 DTO 放在所属业务包的 `model.dto.response`，命名以 `Dore` 结尾。
+- 实体对象放在所属业务包的 `model.entity`，保持与数据库字段语义一致，命名使用单数形式。
+- DTO 与 Entity 之间的转换放到所属业务 `converter` 包的 `ToEntity`、`ToDort`、`ToDore` 中，跨业务复用所属模块的转换方法；不要把转换逻辑散落在 controller 或 mapper 里。
 - 当前简单数据对象普遍使用 Lombok `@Data`；新增同类对象时沿用这一模式。
 
 ## Controller 约定
@@ -93,7 +94,8 @@
 - 配置项默认写在 `src/main/resources/application.properties`，读取方式沿用 `@Value` 或现有配置类注入方式。
 - 涉及数据库、Redis、OAuth、JWT、Light OSS 的配置键名时，优先复用已有命名，不要发明新的同义配置。
 - 除非任务明确要求，不要顺手改动现有敏感配置值，也不要在提交说明里重复抄出密钥内容。
-- 新增外部 HTTP 调用时，优先参考 `LightOssPublishServiceImpl` 的模式：通过 `RestClient` 调用、集中翻译外部错误、对外抛业务异常。
+- 应用发布保持 `ApplicationCreateService → ApplicationSitePublishService → LightOssClient`：业务服务负责 ZIP 规则、SDK 错误翻译与失败补偿，`infrastructure.storage.LightOssConfig` 提供共享 SDK 客户端。
+- 应用域名配置和地址构建放在 `application.util.ApplicationUrlUtils`；通用 URL 校验、协议补全和规范化放在 `common.util.UrlUtils`。
 
 ## 注释与代码风格
 
