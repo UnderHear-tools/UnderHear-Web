@@ -5,8 +5,17 @@ import java.net.HttpURLConnection;
 import java.net.URI;
 import java.util.Locale;
 
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
+
+@Component
 public class UrlUtils {
-    private static final String ONLIKEE_APP_DOMAIN_SUFFIX = ".onlikee.com";
+    private static String appDomainSuffix;
+
+    @Value("${app.domain-suffix}")
+    void setAppDomainSuffix(String appDomainSuffix) {
+        UrlUtils.appDomainSuffix = appDomainSuffix;
+    }
 
     /**
      * 判断给定字符串是否为 HTTP/HTTPS URL 或裸域名。
@@ -129,11 +138,11 @@ public class UrlUtils {
                 + (uri.getRawFragment() == null ? "" : "#" + uri.getRawFragment());
     }
 
-    public static String buildOnlikeeAppDomain(String appSubDomain) {
-        return appSubDomain + ONLIKEE_APP_DOMAIN_SUFFIX;
+    public static String buildAppDomain(String appSubDomain) {
+        return appSubDomain + appDomainSuffix;
     }
 
-    public static String buildOnlikeeAppUrl(String appSubDomain) {
-        return "https://" + buildOnlikeeAppDomain(appSubDomain) + "/";
+    public static String buildAppUrl(String appSubDomain) {
+        return "https://" + buildAppDomain(appSubDomain) + "/";
     }
 }

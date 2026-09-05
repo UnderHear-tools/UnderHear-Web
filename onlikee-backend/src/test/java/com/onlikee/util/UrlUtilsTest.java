@@ -4,9 +4,15 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 class UrlUtilsTest {
+
+    @BeforeEach
+    void setUp() {
+        new UrlUtils().setAppDomainSuffix(".example.com");
+    }
 
     @Test
     // connect 接口接受完整 HTTP(S) URL。
@@ -54,8 +60,17 @@ class UrlUtilsTest {
 
     @Test
     // 已验证的子域名由后端统一构造为发布域名和对外 URL。
-    void buildOnlikeeAppAddressShouldReturnCanonicalValues() {
-        assertEquals("demo.onlikee.com", UrlUtils.buildOnlikeeAppDomain("demo"));
-        assertEquals("https://demo.onlikee.com/", UrlUtils.buildOnlikeeAppUrl("demo"));
+    void buildAppAddressShouldReturnCanonicalValues() {
+        assertEquals("demo.example.com", UrlUtils.buildAppDomain("demo"));
+        assertEquals("https://demo.example.com/", UrlUtils.buildAppUrl("demo"));
+    }
+
+    @Test
+    void buildAppAddressShouldUseConfiguredDomainSuffix() {
+        UrlUtils urlUtils = new UrlUtils();
+        urlUtils.setAppDomainSuffix(".test.com");
+
+        assertEquals("demo.test.com", UrlUtils.buildAppDomain("demo"));
+        assertEquals("https://demo.test.com/", UrlUtils.buildAppUrl("demo"));
     }
 }

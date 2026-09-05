@@ -104,7 +104,7 @@ public class ApplicationSitePublishServiceImpl implements ApplicationSitePublish
             List<ObjectClient.UploadItem> items = prepareZipUploadItems(appFile, tempDir);
             SiteClient.PublishRequest request = SiteClient.PublishRequest.builder(
                             bucketName,
-                            List.of(UrlUtils.buildOnlikeeAppDomain(appSubDomain)),
+                            List.of(UrlUtils.buildAppDomain(appSubDomain)),
                             items)
                     .parentPrefix(appSubDomain)
                     .enabled(true)

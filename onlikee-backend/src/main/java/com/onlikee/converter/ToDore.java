@@ -89,7 +89,7 @@ public final class ToDore {
 
     public static ApplicationCreateNewDore toApplicationCreateNewDore(ApplicationNew application) {
         ApplicationCreateNewDore applicationCreateNewDore = new ApplicationCreateNewDore();
-        applicationCreateNewDore.setAppUrl(UrlUtils.buildOnlikeeAppUrl(application.getAppSubDomain()));
+        applicationCreateNewDore.setAppUrl(UrlUtils.buildAppUrl(application.getAppSubDomain()));
         return applicationCreateNewDore;
     }
 
