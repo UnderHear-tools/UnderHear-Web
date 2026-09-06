@@ -4,7 +4,7 @@ import type { UploadFile } from '@/components/z-ui/Upload'
 import type {
   CreateApplicationRequest
 } from '@/modules/application/api/create-new'
-import { createHtmlZip } from '@/modules/application/utils/zip-utils'
+import { createFolderZip, createHtmlZip } from '@/modules/application/utils/zip-utils'
 
 export type FrameworkValue = 'html' | 'vue' | 'react'
 
@@ -29,31 +29,28 @@ export function useCreateApplicationForm() {
     return selectedFramework.value === null ? '请选择一个前端框架。' : ''
   })
 
-  function isZipFile(file: File | undefined) {
-    return Boolean(file?.name.toLowerCase().endsWith('.zip'))
-  }
-
   const uploadError = computed(() => {
     if (selectedFramework.value === null) {
       return ''
-    }
-
-    if (selectedFramework.value !== 'html') {
-      const selectedFile = files.value[0]
-      if (!selectedFile) {
-        return '请上传文件。'
-      }
-
-      if (!isZipFile(selectedFile.file)) {
-        return 'Vue 和 React 仅支持上传 .zip 格式的 dist 构建包。'
-      }
     }
 
     if (selectedFramework.value === 'html') {
       return htmlSource.value.trim() ? '' : '请输入 HTML 代码。'
     }
 
-    return files.value.length > 0 ? '' : '请上传文件。'
+    if (files.value.length === 0) {
+      return '请选择非空的构建产物文件夹。'
+    }
+
+    const rootDirectory = files.value[0].relativePath.split('/')[0]
+    const isSingleDirectory = rootDirectory && files.value.every(({ relativePath }) => {
+      const segments = relativePath.split('/')
+      return segments.length > 1
+        && segments[0] === rootDirectory
+        && segments.every(segment => segment !== '' && segment !== '.' && segment !== '..')
+    })
+
+    return isSingleDirectory ? '' : '请只选择一个构建产物文件夹，不支持直接上传 ZIP 或散文件。'
   })
 
   const appNameError = computed(() => {
@@ -179,6 +176,7 @@ export function useCreateApplicationForm() {
   async function buildRequest(): Promise<CreateApplicationRequest> {
     const framework = selectedFramework.value as FrameworkValue
     const htmlSourceSnapshot = htmlSource.value
+    const filesSnapshot = files.value.map(({ file, relativePath }) => ({ file, relativePath }))
     const requestSnapshot = {
       framework,
       appName: appName.value,
@@ -188,7 +186,7 @@ export function useCreateApplicationForm() {
     }
     const appFile = framework === 'html'
       ? await createHtmlZip(htmlSourceSnapshot)
-      : files.value[0].file
+      : await createFolderZip(filesSnapshot)
 
     return {
       ...requestSnapshot,

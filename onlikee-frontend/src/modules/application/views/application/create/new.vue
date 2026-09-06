@@ -146,7 +146,7 @@ async function submit() {
     try {
       request = await buildRequest()
     } catch {
-      Banner.error('HTML 应用打包失败，请重试。')
+      Banner.error('应用打包失败，请重试。')
       return
     }
 

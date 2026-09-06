@@ -22,8 +22,8 @@
       <Upload
         v-if="selectedFramework === 'vue' || selectedFramework === 'react'"
         :model-value="files"
-        accept=".zip"
-        hint="支持 .zip 格式的 dist 构建包"
+        directory
+        hint="请上传dist构建包文件夹"
         @update:model-value="updateFiles"
       />
     </div>
