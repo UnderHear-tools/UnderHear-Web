@@ -1,3 +1,5 @@
+import type { UploadFile } from './types'
+
 interface CollectUploadFilesOptions {
   accept?: string
   directory?: boolean
@@ -12,44 +14,48 @@ type WebkitDataTransferItem = DataTransferItem & {
 export function collectFilesFromInput(
   fileList: FileList | null,
   options: CollectUploadFilesOptions = {}
-): File[] {
-  const files = fileList ? Array.from(fileList) : []
+): UploadFile[] {
+  const files = fileList ? Array.from(fileList, toUploadFile) : []
   return normalizeUploadFiles(files, options)
 }
 
 export async function collectFilesFromDrop(
   dataTransfer: DataTransfer | null,
   options: CollectUploadFilesOptions = {}
-): Promise<File[]> {
+): Promise<UploadFile[]> {
   if (!dataTransfer) {
     return []
   }
 
   const files = options.directory
     ? await collectDirectoryDropFiles(dataTransfer)
-    : Array.from(dataTransfer.files ?? [])
+    : Array.from(dataTransfer.files ?? [], toUploadFile)
 
   return normalizeUploadFiles(files, options)
 }
 
-function normalizeUploadFiles(
-  files: File[],
-  options: CollectUploadFilesOptions
-): File[] {
-  const selectedFiles = options.directory ? files : files.slice(0, 1)
-  return selectedFiles.filter(file => isAccepted(file, options.accept))
+function toUploadFile(file: File): UploadFile {
+  return { file, relativePath: file.webkitRelativePath || file.name }
 }
 
-async function collectDirectoryDropFiles(dataTransfer: DataTransfer): Promise<File[]> {
+function normalizeUploadFiles(
+  files: UploadFile[],
+  options: CollectUploadFilesOptions
+): UploadFile[] {
+  const selectedFiles = options.directory ? files : files.slice(0, 1)
+  return selectedFiles.filter(item => isAccepted(item.file, options.accept))
+}
+
+async function collectDirectoryDropFiles(dataTransfer: DataTransfer): Promise<UploadFile[]> {
   const entryFiles = await collectFilesFromItems(dataTransfer.items)
   if (entryFiles.length > 0) {
     return entryFiles
   }
 
-  return Array.from(dataTransfer.files ?? [])
+  return Array.from(dataTransfer.files ?? [], toUploadFile)
 }
 
-async function collectFilesFromItems(items: DataTransferItemList | undefined): Promise<File[]> {
+async function collectFilesFromItems(items: DataTransferItemList | undefined): Promise<UploadFile[]> {
   if (!items || items.length === 0) {
     return []
   }
@@ -66,14 +72,14 @@ async function collectFilesFromItems(items: DataTransferItemList | undefined): P
       }
 
       const file = item.getAsFile()
-      return file ? [file] : []
+      return file ? [toUploadFile(file)] : []
     }
   )
 
   return flattenFileGroups(fileGroups)
 }
 
-async function collectFilesFromEntry(entry: FileSystemEntry): Promise<File[]> {
+async function collectFilesFromEntry(entry: FileSystemEntry): Promise<UploadFile[]> {
   if (entry.isFile) {
     return [await readFileEntry(entry as FileSystemFileEntry)]
   }
@@ -92,9 +98,11 @@ async function collectFilesFromEntry(entry: FileSystemEntry): Promise<File[]> {
   return flattenFileGroups(fileGroups)
 }
 
-function readFileEntry(entry: FileSystemFileEntry): Promise<File> {
+function readFileEntry(entry: FileSystemFileEntry): Promise<UploadFile> {
   return new Promise((resolve, reject) => {
-    entry.file(resolve, reject)
+    entry.file(file => {
+      resolve({ file, relativePath: entry.fullPath.replace(/^\//, '') })
+    }, reject)
   })
 }
 
@@ -147,8 +155,8 @@ async function mapWithConcurrency<T, R>(
   return results
 }
 
-function flattenFileGroups(fileGroups: File[][]): File[] {
-  const files: File[] = []
+function flattenFileGroups(fileGroups: UploadFile[][]): UploadFile[] {
+  const files: UploadFile[] = []
   for (const fileGroup of fileGroups) {
     files.push(...fileGroup)
   }

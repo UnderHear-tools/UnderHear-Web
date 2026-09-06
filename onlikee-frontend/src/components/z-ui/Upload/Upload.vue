@@ -65,10 +65,11 @@
 
 <script setup lang="ts">
 import { computed, ref } from 'vue'
+import type { UploadFile } from './types'
 import { collectFilesFromDrop, collectFilesFromInput } from './fileSelection'
 
 interface Props {
-  modelValue?: File[]
+  modelValue?: UploadFile[]
   accept?: string
   hint?: string
   directory?: boolean
@@ -82,7 +83,7 @@ const props = withDefaults(defineProps<Props>(), {
 })
 
 const emit = defineEmits<{
-  'update:modelValue': [value: File[]]
+  'update:modelValue': [value: UploadFile[]]
 }>()
 
 const inputRef = ref<HTMLInputElement>()
@@ -110,14 +111,14 @@ const dropzoneText = computed(() => {
 
 const selectedFileLabel = computed(() => {
   if (selectedFiles.value.length === 1) {
-    return selectedFiles.value[0].name
+    return selectedFiles.value[0].file.name
   }
 
   return `已选择 ${selectedFiles.value.length} 个文件`
 })
 
 const selectedFileSizeLabel = computed(() => {
-  const totalSize = selectedFiles.value.reduce((sum, file) => sum + file.size, 0)
+  const totalSize = selectedFiles.value.reduce((sum, file) => sum + file.file.size, 0)
   return formatFileSize(totalSize)
 })
 

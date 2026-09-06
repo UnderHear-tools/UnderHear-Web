@@ -1,4 +1,5 @@
 import { computed, ref } from 'vue'
+import type { UploadFile } from '@/components/z-ui/Upload'
 
 import type {
   CreateApplicationRequest
@@ -9,7 +10,7 @@ export type FrameworkValue = 'html' | 'vue' | 'react'
 
 export function useCreateApplicationForm() {
   const selectedFramework = ref<FrameworkValue | null>(null)
-  const files = ref<File[]>([])
+  const files = ref<UploadFile[]>([])
   const htmlSource = ref('<div>hello, world!</div>')
 
   const appName = ref('')
@@ -43,7 +44,7 @@ export function useCreateApplicationForm() {
         return '请上传文件。'
       }
 
-      if (!isZipFile(selectedFile)) {
+      if (!isZipFile(selectedFile.file)) {
         return 'Vue 和 React 仅支持上传 .zip 格式的 dist 构建包。'
       }
     }
@@ -146,7 +147,7 @@ export function useCreateApplicationForm() {
     touchedHtmlSource.value = false
   }
 
-  function setFiles(value: File[]) {
+  function setFiles(value: UploadFile[]) {
     touchedFile.value = true
     files.value = value
   }
@@ -178,7 +179,6 @@ export function useCreateApplicationForm() {
   async function buildRequest(): Promise<CreateApplicationRequest> {
     const framework = selectedFramework.value as FrameworkValue
     const htmlSourceSnapshot = htmlSource.value
-    const selectedFile = files.value[0] as File
     const requestSnapshot = {
       framework,
       appName: appName.value,
@@ -188,7 +188,7 @@ export function useCreateApplicationForm() {
     }
     const appFile = framework === 'html'
       ? await createHtmlZip(htmlSourceSnapshot)
-      : selectedFile
+      : files.value[0].file
 
     return {
       ...requestSnapshot,

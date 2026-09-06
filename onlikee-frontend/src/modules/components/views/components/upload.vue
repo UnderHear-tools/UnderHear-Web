@@ -29,7 +29,9 @@
 
     <ComponentDocsSection title="文件夹模式">
       <template #description>
-        设置 <code>directory</code> 后启用文件夹上传。组件会返回扁平化后的文件数组。
+        设置 <code>directory</code> 后启用文件夹上传。组件返回 UploadFile 数组，通过
+        <code>relativePath</code> 获取包含顶层文件夹名、以 / 分隔且无前导 / 的相对路径，通过
+        <code>file</code> 获取原始文件。普通文件或无法获取目录信息时，相对路径为文件名。
       </template>
       <ComponentDocsDemoBlock :code="demo3Code">
         <Upload
@@ -106,6 +108,7 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 import { Upload } from '@/components/z-ui/Upload'
+import type { UploadFile } from '@/components/z-ui/Upload'
 import { Table, type TableColumn } from '@/components/z-ui/Table'
 import { UploadIcon } from '@/components/octicons-vue3'
 import ComponentDocsDemoBlock from '@/modules/components/components/ComponentDocsPage/ComponentDocsDemoBlock.vue'
@@ -113,22 +116,23 @@ import ComponentDocsHeader from '@/modules/components/components/ComponentDocsPa
 import ComponentDocsPage from '@/modules/components/components/ComponentDocsPage/ComponentDocsPage.vue'
 import ComponentDocsSection from '@/modules/components/components/ComponentDocsPage/ComponentDocsSection.vue'
 
-const files1 = ref<File[]>([])
-const files2 = ref<File[]>([])
-const files3 = ref<File[]>([])
-const files4 = ref<File[]>([])
-const files5 = ref<File[]>([])
+const files1 = ref<UploadFile[]>([])
+const files2 = ref<UploadFile[]>([])
+const files3 = ref<UploadFile[]>([])
+const files4 = ref<UploadFile[]>([])
+const files5 = ref<UploadFile[]>([])
 
 const demo1Code = `<template>
   <Upload v-model="files" />
-  <p v-if="files.length">{{ files[0].name }}</p>
+  <p v-if="files.length">{{ files[0].file.name }}</p>
 </template>
 
 <script setup lang="ts">
 import { ref } from 'vue'
 import { Upload } from '@/components/z-ui/Upload'
+import type { UploadFile } from '@/components/z-ui/Upload'
 
-const files = ref<File[]>([])
+const files = ref<UploadFile[]>([])
 <\/script>`
 
 const demo2Code = `<template>
@@ -142,8 +146,9 @@ const demo2Code = `<template>
 <script setup lang="ts">
 import { ref } from 'vue'
 import { Upload } from '@/components/z-ui/Upload'
+import type { UploadFile } from '@/components/z-ui/Upload'
 
-const files = ref<File[]>([])
+const files = ref<UploadFile[]>([])
 <\/script>`
 
 const demo3Code = `<template>
@@ -157,8 +162,9 @@ const demo3Code = `<template>
 <script setup lang="ts">
 import { ref } from 'vue'
 import { Upload } from '@/components/z-ui/Upload'
+import type { UploadFile } from '@/components/z-ui/Upload'
 
-const files = ref<File[]>([])
+const files = ref<UploadFile[]>([])
 <\/script>`
 
 const demo4Code = `<template>
@@ -168,8 +174,9 @@ const demo4Code = `<template>
 <script setup lang="ts">
 import { ref } from 'vue'
 import { Upload } from '@/components/z-ui/Upload'
+import type { UploadFile } from '@/components/z-ui/Upload'
 
-const files = ref<File[]>([])
+const files = ref<UploadFile[]>([])
 <\/script>`
 
 const demo5Code = `<template>
@@ -185,9 +192,10 @@ const demo5Code = `<template>
 <script setup lang="ts">
 import { ref } from 'vue'
 import { Upload } from '@/components/z-ui/Upload'
+import type { UploadFile } from '@/components/z-ui/Upload'
 import { UploadIcon } from '@/components/octicons-vue3'
 
-const files = ref<File[]>([])
+const files = ref<UploadFile[]>([])
 <\/script>`
 
 const apiCols: TableColumn[] = [
@@ -198,10 +206,10 @@ const apiCols: TableColumn[] = [
 ]
 
 const apiRows = [
-  { name: 'modelValue', description: '绑定的文件数组（v-model）', type: 'File[]', default: '[]' },
+  { name: 'modelValue', description: '绑定的文件数组（v-model）', type: 'UploadFile[]', default: '[]' },
   { name: 'accept', description: '接受的文件类型，格式同原生 input accept', type: 'string', default: "''" },
   { name: 'hint', description: '上传区域底部的提示文案', type: 'string', default: "''" },
-  { name: 'directory', description: '启用文件夹上传模式，并返回扁平化后的文件数组', type: 'boolean', default: 'false' }
+  { name: 'directory', description: '启用文件夹上传模式，并返回包含 file 和 relativePath 的扁平化数组', type: 'boolean', default: 'false' }
 ]
 
 const eventCols: TableColumn[] = [
@@ -211,7 +219,7 @@ const eventCols: TableColumn[] = [
 ]
 
 const eventRows = [
-  { name: 'update:modelValue', description: '选择文件、文件夹或移除文件时触发', type: 'File[]' }
+  { name: 'update:modelValue', description: '选择文件、文件夹或移除文件时触发', type: 'UploadFile[]' }
 ]
 
 const slotCols: TableColumn[] = [
