@@ -11,12 +11,6 @@
       </template>
       <ComponentDocsDemoBlock :code="demo1Code">
         <Upload v-model="files1" />
-        <p
-          v-if="files1.length"
-          class="demo-info"
-        >
-          {{ formatSelectedInfo(files1) }}
-        </p>
       </ComponentDocsDemoBlock>
     </ComponentDocsSection>
 
@@ -30,12 +24,6 @@
           accept=".zip,.html"
           hint="仅支持 .zip 和 .html 文件"
         />
-        <p
-          v-if="files2.length"
-          class="demo-info"
-        >
-          {{ formatSelectedInfo(files2) }}
-        </p>
       </ComponentDocsDemoBlock>
     </ComponentDocsSection>
 
@@ -49,12 +37,6 @@
           directory
           hint="点击选择文件夹，或拖拽文件夹到此处"
         />
-        <p
-          v-if="files3.length"
-          class="demo-info"
-        >
-          {{ formatSelectedInfo(files3) }}
-        </p>
       </ComponentDocsDemoBlock>
     </ComponentDocsSection>
 
@@ -240,38 +222,9 @@ const slotCols: TableColumn[] = [
 const slotRows = [
   { name: 'default', description: '自定义上传区域的内部内容（替换默认图标和文字）' }
 ]
-
-function formatSelectedInfo(files: File[]): string {
-  if (files.length === 1) {
-    return `已选择：${files[0].name}（${formatFileSize(files[0].size)}）`
-  }
-
-  const totalSize = files.reduce((sum, file) => sum + file.size, 0)
-  return `已选择：${files.length} 个文件（${formatFileSize(totalSize)}）`
-}
-
-function formatFileSize(size: number): string {
-  if (size < 1024) {
-    return `${size} B`
-  }
-  if (size < 1024 * 1024) {
-    return `${(size / 1024).toFixed(1)} KB`
-  }
-  if (size < 1024 * 1024 * 1024) {
-    return `${(size / (1024 * 1024)).toFixed(1)} MB`
-  }
-
-  return `${(size / (1024 * 1024 * 1024)).toFixed(1)} GB`
-}
 </script>
 
 <style scoped>
-.demo-info {
-  margin-top: 8px;
-  font-size: 0.85rem;
-  color: var(--fgColor-muted);
-}
-
 .custom-upload-content {
   display: flex;
   flex-direction: column;
